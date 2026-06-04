@@ -1,0 +1,28 @@
+services:
+  tempo:
+    image: grafana/tempo:latest
+    container_name: tempo
+    restart: unless-stopped
+    ports:
+      - "3200:3200"   # HTTP query/API
+      - "4317:4317"   # OTLP gRPC
+      - "4318:4318"   # OTLP HTTP
+    volumes:
+      - tempo_data:/var/tempo
+    configs:
+      - source: tempo_config
+        target: /etc/tempo.yaml
+    command: -config.file=/etc/tempo.yaml
+    networks:
+      - network_swarm_public
+
+configs:
+  tempo_config:
+    external: true
+
+volumes:
+  tempo_data:
+
+networks:
+  network_swarm_public:
+    external: true

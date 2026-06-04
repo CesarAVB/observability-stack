@@ -1,0 +1,16 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  # Para novas apps: copiar este bloco, ajustar job_name e targets
+  - job_name: 'lognet-crm'
+    scheme: https
+    metrics_path: '/api/v1/actuator/prometheus'
+    tls_config:
+      insecure_skip_verify: false
+    static_configs:
+      - targets: ['crm-api.redelognet.com.br']
+        labels:
+          app: 'lognet-crm'
+          env: 'production'
