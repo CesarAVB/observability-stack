@@ -22,6 +22,7 @@ Stack completa de observabilidade em Docker via Portainer: métricas, logs, trac
 
 - [Visão Geral](#visão-geral)
 - [Estrutura do Repositório](#estrutura-do-repositório)
+- [Firewall](#firewall)
 - [Infraestrutura](#infraestrutura)
 - [Onboarding - Novo Projeto Spring Boot](#onboarding--novo-projeto-spring-boot)
   - [1. Dependências (pom.xml)](#1-dependências-pomxml)
@@ -79,6 +80,7 @@ A stack cobre os três pilares da observabilidade:
 │   ├── docker-compose.yml
 │   ├── exemplo.env
 │   └── README.md
+├── firewall-setup.sh         # Script de configuração de firewall para Docker
 └── README.md                 # Este arquivo
 ```
 
@@ -91,6 +93,25 @@ A stack cobre os três pilares da observabilidade:
 | Prometheus | [Prometheus/README.md](Prometheus/README.md) |
 | Tempo | [Tempo/README.md](Tempo/README.md) |
 | Zabbix | [Zabbix/README.md](Zabbix/README.md) |
+
+---
+
+## Firewall
+
+> **Importante:** o Docker ignora o UFW — ele insere regras diretamente no `iptables`, antes das regras do UFW. Para restringir portas publicadas pelo Docker, as regras precisam ser aplicadas na chain `DOCKER-USER`.
+
+O script `firewall-setup.sh` automatiza essa configuração: detecta a interface de rede, aplica as regras imediatamente e persiste no `/etc/ufw/after.rules` para sobreviver a reboots.
+
+**Redes permitidas:** `168.90.16.0/22` e `45.187.224.0/22`  
+**Portas protegidas:** `9090` (Prometheus), `3100` (Loki), `3200` / `4317` / `4318` (Tempo)
+
+```bash
+# no servidor via SSH
+chmod +x firewall-setup.sh
+sudo ./firewall-setup.sh
+```
+
+Para reaplicar após um reboot sem rodar o script novamente, o UFW já carrega as regras do `after.rules` automaticamente ao iniciar.
 
 ---
 
