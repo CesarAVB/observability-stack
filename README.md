@@ -370,4 +370,3 @@ Use este checklist ao integrar um novo projeto:
 ---
 
 <h5 align="center">© 2026 César Augusto - Backend Developer Java & Infraestrutura de Redes</h5>
-© 2026 César Augusto — Backend Developer Java & Infraestrutura de Redes
