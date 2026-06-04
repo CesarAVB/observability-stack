@@ -2,7 +2,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/repo-tempo-blueviolet"/>
-  <img src="https://img.shields.io/badge/Tempo-latest-F46800?logo=grafana&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Tempo-2.6.0-F46800?logo=grafana&logoColor=white"/>
   <img src="https://img.shields.io/badge/Docker-✔-2496ED?logo=docker&logoColor=white"/>
   <img src="https://img.shields.io/badge/Portainer-Stack-13BEF9?logo=portainer&logoColor=white"/>
   <img src="https://img.shields.io/badge/Linux-VPS-FCC624?logo=linux&logoColor=black"/>
@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-Grafana Tempo em Docker via Portainer, com recebimento de traces via OTLP (gRPC e HTTP), configuração via Docker Config e retenção de 48 horas.
+Grafana Tempo 2.6.0 em Docker via Portainer, com recebimento de traces via OTLP (gRPC e HTTP), configuração via Docker Config e retenção de 48 horas.
 </p>
 
 ---
@@ -21,7 +21,7 @@ Grafana Tempo em Docker via Portainer, com recebimento de traces via OTLP (gRPC 
 - **Portainer (Stacks)** — deploy via Docker Compose
 - **Linux (VPS)** — sistema operacional do host
 - **Visual Studio Code** — edição dos arquivos
-- **Grafana Tempo** — backend de rastreamento distribuído (distributed tracing)
+- **Grafana Tempo 2.6.0** — backend de rastreamento distribuído (distributed tracing)
 
 ## Sobre o Projeto
 
