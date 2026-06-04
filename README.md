@@ -305,9 +305,17 @@ TRACING_SAMPLING_PROBABILITY=1.0
 
 ---
 
-### 6. Registrar no Prometheus (Portainer)
+### 6. Registrar no Prometheus (host via SSH)
 
-No Portainer em `45.187.224.251`, vá em **Swarm → Configs** e edite o config `prometheus_config`. Adicione um novo bloco `scrape_configs` para a nova aplicação:
+Acesse o servidor via SSH e edite diretamente o `prometheus.yml`:
+
+```bash
+ssh usuario@45.187.224.251
+sudo mkdir -p /opt/docker/prometheus
+vim /opt/docker/prometheus/prometheus.yml
+```
+
+Adicione um novo bloco em `scrape_configs` para a nova aplicação:
 
 ```yaml
   - job_name: 'nome-do-novo-projeto'
@@ -322,11 +330,15 @@ No Portainer em `45.187.224.251`, vá em **Swarm → Configs** e edite o config 
           env: 'production'
 ```
 
-Após salvar, force o reload do Prometheus sem reiniciar o container:
+Após salvar o arquivo, remova o config antigo, recrie-o e force o reload do Prometheus:
 
 ```bash
+docker config rm prometheus_config
+docker config create prometheus_config /opt/docker/prometheus/prometheus.yml
 curl -X POST http://45.187.224.251:9090/-/reload
 ```
+
+> O reload aplica a nova configuração sem reiniciar o container nem perder dados.
 
 ---
 
