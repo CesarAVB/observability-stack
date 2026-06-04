@@ -70,11 +70,12 @@ Antes de subir a stack, registre o `prometheus.yml` como um Config no Docker:
 docker config create prometheus_config prometheus.yml
 ```
 
-> Para atualizar a configuração posteriormente, remova e recrie o config:
+> Para atualizar a configuração posteriormente, remova e recrie o config e faça o redeploy da stack no Portainer:
 > ```bash
 > docker config rm prometheus_config
 > docker config create prometheus_config prometheus.yml
 > ```
+> Em seguida, faça o redeploy da stack no Portainer para que o serviço monte o config atualizado.
 
 ### 2. Criar a Stack
 

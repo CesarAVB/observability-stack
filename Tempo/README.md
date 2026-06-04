@@ -73,11 +73,12 @@ Antes de subir a stack, registre o `tempo.yml` como um Config no Docker:
 docker config create tempo_config tempo.yml
 ```
 
-> Para atualizar a configuração posteriormente, remova e recrie o config:
+> Para atualizar a configuração posteriormente, remova e recrie o config e faça o redeploy da stack no Portainer:
 > ```bash
 > docker config rm tempo_config
 > docker config create tempo_config tempo.yml
 > ```
+> Em seguida, faça o redeploy da stack no Portainer para que o serviço monte o config atualizado.
 
 ### 2. Criar a Stack
 

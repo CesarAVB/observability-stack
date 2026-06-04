@@ -330,15 +330,14 @@ Adicione um novo bloco em `scrape_configs` para a nova aplicação:
           env: 'production'
 ```
 
-Após salvar o arquivo, remova o config antigo, recrie-o e force o reload do Prometheus:
+Após salvar o arquivo, remova o config antigo e recrie-o — Docker Configs são imutáveis e precisam ser recriados a cada atualização:
 
 ```bash
 docker config rm prometheus_config
 docker config create prometheus_config /opt/docker/prometheus/prometheus.yml
-curl -X POST http://45.187.224.251:9090/-/reload
 ```
 
-> O reload aplica a nova configuração sem reiniciar o container nem perder dados.
+Em seguida, acesse o Portainer e faça o redeploy da stack do Prometheus para que o serviço monte o config atualizado.
 
 ---
 

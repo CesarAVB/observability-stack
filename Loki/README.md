@@ -63,11 +63,12 @@ Antes de subir a stack, registre o `loki-config.yml` como um Config no Docker:
 docker config create loki_config loki-config.yml
 ```
 
-> Para atualizar a configuração posteriormente, remova e recrie o config:
+> Para atualizar a configuração posteriormente, remova e recrie o config e faça o redeploy da stack no Portainer:
 > ```bash
 > docker config rm loki_config
 > docker config create loki_config loki-config.yml
 > ```
+> Em seguida, faça o redeploy da stack no Portainer para que o serviço monte o config atualizado.
 
 ### 2. Criar a Stack
 
