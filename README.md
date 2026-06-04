@@ -29,7 +29,7 @@ Stack completa de observabilidade em Docker via Portainer: métricas, logs, trac
   - [3. Propriedades (application.properties)](#3-propriedades-applicationproperties)
   - [4. Filtro de Correlation ID](#4-filtro-de-correlation-id)
   - [5. Variáveis de Ambiente (Coolify)](#5-variáveis-de-ambiente-coolify)
-  - [6. Registrar no Prometheus (Portainer)](#6-registrar-no-prometheus-portainer)
+  - [6. Registrar no Prometheus (host via SSH)](#6-registrar-no-prometheus-host-via-ssh)
   - [7. Grafana - nenhuma ação necessária](#7-grafana--nenhuma-ação-necessária)
 - [Checklist de Verificação](#checklist-de-verificação)
 - [Contato](#contato)
