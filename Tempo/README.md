@@ -127,8 +127,19 @@ docker network create network_swarm_public
 
 ## Segurança
 
-- A porta `3200` deve ser restrita por IP no firewall ou acessada apenas via rede interna
-- As portas `4317` e `4318` recebem traces das aplicações — restrinja o acesso conforme necessário
+As portas `3200` (query), `4317` (OTLP gRPC) e `4318` (OTLP HTTP) não possuem autenticação — restrinja o acesso via firewall às redes confiáveis:
+
+```bash
+ufw allow from 168.90.16.0/22 to any port 3200
+ufw allow from 45.187.224.0/22 to any port 3200
+ufw allow from 168.90.16.0/22 to any port 4317
+ufw allow from 45.187.224.0/22 to any port 4317
+ufw allow from 168.90.16.0/22 to any port 4318
+ufw allow from 45.187.224.0/22 to any port 4318
+ufw deny 3200
+ufw deny 4317
+ufw deny 4318
+```
 
 ## Contato
 

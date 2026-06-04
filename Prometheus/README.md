@@ -104,8 +104,15 @@ docker network create network_swarm_public
 
 ## Segurança
 
-- O endpoint `:9090` deve ser restrito por IP no firewall ou protegido via proxy reverso
-- A flag `--web.enable-lifecycle` permite recarregar a configuração via API (`POST /-/reload`) — restrinja o acesso a essa rota
+A porta `9090` não possui autenticação nativa — restrinja o acesso via firewall às redes confiáveis:
+
+```bash
+ufw allow from 168.90.16.0/22 to any port 9090
+ufw allow from 45.187.224.0/22 to any port 9090
+ufw deny 9090
+```
+
+> A flag `--web.enable-lifecycle` permite recarregar a configuração via API (`POST /-/reload`) — restrinja o acesso a essa rota pelo mesmo motivo.
 
 ## Contato
 

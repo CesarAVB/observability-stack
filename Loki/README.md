@@ -109,8 +109,13 @@ docker network create network_swarm_public
 
 ## Segurança
 
-- O endpoint `:3100` deve ser restrito por IP no firewall ou acessado apenas via rede interna
-- `auth_enabled: false` desativa autenticação — adequado para ambientes internos isolados
+A porta `3100` não possui autenticação (`auth_enabled: false`) — restrinja o acesso via firewall às redes confiáveis:
+
+```bash
+ufw allow from 168.90.16.0/22 to any port 3100
+ufw allow from 45.187.224.0/22 to any port 3100
+ufw deny 3100
+```
 
 ## Contato
 
