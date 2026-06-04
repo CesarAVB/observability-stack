@@ -65,26 +65,31 @@ distributor:
 
 ## Deploy via Portainer
 
-### 1. Criar o Docker Config
+### Primeiro deploy
 
-Antes de subir a stack, registre o `tempo.yml` como um Config no Docker:
+Antes de subir a stack, o Docker Config precisa existir — a stack referencia `tempo_config` pelo nome e falhará se ele não estiver criado.
+
+Acesse o servidor via SSH, crie o diretório, edite o `tempo.yml` e registre o config:
 
 ```bash
-docker config create tempo_config tempo.yml
+sudo mkdir -p /opt/docker/tempo
+vim /opt/docker/tempo/tempo.yml
+docker config create tempo_config /opt/docker/tempo/tempo.yml
 ```
 
-> Para atualizar a configuração posteriormente, remova e recrie o config e faça o redeploy da stack no Portainer:
-> ```bash
-> docker config rm tempo_config
-> docker config create tempo_config tempo.yml
-> ```
-> Em seguida, faça o redeploy da stack no Portainer para que o serviço monte o config atualizado.
+Em seguida, acesse o Portainer, vá em **Stacks → Add stack**, cole o conteúdo do `docker-compose.yml` e clique em **Deploy the stack**.
 
-### 2. Criar a Stack
+### Atualizar a configuração
 
-1. Acesse o Portainer e vá em **Stacks → Add stack**
-2. Cole o conteúdo do `docker-compose.yml`
-3. Clique em **Deploy the stack**
+Docker Configs são imutáveis — para alterar o `tempo.yml` de uma stack já em execução:
+
+```bash
+vim /opt/docker/tempo/tempo.yml
+docker config rm tempo_config
+docker config create tempo_config /opt/docker/tempo/tempo.yml
+```
+
+Em seguida, faça o redeploy da stack no Portainer para que o serviço monte o config atualizado.
 
 ## Portas
 

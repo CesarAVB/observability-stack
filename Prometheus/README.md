@@ -62,28 +62,33 @@ scrape_configs:
 
 ## Deploy via Portainer
 
-### 1. Criar o Docker Config
+### Primeiro deploy
 
-Antes de subir a stack, registre o `prometheus.yml` como um Config no Docker:
+Antes de subir a stack, o Docker Config precisa existir — a stack referencia `prometheus_config` pelo nome e falhará se ele não estiver criado.
+
+Acesse o servidor via SSH, crie o diretório, edite o `prometheus.yml` e registre o config:
 
 ```bash
-docker config create prometheus_config prometheus.yml
+sudo mkdir -p /opt/docker/prometheus
+vim /opt/docker/prometheus/prometheus.yml
+docker config create prometheus_config /opt/docker/prometheus/prometheus.yml
 ```
 
-> Para atualizar a configuração posteriormente, remova e recrie o config e faça o redeploy da stack no Portainer:
-> ```bash
-> docker config rm prometheus_config
-> docker config create prometheus_config prometheus.yml
-> ```
-> Em seguida, faça o redeploy da stack no Portainer para que o serviço monte o config atualizado.
-
-### 2. Criar a Stack
-
-1. Acesse o Portainer e vá em **Stacks → Add stack**
-2. Cole o conteúdo do `docker-compose.yml`
-3. Clique em **Deploy the stack**
+Em seguida, acesse o Portainer, vá em **Stacks → Add stack**, cole o conteúdo do `docker-compose.yml` e clique em **Deploy the stack**.
 
 O Prometheus estará disponível em: `http://<IP-do-host>:9090`
+
+### Atualizar a configuração
+
+Docker Configs são imutáveis — para alterar o `prometheus.yml` de uma stack já em execução:
+
+```bash
+vim /opt/docker/prometheus/prometheus.yml
+docker config rm prometheus_config
+docker config create prometheus_config /opt/docker/prometheus/prometheus.yml
+```
+
+Em seguida, faça o redeploy da stack no Portainer para que o serviço monte o config atualizado.
 
 ## Persistência de Dados
 

@@ -55,28 +55,33 @@ limits_config:
 
 ## Deploy via Portainer
 
-### 1. Criar o Docker Config
+### Primeiro deploy
 
-Antes de subir a stack, registre o `loki-config.yml` como um Config no Docker:
+Antes de subir a stack, o Docker Config precisa existir — a stack referencia `loki_config` pelo nome e falhará se ele não estiver criado.
+
+Acesse o servidor via SSH, crie o diretório, edite o `loki-config.yml` e registre o config:
 
 ```bash
-docker config create loki_config loki-config.yml
+sudo mkdir -p /opt/docker/loki
+vim /opt/docker/loki/loki-config.yml
+docker config create loki_config /opt/docker/loki/loki-config.yml
 ```
 
-> Para atualizar a configuração posteriormente, remova e recrie o config e faça o redeploy da stack no Portainer:
-> ```bash
-> docker config rm loki_config
-> docker config create loki_config loki-config.yml
-> ```
-> Em seguida, faça o redeploy da stack no Portainer para que o serviço monte o config atualizado.
-
-### 2. Criar a Stack
-
-1. Acesse o Portainer e vá em **Stacks → Add stack**
-2. Cole o conteúdo do `docker-compose.yml`
-3. Clique em **Deploy the stack**
+Em seguida, acesse o Portainer, vá em **Stacks → Add stack**, cole o conteúdo do `docker-compose.yml` e clique em **Deploy the stack**.
 
 O Loki estará disponível na porta `3100` via rede `network_swarm_public`.
+
+### Atualizar a configuração
+
+Docker Configs são imutáveis — para alterar o `loki-config.yml` de uma stack já em execução:
+
+```bash
+vim /opt/docker/loki/loki-config.yml
+docker config rm loki_config
+docker config create loki_config /opt/docker/loki/loki-config.yml
+```
+
+Em seguida, faça o redeploy da stack no Portainer para que o serviço monte o config atualizado.
 
 ## Persistência de Dados
 
