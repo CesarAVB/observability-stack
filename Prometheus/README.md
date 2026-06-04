@@ -40,7 +40,6 @@ O objetivo é manter um ambiente limpo, organizado e próximo de produção, com
 .
 ├── docker-compose.yml   # Stack do Prometheus
 ├── prometheus.yml       # Configuração de scrape (jobs e targets)
-├── exemplo.env          # Exemplo de variáveis de ambiente
 └── README.md
 ```
 
