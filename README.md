@@ -79,7 +79,6 @@ A stack cobre os três pilares da observabilidade:
 │   ├── docker-compose.yml
 │   ├── exemplo.env
 │   └── README.md
-├── observability-onboarding.md   # Guia de integração para projetos Spring Boot
 └── README.md                 # Este arquivo
 ```
 

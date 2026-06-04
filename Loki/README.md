@@ -40,7 +40,6 @@ O objetivo é manter um ambiente limpo, organizado e próximo de produção, com
 .
 ├── docker-compose.yml   # Stack do Loki
 ├── loki-config.yml      # Configuração do Loki (schema, storage, retenção)
-├── exemplo.env          # Exemplo de variáveis de ambiente
 └── README.md
 ```
 
