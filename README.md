@@ -63,17 +63,17 @@ A stack cobre os três pilares da observabilidade:
 │   └── README.md
 ├── Loki/                     # Stack do Grafana Loki (agregação de logs)
 │   ├── docker-compose.yml
-│   ├── loki-config.yml
+│   ├── loki_config.yml
 │   ├── exemplo.env
 │   └── README.md
 ├── Prometheus/               # Stack do Prometheus (coleta de métricas)
 │   ├── docker-compose.yml
-│   ├── prometheus.yml
+│   ├── prometheus_config.yml
 │   ├── exemplo.env
 │   └── README.md
 ├── Tempo/                    # Stack do Grafana Tempo (rastreamento distribuído)
 │   ├── docker-compose.yml
-│   ├── tempo.yml
+│   ├── tempo_config.yml
 │   ├── exemplo.env
 │   └── README.md
 ├── Zabbix/                   # Stack do Zabbix Server (monitoramento de infra)
@@ -327,12 +327,12 @@ TRACING_SAMPLING_PROBABILITY=1.0
 
 ### 6. Registrar no Prometheus (host via SSH)
 
-Acesse o servidor via SSH e edite diretamente o `prometheus.yml`:
+Acesse o servidor via SSH e edite diretamente o `prometheus_config.yml`:
 
 ```bash
 ssh usuario@45.187.224.251
 sudo mkdir -p /opt/docker/prometheus
-vim /opt/docker/prometheus/prometheus.yml
+vim /opt/docker/prometheus/prometheus_config.yml
 ```
 
 Adicione um novo bloco em `scrape_configs` para a nova aplicação:
@@ -354,7 +354,7 @@ Após salvar o arquivo, remova o config antigo e recrie-o — Docker Configs sã
 
 ```bash
 docker config rm prometheus_config
-docker config create prometheus_config /opt/docker/prometheus/prometheus.yml
+docker config create prometheus_config /opt/docker/prometheus/prometheus_config.yml
 ```
 
 Em seguida, acesse o Portainer e faça o redeploy da stack do Prometheus para que o serviço monte o config atualizado.

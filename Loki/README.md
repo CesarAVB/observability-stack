@@ -39,13 +39,13 @@ O objetivo é manter um ambiente limpo, organizado e próximo de produção, com
 ```
 .
 ├── docker-compose.yml   # Stack do Loki
-├── loki-config.yml      # Configuração do Loki (schema, storage, retenção)
+├── loki_config.yml      # Configuração do Loki (schema, storage, retenção)
 └── README.md
 ```
 
 ## Configuração do Loki
 
-O arquivo `loki-config.yml` define o comportamento do Loki. Principais parâmetros:
+O arquivo `loki_config.yml` define o comportamento do Loki. Principais parâmetros:
 
 ```yaml
 limits_config:
@@ -58,12 +58,12 @@ limits_config:
 
 Antes de subir a stack, o Docker Config precisa existir — a stack referencia `loki_config` pelo nome e falhará se ele não estiver criado.
 
-Acesse o servidor via SSH, crie o diretório, edite o `loki-config.yml` e registre o config:
+Acesse o servidor via SSH, crie o diretório, edite o `loki_config.yml` e registre o config:
 
 ```bash
 sudo mkdir -p /opt/docker/loki
-vim /opt/docker/loki/loki-config.yml
-docker config create loki_config /opt/docker/loki/loki-config.yml
+vim /opt/docker/loki/loki_config.yml
+docker config create loki_config /opt/docker/loki/loki_config.yml
 ```
 
 Em seguida, acesse o Portainer, vá em **Stacks → Add stack**, cole o conteúdo do `docker-compose.yml` e clique em **Deploy the stack**.
@@ -72,12 +72,12 @@ O Loki estará disponível na porta `3100` via rede `network_swarm_public`.
 
 ### Atualizar a configuração
 
-Docker Configs são imutáveis — para alterar o `loki-config.yml` de uma stack já em execução:
+Docker Configs são imutáveis — para alterar o `loki_config.yml` de uma stack já em execução:
 
 ```bash
-vim /opt/docker/loki/loki-config.yml
+vim /opt/docker/loki/loki_config.yml
 docker config rm loki_config
-docker config create loki_config /opt/docker/loki/loki-config.yml
+docker config create loki_config /opt/docker/loki/loki_config.yml
 ```
 
 Em seguida, faça o redeploy da stack no Portainer para que o serviço monte o config atualizado.

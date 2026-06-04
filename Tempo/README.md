@@ -39,13 +39,13 @@ O objetivo é manter um ambiente limpo, organizado e próximo de produção, com
 ```
 .
 ├── docker-compose.yml   # Stack do Tempo
-├── tempo.yml            # Configuração do Tempo (receivers, storage, retenção)
+├── tempo_config.yml            # Configuração do Tempo (receivers, storage, retenção)
 └── README.md
 ```
 
 ## Configuração do Tempo
 
-O arquivo `tempo.yml` define o comportamento do Tempo. Principais parâmetros:
+O arquivo `tempo_config.yml` define o comportamento do Tempo. Principais parâmetros:
 
 ```yaml
 compactor:
@@ -68,24 +68,24 @@ distributor:
 
 Antes de subir a stack, o Docker Config precisa existir — a stack referencia `tempo_config` pelo nome e falhará se ele não estiver criado.
 
-Acesse o servidor via SSH, crie o diretório, edite o `tempo.yml` e registre o config:
+Acesse o servidor via SSH, crie o diretório, edite o `tempo_config.yml` e registre o config:
 
 ```bash
 sudo mkdir -p /opt/docker/tempo
-vim /opt/docker/tempo/tempo.yml
-docker config create tempo_config /opt/docker/tempo/tempo.yml
+vim /opt/docker/tempo/tempo_config.yml
+docker config create tempo_config /opt/docker/tempo/tempo_config.yml
 ```
 
 Em seguida, acesse o Portainer, vá em **Stacks → Add stack**, cole o conteúdo do `docker-compose.yml` e clique em **Deploy the stack**.
 
 ### Atualizar a configuração
 
-Docker Configs são imutáveis — para alterar o `tempo.yml` de uma stack já em execução:
+Docker Configs são imutáveis — para alterar o `tempo_config.yml` de uma stack já em execução:
 
 ```bash
-vim /opt/docker/tempo/tempo.yml
+vim /opt/docker/tempo/tempo_config.yml
 docker config rm tempo_config
-docker config create tempo_config /opt/docker/tempo/tempo.yml
+docker config create tempo_config /opt/docker/tempo/tempo_config.yml
 ```
 
 Em seguida, faça o redeploy da stack no Portainer para que o serviço monte o config atualizado.
