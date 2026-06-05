@@ -20,7 +20,7 @@ scrape_configs:
   # (CPU, memória, disco, rede). Resolvido pela rede Docker na porta 9100.
   - job_name: 'node-exporter'
     static_configs:
-      - targets: ['node-exporter:9100']
+      - targets: ['infra_node-exporter:9100']
         labels:
           app: 'host-linux'
           env: 'production'
@@ -29,7 +29,7 @@ scrape_configs:
   # (CPU, memória, I/O). Resolvido pela rede Docker na porta 8080.
   - job_name: 'cadvisor'
     static_configs:
-      - targets: ['cadvisor:8080']
+      - targets: ['infra_cadvisor:8080']
         labels:
           app: 'containers'
           env: 'production'
