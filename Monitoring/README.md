@@ -30,8 +30,8 @@ Esta stack sobe apenas os **exporters** de infraestrutura. Eles expõem métrica
 
 | Serviço | Camada | Porta | Alimenta o dashboard |
 |---|---|---|---|
-| `node-exporter` | Host (máquina/VM): CPU, RAM, disco, rede, load | `9100` | `../Grafana/dashboards/lognet-host-linux-dashboard.json` |
-| `cadvisor` | Por container Docker: CPU, RAM, rede, I/O | `8080` | `../Grafana/dashboards/lognet-containers-dashboard.json` |
+| `node-exporter` | Host (máquina/VM): CPU, RAM, disco, rede, load | `9100` | `../Grafana/dashboards/host-linux-dashboard.json` |
+| `cadvisor` | Por container Docker: CPU, RAM, rede, I/O | `8080` | `../Grafana/dashboards/docker-containers-dashboard.json` |
 
 ## Estrutura do Projeto
 
@@ -113,8 +113,8 @@ Confira em **Prometheus → Status → Targets**: `node-exporter` e `cadvisor` =
 
 ## Importar os dashboards no Grafana
 
-- `../Grafana/dashboards/lognet-host-linux-dashboard.json`
-- `../Grafana/dashboards/lognet-containers-dashboard.json`
+- `../Grafana/dashboards/host-linux-dashboard.json`
+- `../Grafana/dashboards/docker-containers-dashboard.json`
 
 O seletor **Host** no topo lista a instância automaticamente.
 

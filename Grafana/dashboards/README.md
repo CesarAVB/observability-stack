@@ -1,0 +1,120 @@
+# Dashboards Grafana — Stack de Observabilidade
+
+Três dashboards prontos para importar, cobrindo aplicação, host e containers.
+
+| Arquivo | Fonte de dados | O que mostra |
+|---|---|---|
+| `spring-application-dashboard.json` | Prometheus + Loki | Aplicação Spring Boot: JVM, HTTP, latência, erros, logs, conexões de DB |
+| `host-linux-dashboard.json` | Prometheus (node-exporter) | Host Linux: CPU, memória, disco, rede, load |
+| `docker-containers-dashboard.json` | Prometheus (cAdvisor) | Por container Docker: CPU, memória, rede, I/O |
+
+---
+
+## Pré-requisitos
+
+O dashboard de aplicação usa plugins de painel customizado. Instale antes de importar:
+
+```bash
+# No container/servidor do Grafana
+grafana-cli plugins install marcusolsson-dynamictext-panel
+grafana-cli plugins install gapit-htmlgraphics-panel
+grafana-cli plugins install grafana-clock-panel  # opcional
+
+# Reinicie o Grafana após instalar
+systemctl restart grafana-server
+# ou no Docker:
+docker restart grafana
+```
+
+Os dashboards de host e containers usam apenas painéis nativos (Time Series, Bar Gauge, Stat) — não exigem plugins.
+
+---
+
+## Como importar
+
+1. Acesse `http://45.187.224.251:3000`
+2. **Dashboards → New → Import**
+3. Clique em **Upload JSON file** e selecione o `.json` desejado
+4. Na tela de configuração, mapeie os datasources:
+   - **Prometheus** → selecione `Prometheus`
+   - **Loki** → selecione `Loki` (apenas para o dashboard de aplicação)
+5. Clique em **Import**
+
+---
+
+## Dashboard de Aplicação (Spring Boot)
+
+### Estrutura
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  HEADER BANNER — Business Text                              │
+│  Aplicação · Observabilidade · Indicador Ao Vivo           │
+├──────────┬──────────┬──────────┬──────────────────────────┤
+│ Req/min  │ Erro %   │ P95 (ms) │ Heap JVM %              │
+│ HTML Grp │ HTML Grp │ HTML Grp │ HTML Grp + barra         │
+├────────────────────────────────┬────────────────────────────┤
+│  MAPA DE TOPOLOGIA             │  LOGS RECENTES             │
+│  HTML Graphics (SVG animado)   │  Business Text             │
+│  Client→Nginx→App→MySQL/Prom   │  Erros & Avisos do Loki    │
+├────────────────────────┬───────┴────────────────────────────┤
+│  HTTP req/s por Status  │  GAUGE Taxa de Erro               │
+│  Time Series (nativo)   │  HTML Graphics (SVG arc animado)  │
+├────────────────────────┴───────────────────────────────────┤
+│  TABELA — Top Endpoints por Volume                         │
+│  Business Text — método, URI, status, req/min, latência    │
+└────────────────────────────────────────────────────────────┘
+```
+
+### Painéis — Detalhes
+
+| Título | Plugin | Query |
+|--------|--------|-------|
+| Header Banner | **Business Text** | estático |
+| Requisições / min | **HTML Graphics** | `rate(http_server_requests_seconds_count[5m]) * 60` |
+| Taxa de Erro | **HTML Graphics** | erros 5xx / total × 100 |
+| Latência P95 | **HTML Graphics** | `histogram_quantile(0.95, ...)` × 1000 ms |
+| Heap JVM | **HTML Graphics** | `jvm_memory_used_bytes / jvm_memory_max_bytes` |
+| Mapa de Topologia | **HTML Graphics** | `up{application="$app_name"}` |
+| Logs Recentes | **Loki (Logs)** | `{app="lognet-crm"} \| pattern ...` |
+| HTTP req/s por Status | Time Series | `rate(...) by (status)` |
+| Gauge Taxa de Erro | **HTML Graphics** | idem painel de Taxa de Erro |
+| Top Endpoints | **Bar Gauge** | `sum(increase(http_server_requests_seconds_count[$__range])) by (uri)` |
+
+### Thresholds de Cor
+
+| Métrica | Verde | Amarelo | Vermelho |
+|---------|-------|---------|----------|
+| Taxa de Erro | < 0,5% | 0,5–2% | ≥ 2% |
+| Latência P95 | < 500ms | 500–1000ms | ≥ 1000ms |
+| Heap JVM | < 70% | 70–85% | ≥ 85% |
+| Req/min | < 1000 | 1000–5000 | ≥ 5000 |
+
+### Variável de Template
+
+O dashboard expõe a variável `$app_name`, populada via `label_values(http_server_requests_seconds_count, application)` e filtrada pelo regex `lognet.*`. Use o seletor **Aplicação** no topo para escolher o serviço.
+
+> Para reaproveitar com outra aplicação, ajuste o regex da variável `app_name` (atualmente `lognet.*`) e a query Loki do painel de logs (atualmente fixa em `{app="lognet-crm"}`).
+
+### Personalização
+
+**Trocar a fonte de logs:** edite a query Loki do painel de logs para incluir outros labels:
+```logql
+{app="$app_name", namespace="producao"} | pattern `...`
+```
+
+**Campo `correlationId` nos logs:** o painel de logs extrai `correlationId`, `traceId` e `spanId` via `pattern` do LogQL. O backend já injeta esses campos via MDC (ver `CLAUDE.md`).
+
+**Ajustar thresholds do gauge:** no `onRender` do painel, edite as constantes:
+```javascript
+var color = pct >= 2 ? '#EF4444' : pct >= 0.5 ? '#F59E0B' : '#10B981';
+```
+
+---
+
+## Dashboards de Host e Containers
+
+- **`host-linux-dashboard.json`** — métricas do node-exporter. O seletor **Host** no topo lista a instância automaticamente.
+- **`docker-containers-dashboard.json`** — métricas do cAdvisor, agrupadas por container.
+
+Ambos dependem da stack de exporters em `../../Monitoring/` e dos jobs `node-exporter` / `cadvisor` no `prometheus_config.yml`. Ver `Monitoring/README.md` para o deploy dos exporters.

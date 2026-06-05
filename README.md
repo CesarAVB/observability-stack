@@ -94,7 +94,7 @@ A stack cobre os três pilares da observabilidade:
 | Ferramenta | README |
 |---|---|
 | Grafana | [Grafana/README.md](Grafana/README.md) |
-| Dashboards (templates) | [Grafana/dashboards/README-dashboard.md](Grafana/dashboards/README-dashboard.md) |
+| Dashboards (templates) | [Grafana/dashboards/README.md](Grafana/dashboards/README.md) |
 | Monitoring (exporters) | [Monitoring/README.md](Monitoring/README.md) |
 | Loki | [Loki/README.md](Loki/README.md) |
 | Prometheus | [Prometheus/README.md](Prometheus/README.md) |

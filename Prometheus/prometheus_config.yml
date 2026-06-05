@@ -17,19 +17,41 @@ scrape_configs:
           env: 'production'
 
   # node-exporter — métricas de hardware/SO do host Linux
-  # (CPU, memória, disco, rede). Resolvido pela rede Docker na porta 9100.
+  # (CPU, memória, disco, rede).
+  #   - srv-251: mesmo cluster Swarm, scrape via DNS interno; o label
+  #     `instance` é fixado no IP para aparecer assim no seletor do Grafana.
+  #   - srv-248: Docker standalone, scrape via IP público.
   - job_name: 'node-exporter'
     static_configs:
       - targets: ['monitoring_node-exporter:9100']
         labels:
           app: 'host-linux'
           env: 'production'
+          server: 'srv-251'
+          instance: '45.187.224.251'
+      - targets: ['45.187.224.248:9100']
+        labels:
+          app: 'host-linux'
+          env: 'production'
+          server: 'srv-248'
+          instance: '45.187.224.248'
 
   # cAdvisor — métricas de uso de recursos por container Docker
-  # (CPU, memória, I/O). Resolvido pela rede Docker na porta 8080.
+  # (CPU, memória, I/O).
+  #   - srv-251: mesmo cluster Swarm, scrape via DNS interno; `instance`
+  #     fixado no IP para aparecer assim no seletor do Grafana.
+  #   - srv-248: Docker standalone, scrape via IP público.
   - job_name: 'cadvisor'
     static_configs:
       - targets: ['monitoring_cadvisor:8080']
         labels:
           app: 'containers'
           env: 'production'
+          server: 'srv-251'
+          instance: '45.187.224.251'
+      - targets: ['45.187.224.248:8080']
+        labels:
+          app: 'containers'
+          env: 'production'
+          server: 'srv-248'
+          instance: '45.187.224.248'

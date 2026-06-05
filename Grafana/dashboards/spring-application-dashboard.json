@@ -21,7 +21,7 @@
     }
   ],
   "cursorSync": "Crosshair",
-  "description": "Dashboard de observabilidade do LogNet CRM - métricas JVM, HTTP, logs e saúde dos serviços",
+  "description": "Dashboard de observabilidade de aplicação Spring Boot - métricas JVM, HTTP, logs e saúde dos serviços",
   "editable": true,
   "elements": {
     "panel-1": {
@@ -1030,7 +1030,7 @@
         "description": "",
         "id": 17,
         "links": [],
-        "title": "Início da Aplicação",
+        "title": "Uptime",
         "vizConfig": {
           "group": "gapit-htmlgraphics-panel",
           "kind": "VizConfig",
@@ -2406,11 +2406,7 @@
   "links": [],
   "liveNow": false,
   "preload": false,
-  "tags": [
-    "lognet",
-    "crm",
-    "observabilidade"
-  ],
+  "tags": [],
   "timeSettings": {
     "autoRefresh": "10s",
     "autoRefreshIntervals": [
@@ -2431,7 +2427,7 @@
     "timezone": "browser",
     "to": "now"
   },
-  "title": "LogNet CRM",
+  "title": "Aplicação - Spring Boot",
   "variables": [
     {
       "kind": "QueryVariable",

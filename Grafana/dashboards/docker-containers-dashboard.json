@@ -24,6 +24,192 @@
   "description": "Dashboard de monitoramento de containers Docker (cAdvisor) - CPU, memória, rede e disco por container",
   "editable": true,
   "elements": {
+    "bg-cpu": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "topk(10, sum(rate(container_cpu_usage_seconds_total{instance=~\"$node\",name!=\"\"}[5m])) by (name))",
+                      "instant": true,
+                      "legendFormat": "{{name}}"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 10,
+        "links": [],
+        "title": "Top 10 - CPU (cores)",
+        "vizConfig": {
+          "group": "bargauge",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "continuous-GrYlRd"
+                },
+                "decimals": 3,
+                "min": 0,
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                },
+                "unit": "short"
+              },
+              "overrides": []
+            },
+            "options": {
+              "displayMode": "lcd",
+              "legend": {
+                "calcs": [],
+                "displayMode": "list",
+                "placement": "bottom",
+                "showLegend": false
+              },
+              "maxVizHeight": 300,
+              "minVizHeight": 16,
+              "minVizWidth": 8,
+              "namePlacement": "left",
+              "orientation": "horizontal",
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "showUnfilled": true,
+              "sizing": "auto",
+              "text": {
+                "titleSize": 11,
+                "valueSize": 13
+              },
+              "valueMode": "color"
+            }
+          },
+          "version": "13.0.2"
+        }
+      }
+    },
+    "bg-ram": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "topk(10, sum(container_memory_working_set_bytes{instance=~\"$node\",name!=\"\"}) by (name))",
+                      "instant": true,
+                      "legendFormat": "{{name}}"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 11,
+        "links": [],
+        "title": "Top 10 - Memória",
+        "vizConfig": {
+          "group": "bargauge",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "continuous-GrYlRd"
+                },
+                "decimals": 0,
+                "min": 0,
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                },
+                "unit": "bytes"
+              },
+              "overrides": []
+            },
+            "options": {
+              "displayMode": "lcd",
+              "legend": {
+                "calcs": [],
+                "displayMode": "list",
+                "placement": "bottom",
+                "showLegend": false
+              },
+              "maxVizHeight": 300,
+              "minVizHeight": 16,
+              "minVizWidth": 8,
+              "namePlacement": "left",
+              "orientation": "horizontal",
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "showUnfilled": true,
+              "sizing": "auto",
+              "text": {
+                "titleSize": 11,
+                "valueSize": 13
+              },
+              "valueMode": "color"
+            }
+          },
+          "version": "13.0.2"
+        }
+      }
+    },
     "cont-header": {
       "kind": "Panel",
       "spec": {
@@ -80,7 +266,7 @@
               "afterRender": "",
               "content": "",
               "contentPartials": [],
-              "defaultContent": "<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.hdr{background:linear-gradient(135deg,#0d1520 0%,#141B27 40%,#1a2233 100%);border-bottom:2px solid #F97316;height:100%;display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:relative;overflow:hidden}.hdr::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(249,115,22,0.07) 0%,transparent 60%);pointer-events:none}.logo-wrap{display:flex;align-items:center;gap:14px}.logo-box{width:46px;height:46px;background:linear-gradient(135deg,#F97316,#ea580c);border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px rgba(249,115,22,0.4),0 4px 12px rgba(0,0,0,0.3);flex-shrink:0}.logo-box svg{width:24px;height:24px}.ht{font-size:19px;font-weight:800;color:#F9FAFB;letter-spacing:-0.5px;line-height:1}.hs{font-size:12px;color:#6B7280;margin-top:3px;font-weight:400}.hdr-r{display:flex;align-items:center;gap:14px}.pills{display:flex;gap:6px}.pill{background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.22);color:#F97316;font-size:10.5px;font-weight:600;padding:4px 10px;border-radius:6px;letter-spacing:0.3px}.env{background:linear-gradient(135deg,#F97316,#dc6011);color:#fff;font-size:10px;font-weight:800;padding:5px 14px;border-radius:20px;letter-spacing:1.2px;text-transform:uppercase;box-shadow:0 0 12px rgba(249,115,22,0.3)}.live{display:flex;align-items:center;gap:7px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);padding:5px 12px;border-radius:8px}.live-dot{width:7px;height:7px;background:#10B981;border-radius:50%;animation:blink 2s ease-in-out infinite;box-shadow:0 0 8px rgba(16,185,129,0.6)}.live-lbl{font-size:11px;font-weight:600;color:#10B981}@keyframes blink{0%,100%{opacity:1}50%{opacity:0.4}}</style><div class='hdr'><div class='logo-wrap'><div class='logo-box'><svg viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><path d='M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z'/><path d='m3.3 7 8.7 5 8.7-5'/><path d='M12 22V12'/></svg></div><div><div class='ht'>LogNet &mdash; Containers</div><div class='hs'>Monitoramento de Containers Docker &mdash; cAdvisor</div></div></div><div class='hdr-r'><div class='pills'><span class='pill'>Prometheus</span><span class='pill'>cAdvisor</span></div><span class='env'>Produ&ccedil;&atilde;o</span><div class='live'><div class='live-dot'></div><span class='live-lbl'>Ao vivo</span></div></div></div>",
+              "defaultContent": "<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.hdr{background:linear-gradient(135deg,#0d1520 0%,#141B27 40%,#1a2233 100%);border-bottom:2px solid #F97316;height:100%;display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:relative;overflow:hidden}.hdr::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(249,115,22,0.07) 0%,transparent 60%);pointer-events:none}.logo-wrap{display:flex;align-items:center;gap:14px}.logo-box{width:46px;height:46px;background:linear-gradient(135deg,#F97316,#ea580c);border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px rgba(249,115,22,0.4),0 4px 12px rgba(0,0,0,0.3);flex-shrink:0}.logo-box svg{width:24px;height:24px}.ht{font-size:19px;font-weight:800;color:#F9FAFB;letter-spacing:-0.5px;line-height:1}.hs{font-size:12px;color:#6B7280;margin-top:3px;font-weight:400}.hdr-r{display:flex;align-items:center;gap:14px}.pills{display:flex;gap:6px}.pill{background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.22);color:#F97316;font-size:10.5px;font-weight:600;padding:4px 10px;border-radius:6px;letter-spacing:0.3px}.env{background:linear-gradient(135deg,#F97316,#dc6011);color:#fff;font-size:10px;font-weight:800;padding:5px 14px;border-radius:20px;letter-spacing:1.2px;text-transform:uppercase;box-shadow:0 0 12px rgba(249,115,22,0.3)}.live{display:flex;align-items:center;gap:7px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);padding:5px 12px;border-radius:8px}.live-dot{width:7px;height:7px;background:#10B981;border-radius:50%;animation:blink 2s ease-in-out infinite;box-shadow:0 0 8px rgba(16,185,129,0.6)}.live-lbl{font-size:11px;font-weight:600;color:#10B981}@keyframes blink{0%,100%{opacity:1}50%{opacity:0.4}}</style><div class='hdr'><div class='logo-wrap'><div class='logo-box'><svg viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><path d='M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z'/><path d='m3.3 7 8.7 5 8.7-5'/><path d='M12 22V12'/></svg></div><div><div class='ht'>Docker - Containers</div><div class='hs'>Monitoramento de Containers Docker &mdash; cAdvisor</div></div></div><div class='hdr-r'><div class='pills'><span class='pill'>Prometheus</span><span class='pill'>cAdvisor</span></div><span class='env'>Produ&ccedil;&atilde;o</span><div class='live'><div class='live-dot'></div><span class='live-lbl'>Ao vivo</span></div></div></div>",
               "editor": {
                 "format": "auto",
                 "language": "markdown"
@@ -477,6 +663,99 @@
         }
       }
     },
+    "kpi-net": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(rate(container_network_receive_bytes_total{instance=~\"$node\",name!=\"\"}[5m])) + sum(rate(container_network_transmit_bytes_total{instance=~\"$node\",name!=\"\"}[5m]))",
+                      "instant": true,
+                      "legendFormat": "net"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 5,
+        "links": [],
+        "title": "Tráfego de Rede dos Containers",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.kpi{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;position:relative;overflow:hidden;cursor:default;transition:border-color .3s}.kpi:hover{border-color:#14B8A6}.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#14B8A6,#2dd4bf)}.icon-ring{width:38px;height:38px;background:rgba(20,184,166,0.12);border:1.5px solid rgba(20,184,166,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:8px;flex-shrink:0}.icon-ring svg{width:18px;height:18px;stroke:#14B8A6}.val{font-size:30px;font-weight:800;color:#F9FAFB;letter-spacing:-1px;line-height:1}.unit{font-size:11px;color:#6B7280;margin-top:2px;font-weight:500}.label{font-size:11px;color:#9CA3AF;margin-top:6px;font-weight:500;text-align:center}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class='kpi'><div class='icon-ring'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12.55a11 11 0 0 1 14.08 0'/><path d='M1.42 9a16 16 0 0 1 21.16 0'/><path d='M8.53 16.11a6 6 0 0 1 6.95 0'/><line x1='12' y1='20' x2='12.01' y2='20'/></svg></div><div class='val' id='val'>--</div><div class='unit' id='unit'>throughput</div><div class='label'>Rede (RX + TX)</div></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "var val=0;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var v=f[1].values;val=Array.isArray(v)?v[v.length-1]:(v.get?v.get(v.length-1):0)||0;}}}catch(e){}var b=val||0;var n,u;if(b>=1048576){n=b/1048576;u='MB/s';}else if(b>=1024){n=b/1024;u='KB/s';}else{n=b;u='B/s';}var el=htmlNode.querySelector('#val');var un=htmlNode.querySelector('#unit');if(el)el.textContent=n.toFixed(n<10?2:1);if(un)un.textContent=u;",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
     "kpi-ram": {
       "kind": "Panel",
       "spec": {
@@ -570,7 +849,7 @@
         }
       }
     },
-    "kpi-net": {
+    "sec-netdisk": {
       "kind": "Panel",
       "spec": {
         "data": {
@@ -582,16 +861,9 @@
                 "spec": {
                   "hidden": false,
                   "query": {
-                    "datasource": {
-                      "name": "bfnr96wiwms5cd"
-                    },
-                    "group": "prometheus",
+                    "group": "",
                     "kind": "DataQuery",
-                    "spec": {
-                      "expr": "sum(rate(container_network_receive_bytes_total{instance=~\"$node\",name!=\"\"}[5m])) + sum(rate(container_network_transmit_bytes_total{instance=~\"$node\",name!=\"\"}[5m]))",
-                      "instant": true,
-                      "legendFormat": "net"
-                    },
+                    "spec": {},
                     "version": "v0"
                   },
                   "refId": "A"
@@ -603,11 +875,12 @@
           }
         },
         "description": "",
-        "id": 5,
+        "id": 12,
         "links": [],
-        "title": "Tráfego de Rede dos Containers",
+        "title": "",
+        "transparent": true,
         "vizConfig": {
-          "group": "gapit-htmlgraphics-panel",
+          "group": "marcusolsson-dynamictext-panel",
           "kind": "VizConfig",
           "spec": {
             "fieldConfig": {
@@ -629,37 +902,98 @@
               "overrides": []
             },
             "options": {
-              "SVGBaseFix": true,
-              "add100Percentage": true,
-              "calcsMutation": "standard",
-              "centerAlignContent": true,
-              "codeData": "{}",
-              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.kpi{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;position:relative;overflow:hidden;cursor:default;transition:border-color .3s}.kpi:hover{border-color:#14B8A6}.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#14B8A6,#2dd4bf)}.icon-ring{width:38px;height:38px;background:rgba(20,184,166,0.12);border:1.5px solid rgba(20,184,166,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:8px;flex-shrink:0}.icon-ring svg{width:18px;height:18px;stroke:#14B8A6}.val{font-size:30px;font-weight:800;color:#F9FAFB;letter-spacing:-1px;line-height:1}.unit{font-size:11px;color:#6B7280;margin-top:2px;font-weight:500}.label{font-size:11px;color:#9CA3AF;margin-top:6px;font-weight:500;text-align:center}",
-              "dynamicData": false,
-              "dynamicFieldDisplayValues": false,
-              "dynamicHtmlGraphics": {
-                "dynamicData": true,
-                "dynamicFieldDisplayValues": false,
-                "dynamicProps": false
+              "afterRender": "",
+              "content": "",
+              "contentPartials": [],
+              "defaultContent": "<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.sec{height:100%;display:flex;align-items:center;gap:13px;padding:0 16px;background:linear-gradient(90deg,rgba(249,115,22,0.12),rgba(31,41,55,0) 55%);border-left:3px solid #F97316;border-radius:8px}.sico{width:30px;height:30px;border-radius:8px;background:rgba(249,115,22,0.14);border:1px solid rgba(249,115,22,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0}.sico svg{width:16px;height:16px;stroke:#F97316}.stt{font-size:14px;font-weight:700;color:#F9FAFB;letter-spacing:-0.3px;white-space:nowrap}.sln{flex:1;height:1px;background:linear-gradient(90deg,rgba(75,85,99,0.55),transparent)}.ssub{font-size:11px;color:#6B7280;font-weight:500;white-space:nowrap}</style><div class='sec'><div class='sico'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12.55a11 11 0 0 1 14.08 0'/><path d='M1.42 9a16 16 0 0 1 21.16 0'/><path d='M8.53 16.11a6 6 0 0 1 6.95 0'/><line x1='12' y1='20' x2='12.01' y2='20'/></svg></div><div class='stt'>Rede &amp; Disco por Container</div><div class='sln'></div><div class='ssub'>Throughput de rede e I/O de disco de cada container</div></div>",
+              "editor": {
+                "format": "auto",
+                "language": "markdown"
               },
-              "dynamicProps": false,
-              "html": "<div class='kpi'><div class='icon-ring'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12.55a11 11 0 0 1 14.08 0'/><path d='M1.42 9a16 16 0 0 1 21.16 0'/><path d='M8.53 16.11a6 6 0 0 1 6.95 0'/><line x1='12' y1='20' x2='12.01' y2='20'/></svg></div><div class='val' id='val'>--</div><div class='unit' id='unit'>throughput</div><div class='label'>Rede (RX + TX)</div></div>",
-              "onInit": "",
-              "onInitOnResize": false,
-              "onRender": "var val=0;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var v=f[1].values;val=Array.isArray(v)?v[v.length-1]:(v.get?v.get(v.length-1):0)||0;}}}catch(e){}var b=val||0;var n,u;if(b>=1048576){n=b/1048576;u='MB/s';}else if(b>=1024){n=b/1024;u='KB/s';}else{n=b;u='B/s';}var el=htmlNode.querySelector('#val');var un=htmlNode.querySelector('#unit');if(el)el.textContent=n.toFixed(n<10?2:1);if(un)un.textContent=u;",
-              "overflow": "visible",
-              "panelupdateOnMount": true,
-              "reduceOptions": {
-                "calcs": [
-                  "lastNotNull"
-                ]
-              },
-              "renderOnMount": true,
-              "rootCSS": ":host{overflow:hidden;display:block;}",
-              "useGrafanaScrollbar": false
+              "editors": [],
+              "externalScripts": [],
+              "externalStyles": [],
+              "helpers": "",
+              "renderMode": "everyRow",
+              "styles": "",
+              "wrap": false
             }
           },
-          "version": "2.2.3"
+          "version": "6.2.3"
+        }
+      }
+    },
+    "sec-top": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "group": "",
+                    "kind": "DataQuery",
+                    "spec": {},
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 9,
+        "links": [],
+        "title": "",
+        "transparent": true,
+        "vizConfig": {
+          "group": "marcusolsson-dynamictext-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "afterRender": "",
+              "content": "",
+              "contentPartials": [],
+              "defaultContent": "<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.sec{height:100%;display:flex;align-items:center;gap:13px;padding:0 16px;background:linear-gradient(90deg,rgba(249,115,22,0.12),rgba(31,41,55,0) 55%);border-left:3px solid #F97316;border-radius:8px}.sico{width:30px;height:30px;border-radius:8px;background:rgba(249,115,22,0.14);border:1px solid rgba(249,115,22,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0}.sico svg{width:16px;height:16px;stroke:#F97316}.stt{font-size:14px;font-weight:700;color:#F9FAFB;letter-spacing:-0.3px;white-space:nowrap}.sln{flex:1;height:1px;background:linear-gradient(90deg,rgba(75,85,99,0.55),transparent)}.ssub{font-size:11px;color:#6B7280;font-weight:500;white-space:nowrap}</style><div class='sec'><div class='sico'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='12' y1='20' x2='12' y2='10'/><line x1='18' y1='20' x2='18' y2='4'/><line x1='6' y1='20' x2='6' y2='16'/></svg></div><div class='stt'>Top Consumidores</div><div class='sln'></div><div class='ssub'>Containers que mais consomem CPU e mem&oacute;ria</div></div>",
+              "editor": {
+                "format": "auto",
+                "language": "markdown"
+              },
+              "editors": [],
+              "externalScripts": [],
+              "externalStyles": [],
+              "helpers": "",
+              "renderMode": "everyRow",
+              "styles": "",
+              "wrap": false
+            }
+          },
+          "version": "6.2.3"
         }
       }
     },
@@ -834,595 +1168,10 @@
               "overrides": []
             },
             "options": {
-              "legend": {
-                "calcs": [
-                  "mean",
-                  "max",
-                  "lastNotNull"
-                ],
-                "displayMode": "table",
-                "placement": "right",
-                "showLegend": true
+              "annotations": {
+                "clustering": -1,
+                "multiLane": false
               },
-              "tooltip": {
-                "hideZeros": false,
-                "mode": "multi",
-                "sort": "desc"
-              }
-            }
-          },
-          "version": "13.0.2"
-        }
-      }
-    },
-    "ts-ram": {
-      "kind": "Panel",
-      "spec": {
-        "data": {
-          "kind": "QueryGroup",
-          "spec": {
-            "queries": [
-              {
-                "kind": "PanelQuery",
-                "spec": {
-                  "hidden": false,
-                  "query": {
-                    "datasource": {
-                      "name": "bfnr96wiwms5cd"
-                    },
-                    "group": "prometheus",
-                    "kind": "DataQuery",
-                    "spec": {
-                      "expr": "sum(container_memory_working_set_bytes{instance=~\"$node\",name!=\"\"}) by (name)",
-                      "legendFormat": "{{name}}"
-                    },
-                    "version": "v0"
-                  },
-                  "refId": "A"
-                }
-              }
-            ],
-            "queryOptions": {},
-            "transformations": []
-          }
-        },
-        "description": "",
-        "id": 8,
-        "links": [],
-        "title": "Memória por Container",
-        "vizConfig": {
-          "group": "timeseries",
-          "kind": "VizConfig",
-          "spec": {
-            "fieldConfig": {
-              "defaults": {
-                "color": {
-                  "mode": "palette-classic"
-                },
-                "custom": {
-                  "axisBorderShow": false,
-                  "axisCenteredZero": false,
-                  "axisColorMode": "text",
-                  "axisLabel": "",
-                  "axisPlacement": "auto",
-                  "barAlignment": 0,
-                  "barWidthFactor": 0.6,
-                  "drawStyle": "line",
-                  "fillOpacity": 14,
-                  "gradientMode": "opacity",
-                  "hideFrom": {
-                    "legend": false,
-                    "tooltip": false,
-                    "viz": false
-                  },
-                  "insertNulls": false,
-                  "lineInterpolation": "smooth",
-                  "lineWidth": 2,
-                  "pointSize": 4,
-                  "scaleDistribution": {
-                    "type": "linear"
-                  },
-                  "showPoints": "never",
-                  "showValues": false,
-                  "spanNulls": true,
-                  "stacking": {
-                    "group": "A",
-                    "mode": "none"
-                  },
-                  "thresholdsStyle": {
-                    "mode": "off"
-                  }
-                },
-                "min": 0,
-                "thresholds": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": 0
-                    },
-                    {
-                      "color": "red",
-                      "value": 80
-                    }
-                  ]
-                },
-                "unit": "bytes"
-              },
-              "overrides": []
-            },
-            "options": {
-              "legend": {
-                "calcs": [
-                  "mean",
-                  "max",
-                  "lastNotNull"
-                ],
-                "displayMode": "table",
-                "placement": "right",
-                "showLegend": true
-              },
-              "tooltip": {
-                "hideZeros": false,
-                "mode": "multi",
-                "sort": "desc"
-              }
-            }
-          },
-          "version": "13.0.2"
-        }
-      }
-    },
-    "sec-top": {
-      "kind": "Panel",
-      "spec": {
-        "data": {
-          "kind": "QueryGroup",
-          "spec": {
-            "queries": [
-              {
-                "kind": "PanelQuery",
-                "spec": {
-                  "hidden": false,
-                  "query": {
-                    "group": "",
-                    "kind": "DataQuery",
-                    "spec": {},
-                    "version": "v0"
-                  },
-                  "refId": "A"
-                }
-              }
-            ],
-            "queryOptions": {},
-            "transformations": []
-          }
-        },
-        "description": "",
-        "id": 9,
-        "links": [],
-        "title": "",
-        "transparent": true,
-        "vizConfig": {
-          "group": "marcusolsson-dynamictext-panel",
-          "kind": "VizConfig",
-          "spec": {
-            "fieldConfig": {
-              "defaults": {
-                "thresholds": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": 0
-                    },
-                    {
-                      "color": "red",
-                      "value": 80
-                    }
-                  ]
-                }
-              },
-              "overrides": []
-            },
-            "options": {
-              "afterRender": "",
-              "content": "",
-              "contentPartials": [],
-              "defaultContent": "<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.sec{height:100%;display:flex;align-items:center;gap:13px;padding:0 16px;background:linear-gradient(90deg,rgba(249,115,22,0.12),rgba(31,41,55,0) 55%);border-left:3px solid #F97316;border-radius:8px}.sico{width:30px;height:30px;border-radius:8px;background:rgba(249,115,22,0.14);border:1px solid rgba(249,115,22,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0}.sico svg{width:16px;height:16px;stroke:#F97316}.stt{font-size:14px;font-weight:700;color:#F9FAFB;letter-spacing:-0.3px;white-space:nowrap}.sln{flex:1;height:1px;background:linear-gradient(90deg,rgba(75,85,99,0.55),transparent)}.ssub{font-size:11px;color:#6B7280;font-weight:500;white-space:nowrap}</style><div class='sec'><div class='sico'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='12' y1='20' x2='12' y2='10'/><line x1='18' y1='20' x2='18' y2='4'/><line x1='6' y1='20' x2='6' y2='16'/></svg></div><div class='stt'>Top Consumidores</div><div class='sln'></div><div class='ssub'>Containers que mais consomem CPU e mem&oacute;ria</div></div>",
-              "editor": {
-                "format": "auto",
-                "language": "markdown"
-              },
-              "editors": [],
-              "externalScripts": [],
-              "externalStyles": [],
-              "helpers": "",
-              "renderMode": "everyRow",
-              "styles": "",
-              "wrap": false
-            }
-          },
-          "version": "6.2.3"
-        }
-      }
-    },
-    "bg-cpu": {
-      "kind": "Panel",
-      "spec": {
-        "data": {
-          "kind": "QueryGroup",
-          "spec": {
-            "queries": [
-              {
-                "kind": "PanelQuery",
-                "spec": {
-                  "hidden": false,
-                  "query": {
-                    "datasource": {
-                      "name": "bfnr96wiwms5cd"
-                    },
-                    "group": "prometheus",
-                    "kind": "DataQuery",
-                    "spec": {
-                      "expr": "topk(10, sum(rate(container_cpu_usage_seconds_total{instance=~\"$node\",name!=\"\"}[5m])) by (name))",
-                      "instant": true,
-                      "legendFormat": "{{name}}"
-                    },
-                    "version": "v0"
-                  },
-                  "refId": "A"
-                }
-              }
-            ],
-            "queryOptions": {},
-            "transformations": []
-          }
-        },
-        "description": "",
-        "id": 10,
-        "links": [],
-        "title": "Top 10 - CPU (cores)",
-        "vizConfig": {
-          "group": "bargauge",
-          "kind": "VizConfig",
-          "spec": {
-            "fieldConfig": {
-              "defaults": {
-                "color": {
-                  "mode": "continuous-GrYlRd"
-                },
-                "decimals": 3,
-                "min": 0,
-                "thresholds": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": 0
-                    }
-                  ]
-                },
-                "unit": "short"
-              },
-              "overrides": []
-            },
-            "options": {
-              "displayMode": "lcd",
-              "legend": {
-                "calcs": [],
-                "displayMode": "list",
-                "placement": "bottom",
-                "showLegend": false
-              },
-              "maxVizHeight": 300,
-              "minVizHeight": 16,
-              "minVizWidth": 8,
-              "namePlacement": "left",
-              "orientation": "horizontal",
-              "reduceOptions": {
-                "calcs": [
-                  "lastNotNull"
-                ],
-                "fields": "",
-                "values": false
-              },
-              "showUnfilled": true,
-              "sizing": "auto",
-              "text": {
-                "titleSize": 11,
-                "valueSize": 13
-              },
-              "valueMode": "color"
-            }
-          },
-          "version": "13.0.2"
-        }
-      }
-    },
-    "bg-ram": {
-      "kind": "Panel",
-      "spec": {
-        "data": {
-          "kind": "QueryGroup",
-          "spec": {
-            "queries": [
-              {
-                "kind": "PanelQuery",
-                "spec": {
-                  "hidden": false,
-                  "query": {
-                    "datasource": {
-                      "name": "bfnr96wiwms5cd"
-                    },
-                    "group": "prometheus",
-                    "kind": "DataQuery",
-                    "spec": {
-                      "expr": "topk(10, sum(container_memory_working_set_bytes{instance=~\"$node\",name!=\"\"}) by (name))",
-                      "instant": true,
-                      "legendFormat": "{{name}}"
-                    },
-                    "version": "v0"
-                  },
-                  "refId": "A"
-                }
-              }
-            ],
-            "queryOptions": {},
-            "transformations": []
-          }
-        },
-        "description": "",
-        "id": 11,
-        "links": [],
-        "title": "Top 10 - Memória",
-        "vizConfig": {
-          "group": "bargauge",
-          "kind": "VizConfig",
-          "spec": {
-            "fieldConfig": {
-              "defaults": {
-                "color": {
-                  "mode": "continuous-GrYlRd"
-                },
-                "decimals": 0,
-                "min": 0,
-                "thresholds": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": 0
-                    }
-                  ]
-                },
-                "unit": "bytes"
-              },
-              "overrides": []
-            },
-            "options": {
-              "displayMode": "lcd",
-              "legend": {
-                "calcs": [],
-                "displayMode": "list",
-                "placement": "bottom",
-                "showLegend": false
-              },
-              "maxVizHeight": 300,
-              "minVizHeight": 16,
-              "minVizWidth": 8,
-              "namePlacement": "left",
-              "orientation": "horizontal",
-              "reduceOptions": {
-                "calcs": [
-                  "lastNotNull"
-                ],
-                "fields": "",
-                "values": false
-              },
-              "showUnfilled": true,
-              "sizing": "auto",
-              "text": {
-                "titleSize": 11,
-                "valueSize": 13
-              },
-              "valueMode": "color"
-            }
-          },
-          "version": "13.0.2"
-        }
-      }
-    },
-    "sec-netdisk": {
-      "kind": "Panel",
-      "spec": {
-        "data": {
-          "kind": "QueryGroup",
-          "spec": {
-            "queries": [
-              {
-                "kind": "PanelQuery",
-                "spec": {
-                  "hidden": false,
-                  "query": {
-                    "group": "",
-                    "kind": "DataQuery",
-                    "spec": {},
-                    "version": "v0"
-                  },
-                  "refId": "A"
-                }
-              }
-            ],
-            "queryOptions": {},
-            "transformations": []
-          }
-        },
-        "description": "",
-        "id": 12,
-        "links": [],
-        "title": "",
-        "transparent": true,
-        "vizConfig": {
-          "group": "marcusolsson-dynamictext-panel",
-          "kind": "VizConfig",
-          "spec": {
-            "fieldConfig": {
-              "defaults": {
-                "thresholds": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": 0
-                    },
-                    {
-                      "color": "red",
-                      "value": 80
-                    }
-                  ]
-                }
-              },
-              "overrides": []
-            },
-            "options": {
-              "afterRender": "",
-              "content": "",
-              "contentPartials": [],
-              "defaultContent": "<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.sec{height:100%;display:flex;align-items:center;gap:13px;padding:0 16px;background:linear-gradient(90deg,rgba(249,115,22,0.12),rgba(31,41,55,0) 55%);border-left:3px solid #F97316;border-radius:8px}.sico{width:30px;height:30px;border-radius:8px;background:rgba(249,115,22,0.14);border:1px solid rgba(249,115,22,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0}.sico svg{width:16px;height:16px;stroke:#F97316}.stt{font-size:14px;font-weight:700;color:#F9FAFB;letter-spacing:-0.3px;white-space:nowrap}.sln{flex:1;height:1px;background:linear-gradient(90deg,rgba(75,85,99,0.55),transparent)}.ssub{font-size:11px;color:#6B7280;font-weight:500;white-space:nowrap}</style><div class='sec'><div class='sico'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12.55a11 11 0 0 1 14.08 0'/><path d='M1.42 9a16 16 0 0 1 21.16 0'/><path d='M8.53 16.11a6 6 0 0 1 6.95 0'/><line x1='12' y1='20' x2='12.01' y2='20'/></svg></div><div class='stt'>Rede &amp; Disco por Container</div><div class='sln'></div><div class='ssub'>Throughput de rede e I/O de disco de cada container</div></div>",
-              "editor": {
-                "format": "auto",
-                "language": "markdown"
-              },
-              "editors": [],
-              "externalScripts": [],
-              "externalStyles": [],
-              "helpers": "",
-              "renderMode": "everyRow",
-              "styles": "",
-              "wrap": false
-            }
-          },
-          "version": "6.2.3"
-        }
-      }
-    },
-    "ts-net": {
-      "kind": "Panel",
-      "spec": {
-        "data": {
-          "kind": "QueryGroup",
-          "spec": {
-            "queries": [
-              {
-                "kind": "PanelQuery",
-                "spec": {
-                  "hidden": false,
-                  "query": {
-                    "datasource": {
-                      "name": "bfnr96wiwms5cd"
-                    },
-                    "group": "prometheus",
-                    "kind": "DataQuery",
-                    "spec": {
-                      "expr": "sum(rate(container_network_receive_bytes_total{instance=~\"$node\",name!=\"\"}[$__rate_interval])) by (name)",
-                      "legendFormat": "{{name}} ↓"
-                    },
-                    "version": "v0"
-                  },
-                  "refId": "A"
-                }
-              },
-              {
-                "kind": "PanelQuery",
-                "spec": {
-                  "hidden": false,
-                  "query": {
-                    "datasource": {
-                      "name": "bfnr96wiwms5cd"
-                    },
-                    "group": "prometheus",
-                    "kind": "DataQuery",
-                    "spec": {
-                      "expr": "sum(rate(container_network_transmit_bytes_total{instance=~\"$node\",name!=\"\"}[$__rate_interval])) by (name)",
-                      "legendFormat": "{{name}} ↑"
-                    },
-                    "version": "v0"
-                  },
-                  "refId": "B"
-                }
-              }
-            ],
-            "queryOptions": {},
-            "transformations": []
-          }
-        },
-        "description": "",
-        "id": 13,
-        "links": [],
-        "title": "Rede por Container",
-        "vizConfig": {
-          "group": "timeseries",
-          "kind": "VizConfig",
-          "spec": {
-            "fieldConfig": {
-              "defaults": {
-                "color": {
-                  "mode": "palette-classic"
-                },
-                "custom": {
-                  "axisBorderShow": false,
-                  "axisCenteredZero": false,
-                  "axisColorMode": "text",
-                  "axisLabel": "",
-                  "axisPlacement": "auto",
-                  "barAlignment": 0,
-                  "barWidthFactor": 0.6,
-                  "drawStyle": "line",
-                  "fillOpacity": 12,
-                  "gradientMode": "opacity",
-                  "hideFrom": {
-                    "legend": false,
-                    "tooltip": false,
-                    "viz": false
-                  },
-                  "insertNulls": false,
-                  "lineInterpolation": "smooth",
-                  "lineWidth": 2,
-                  "pointSize": 4,
-                  "scaleDistribution": {
-                    "type": "linear"
-                  },
-                  "showPoints": "never",
-                  "showValues": false,
-                  "spanNulls": true,
-                  "stacking": {
-                    "group": "A",
-                    "mode": "none"
-                  },
-                  "thresholdsStyle": {
-                    "mode": "off"
-                  }
-                },
-                "min": 0,
-                "thresholds": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": 0
-                    },
-                    {
-                      "color": "red",
-                      "value": 80
-                    }
-                  ]
-                },
-                "unit": "Bps"
-              },
-              "overrides": []
-            },
-            "options": {
               "legend": {
                 "calcs": [
                   "mean",
@@ -1560,6 +1309,273 @@
               "overrides": []
             },
             "options": {
+              "annotations": {
+                "clustering": -1,
+                "multiLane": false
+              },
+              "legend": {
+                "calcs": [
+                  "mean",
+                  "max",
+                  "lastNotNull"
+                ],
+                "displayMode": "table",
+                "placement": "right",
+                "showLegend": true
+              },
+              "tooltip": {
+                "hideZeros": false,
+                "mode": "multi",
+                "sort": "desc"
+              }
+            }
+          },
+          "version": "13.0.2"
+        }
+      }
+    },
+    "ts-net": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(rate(container_network_receive_bytes_total{instance=~\"$node\",name!=\"\"}[$__rate_interval])) by (name)",
+                      "legendFormat": "{{name}} ↓"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(rate(container_network_transmit_bytes_total{instance=~\"$node\",name!=\"\"}[$__rate_interval])) by (name)",
+                      "legendFormat": "{{name}} ↑"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "B"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 13,
+        "links": [],
+        "title": "Rede por Container",
+        "vizConfig": {
+          "group": "timeseries",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "custom": {
+                  "axisBorderShow": false,
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "barWidthFactor": 0.6,
+                  "drawStyle": "line",
+                  "fillOpacity": 12,
+                  "gradientMode": "opacity",
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  },
+                  "insertNulls": false,
+                  "lineInterpolation": "smooth",
+                  "lineWidth": 2,
+                  "pointSize": 4,
+                  "scaleDistribution": {
+                    "type": "linear"
+                  },
+                  "showPoints": "never",
+                  "showValues": false,
+                  "spanNulls": true,
+                  "stacking": {
+                    "group": "A",
+                    "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                    "mode": "off"
+                  }
+                },
+                "min": 0,
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                },
+                "unit": "Bps"
+              },
+              "overrides": []
+            },
+            "options": {
+              "annotations": {
+                "clustering": -1,
+                "multiLane": false
+              },
+              "legend": {
+                "calcs": [
+                  "mean",
+                  "max",
+                  "lastNotNull"
+                ],
+                "displayMode": "table",
+                "placement": "right",
+                "showLegend": true
+              },
+              "tooltip": {
+                "hideZeros": false,
+                "mode": "multi",
+                "sort": "desc"
+              }
+            }
+          },
+          "version": "13.0.2"
+        }
+      }
+    },
+    "ts-ram": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(container_memory_working_set_bytes{instance=~\"$node\",name!=\"\"}) by (name)",
+                      "legendFormat": "{{name}}"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 8,
+        "links": [],
+        "title": "Memória por Container",
+        "vizConfig": {
+          "group": "timeseries",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "custom": {
+                  "axisBorderShow": false,
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "barWidthFactor": 0.6,
+                  "drawStyle": "line",
+                  "fillOpacity": 14,
+                  "gradientMode": "opacity",
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  },
+                  "insertNulls": false,
+                  "lineInterpolation": "smooth",
+                  "lineWidth": 2,
+                  "pointSize": 4,
+                  "scaleDistribution": {
+                    "type": "linear"
+                  },
+                  "showPoints": "never",
+                  "showValues": false,
+                  "spanNulls": true,
+                  "stacking": {
+                    "group": "A",
+                    "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                    "mode": "off"
+                  }
+                },
+                "min": 0,
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                },
+                "unit": "bytes"
+              },
+              "overrides": []
+            },
+            "options": {
+              "annotations": {
+                "clustering": -1,
+                "multiLane": false
+              },
               "legend": {
                 "calcs": [
                   "mean",
@@ -1787,13 +1803,7 @@
   "links": [],
   "liveNow": false,
   "preload": false,
-  "tags": [
-    "lognet",
-    "containers",
-    "docker",
-    "cadvisor",
-    "infraestrutura"
-  ],
+  "tags": [],
   "timeSettings": {
     "autoRefresh": "10s",
     "autoRefreshIntervals": [
@@ -1814,15 +1824,15 @@
     "timezone": "browser",
     "to": "now"
   },
-  "title": "LogNet - Containers",
+  "title": "Docker - Containers",
   "variables": [
     {
       "kind": "QueryVariable",
       "spec": {
         "allowCustomValue": true,
         "current": {
-          "text": "",
-          "value": ""
+          "text": "45.187.224.248",
+          "value": "45.187.224.248"
         },
         "definition": "label_values(container_last_seen, instance)",
         "hide": "dontHide",

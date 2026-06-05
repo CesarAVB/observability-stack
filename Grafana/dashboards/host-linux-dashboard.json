@@ -24,6 +24,378 @@
   "description": "Dashboard de monitoramento do host Linux (node_exporter) - CPU, memória, disco, rede e load",
   "editable": true,
   "elements": {
+    "gauge-cpu": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "100 - (avg(rate(node_cpu_seconds_total{instance=~\"$node\",mode=\"idle\"}[5m])) * 100)",
+                      "instant": true,
+                      "legendFormat": "cpu"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 2,
+        "links": [],
+        "title": "CPU",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.ring-wrap{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;transition:border-color .3s}.ring-wrap:hover{border-color:#10B981}.ring-svg{width:100%;height:100%;max-width:230px;max-height:230px}.tick{stroke:#374151;stroke-width:1.5}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class='ring-wrap'><svg class='ring-svg' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><g id='ticks'></g><circle cx='100' cy='100' r='82' fill='none' stroke='#2b3648' stroke-width='6'/><circle id='arc' cx='100' cy='100' r='82' fill='none' stroke='#10B981' stroke-width='6' stroke-linecap='round' stroke-dasharray='515.2' stroke-dashoffset='515.2' transform='rotate(-90 100 100)'/><text id='val' x='86' y='102' text-anchor='middle' fill='#F9FAFB' font-size='34' font-weight='700' font-family='Inter'>--</text><text id='pct' x='126' y='102' text-anchor='middle' fill='#9CA3AF' font-size='15' font-weight='500' font-family='Inter'>%</text><text id='lbl' x='100' y='150' text-anchor='middle' fill='#6B7280' font-size='10' font-weight='700' letter-spacing='1.5' font-family='Inter'>CPU</text></svg></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "var val=0;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var v=f[1].values;val=Array.isArray(v)?v[v.length-1]:(v.get?v.get(v.length-1):0)||0;}}}catch(e){}var pct=Math.min(Math.max(val||0,0),100);var circ=515.2;var arc=htmlNode.querySelector('#arc');var el=htmlNode.querySelector('#val');var tk=htmlNode.querySelector('#ticks');var color=pct>=90?'#EF4444':pct>=75?'#F59E0B':'#10B981';if(tk&&!tk.childNodes.length){var ns='http://www.w3.org/2000/svg';for(var i=0;i<40;i++){var a=(i/40)*2*Math.PI-Math.PI/2;var x1=100+Math.cos(a)*94,y1=100+Math.sin(a)*94,x2=100+Math.cos(a)*(i%5===0?86:90),y2=100+Math.sin(a)*(i%5===0?86:90);var ln=document.createElementNS(ns,'line');ln.setAttribute('x1',x1.toFixed(1));ln.setAttribute('y1',y1.toFixed(1));ln.setAttribute('x2',x2.toFixed(1));ln.setAttribute('y2',y2.toFixed(1));ln.setAttribute('class','tick');tk.appendChild(ln);}}if(arc){arc.setAttribute('stroke-dashoffset',(circ-(circ*pct/100)).toFixed(1));arc.setAttribute('stroke',color);}if(el){el.textContent=Math.round(pct);el.setAttribute('fill',pct>=90?'#EF4444':'#F9FAFB');}var wrap=htmlNode.querySelector('.ring-wrap');if(wrap){wrap.style.borderColor=pct>=90?'rgba(239,68,68,0.6)':'#374151';}",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "gauge-disk": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "(1 - (node_filesystem_avail_bytes{instance=~\"$node\",mountpoint=\"/\",fstype!~\"tmpfs|overlay\"} / node_filesystem_size_bytes{instance=~\"$node\",mountpoint=\"/\",fstype!~\"tmpfs|overlay\"})) * 100",
+                      "instant": true,
+                      "legendFormat": "disk"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 5,
+        "links": [],
+        "title": "Disco Local (/)",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.ring-wrap{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;transition:border-color .3s}.ring-wrap:hover{border-color:#10B981}.ring-svg{width:100%;height:100%;max-width:230px;max-height:230px}.tick{stroke:#374151;stroke-width:1.5}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class='ring-wrap'><svg class='ring-svg' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><g id='ticks'></g><circle cx='100' cy='100' r='82' fill='none' stroke='#2b3648' stroke-width='6'/><circle id='arc' cx='100' cy='100' r='82' fill='none' stroke='#10B981' stroke-width='6' stroke-linecap='round' stroke-dasharray='515.2' stroke-dashoffset='515.2' transform='rotate(-90 100 100)'/><text id='val' x='86' y='102' text-anchor='middle' fill='#F9FAFB' font-size='34' font-weight='700' font-family='Inter'>--</text><text id='pct' x='126' y='102' text-anchor='middle' fill='#9CA3AF' font-size='15' font-weight='500' font-family='Inter'>%</text><text id='lbl' x='100' y='150' text-anchor='middle' fill='#6B7280' font-size='10' font-weight='700' letter-spacing='1.5' font-family='Inter'>DISCO LOCAL</text></svg></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "var val=0;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var v=f[1].values;val=Array.isArray(v)?v[v.length-1]:(v.get?v.get(v.length-1):0)||0;}}}catch(e){}var pct=Math.min(Math.max(val||0,0),100);var circ=515.2;var arc=htmlNode.querySelector('#arc');var el=htmlNode.querySelector('#val');var tk=htmlNode.querySelector('#ticks');var color=pct>=90?'#EF4444':pct>=75?'#F59E0B':'#10B981';if(tk&&!tk.childNodes.length){var ns='http://www.w3.org/2000/svg';for(var i=0;i<40;i++){var a=(i/40)*2*Math.PI-Math.PI/2;var x1=100+Math.cos(a)*94,y1=100+Math.sin(a)*94,x2=100+Math.cos(a)*(i%5===0?86:90),y2=100+Math.sin(a)*(i%5===0?86:90);var ln=document.createElementNS(ns,'line');ln.setAttribute('x1',x1.toFixed(1));ln.setAttribute('y1',y1.toFixed(1));ln.setAttribute('x2',x2.toFixed(1));ln.setAttribute('y2',y2.toFixed(1));ln.setAttribute('class','tick');tk.appendChild(ln);}}if(arc){arc.setAttribute('stroke-dashoffset',(circ-(circ*pct/100)).toFixed(1));arc.setAttribute('stroke',color);}if(el){el.textContent=Math.round(pct);el.setAttribute('fill',pct>=90?'#EF4444':'#F9FAFB');}var wrap=htmlNode.querySelector('.ring-wrap');if(wrap){wrap.style.borderColor=pct>=90?'rgba(239,68,68,0.6)':'#374151';}",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "gauge-mem": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "(1 - (node_memory_MemAvailable_bytes{instance=~\"$node\"} / node_memory_MemTotal_bytes{instance=~\"$node\"})) * 100",
+                      "instant": true,
+                      "legendFormat": "mem"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 3,
+        "links": [],
+        "title": "Memória Real (RAM)",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.ring-wrap{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;transition:border-color .3s}.ring-wrap:hover{border-color:#10B981}.ring-svg{width:100%;height:100%;max-width:230px;max-height:230px}.tick{stroke:#374151;stroke-width:1.5}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class='ring-wrap'><svg class='ring-svg' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><g id='ticks'></g><circle cx='100' cy='100' r='82' fill='none' stroke='#2b3648' stroke-width='6'/><circle id='arc' cx='100' cy='100' r='82' fill='none' stroke='#10B981' stroke-width='6' stroke-linecap='round' stroke-dasharray='515.2' stroke-dashoffset='515.2' transform='rotate(-90 100 100)'/><text id='val' x='86' y='102' text-anchor='middle' fill='#F9FAFB' font-size='34' font-weight='700' font-family='Inter'>--</text><text id='pct' x='126' y='102' text-anchor='middle' fill='#9CA3AF' font-size='15' font-weight='500' font-family='Inter'>%</text><text id='lbl' x='100' y='150' text-anchor='middle' fill='#6B7280' font-size='10' font-weight='700' letter-spacing='1.5' font-family='Inter'>MEMÓRIA REAL</text></svg></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "var val=0;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var v=f[1].values;val=Array.isArray(v)?v[v.length-1]:(v.get?v.get(v.length-1):0)||0;}}}catch(e){}var pct=Math.min(Math.max(val||0,0),100);var circ=515.2;var arc=htmlNode.querySelector('#arc');var el=htmlNode.querySelector('#val');var tk=htmlNode.querySelector('#ticks');var color=pct>=90?'#EF4444':pct>=75?'#F59E0B':'#10B981';if(tk&&!tk.childNodes.length){var ns='http://www.w3.org/2000/svg';for(var i=0;i<40;i++){var a=(i/40)*2*Math.PI-Math.PI/2;var x1=100+Math.cos(a)*94,y1=100+Math.sin(a)*94,x2=100+Math.cos(a)*(i%5===0?86:90),y2=100+Math.sin(a)*(i%5===0?86:90);var ln=document.createElementNS(ns,'line');ln.setAttribute('x1',x1.toFixed(1));ln.setAttribute('y1',y1.toFixed(1));ln.setAttribute('x2',x2.toFixed(1));ln.setAttribute('y2',y2.toFixed(1));ln.setAttribute('class','tick');tk.appendChild(ln);}}if(arc){arc.setAttribute('stroke-dashoffset',(circ-(circ*pct/100)).toFixed(1));arc.setAttribute('stroke',color);}if(el){el.textContent=Math.round(pct);el.setAttribute('fill',pct>=90?'#EF4444':'#F9FAFB');}var wrap=htmlNode.querySelector('.ring-wrap');if(wrap){wrap.style.borderColor=pct>=90?'rgba(239,68,68,0.6)':'#374151';}",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "gauge-swap": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "(1 - ((node_memory_SwapFree_bytes{instance=~\"$node\"} + node_memory_MemFree_bytes{instance=~\"$node\"}) / (node_memory_SwapTotal_bytes{instance=~\"$node\"} + node_memory_MemTotal_bytes{instance=~\"$node\"}))) * 100",
+                      "instant": true,
+                      "legendFormat": "virt"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 4,
+        "links": [],
+        "title": "Memória Virtual",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.ring-wrap{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;transition:border-color .3s}.ring-wrap:hover{border-color:#10B981}.ring-svg{width:100%;height:100%;max-width:230px;max-height:230px}.tick{stroke:#374151;stroke-width:1.5}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class='ring-wrap'><svg class='ring-svg' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><g id='ticks'></g><circle cx='100' cy='100' r='82' fill='none' stroke='#2b3648' stroke-width='6'/><circle id='arc' cx='100' cy='100' r='82' fill='none' stroke='#10B981' stroke-width='6' stroke-linecap='round' stroke-dasharray='515.2' stroke-dashoffset='515.2' transform='rotate(-90 100 100)'/><text id='val' x='86' y='102' text-anchor='middle' fill='#F9FAFB' font-size='34' font-weight='700' font-family='Inter'>--</text><text id='pct' x='126' y='102' text-anchor='middle' fill='#9CA3AF' font-size='15' font-weight='500' font-family='Inter'>%</text><text id='lbl' x='100' y='150' text-anchor='middle' fill='#6B7280' font-size='10' font-weight='700' letter-spacing='1.5' font-family='Inter'>MEMÓRIA VIRTUAL</text></svg></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "var val=0;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var v=f[1].values;val=Array.isArray(v)?v[v.length-1]:(v.get?v.get(v.length-1):0)||0;}}}catch(e){}var pct=Math.min(Math.max(val||0,0),100);var circ=515.2;var arc=htmlNode.querySelector('#arc');var el=htmlNode.querySelector('#val');var tk=htmlNode.querySelector('#ticks');var color=pct>=90?'#EF4444':pct>=75?'#F59E0B':'#10B981';if(tk&&!tk.childNodes.length){var ns='http://www.w3.org/2000/svg';for(var i=0;i<40;i++){var a=(i/40)*2*Math.PI-Math.PI/2;var x1=100+Math.cos(a)*94,y1=100+Math.sin(a)*94,x2=100+Math.cos(a)*(i%5===0?86:90),y2=100+Math.sin(a)*(i%5===0?86:90);var ln=document.createElementNS(ns,'line');ln.setAttribute('x1',x1.toFixed(1));ln.setAttribute('y1',y1.toFixed(1));ln.setAttribute('x2',x2.toFixed(1));ln.setAttribute('y2',y2.toFixed(1));ln.setAttribute('class','tick');tk.appendChild(ln);}}if(arc){arc.setAttribute('stroke-dashoffset',(circ-(circ*pct/100)).toFixed(1));arc.setAttribute('stroke',color);}if(el){el.textContent=Math.round(pct);el.setAttribute('fill',pct>=90?'#EF4444':'#F9FAFB');}var wrap=htmlNode.querySelector('.ring-wrap');if(wrap){wrap.style.borderColor=pct>=90?'rgba(239,68,68,0.6)':'#374151';}",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
     "host-header": {
       "kind": "Panel",
       "spec": {
@@ -80,7 +452,7 @@
               "afterRender": "",
               "content": "",
               "contentPartials": [],
-              "defaultContent": "<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.hdr{background:linear-gradient(135deg,#0d1520 0%,#141B27 40%,#1a2233 100%);border-bottom:2px solid #F97316;height:100%;display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:relative;overflow:hidden}.hdr::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(249,115,22,0.07) 0%,transparent 60%);pointer-events:none}.logo-wrap{display:flex;align-items:center;gap:14px}.logo-box{width:46px;height:46px;background:linear-gradient(135deg,#F97316,#ea580c);border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px rgba(249,115,22,0.4),0 4px 12px rgba(0,0,0,0.3);flex-shrink:0}.logo-box svg{width:24px;height:24px}.ht{font-size:19px;font-weight:800;color:#F9FAFB;letter-spacing:-0.5px;line-height:1}.hs{font-size:12px;color:#6B7280;margin-top:3px;font-weight:400}.hdr-r{display:flex;align-items:center;gap:14px}.pills{display:flex;gap:6px}.pill{background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.22);color:#F97316;font-size:10.5px;font-weight:600;padding:4px 10px;border-radius:6px;letter-spacing:0.3px}.env{background:linear-gradient(135deg,#F97316,#dc6011);color:#fff;font-size:10px;font-weight:800;padding:5px 14px;border-radius:20px;letter-spacing:1.2px;text-transform:uppercase;box-shadow:0 0 12px rgba(249,115,22,0.3)}.live{display:flex;align-items:center;gap:7px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);padding:5px 12px;border-radius:8px}.live-dot{width:7px;height:7px;background:#10B981;border-radius:50%;animation:blink 2s ease-in-out infinite;box-shadow:0 0 8px rgba(16,185,129,0.6)}.live-lbl{font-size:11px;font-weight:600;color:#10B981}@keyframes blink{0%,100%{opacity:1}50%{opacity:0.4}}</style><div class='hdr'><div class='logo-wrap'><div class='logo-box'><svg viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><rect x='2' y='2' width='20' height='8' rx='2'/><rect x='2' y='14' width='20' height='8' rx='2'/><line x1='6' y1='6' x2='6.01' y2='6'/><line x1='6' y1='18' x2='6.01' y2='18'/></svg></div><div><div class='ht'>LogNet - Host Linux</div><div class='hs'>Monitoramento de Infraestrutura &mdash; node_exporter</div></div></div><div class='hdr-r'><div class='pills'><span class='pill'>Prometheus</span><span class='pill'>node_exporter</span></div><span class='env'>Produ&ccedil;&atilde;o</span><div class='live'><div class='live-dot'></div><span class='live-lbl'>Ao vivo</span></div></div></div>",
+              "defaultContent": "<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.hdr{background:linear-gradient(135deg,#0d1520 0%,#141B27 40%,#1a2233 100%);border-bottom:2px solid #F97316;height:100%;display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:relative;overflow:hidden}.hdr::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(249,115,22,0.07) 0%,transparent 60%);pointer-events:none}.logo-wrap{display:flex;align-items:center;gap:14px}.logo-box{width:46px;height:46px;background:linear-gradient(135deg,#F97316,#ea580c);border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px rgba(249,115,22,0.4),0 4px 12px rgba(0,0,0,0.3);flex-shrink:0}.logo-box svg{width:24px;height:24px}.ht{font-size:19px;font-weight:800;color:#F9FAFB;letter-spacing:-0.5px;line-height:1}.hs{font-size:12px;color:#6B7280;margin-top:3px;font-weight:400}.hdr-r{display:flex;align-items:center;gap:14px}.pills{display:flex;gap:6px}.pill{background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.22);color:#F97316;font-size:10.5px;font-weight:600;padding:4px 10px;border-radius:6px;letter-spacing:0.3px}.env{background:linear-gradient(135deg,#F97316,#dc6011);color:#fff;font-size:10px;font-weight:800;padding:5px 14px;border-radius:20px;letter-spacing:1.2px;text-transform:uppercase;box-shadow:0 0 12px rgba(249,115,22,0.3)}.live{display:flex;align-items:center;gap:7px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);padding:5px 12px;border-radius:8px}.live-dot{width:7px;height:7px;background:#10B981;border-radius:50%;animation:blink 2s ease-in-out infinite;box-shadow:0 0 8px rgba(16,185,129,0.6)}.live-lbl{font-size:11px;font-weight:600;color:#10B981}@keyframes blink{0%,100%{opacity:1}50%{opacity:0.4}}</style><div class='hdr'><div class='logo-wrap'><div class='logo-box'><svg viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><rect x='2' y='2' width='20' height='8' rx='2'/><rect x='2' y='14' width='20' height='8' rx='2'/><line x1='6' y1='6' x2='6.01' y2='6'/><line x1='6' y1='18' x2='6.01' y2='18'/></svg></div><div><div class='ht'>Server - Linux</div><div class='hs'>Monitoramento de Infraestrutura - node_exporter</div></div></div><div class='hdr-r'><div class='pills'><span class='pill'>Prometheus</span><span class='pill'>node_exporter</span></div><span class='env'>Produ&ccedil;&atilde;o</span><div class='live'><div class='live-dot'></div><span class='live-lbl'>Ao vivo</span></div></div></div>",
               "editor": {
                 "format": "auto",
                 "language": "markdown"
@@ -98,7 +470,7 @@
         }
       }
     },
-    "sys-info": {
+    "panel-13": {
       "kind": "Panel",
       "spec": {
         "data": {
@@ -491,378 +863,6 @@
         }
       }
     },
-    "gauge-cpu": {
-      "kind": "Panel",
-      "spec": {
-        "data": {
-          "kind": "QueryGroup",
-          "spec": {
-            "queries": [
-              {
-                "kind": "PanelQuery",
-                "spec": {
-                  "hidden": false,
-                  "query": {
-                    "datasource": {
-                      "name": "bfnr96wiwms5cd"
-                    },
-                    "group": "prometheus",
-                    "kind": "DataQuery",
-                    "spec": {
-                      "expr": "100 - (avg(rate(node_cpu_seconds_total{instance=~\"$node\",mode=\"idle\"}[5m])) * 100)",
-                      "instant": true,
-                      "legendFormat": "cpu"
-                    },
-                    "version": "v0"
-                  },
-                  "refId": "A"
-                }
-              }
-            ],
-            "queryOptions": {},
-            "transformations": []
-          }
-        },
-        "description": "",
-        "id": 2,
-        "links": [],
-        "title": "CPU",
-        "vizConfig": {
-          "group": "gapit-htmlgraphics-panel",
-          "kind": "VizConfig",
-          "spec": {
-            "fieldConfig": {
-              "defaults": {
-                "thresholds": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": 0
-                    },
-                    {
-                      "color": "red",
-                      "value": 80
-                    }
-                  ]
-                }
-              },
-              "overrides": []
-            },
-            "options": {
-              "SVGBaseFix": true,
-              "add100Percentage": true,
-              "calcsMutation": "standard",
-              "centerAlignContent": true,
-              "codeData": "{}",
-              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.ring-wrap{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;transition:border-color .3s}.ring-wrap:hover{border-color:#10B981}.ring-svg{width:100%;height:100%;max-width:230px;max-height:230px}.tick{stroke:#374151;stroke-width:1.5}",
-              "dynamicData": false,
-              "dynamicFieldDisplayValues": false,
-              "dynamicHtmlGraphics": {
-                "dynamicData": true,
-                "dynamicFieldDisplayValues": false,
-                "dynamicProps": false
-              },
-              "dynamicProps": false,
-              "html": "<div class='ring-wrap'><svg class='ring-svg' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><g id='ticks'></g><circle cx='100' cy='100' r='82' fill='none' stroke='#2b3648' stroke-width='6'/><circle id='arc' cx='100' cy='100' r='82' fill='none' stroke='#10B981' stroke-width='6' stroke-linecap='round' stroke-dasharray='515.2' stroke-dashoffset='515.2' transform='rotate(-90 100 100)'/><text id='val' x='86' y='102' text-anchor='middle' fill='#F9FAFB' font-size='34' font-weight='700' font-family='Inter'>--</text><text id='pct' x='126' y='102' text-anchor='middle' fill='#9CA3AF' font-size='15' font-weight='500' font-family='Inter'>%</text><text id='lbl' x='100' y='150' text-anchor='middle' fill='#6B7280' font-size='10' font-weight='700' letter-spacing='1.5' font-family='Inter'>CPU</text></svg></div>",
-              "onInit": "",
-              "onInitOnResize": false,
-              "onRender": "var val=0;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var v=f[1].values;val=Array.isArray(v)?v[v.length-1]:(v.get?v.get(v.length-1):0)||0;}}}catch(e){}var pct=Math.min(Math.max(val||0,0),100);var circ=515.2;var arc=htmlNode.querySelector('#arc');var el=htmlNode.querySelector('#val');var tk=htmlNode.querySelector('#ticks');var color=pct>=90?'#EF4444':pct>=75?'#F59E0B':'#10B981';if(tk&&!tk.childNodes.length){var ns='http://www.w3.org/2000/svg';for(var i=0;i<40;i++){var a=(i/40)*2*Math.PI-Math.PI/2;var x1=100+Math.cos(a)*94,y1=100+Math.sin(a)*94,x2=100+Math.cos(a)*(i%5===0?86:90),y2=100+Math.sin(a)*(i%5===0?86:90);var ln=document.createElementNS(ns,'line');ln.setAttribute('x1',x1.toFixed(1));ln.setAttribute('y1',y1.toFixed(1));ln.setAttribute('x2',x2.toFixed(1));ln.setAttribute('y2',y2.toFixed(1));ln.setAttribute('class','tick');tk.appendChild(ln);}}if(arc){arc.setAttribute('stroke-dashoffset',(circ-(circ*pct/100)).toFixed(1));arc.setAttribute('stroke',color);}if(el){el.textContent=Math.round(pct);el.setAttribute('fill',pct>=90?'#EF4444':'#F9FAFB');}var wrap=htmlNode.querySelector('.ring-wrap');if(wrap){wrap.style.borderColor=pct>=90?'rgba(239,68,68,0.6)':'#374151';}",
-              "overflow": "visible",
-              "panelupdateOnMount": true,
-              "reduceOptions": {
-                "calcs": [
-                  "lastNotNull"
-                ]
-              },
-              "renderOnMount": true,
-              "rootCSS": ":host{overflow:hidden;display:block;}",
-              "useGrafanaScrollbar": false
-            }
-          },
-          "version": "2.2.3"
-        }
-      }
-    },
-    "gauge-mem": {
-      "kind": "Panel",
-      "spec": {
-        "data": {
-          "kind": "QueryGroup",
-          "spec": {
-            "queries": [
-              {
-                "kind": "PanelQuery",
-                "spec": {
-                  "hidden": false,
-                  "query": {
-                    "datasource": {
-                      "name": "bfnr96wiwms5cd"
-                    },
-                    "group": "prometheus",
-                    "kind": "DataQuery",
-                    "spec": {
-                      "expr": "(1 - (node_memory_MemAvailable_bytes{instance=~\"$node\"} / node_memory_MemTotal_bytes{instance=~\"$node\"})) * 100",
-                      "instant": true,
-                      "legendFormat": "mem"
-                    },
-                    "version": "v0"
-                  },
-                  "refId": "A"
-                }
-              }
-            ],
-            "queryOptions": {},
-            "transformations": []
-          }
-        },
-        "description": "",
-        "id": 3,
-        "links": [],
-        "title": "Memória Real (RAM)",
-        "vizConfig": {
-          "group": "gapit-htmlgraphics-panel",
-          "kind": "VizConfig",
-          "spec": {
-            "fieldConfig": {
-              "defaults": {
-                "thresholds": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": 0
-                    },
-                    {
-                      "color": "red",
-                      "value": 80
-                    }
-                  ]
-                }
-              },
-              "overrides": []
-            },
-            "options": {
-              "SVGBaseFix": true,
-              "add100Percentage": true,
-              "calcsMutation": "standard",
-              "centerAlignContent": true,
-              "codeData": "{}",
-              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.ring-wrap{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;transition:border-color .3s}.ring-wrap:hover{border-color:#10B981}.ring-svg{width:100%;height:100%;max-width:230px;max-height:230px}.tick{stroke:#374151;stroke-width:1.5}",
-              "dynamicData": false,
-              "dynamicFieldDisplayValues": false,
-              "dynamicHtmlGraphics": {
-                "dynamicData": true,
-                "dynamicFieldDisplayValues": false,
-                "dynamicProps": false
-              },
-              "dynamicProps": false,
-              "html": "<div class='ring-wrap'><svg class='ring-svg' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><g id='ticks'></g><circle cx='100' cy='100' r='82' fill='none' stroke='#2b3648' stroke-width='6'/><circle id='arc' cx='100' cy='100' r='82' fill='none' stroke='#10B981' stroke-width='6' stroke-linecap='round' stroke-dasharray='515.2' stroke-dashoffset='515.2' transform='rotate(-90 100 100)'/><text id='val' x='86' y='102' text-anchor='middle' fill='#F9FAFB' font-size='34' font-weight='700' font-family='Inter'>--</text><text id='pct' x='126' y='102' text-anchor='middle' fill='#9CA3AF' font-size='15' font-weight='500' font-family='Inter'>%</text><text id='lbl' x='100' y='150' text-anchor='middle' fill='#6B7280' font-size='10' font-weight='700' letter-spacing='1.5' font-family='Inter'>MEMÓRIA REAL</text></svg></div>",
-              "onInit": "",
-              "onInitOnResize": false,
-              "onRender": "var val=0;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var v=f[1].values;val=Array.isArray(v)?v[v.length-1]:(v.get?v.get(v.length-1):0)||0;}}}catch(e){}var pct=Math.min(Math.max(val||0,0),100);var circ=515.2;var arc=htmlNode.querySelector('#arc');var el=htmlNode.querySelector('#val');var tk=htmlNode.querySelector('#ticks');var color=pct>=90?'#EF4444':pct>=75?'#F59E0B':'#10B981';if(tk&&!tk.childNodes.length){var ns='http://www.w3.org/2000/svg';for(var i=0;i<40;i++){var a=(i/40)*2*Math.PI-Math.PI/2;var x1=100+Math.cos(a)*94,y1=100+Math.sin(a)*94,x2=100+Math.cos(a)*(i%5===0?86:90),y2=100+Math.sin(a)*(i%5===0?86:90);var ln=document.createElementNS(ns,'line');ln.setAttribute('x1',x1.toFixed(1));ln.setAttribute('y1',y1.toFixed(1));ln.setAttribute('x2',x2.toFixed(1));ln.setAttribute('y2',y2.toFixed(1));ln.setAttribute('class','tick');tk.appendChild(ln);}}if(arc){arc.setAttribute('stroke-dashoffset',(circ-(circ*pct/100)).toFixed(1));arc.setAttribute('stroke',color);}if(el){el.textContent=Math.round(pct);el.setAttribute('fill',pct>=90?'#EF4444':'#F9FAFB');}var wrap=htmlNode.querySelector('.ring-wrap');if(wrap){wrap.style.borderColor=pct>=90?'rgba(239,68,68,0.6)':'#374151';}",
-              "overflow": "visible",
-              "panelupdateOnMount": true,
-              "reduceOptions": {
-                "calcs": [
-                  "lastNotNull"
-                ]
-              },
-              "renderOnMount": true,
-              "rootCSS": ":host{overflow:hidden;display:block;}",
-              "useGrafanaScrollbar": false
-            }
-          },
-          "version": "2.2.3"
-        }
-      }
-    },
-    "gauge-swap": {
-      "kind": "Panel",
-      "spec": {
-        "data": {
-          "kind": "QueryGroup",
-          "spec": {
-            "queries": [
-              {
-                "kind": "PanelQuery",
-                "spec": {
-                  "hidden": false,
-                  "query": {
-                    "datasource": {
-                      "name": "bfnr96wiwms5cd"
-                    },
-                    "group": "prometheus",
-                    "kind": "DataQuery",
-                    "spec": {
-                      "expr": "(1 - ((node_memory_SwapFree_bytes{instance=~\"$node\"} + node_memory_MemFree_bytes{instance=~\"$node\"}) / (node_memory_SwapTotal_bytes{instance=~\"$node\"} + node_memory_MemTotal_bytes{instance=~\"$node\"}))) * 100",
-                      "instant": true,
-                      "legendFormat": "virt"
-                    },
-                    "version": "v0"
-                  },
-                  "refId": "A"
-                }
-              }
-            ],
-            "queryOptions": {},
-            "transformations": []
-          }
-        },
-        "description": "",
-        "id": 4,
-        "links": [],
-        "title": "Memória Virtual",
-        "vizConfig": {
-          "group": "gapit-htmlgraphics-panel",
-          "kind": "VizConfig",
-          "spec": {
-            "fieldConfig": {
-              "defaults": {
-                "thresholds": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": 0
-                    },
-                    {
-                      "color": "red",
-                      "value": 80
-                    }
-                  ]
-                }
-              },
-              "overrides": []
-            },
-            "options": {
-              "SVGBaseFix": true,
-              "add100Percentage": true,
-              "calcsMutation": "standard",
-              "centerAlignContent": true,
-              "codeData": "{}",
-              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.ring-wrap{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;transition:border-color .3s}.ring-wrap:hover{border-color:#10B981}.ring-svg{width:100%;height:100%;max-width:230px;max-height:230px}.tick{stroke:#374151;stroke-width:1.5}",
-              "dynamicData": false,
-              "dynamicFieldDisplayValues": false,
-              "dynamicHtmlGraphics": {
-                "dynamicData": true,
-                "dynamicFieldDisplayValues": false,
-                "dynamicProps": false
-              },
-              "dynamicProps": false,
-              "html": "<div class='ring-wrap'><svg class='ring-svg' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><g id='ticks'></g><circle cx='100' cy='100' r='82' fill='none' stroke='#2b3648' stroke-width='6'/><circle id='arc' cx='100' cy='100' r='82' fill='none' stroke='#10B981' stroke-width='6' stroke-linecap='round' stroke-dasharray='515.2' stroke-dashoffset='515.2' transform='rotate(-90 100 100)'/><text id='val' x='86' y='102' text-anchor='middle' fill='#F9FAFB' font-size='34' font-weight='700' font-family='Inter'>--</text><text id='pct' x='126' y='102' text-anchor='middle' fill='#9CA3AF' font-size='15' font-weight='500' font-family='Inter'>%</text><text id='lbl' x='100' y='150' text-anchor='middle' fill='#6B7280' font-size='10' font-weight='700' letter-spacing='1.5' font-family='Inter'>MEMÓRIA VIRTUAL</text></svg></div>",
-              "onInit": "",
-              "onInitOnResize": false,
-              "onRender": "var val=0;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var v=f[1].values;val=Array.isArray(v)?v[v.length-1]:(v.get?v.get(v.length-1):0)||0;}}}catch(e){}var pct=Math.min(Math.max(val||0,0),100);var circ=515.2;var arc=htmlNode.querySelector('#arc');var el=htmlNode.querySelector('#val');var tk=htmlNode.querySelector('#ticks');var color=pct>=90?'#EF4444':pct>=75?'#F59E0B':'#10B981';if(tk&&!tk.childNodes.length){var ns='http://www.w3.org/2000/svg';for(var i=0;i<40;i++){var a=(i/40)*2*Math.PI-Math.PI/2;var x1=100+Math.cos(a)*94,y1=100+Math.sin(a)*94,x2=100+Math.cos(a)*(i%5===0?86:90),y2=100+Math.sin(a)*(i%5===0?86:90);var ln=document.createElementNS(ns,'line');ln.setAttribute('x1',x1.toFixed(1));ln.setAttribute('y1',y1.toFixed(1));ln.setAttribute('x2',x2.toFixed(1));ln.setAttribute('y2',y2.toFixed(1));ln.setAttribute('class','tick');tk.appendChild(ln);}}if(arc){arc.setAttribute('stroke-dashoffset',(circ-(circ*pct/100)).toFixed(1));arc.setAttribute('stroke',color);}if(el){el.textContent=Math.round(pct);el.setAttribute('fill',pct>=90?'#EF4444':'#F9FAFB');}var wrap=htmlNode.querySelector('.ring-wrap');if(wrap){wrap.style.borderColor=pct>=90?'rgba(239,68,68,0.6)':'#374151';}",
-              "overflow": "visible",
-              "panelupdateOnMount": true,
-              "reduceOptions": {
-                "calcs": [
-                  "lastNotNull"
-                ]
-              },
-              "renderOnMount": true,
-              "rootCSS": ":host{overflow:hidden;display:block;}",
-              "useGrafanaScrollbar": false
-            }
-          },
-          "version": "2.2.3"
-        }
-      }
-    },
-    "gauge-disk": {
-      "kind": "Panel",
-      "spec": {
-        "data": {
-          "kind": "QueryGroup",
-          "spec": {
-            "queries": [
-              {
-                "kind": "PanelQuery",
-                "spec": {
-                  "hidden": false,
-                  "query": {
-                    "datasource": {
-                      "name": "bfnr96wiwms5cd"
-                    },
-                    "group": "prometheus",
-                    "kind": "DataQuery",
-                    "spec": {
-                      "expr": "(1 - (node_filesystem_avail_bytes{instance=~\"$node\",mountpoint=\"/\",fstype!~\"tmpfs|overlay\"} / node_filesystem_size_bytes{instance=~\"$node\",mountpoint=\"/\",fstype!~\"tmpfs|overlay\"})) * 100",
-                      "instant": true,
-                      "legendFormat": "disk"
-                    },
-                    "version": "v0"
-                  },
-                  "refId": "A"
-                }
-              }
-            ],
-            "queryOptions": {},
-            "transformations": []
-          }
-        },
-        "description": "",
-        "id": 5,
-        "links": [],
-        "title": "Disco Local (/)",
-        "vizConfig": {
-          "group": "gapit-htmlgraphics-panel",
-          "kind": "VizConfig",
-          "spec": {
-            "fieldConfig": {
-              "defaults": {
-                "thresholds": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": 0
-                    },
-                    {
-                      "color": "red",
-                      "value": 80
-                    }
-                  ]
-                }
-              },
-              "overrides": []
-            },
-            "options": {
-              "SVGBaseFix": true,
-              "add100Percentage": true,
-              "calcsMutation": "standard",
-              "centerAlignContent": true,
-              "codeData": "{}",
-              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.ring-wrap{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;transition:border-color .3s}.ring-wrap:hover{border-color:#10B981}.ring-svg{width:100%;height:100%;max-width:230px;max-height:230px}.tick{stroke:#374151;stroke-width:1.5}",
-              "dynamicData": false,
-              "dynamicFieldDisplayValues": false,
-              "dynamicHtmlGraphics": {
-                "dynamicData": true,
-                "dynamicFieldDisplayValues": false,
-                "dynamicProps": false
-              },
-              "dynamicProps": false,
-              "html": "<div class='ring-wrap'><svg class='ring-svg' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><g id='ticks'></g><circle cx='100' cy='100' r='82' fill='none' stroke='#2b3648' stroke-width='6'/><circle id='arc' cx='100' cy='100' r='82' fill='none' stroke='#10B981' stroke-width='6' stroke-linecap='round' stroke-dasharray='515.2' stroke-dashoffset='515.2' transform='rotate(-90 100 100)'/><text id='val' x='86' y='102' text-anchor='middle' fill='#F9FAFB' font-size='34' font-weight='700' font-family='Inter'>--</text><text id='pct' x='126' y='102' text-anchor='middle' fill='#9CA3AF' font-size='15' font-weight='500' font-family='Inter'>%</text><text id='lbl' x='100' y='150' text-anchor='middle' fill='#6B7280' font-size='10' font-weight='700' letter-spacing='1.5' font-family='Inter'>DISCO LOCAL</text></svg></div>",
-              "onInit": "",
-              "onInitOnResize": false,
-              "onRender": "var val=0;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var v=f[1].values;val=Array.isArray(v)?v[v.length-1]:(v.get?v.get(v.length-1):0)||0;}}}catch(e){}var pct=Math.min(Math.max(val||0,0),100);var circ=515.2;var arc=htmlNode.querySelector('#arc');var el=htmlNode.querySelector('#val');var tk=htmlNode.querySelector('#ticks');var color=pct>=90?'#EF4444':pct>=75?'#F59E0B':'#10B981';if(tk&&!tk.childNodes.length){var ns='http://www.w3.org/2000/svg';for(var i=0;i<40;i++){var a=(i/40)*2*Math.PI-Math.PI/2;var x1=100+Math.cos(a)*94,y1=100+Math.sin(a)*94,x2=100+Math.cos(a)*(i%5===0?86:90),y2=100+Math.sin(a)*(i%5===0?86:90);var ln=document.createElementNS(ns,'line');ln.setAttribute('x1',x1.toFixed(1));ln.setAttribute('y1',y1.toFixed(1));ln.setAttribute('x2',x2.toFixed(1));ln.setAttribute('y2',y2.toFixed(1));ln.setAttribute('class','tick');tk.appendChild(ln);}}if(arc){arc.setAttribute('stroke-dashoffset',(circ-(circ*pct/100)).toFixed(1));arc.setAttribute('stroke',color);}if(el){el.textContent=Math.round(pct);el.setAttribute('fill',pct>=90?'#EF4444':'#F9FAFB');}var wrap=htmlNode.querySelector('.ring-wrap');if(wrap){wrap.style.borderColor=pct>=90?'rgba(239,68,68,0.6)':'#374151';}",
-              "overflow": "visible",
-              "panelupdateOnMount": true,
-              "reduceOptions": {
-                "calcs": [
-                  "lastNotNull"
-                ]
-              },
-              "renderOnMount": true,
-              "rootCSS": ":host{overflow:hidden;display:block;}",
-              "useGrafanaScrollbar": false
-            }
-          },
-          "version": "2.2.3"
-        }
-      }
-    },
     "sec-cpu-mem": {
       "kind": "Panel",
       "spec": {
@@ -920,6 +920,80 @@
               "content": "",
               "contentPartials": [],
               "defaultContent": "<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.sec{height:100%;display:flex;align-items:center;gap:13px;padding:0 16px;background:linear-gradient(90deg,rgba(249,115,22,0.12),rgba(31,41,55,0) 55%);border-left:3px solid #F97316;border-radius:8px}.sico{width:30px;height:30px;border-radius:8px;background:rgba(249,115,22,0.14);border:1px solid rgba(249,115,22,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0}.sico svg{width:16px;height:16px;stroke:#F97316}.stt{font-size:14px;font-weight:700;color:#F9FAFB;letter-spacing:-0.3px;white-space:nowrap}.sln{flex:1;height:1px;background:linear-gradient(90deg,rgba(75,85,99,0.55),transparent)}.ssub{font-size:11px;color:#6B7280;font-weight:500;white-space:nowrap}</style><div class='sec'><div class='sico'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='4' y='4' width='16' height='16' rx='2'/><rect x='9' y='9' width='6' height='6'/><line x1='9' y1='1' x2='9' y2='4'/><line x1='15' y1='1' x2='15' y2='4'/><line x1='9' y1='20' x2='9' y2='23'/><line x1='15' y1='20' x2='15' y2='23'/><line x1='20' y1='9' x2='23' y2='9'/><line x1='20' y1='14' x2='23' y2='14'/><line x1='1' y1='9' x2='4' y2='9'/><line x1='1' y1='14' x2='4' y2='14'/></svg></div><div class='stt'>CPU &amp; Mem&oacute;ria</div><div class='sln'></div><div class='ssub'>Utiliza&ccedil;&atilde;o ao longo do tempo e load average</div></div>",
+              "editor": {
+                "format": "auto",
+                "language": "markdown"
+              },
+              "editors": [],
+              "externalScripts": [],
+              "externalStyles": [],
+              "helpers": "",
+              "renderMode": "everyRow",
+              "styles": "",
+              "wrap": false
+            }
+          },
+          "version": "6.2.3"
+        }
+      }
+    },
+    "sec-disk-net": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "group": "",
+                    "kind": "DataQuery",
+                    "spec": {},
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 10,
+        "links": [],
+        "title": "",
+        "transparent": true,
+        "vizConfig": {
+          "group": "marcusolsson-dynamictext-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "afterRender": "",
+              "content": "",
+              "contentPartials": [],
+              "defaultContent": "<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.sec{height:100%;display:flex;align-items:center;gap:13px;padding:0 16px;background:linear-gradient(90deg,rgba(249,115,22,0.12),rgba(31,41,55,0) 55%);border-left:3px solid #F97316;border-radius:8px}.sico{width:30px;height:30px;border-radius:8px;background:rgba(249,115,22,0.14);border:1px solid rgba(249,115,22,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0}.sico svg{width:16px;height:16px;stroke:#F97316}.stt{font-size:14px;font-weight:700;color:#F9FAFB;letter-spacing:-0.3px;white-space:nowrap}.sln{flex:1;height:1px;background:linear-gradient(90deg,rgba(75,85,99,0.55),transparent)}.ssub{font-size:11px;color:#6B7280;font-weight:500;white-space:nowrap}</style><div class='sec'><div class='sico'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><ellipse cx='12' cy='5' rx='9' ry='3'/><path d='M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5'/><path d='M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3'/></svg></div><div class='stt'>Disco &amp; Rede</div><div class='sln'></div><div class='ssub'>I/O de disco e tr&aacute;fego de rede por interface</div></div>",
               "editor": {
                 "format": "auto",
                 "language": "markdown"
@@ -1051,6 +1125,10 @@
               ]
             },
             "options": {
+              "annotations": {
+                "clustering": -1,
+                "multiLane": false
+              },
               "legend": {
                 "calcs": [
                   "mean",
@@ -1072,7 +1150,7 @@
         }
       }
     },
-    "ts-mem": {
+    "ts-diskio": {
       "kind": "Panel",
       "spec": {
         "data": {
@@ -1090,8 +1168,8 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "node_memory_MemTotal_bytes{instance=~\"$node\"}",
-                      "legendFormat": "Total"
+                      "expr": "sum(rate(node_disk_read_bytes_total{instance=~\"$node\"}[$__rate_interval]))",
+                      "legendFormat": "Leitura"
                     },
                     "version": "v0"
                   },
@@ -1109,8 +1187,8 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "node_memory_MemTotal_bytes{instance=~\"$node\"} - node_memory_MemAvailable_bytes{instance=~\"$node\"}",
-                      "legendFormat": "Em uso"
+                      "expr": "sum(rate(node_disk_written_bytes_total{instance=~\"$node\"}[$__rate_interval]))",
+                      "legendFormat": "Escrita"
                     },
                     "version": "v0"
                   },
@@ -1123,9 +1201,9 @@
           }
         },
         "description": "",
-        "id": 8,
+        "id": 11,
         "links": [],
-        "title": "Memória (bytes)",
+        "title": "Disco I/O",
         "vizConfig": {
           "group": "timeseries",
           "kind": "VizConfig",
@@ -1183,19 +1261,19 @@
                     }
                   ]
                 },
-                "unit": "bytes"
+                "unit": "Bps"
               },
               "overrides": [
                 {
                   "matcher": {
                     "id": "byName",
-                    "options": "Em uso"
+                    "options": "Leitura"
                   },
                   "properties": [
                     {
                       "id": "color",
                       "value": {
-                        "fixedColor": "#10B981",
+                        "fixedColor": "#3B82F6",
                         "mode": "fixed"
                       }
                     }
@@ -1204,28 +1282,14 @@
                 {
                   "matcher": {
                     "id": "byName",
-                    "options": "Total"
+                    "options": "Escrita"
                   },
                   "properties": [
                     {
                       "id": "color",
                       "value": {
-                        "fixedColor": "#6B7280",
+                        "fixedColor": "#F97316",
                         "mode": "fixed"
-                      }
-                    },
-                    {
-                      "id": "custom.fillOpacity",
-                      "value": 0
-                    },
-                    {
-                      "id": "custom.lineStyle",
-                      "value": {
-                        "dash": [
-                          8,
-                          4
-                        ],
-                        "fill": "dash"
                       }
                     }
                   ]
@@ -1233,6 +1297,10 @@
               ]
             },
             "options": {
+              "annotations": {
+                "clustering": -1,
+                "multiLane": false
+              },
               "legend": {
                 "calcs": [
                   "mean",
@@ -1419,6 +1487,10 @@
               ]
             },
             "options": {
+              "annotations": {
+                "clustering": -1,
+                "multiLane": false
+              },
               "legend": {
                 "calcs": [
                   "mean",
@@ -1440,81 +1512,7 @@
         }
       }
     },
-    "sec-disk-net": {
-      "kind": "Panel",
-      "spec": {
-        "data": {
-          "kind": "QueryGroup",
-          "spec": {
-            "queries": [
-              {
-                "kind": "PanelQuery",
-                "spec": {
-                  "hidden": false,
-                  "query": {
-                    "group": "",
-                    "kind": "DataQuery",
-                    "spec": {},
-                    "version": "v0"
-                  },
-                  "refId": "A"
-                }
-              }
-            ],
-            "queryOptions": {},
-            "transformations": []
-          }
-        },
-        "description": "",
-        "id": 10,
-        "links": [],
-        "title": "",
-        "transparent": true,
-        "vizConfig": {
-          "group": "marcusolsson-dynamictext-panel",
-          "kind": "VizConfig",
-          "spec": {
-            "fieldConfig": {
-              "defaults": {
-                "thresholds": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": 0
-                    },
-                    {
-                      "color": "red",
-                      "value": 80
-                    }
-                  ]
-                }
-              },
-              "overrides": []
-            },
-            "options": {
-              "afterRender": "",
-              "content": "",
-              "contentPartials": [],
-              "defaultContent": "<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.sec{height:100%;display:flex;align-items:center;gap:13px;padding:0 16px;background:linear-gradient(90deg,rgba(249,115,22,0.12),rgba(31,41,55,0) 55%);border-left:3px solid #F97316;border-radius:8px}.sico{width:30px;height:30px;border-radius:8px;background:rgba(249,115,22,0.14);border:1px solid rgba(249,115,22,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0}.sico svg{width:16px;height:16px;stroke:#F97316}.stt{font-size:14px;font-weight:700;color:#F9FAFB;letter-spacing:-0.3px;white-space:nowrap}.sln{flex:1;height:1px;background:linear-gradient(90deg,rgba(75,85,99,0.55),transparent)}.ssub{font-size:11px;color:#6B7280;font-weight:500;white-space:nowrap}</style><div class='sec'><div class='sico'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><ellipse cx='12' cy='5' rx='9' ry='3'/><path d='M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5'/><path d='M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3'/></svg></div><div class='stt'>Disco &amp; Rede</div><div class='sln'></div><div class='ssub'>I/O de disco e tr&aacute;fego de rede por interface</div></div>",
-              "editor": {
-                "format": "auto",
-                "language": "markdown"
-              },
-              "editors": [],
-              "externalScripts": [],
-              "externalStyles": [],
-              "helpers": "",
-              "renderMode": "everyRow",
-              "styles": "",
-              "wrap": false
-            }
-          },
-          "version": "6.2.3"
-        }
-      }
-    },
-    "ts-diskio": {
+    "ts-mem": {
       "kind": "Panel",
       "spec": {
         "data": {
@@ -1532,8 +1530,8 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "sum(rate(node_disk_read_bytes_total{instance=~\"$node\"}[$__rate_interval]))",
-                      "legendFormat": "Leitura"
+                      "expr": "node_memory_MemTotal_bytes{instance=~\"$node\"}",
+                      "legendFormat": "Total"
                     },
                     "version": "v0"
                   },
@@ -1551,8 +1549,8 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "sum(rate(node_disk_written_bytes_total{instance=~\"$node\"}[$__rate_interval]))",
-                      "legendFormat": "Escrita"
+                      "expr": "node_memory_MemTotal_bytes{instance=~\"$node\"} - node_memory_MemAvailable_bytes{instance=~\"$node\"}",
+                      "legendFormat": "Em uso"
                     },
                     "version": "v0"
                   },
@@ -1565,9 +1563,9 @@
           }
         },
         "description": "",
-        "id": 11,
+        "id": 8,
         "links": [],
-        "title": "Disco I/O",
+        "title": "Memória (bytes)",
         "vizConfig": {
           "group": "timeseries",
           "kind": "VizConfig",
@@ -1625,19 +1623,19 @@
                     }
                   ]
                 },
-                "unit": "Bps"
+                "unit": "bytes"
               },
               "overrides": [
                 {
                   "matcher": {
                     "id": "byName",
-                    "options": "Leitura"
+                    "options": "Em uso"
                   },
                   "properties": [
                     {
                       "id": "color",
                       "value": {
-                        "fixedColor": "#3B82F6",
+                        "fixedColor": "#10B981",
                         "mode": "fixed"
                       }
                     }
@@ -1646,14 +1644,28 @@
                 {
                   "matcher": {
                     "id": "byName",
-                    "options": "Escrita"
+                    "options": "Total"
                   },
                   "properties": [
                     {
                       "id": "color",
                       "value": {
-                        "fixedColor": "#F97316",
+                        "fixedColor": "#6B7280",
                         "mode": "fixed"
+                      }
+                    },
+                    {
+                      "id": "custom.fillOpacity",
+                      "value": 0
+                    },
+                    {
+                      "id": "custom.lineStyle",
+                      "value": {
+                        "dash": [
+                          8,
+                          4
+                        ],
+                        "fill": "dash"
                       }
                     }
                   ]
@@ -1661,6 +1673,10 @@
               ]
             },
             "options": {
+              "annotations": {
+                "clustering": -1,
+                "multiLane": false
+              },
               "legend": {
                 "calcs": [
                   "mean",
@@ -1829,6 +1845,10 @@
               ]
             },
             "options": {
+              "annotations": {
+                "clustering": -1,
+                "multiLane": false
+              },
               "legend": {
                 "calcs": [
                   "mean",
@@ -1873,7 +1893,7 @@
           "spec": {
             "element": {
               "kind": "ElementReference",
-              "name": "sys-info"
+              "name": "panel-13"
             },
             "height": 7,
             "width": 24,
@@ -2030,13 +2050,7 @@
   "links": [],
   "liveNow": false,
   "preload": false,
-  "tags": [
-    "lognet",
-    "host",
-    "linux",
-    "node-exporter",
-    "infraestrutura"
-  ],
+  "tags": [],
   "timeSettings": {
     "autoRefresh": "10s",
     "autoRefreshIntervals": [
@@ -2052,20 +2066,20 @@
       "1d"
     ],
     "fiscalYearStartMonth": 0,
-    "from": "now-1h",
+    "from": "now-5m",
     "hideTimepicker": false,
     "timezone": "browser",
     "to": "now"
   },
-  "title": "LogNet - Host Linux",
+  "title": "Server - Linux",
   "variables": [
     {
       "kind": "QueryVariable",
       "spec": {
         "allowCustomValue": true,
         "current": {
-          "text": "",
-          "value": ""
+          "text": "45.187.224.251",
+          "value": "45.187.224.251"
         },
         "definition": "label_values(node_uname_info, instance)",
         "hide": "dontHide",
