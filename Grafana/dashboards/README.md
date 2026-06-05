@@ -76,7 +76,7 @@ Os dashboards de host e containers usam apenas painéis nativos (Time Series, Ba
 | Latência P95 | **HTML Graphics** | `histogram_quantile(0.95, ...)` × 1000 ms |
 | Heap JVM | **HTML Graphics** | `jvm_memory_used_bytes / jvm_memory_max_bytes` |
 | Mapa de Topologia | **HTML Graphics** | `up{application="$app_name"}` |
-| Logs Recentes | **Loki (Logs)** | `{app="lognet-crm"} \| pattern ...` |
+| Logs Recentes | **Loki (Logs)** | `{app="$app_name"} \| pattern ...` |
 | HTTP req/s por Status | Time Series | `rate(...) by (status)` |
 | Gauge Taxa de Erro | **HTML Graphics** | idem painel de Taxa de Erro |
 | Top Endpoints | **Bar Gauge** | `sum(increase(http_server_requests_seconds_count[$__range])) by (uri)` |
@@ -92,9 +92,9 @@ Os dashboards de host e containers usam apenas painéis nativos (Time Series, Ba
 
 ### Variável de Template
 
-O dashboard expõe a variável `$app_name`, populada via `label_values(http_server_requests_seconds_count, application)` e filtrada pelo regex `lognet.*`. Use o seletor **Aplicação** no topo para escolher o serviço.
+O dashboard expõe a variável `$app_name`, populada via `label_values(http_server_requests_seconds_count, application)` e filtrada pelo regex `lognet.*`. Use o seletor **Aplicação** no topo para escolher o serviço — os painéis Prometheus **e** o painel de logs Loki (`{app="$app_name"}`) acompanham a seleção.
 
-> Para reaproveitar com outra aplicação, ajuste o regex da variável `app_name` (atualmente `lognet.*`) e a query Loki do painel de logs (atualmente fixa em `{app="lognet-crm"}`).
+> Isso pressupõe que o label `app` no Loki use o mesmo valor que o label `application` no Prometheus (convenção do `logback-spring.xml`). Para listar outras aplicações no seletor, ajuste o regex da variável `app_name` (atualmente `lognet.*`).
 
 ### Personalização
 
