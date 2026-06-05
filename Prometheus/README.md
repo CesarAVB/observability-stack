@@ -63,7 +63,7 @@ scrape_configs:
 
 ### Primeiro deploy
 
-Antes de subir a stack, o Docker Config precisa existir — a stack referencia `prometheus_config` pelo nome e falhará se ele não estiver criado.
+Antes de subir a stack, o Docker Config precisa existir - a stack referencia `prometheus_config` pelo nome e falhará se ele não estiver criado.
 
 Acesse o servidor via SSH, crie o diretório, edite o `prometheus_config.yml` e registre o config:
 
@@ -79,7 +79,7 @@ O Prometheus estará disponível em: `http://<IP-do-host>:9090`
 
 ### Atualizar a configuração
 
-Docker Configs são imutáveis — para alterar o `prometheus_config.yml` de uma stack já em execução:
+Docker Configs são imutáveis - para alterar o `prometheus_config.yml` de uma stack já em execução:
 
 ```bash
 vim /opt/docker/prometheus/prometheus_config.yml
@@ -111,7 +111,7 @@ ufw allow from 45.187.224.0/22 to any port 9090
 ufw deny 9090
 ```
 
-> A flag `--web.enable-lifecycle` permite recarregar a configuração via API (`POST /-/reload`) — restrinja o acesso a essa rota pelo mesmo motivo.
+> A flag `--web.enable-lifecycle` permite recarregar a configuração via API (`POST /-/reload`) - restrinja o acesso a essa rota pelo mesmo motivo.
 
 ## Contato
 
