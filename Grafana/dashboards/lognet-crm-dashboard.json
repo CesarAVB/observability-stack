@@ -1,0 +1,2485 @@
+{
+  "annotations": [
+    {
+      "kind": "AnnotationQuery",
+      "spec": {
+        "builtIn": true,
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "query": {
+          "datasource": {
+            "name": "-- Grafana --"
+          },
+          "group": "grafana",
+          "kind": "DataQuery",
+          "spec": {},
+          "version": "v0"
+        }
+      }
+    }
+  ],
+  "cursorSync": "Crosshair",
+  "description": "Dashboard de observabilidade do LogNet CRM - métricas JVM, HTTP, logs e saúde dos serviços",
+  "editable": true,
+  "elements": {
+    "panel-1": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "group": "",
+                    "kind": "DataQuery",
+                    "spec": {},
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 1,
+        "links": [],
+        "title": "",
+        "transparent": true,
+        "vizConfig": {
+          "group": "marcusolsson-dynamictext-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "afterRender": "",
+              "content": "",
+              "contentPartials": [],
+              "defaultContent": "<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.hdr{background:linear-gradient(135deg,#0d1520 0%,#141B27 40%,#1a2233 100%);border-bottom:2px solid #F97316;height:100%;display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:relative;overflow:hidden}.hdr::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(249,115,22,0.07) 0%,transparent 60%);pointer-events:none}.logo-wrap{display:flex;align-items:center;gap:14px}.logo-box{width:46px;height:46px;background:linear-gradient(135deg,#F97316,#ea580c);border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px rgba(249,115,22,0.4),0 4px 12px rgba(0,0,0,0.3);flex-shrink:0}.logo-box svg{width:24px;height:24px}.ht{font-size:19px;font-weight:800;color:#F9FAFB;letter-spacing:-0.5px;line-height:1}.hs{font-size:12px;color:#6B7280;margin-top:3px;font-weight:400}.hdr-r{display:flex;align-items:center;gap:14px}.pills{display:flex;gap:6px}.pill{background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.22);color:#F97316;font-size:10.5px;font-weight:600;padding:4px 10px;border-radius:6px;letter-spacing:0.3px}.env{background:linear-gradient(135deg,#F97316,#dc6011);color:#fff;font-size:10px;font-weight:800;padding:5px 14px;border-radius:20px;letter-spacing:1.2px;text-transform:uppercase;box-shadow:0 0 12px rgba(249,115,22,0.3)}.live{display:flex;align-items:center;gap:7px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);padding:5px 12px;border-radius:8px}.live-dot{width:7px;height:7px;background:#10B981;border-radius:50%;animation:blink 2s ease-in-out infinite;box-shadow:0 0 8px rgba(16,185,129,0.6)}.live-lbl{font-size:11px;font-weight:600;color:#10B981}@keyframes blink{0%,100%{opacity:1}50%{opacity:0.4}}</style><div class='hdr'><div class='logo-wrap'><div class='logo-box'><svg viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='22 12 18 12 15 21 9 3 6 12 2 12'/></svg></div><div><div class='ht'>LogNet CRM</div><div class='hs'>Painel de Observabilidade &mdash; Monitoramento em Tempo Real</div></div></div><div class='hdr-r'><div class='pills'><span class='pill'>Prometheus</span><span class='pill'>Loki</span><span class='pill'>Tempo</span></div><span class='env'>Produ&ccedil;&atilde;o</span><div class='live'><div class='live-dot'></div><span class='live-lbl'>Ao vivo</span></div></div></div>",
+              "editor": {
+                "format": "auto",
+                "language": "markdown"
+              },
+              "editors": [],
+              "externalScripts": [],
+              "externalStyles": [],
+              "helpers": "",
+              "renderMode": "everyRow",
+              "styles": "",
+              "wrap": false
+            }
+          },
+          "version": "6.2.3"
+        }
+      }
+    },
+    "panel-10": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "cfo52u38mplogd"
+                    },
+                    "group": "loki",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "direction": "backward",
+                      "editorMode": "code",
+                      "expr": "{app=\"lognet-crm\"} \r\n  | pattern `[<_>] [<thread>] correlationId=<correlationId> traceId=<traceId> spanId=<spanId> <type> <logger> - <msg>` \r\n  | line_format \"{{.type}}\\ttraceId={{.traceId}}\\tcorr={{.correlationId}}\\t{{.msg}}\"\r\n  |= \"$log_keyword\"",
+                      "maxLines": 200,
+                      "queryType": "range"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 10,
+        "links": [],
+        "title": "Logs - Todas as Entradas",
+        "vizConfig": {
+          "group": "logs",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {},
+              "overrides": []
+            },
+            "options": {
+              "dedupStrategy": "none",
+              "displayedFields": [],
+              "enableInfiniteScrolling": false,
+              "enableLogDetails": true,
+              "prettifyLogMessage": false,
+              "showCommonLabels": false,
+              "showControls": false,
+              "showFieldSelector": false,
+              "showLabels": false,
+              "showLevel": true,
+              "showTime": true,
+              "sortOrder": "Descending",
+              "timestampResolution": "ms",
+              "unwrappedColumns": false,
+              "wrapLogMessage": true
+            }
+          },
+          "version": "13.0.2"
+        }
+      }
+    },
+    "panel-11": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(rate(http_server_requests_seconds_sum{application=\"$app_name\",uri!~\"/actuator.*\"}[5m])) by (uri) / sum(rate(http_server_requests_seconds_count{application=\"$app_name\",uri!~\"/actuator.*\"}[5m])) by (uri) * 1000",
+                      "legendFormat": "{{uri}}"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 11,
+        "links": [],
+        "title": "Duração Média por Endpoint",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": false,
+              "codeData": "{}",
+              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.wrap{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;flex-direction:column;padding:16px;overflow:hidden;position:relative}.wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#F97316,#fb923c);border-radius:14px 14px 0 0;pointer-events:none}.leg-row{display:flex;gap:10px;margin-bottom:10px;padding-top:4px;flex-shrink:0;flex-wrap:wrap}.leg{display:flex;align-items:center;gap:5px;font-size:10px;color:#6B7280}.leg-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}#bars-ct{flex:1;display:flex;flex-direction:column;gap:6px;overflow-y:auto;min-height:0}.bar-row{display:flex;align-items:center;gap:8px;flex-shrink:0}.bar-lbl{font-size:10.5px;color:#9CA3AF;width:130px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right}.bar-wrap{flex:1;height:20px;background:#1a2233;border-radius:5px;overflow:hidden}.bar-fill{height:100%;border-radius:5px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;min-width:36px;transition:width .5s ease}.bar-val{font-size:10px;font-weight:700;color:#fff;white-space:nowrap;letter-spacing:-0.3px}.empty{color:#6B7280;font-size:12px;text-align:center;padding-top:24px}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class='wrap'><div class='leg-row'><div class='leg'><div class='leg-dot' style='background:#10B981'></div><span>&lt;100ms</span></div><div class='leg'><div class='leg-dot' style='background:#F59E0B'></div><span>100–300ms</span></div><div class='leg'><div class='leg-dot' style='background:#F97316'></div><span>300ms–1s</span></div><div class='leg'><div class='leg-dot' style='background:#EF4444'></div><span>&gt;1s</span></div></div><div id='bars-ct'><div class='empty'>Aguardando dados...</div></div></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "var ct=htmlNode.querySelector('#bars-ct');if(!ct)return;try{var series=data&&data.series;if(!series||!series.length){ct.innerHTML=\"<div class='empty'>Sem dados disponíveis</div>\";return;}var pts=[];series.forEach(function(s){var name=s.name||'';if(!name&&s.fields){for(var i=0;i<s.fields.length;i++){var f=s.fields[i];if(f.labels){name=f.labels.uri||f.labels.handler||f.labels.endpoint||(Object.values(f.labels)[0]||'');if(name)break;}}}if(!name)name='?';var vf=null;if(s.fields){for(var j=0;j<s.fields.length;j++){if(s.fields[j].type==='number'){vf=s.fields[j];break;}}}if(!vf)return;var vs=vf.values;var v=Array.isArray(vs)?vs[vs.length-1]:(vs&&vs.get?vs.get(vs.length-1):0)||0;pts.push({name:name,val:v||0});});if(!pts.length){ct.innerHTML=\"<div class='empty'>Sem dados disponíveis</div>\";return;}pts.sort(function(a,b){return b.val-a.val;});var maxV=pts[0].val||1;var html='';pts.forEach(function(p){var pct=Math.min((p.val/maxV)*100,100);var color=p.val>=1000?'#EF4444':p.val>=300?'#F97316':p.val>=100?'#F59E0B':'#10B981';var short=p.name.replace(/.*\\/api\\/v\\d+/,'').replace(/\\{[^}]+\\}/g,'{id}')||p.name;if(short.length>28)short=short.substring(0,25)+'...';html+=\"<div class='bar-row'><div class='bar-lbl' title='\"+p.name+\"'>\"+short+\"</div><div class='bar-wrap'><div class='bar-fill' style='width:\"+pct.toFixed(1)+\"%;background:\"+color+\"'><span class='bar-val'>\"+Math.round(p.val)+\"ms</span></div></div></div>\";});ct.innerHTML=html;}catch(e){ct.innerHTML=\"<div class='empty'>Erro: \"+e.message+\"</div>\";}",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": true
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-12": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sort_desc(sum(increase(http_server_requests_seconds_count{application=\"$app_name\"}[$__range])) by (uri))",
+                      "instant": true,
+                      "legendFormat": "{{uri}}"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 12,
+        "links": [],
+        "title": "Total de Requisições por Endpoint",
+        "vizConfig": {
+          "group": "bargauge",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "decimals": 0,
+                "min": 0,
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                },
+                "unit": "short"
+              },
+              "overrides": []
+            },
+            "options": {
+              "displayMode": "lcd",
+              "legend": {
+                "calcs": [],
+                "displayMode": "list",
+                "placement": "bottom",
+                "showLegend": false
+              },
+              "maxVizHeight": 300,
+              "minVizHeight": 16,
+              "minVizWidth": 8,
+              "namePlacement": "left",
+              "orientation": "horizontal",
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "showUnfilled": true,
+              "sizing": "auto",
+              "text": {
+                "titleSize": 11,
+                "valueSize": 13
+              },
+              "valueMode": "color"
+            }
+          },
+          "version": "13.0.2"
+        }
+      }
+    },
+    "panel-13": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(hikaricp_connections_active{application=\"$app_name\"})",
+                      "instant": true,
+                      "legendFormat": "active"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(hikaricp_connections_max{application=\"$app_name\"})",
+                      "instant": true,
+                      "legendFormat": "max"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "B"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(hikaricp_connections_idle{application=\"$app_name\"})",
+                      "instant": true,
+                      "legendFormat": "idle"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "C"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(hikaricp_connections{application=\"$app_name\"})",
+                      "instant": true,
+                      "legendFormat": "total"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "D"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(max_over_time(hikaricp_connections_active{application=\"$app_name\"}[$__range]))",
+                      "instant": true,
+                      "legendFormat": "peak"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "E"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(hikaricp_connections_pending{application=\"$app_name\"})",
+                      "instant": true,
+                      "legendFormat": "pending"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "F"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 13,
+        "links": [],
+        "title": "Conexões ao Database",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.kpi{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;position:relative;overflow:hidden;cursor:default;transition:border-color .3s}.kpi:hover{border-color:#06B6D4}.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#06B6D4,#22d3ee)}.kpi::after{content:'';position:absolute;bottom:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,rgba(6,182,212,0.07),transparent 70%);pointer-events:none}.icon-ring{width:38px;height:38px;background:rgba(6,182,212,0.1);border:1.5px solid rgba(6,182,212,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:8px;flex-shrink:0}.icon-ring svg{width:18px;height:18px;stroke:#06B6D4}.val{font-size:26px;font-weight:800;letter-spacing:-1px;line-height:1}.unit{font-size:10px;color:#6B7280;margin-top:2px;font-weight:500}.stats{display:flex;gap:6px;margin-top:8px;width:100%;justify-content:center}.st{display:flex;flex-direction:column;align-items:center;gap:1px;min-width:40px}.st-v{font-size:14px;font-weight:700;color:#F9FAFB;line-height:1}.st-l{font-size:8.5px;color:#6B7280;font-weight:600;text-transform:uppercase;letter-spacing:0.3px}.prog-track{width:100%;height:5px;background:#374151;border-radius:3px;margin-top:8px;overflow:hidden}.prog-fill{height:100%;border-radius:3px;transition:width .6s ease}.badge{margin-top:6px;font-size:10px;font-weight:600;padding:2px 10px;border-radius:20px;flex-shrink:0}.ok{background:rgba(16,185,129,0.12);color:#10B981;border:1px solid rgba(16,185,129,0.25)}.warn{background:rgba(245,158,11,0.12);color:#F59E0B;border:1px solid rgba(245,158,11,0.25)}.crit{background:rgba(239,68,68,0.12);color:#EF4444;border:1px solid rgba(239,68,68,0.25)}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class='kpi'><div class='icon-ring'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><ellipse cx='12' cy='5' rx='9' ry='3'/><path d='M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5'/><path d='M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3'/></svg></div><div class='val' id='val' style='color:#F9FAFB'>--</div><div class='unit' id='unit'>conexões no pool</div><div class='stats'><div class='st'><div class='st-v' id='s-act'>0</div><div class='st-l'>em uso</div></div><div class='st'><div class='st-v' id='s-idle'>0</div><div class='st-l'>ociosas</div></div><div class='st'><div class='st-v' id='s-peak'>0</div><div class='st-l'>pico</div></div></div><div class='prog-track'><div class='prog-fill' id='bar' style='width:0%;background:#06B6D4'></div></div><div class='badge ok' id='badge'>Disponível</div></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "var active=0,max=20,idle=0,total=0,peak=0,pending=0;try{if(data&&data.series){data.series.forEach(function(s){var vf=null;if(s.fields){for(var i=0;i<s.fields.length;i++){if(s.fields[i].type==='number'){vf=s.fields[i];break;}}}if(!vf)return;var vs=vf.values;var v=Array.isArray(vs)?vs[vs.length-1]:(vs&&vs.get?vs.get(vs.length-1):0);v=v||0;switch(s.refId){case 'A':active=v;break;case 'B':max=v||20;break;case 'C':idle=v;break;case 'D':total=v;break;case 'E':peak=v;break;case 'F':pending=v;break;}});}}catch(e){}if(!total)total=active+idle;var fillPct=max>0?Math.min((total/max)*100,100):0;var sat=max>0?Math.max(active,peak)/max*100:0;var el=htmlNode.querySelector('#val');var un=htmlNode.querySelector('#unit');var bar=htmlNode.querySelector('#bar');var badge=htmlNode.querySelector('#badge');var sAct=htmlNode.querySelector('#s-act');var sIdle=htmlNode.querySelector('#s-idle');var sPeak=htmlNode.querySelector('#s-peak');if(el)el.textContent=Math.round(total);if(un)un.textContent='de '+Math.round(max)+' no pool';if(sAct)sAct.textContent=Math.round(active);if(sIdle)sIdle.textContent=Math.round(idle);if(sPeak)sPeak.textContent=Math.round(peak);var color=(pending>0||sat>=80)?'#EF4444':sat>=50?'#F59E0B':'#06B6D4';if(bar){bar.style.width=fillPct.toFixed(1)+'%';bar.style.background=color;}if(badge){if(pending>0){badge.textContent='Fila de espera';badge.className='badge crit';}else if(sat>=80){badge.textContent='Saturado';badge.className='badge crit';}else if(sat>=50){badge.textContent='Moderado';badge.className='badge warn';}else{badge.textContent='Saudável';badge.className='badge ok';}}",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-14": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "system_cpu_usage{application=\"$app_name\"} * 100",
+                      "legendFormat": "Sistema"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "process_cpu_usage{application=\"$app_name\"} * 100",
+                      "legendFormat": "Processo (JVM)"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "B"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 14,
+        "links": [],
+        "title": "Uso de CPU",
+        "vizConfig": {
+          "group": "timeseries",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "custom": {
+                  "axisBorderShow": false,
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "%",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "barWidthFactor": 0.6,
+                  "drawStyle": "line",
+                  "fillOpacity": 18,
+                  "gradientMode": "opacity",
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  },
+                  "insertNulls": false,
+                  "lineInterpolation": "smooth",
+                  "lineWidth": 2,
+                  "pointSize": 4,
+                  "scaleDistribution": {
+                    "type": "linear"
+                  },
+                  "showPoints": "never",
+                  "showValues": false,
+                  "spanNulls": true,
+                  "stacking": {
+                    "group": "A",
+                    "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                    "mode": "off"
+                  }
+                },
+                "min": 0,
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                },
+                "unit": "percent"
+              },
+              "overrides": [
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Sistema"
+                  },
+                  "properties": [
+                    {
+                      "id": "color",
+                      "value": {
+                        "fixedColor": "#10B981",
+                        "mode": "fixed"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Processo (JVM)"
+                  },
+                  "properties": [
+                    {
+                      "id": "color",
+                      "value": {
+                        "fixedColor": "#F59E0B",
+                        "mode": "fixed"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "options": {
+              "annotations": {
+                "clustering": -1,
+                "multiLane": false
+              },
+              "legend": {
+                "calcs": [
+                  "mean",
+                  "max",
+                  "lastNotNull"
+                ],
+                "displayMode": "table",
+                "placement": "bottom",
+                "showLegend": true
+              },
+              "tooltip": {
+                "hideZeros": false,
+                "mode": "multi",
+                "sort": "desc"
+              }
+            }
+          },
+          "version": "13.0.2"
+        }
+      }
+    },
+    "panel-15": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "system_load_average_1m{application=\"$app_name\"}",
+                      "legendFormat": "Carga (1m)"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "system_cpu_count{application=\"$app_name\"}",
+                      "legendFormat": "Núcleos de CPU"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "B"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 15,
+        "links": [],
+        "title": "Load Average do Sistema",
+        "vizConfig": {
+          "group": "timeseries",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "custom": {
+                  "axisBorderShow": false,
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "carga",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "barWidthFactor": 0.6,
+                  "drawStyle": "line",
+                  "fillOpacity": 18,
+                  "gradientMode": "opacity",
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  },
+                  "insertNulls": false,
+                  "lineInterpolation": "smooth",
+                  "lineWidth": 2,
+                  "pointSize": 4,
+                  "scaleDistribution": {
+                    "type": "linear"
+                  },
+                  "showPoints": "never",
+                  "showValues": false,
+                  "spanNulls": true,
+                  "stacking": {
+                    "group": "A",
+                    "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                    "mode": "off"
+                  }
+                },
+                "min": 0,
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                },
+                "unit": "short"
+              },
+              "overrides": [
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Carga (1m)"
+                  },
+                  "properties": [
+                    {
+                      "id": "color",
+                      "value": {
+                        "fixedColor": "#10B981",
+                        "mode": "fixed"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Núcleos de CPU"
+                  },
+                  "properties": [
+                    {
+                      "id": "color",
+                      "value": {
+                        "fixedColor": "#F59E0B",
+                        "mode": "fixed"
+                      }
+                    },
+                    {
+                      "id": "custom.fillOpacity",
+                      "value": 0
+                    },
+                    {
+                      "id": "custom.lineStyle",
+                      "value": {
+                        "dash": [
+                          8,
+                          4
+                        ],
+                        "fill": "dash"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "options": {
+              "annotations": {
+                "clustering": -1,
+                "multiLane": false
+              },
+              "legend": {
+                "calcs": [
+                  "mean",
+                  "max",
+                  "lastNotNull"
+                ],
+                "displayMode": "table",
+                "placement": "bottom",
+                "showLegend": true
+              },
+              "tooltip": {
+                "hideZeros": false,
+                "mode": "multi",
+                "sort": "desc"
+              }
+            }
+          },
+          "version": "13.0.2"
+        }
+      }
+    },
+    "panel-16": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "process_uptime_seconds{application=\"$app_name\"}",
+                      "instant": true,
+                      "legendFormat": "uptime"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 16,
+        "links": [],
+        "title": "Tempo de Atividade",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.kpi{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;position:relative;overflow:hidden;cursor:default;transition:border-color .3s}.kpi:hover{border-color:#14B8A6}.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#14B8A6,#2dd4bf)}.kpi::after{content:'';position:absolute;bottom:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,rgba(20,184,166,0.08),transparent 70%);pointer-events:none}.icon-ring{width:38px;height:38px;background:rgba(20,184,166,0.12);border:1.5px solid rgba(20,184,166,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:8px;flex-shrink:0}.icon-ring svg{width:18px;height:18px;stroke:#14B8A6}.val{font-size:30px;font-weight:800;color:#F9FAFB;letter-spacing:-1px;line-height:1}.unit{font-size:11px;color:#6B7280;margin-top:2px;font-weight:500}.label{font-size:11px;color:#9CA3AF;margin-top:6px;font-weight:500;text-align:center}.badge{margin-top:8px;font-size:10px;font-weight:600;padding:2px 10px;border-radius:20px;letter-spacing:0.3px;flex-shrink:0}.ok{background:rgba(16,185,129,0.12);color:#10B981;border:1px solid rgba(16,185,129,0.25)}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class='kpi'><div class='icon-ring'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10'/><polyline points='12 6 12 12 16 14'/></svg></div><div class='val' id='val'>--</div><div class='unit' id='unit'>tempo ativo</div><div class='label'>Tempo de Atividade</div><div class='badge ok' id='badge'>Online</div></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "var val=0;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var vv=f[1].values;val=Array.isArray(vv)?vv[vv.length-1]:(vv.get?vv.get(vv.length-1):0)||0;}}}catch(e){}var s=val||0;var num,u;if(s<3600){num=s/60;u='minutos ativo';}else if(s<172800){num=s/3600;u='horas ativo';}else{num=s/86400;u='dias ativo';}var el=htmlNode.querySelector('#val');var un=htmlNode.querySelector('#unit');if(el){el.textContent=num<10?num.toFixed(1):Math.round(num).toLocaleString('pt-BR');}if(un){un.textContent=u;}",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-17": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "process_start_time_seconds{application=\"$app_name\"}",
+                      "instant": true,
+                      "legendFormat": "start"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 17,
+        "links": [],
+        "title": "Início da Aplicação",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.kpi{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;position:relative;overflow:hidden;cursor:default;transition:border-color .3s}.kpi:hover{border-color:#6366F1}.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#6366F1,#818cf8)}.kpi::after{content:'';position:absolute;bottom:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,rgba(99,102,241,0.08),transparent 70%);pointer-events:none}.icon-ring{width:38px;height:38px;background:rgba(99,102,241,0.12);border:1.5px solid rgba(99,102,241,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:8px;flex-shrink:0}.icon-ring svg{width:18px;height:18px;stroke:#6366F1}.val{font-size:30px;font-weight:800;color:#F9FAFB;letter-spacing:-1px;line-height:1}.unit{font-size:11px;color:#6B7280;margin-top:2px;font-weight:500}.label{font-size:11px;color:#9CA3AF;margin-top:6px;font-weight:500;text-align:center}.badge{margin-top:8px;font-size:10px;font-weight:600;padding:2px 10px;border-radius:20px;letter-spacing:0.3px;flex-shrink:0}.ok{background:rgba(99,102,241,0.12);color:#818cf8;border:1px solid rgba(99,102,241,0.25)}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class='kpi'><div class='icon-ring'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10'/><polygon points='10 8 16 12 10 16 10 8'/></svg></div><div class='val' id='val'>--</div><div class='unit' id='unit'>iniciado há</div><div class='label'>Início da Aplicação</div><div class='badge ok' id='badge'>Ativo</div></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "var val=0;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var vv=f[1].values;val=Array.isArray(vv)?vv[vv.length-1]:(vv.get?vv.get(vv.length-1):0)||0;}}}catch(e){}var ago=(Date.now()/1000)-(val||0);if(ago<0||!val)ago=0;var num,u;if(ago<3600){num=ago/60;u='min atrás';}else if(ago<172800){num=ago/3600;u='horas atrás';}else{num=ago/86400;u='dias atrás';}var el=htmlNode.querySelector('#val');var un=htmlNode.querySelector('#unit');if(el){el.textContent=num<10?num.toFixed(1):Math.round(num).toLocaleString('pt-BR');}if(un){un.textContent=u;}",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-2": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(rate(http_server_requests_seconds_count{application=\"$app_name\"}[5m])) * 60",
+                      "instant": true,
+                      "legendFormat": "req_min"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 2,
+        "links": [],
+        "title": "Requisições / min",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.kpi{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;position:relative;overflow:hidden;cursor:default;transition:border-color .3s}.kpi:hover{border-color:#F97316}.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#F97316,#fb923c)}.kpi::after{content:'';position:absolute;bottom:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,rgba(249,115,22,0.08),transparent 70%);pointer-events:none}.icon-ring{width:38px;height:38px;background:rgba(249,115,22,0.12);border:1.5px solid rgba(249,115,22,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:8px;flex-shrink:0}.icon-ring svg{width:18px;height:18px;stroke:#F97316}.val{font-size:30px;font-weight:800;color:#F9FAFB;letter-spacing:-1px;line-height:1}.unit{font-size:11px;color:#6B7280;margin-top:2px;font-weight:500}.label{font-size:11px;color:#9CA3AF;margin-top:6px;font-weight:500;text-align:center}.badge{margin-top:8px;font-size:10px;font-weight:600;padding:2px 10px;border-radius:20px;letter-spacing:0.3px;flex-shrink:0}.ok{background:rgba(16,185,129,0.12);color:#10B981;border:1px solid rgba(16,185,129,0.25)}.warn{background:rgba(245,158,11,0.12);color:#F59E0B;border:1px solid rgba(245,158,11,0.25)}.crit{background:rgba(239,68,68,0.12);color:#EF4444;border:1px solid rgba(239,68,68,0.25)}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class='kpi'><div class='icon-ring'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 12h4l3-9 6 18 3-9h5'/></svg></div><div class='val' id='val'>--</div><div class='unit'>req / min</div><div class='label'>Requisições HTTP</div><div class='badge ok' id='badge'>Normal</div></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "var val=0;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var v=f[1].values;val=Array.isArray(v)?v[v.length-1]:(v.get?v.get(v.length-1):0)||0;}}}catch(e){}var el=htmlNode.querySelector('#val');var badge=htmlNode.querySelector('#badge');if(el){el.textContent=val<10?val.toFixed(1):Math.round(val).toLocaleString('pt-BR');}if(badge){if(val>5000){badge.textContent='Crítico';badge.className='badge crit';}else if(val>1000){badge.textContent='Alto Volume';badge.className='badge warn';}else{badge.textContent='Normal';badge.className='badge ok';}}",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull",
+                  "last",
+                  "firstNotNull",
+                  "first",
+                  "min",
+                  "max",
+                  "mean",
+                  "sum",
+                  "count",
+                  "range",
+                  "delta",
+                  "step",
+                  "diff",
+                  "logmin",
+                  "allIsZero",
+                  "allIsNull",
+                  "diffperc"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-3": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(rate(http_server_requests_seconds_count{application=\"$app_name\",status=~\"5..\"}[5m])) / sum(rate(http_server_requests_seconds_count{application=\"$app_name\"}[5m])) * 100",
+                      "instant": true,
+                      "legendFormat": "error_pct"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 3,
+        "links": [],
+        "title": "Taxa de Erro",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.kpi{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;position:relative;overflow:hidden;cursor:default;transition:border-color .3s}.kpi:hover{border-color:#EF4444}.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#EF4444,#f87171)}.icon-ring{width:38px;height:38px;background:rgba(239,68,68,0.1);border:1.5px solid rgba(239,68,68,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:8px;flex-shrink:0}.icon-ring svg{width:18px;height:18px;stroke:#EF4444}.val{font-size:30px;font-weight:800;letter-spacing:-1px;line-height:1}.unit{font-size:11px;color:#6B7280;margin-top:2px;font-weight:500}.label{font-size:11px;color:#9CA3AF;margin-top:6px;font-weight:500;text-align:center}.badge{margin-top:8px;font-size:10px;font-weight:600;padding:2px 10px;border-radius:20px;flex-shrink:0}.ok{background:rgba(16,185,129,0.12);color:#10B981;border:1px solid rgba(16,185,129,0.25)}.warn{background:rgba(245,158,11,0.12);color:#F59E0B;border:1px solid rgba(245,158,11,0.25)}.crit{background:rgba(239,68,68,0.12);color:#EF4444;border:1px solid rgba(239,68,68,0.25)}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class='kpi'><div class='icon-ring'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10'/><line x1='12' y1='8' x2='12' y2='12'/><line x1='12' y1='16' x2='12.01' y2='16'/></svg></div><div class='val' id='val' style='color:#F9FAFB'>--</div><div class='unit'>% erros 5xx</div><div class='label'>Taxa de Erro HTTP</div><div class='badge ok' id='badge'>Saudável</div></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "var val=0;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var v=f[1].values;val=Array.isArray(v)?v[v.length-1]:(v.get?v.get(v.length-1):0)||0;}}}catch(e){}var el=htmlNode.querySelector('#val');var badge=htmlNode.querySelector('#badge');if(el){el.textContent=val.toFixed(2)+'%';el.style.color=val>=2?'#EF4444':val>=0.5?'#F59E0B':'#10B981';}if(badge){if(val>=2){badge.textContent='Crítico';badge.className='badge crit';}else if(val>=0.5){badge.textContent='Atenção';badge.className='badge warn';}else{badge.textContent='Saudável';badge.className='badge ok';}}",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull",
+                  "last",
+                  "firstNotNull",
+                  "first",
+                  "min",
+                  "max",
+                  "mean",
+                  "sum",
+                  "count",
+                  "range",
+                  "delta",
+                  "step",
+                  "diff",
+                  "logmin",
+                  "allIsZero",
+                  "allIsNull",
+                  "diffperc"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": true
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-30": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "group": "",
+                    "kind": "DataQuery",
+                    "spec": {},
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 30,
+        "links": [],
+        "title": "",
+        "transparent": true,
+        "vizConfig": {
+          "group": "marcusolsson-dynamictext-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "afterRender": "",
+              "content": "",
+              "contentPartials": [],
+              "defaultContent": "<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.sec{height:100%;display:flex;align-items:center;gap:13px;padding:0 16px;background:linear-gradient(90deg,rgba(249,115,22,0.12),rgba(31,41,55,0) 55%);border-left:3px solid #F97316;border-radius:8px}.sico{width:30px;height:30px;border-radius:8px;background:rgba(249,115,22,0.14);border:1px solid rgba(249,115,22,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0}.sico svg{width:16px;height:16px;stroke:#F97316}.stt{font-size:14px;font-weight:700;color:#F9FAFB;letter-spacing:-0.3px;white-space:nowrap}.sln{flex:1;height:1px;background:linear-gradient(90deg,rgba(75,85,99,0.55),transparent)}.ssub{font-size:11px;color:#6B7280;font-weight:500;white-space:nowrap}</style><div class='sec'><div class='sico'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M22 12h-4l-3 9L9 3l-3 9H2'/></svg></div><div class='stt'>Tr&aacute;fego HTTP &amp; Endpoints</div><div class='sln'></div><div class='ssub'>Requisi&ccedil;&otilde;es, lat&ecirc;ncia, erros e desempenho por endpoint</div></div>",
+              "editor": {
+                "format": "auto",
+                "language": "markdown"
+              },
+              "editors": [],
+              "externalScripts": [],
+              "externalStyles": [],
+              "helpers": "",
+              "renderMode": "everyRow",
+              "styles": "",
+              "wrap": false
+            }
+          },
+          "version": "6.2.3"
+        }
+      }
+    },
+    "panel-31": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "group": "",
+                    "kind": "DataQuery",
+                    "spec": {},
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 31,
+        "links": [],
+        "title": "",
+        "transparent": true,
+        "vizConfig": {
+          "group": "marcusolsson-dynamictext-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "afterRender": "",
+              "content": "",
+              "contentPartials": [],
+              "defaultContent": "<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.sec{height:100%;display:flex;align-items:center;gap:13px;padding:0 16px;background:linear-gradient(90deg,rgba(249,115,22,0.12),rgba(31,41,55,0) 55%);border-left:3px solid #F97316;border-radius:8px}.sico{width:30px;height:30px;border-radius:8px;background:rgba(249,115,22,0.14);border:1px solid rgba(249,115,22,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0}.sico svg{width:16px;height:16px;stroke:#F97316}.stt{font-size:14px;font-weight:700;color:#F9FAFB;letter-spacing:-0.3px;white-space:nowrap}.sln{flex:1;height:1px;background:linear-gradient(90deg,rgba(75,85,99,0.55),transparent)}.ssub{font-size:11px;color:#6B7280;font-weight:500;white-space:nowrap}</style><div class='sec'><div class='sico'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='2' y='2' width='20' height='8' rx='2'/><rect x='2' y='14' width='20' height='8' rx='2'/><line x1='6' y1='6' x2='6.01' y2='6'/><line x1='6' y1='18' x2='6.01' y2='18'/></svg></div><div class='stt'>Infraestrutura &amp; JVM</div><div class='sln'></div><div class='ssub'>Recursos do sistema, mem&oacute;ria, CPU e disponibilidade</div></div>",
+              "editor": {
+                "format": "auto",
+                "language": "markdown"
+              },
+              "editors": [],
+              "externalScripts": [],
+              "externalStyles": [],
+              "helpers": "",
+              "renderMode": "everyRow",
+              "styles": "",
+              "wrap": false
+            }
+          },
+          "version": "6.2.3"
+        }
+      }
+    },
+    "panel-32": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "group": "",
+                    "kind": "DataQuery",
+                    "spec": {},
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 32,
+        "links": [],
+        "title": "",
+        "transparent": true,
+        "vizConfig": {
+          "group": "marcusolsson-dynamictext-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "afterRender": "",
+              "content": "",
+              "contentPartials": [],
+              "defaultContent": "<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.sec{height:100%;display:flex;align-items:center;gap:13px;padding:0 16px;background:linear-gradient(90deg,rgba(249,115,22,0.12),rgba(31,41,55,0) 55%);border-left:3px solid #F97316;border-radius:8px}.sico{width:30px;height:30px;border-radius:8px;background:rgba(249,115,22,0.14);border:1px solid rgba(249,115,22,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0}.sico svg{width:16px;height:16px;stroke:#F97316}.stt{font-size:14px;font-weight:700;color:#F9FAFB;letter-spacing:-0.3px;white-space:nowrap}.sln{flex:1;height:1px;background:linear-gradient(90deg,rgba(75,85,99,0.55),transparent)}.ssub{font-size:11px;color:#6B7280;font-weight:500;white-space:nowrap}</style><div class='sec'><div class='sico'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/><polyline points='14 2 14 8 20 8'/><line x1='16' y1='13' x2='8' y2='13'/><line x1='16' y1='17' x2='8' y2='17'/></svg></div><div class='stt'>Logs &amp; Eventos</div><div class='sln'></div><div class='ssub'>Stream de logs estruturados em tempo real</div></div>",
+              "editor": {
+                "format": "auto",
+                "language": "markdown"
+              },
+              "editors": [],
+              "externalScripts": [],
+              "externalStyles": [],
+              "helpers": "",
+              "renderMode": "everyRow",
+              "styles": "",
+              "wrap": false
+            }
+          },
+          "version": "6.2.3"
+        }
+      }
+    },
+    "panel-4": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "histogram_quantile(0.95, sum(rate(http_server_requests_seconds_bucket{application=\"$app_name\"}[5m])) by (le)) * 1000",
+                      "instant": true,
+                      "legendFormat": "p95_ms"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 4,
+        "links": [],
+        "title": "Latência P95",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.kpi{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;position:relative;overflow:hidden;cursor:default;transition:border-color .3s}.kpi:hover{border-color:#3B82F6}.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#3B82F6,#60a5fa)}.icon-ring{width:38px;height:38px;background:rgba(59,130,246,0.1);border:1.5px solid rgba(59,130,246,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:8px;flex-shrink:0}.icon-ring svg{width:18px;height:18px;stroke:#3B82F6}.val{font-size:30px;font-weight:800;letter-spacing:-1px;line-height:1}.unit{font-size:11px;color:#6B7280;margin-top:2px;font-weight:500}.label{font-size:11px;color:#9CA3AF;margin-top:6px;font-weight:500;text-align:center}.badge{margin-top:8px;font-size:10px;font-weight:600;padding:2px 10px;border-radius:20px;flex-shrink:0}.ok{background:rgba(16,185,129,0.12);color:#10B981;border:1px solid rgba(16,185,129,0.25)}.warn{background:rgba(245,158,11,0.12);color:#F59E0B;border:1px solid rgba(245,158,11,0.25)}.crit{background:rgba(239,68,68,0.12);color:#EF4444;border:1px solid rgba(239,68,68,0.25)}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class='kpi'><div class='icon-ring'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10'/><polyline points='12 6 12 12 16 14'/></svg></div><div class='val' id='val' style='color:#F9FAFB'>--</div><div class='unit'>ms (P95)</div><div class='label'>Latência de Resposta</div><div class='badge ok' id='badge'>Rápido</div></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "var val=0;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var v=f[1].values;val=Array.isArray(v)?v[v.length-1]:(v.get?v.get(v.length-1):0)||0;}}}catch(e){}var el=htmlNode.querySelector('#val');var badge=htmlNode.querySelector('#badge');if(el){el.textContent=Math.round(val)+'ms';el.style.color=val>=1000?'#EF4444':val>=500?'#F59E0B':'#10B981';}if(badge){if(val>=1000){badge.textContent='Lento';badge.className='badge crit';}else if(val>=500){badge.textContent='Atenção';badge.className='badge warn';}else{badge.textContent='Rápido';badge.className='badge ok';}}",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull",
+                  "last",
+                  "firstNotNull",
+                  "first",
+                  "min",
+                  "max",
+                  "mean",
+                  "sum",
+                  "count",
+                  "range",
+                  "delta",
+                  "step",
+                  "diff",
+                  "logmin",
+                  "allIsZero",
+                  "allIsNull",
+                  "diffperc"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": true
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-5": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(jvm_memory_used_bytes{application=\"$app_name\",area=\"heap\"}) / sum(jvm_memory_max_bytes{application=\"$app_name\",area=\"heap\"}) * 100",
+                      "instant": true,
+                      "legendFormat": "heap_pct"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 5,
+        "links": [],
+        "title": "Heap JVM",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.kpi{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;position:relative;overflow:hidden;cursor:default;transition:border-color .3s}.kpi:hover{border-color:#8B5CF6}.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#8B5CF6,#a78bfa)}.icon-ring{width:38px;height:38px;background:rgba(139,92,246,0.1);border:1.5px solid rgba(139,92,246,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:8px;flex-shrink:0}.icon-ring svg{width:18px;height:18px;stroke:#8B5CF6}.val{font-size:30px;font-weight:800;letter-spacing:-1px;line-height:1}.unit{font-size:11px;color:#6B7280;margin-top:2px;font-weight:500}.label{font-size:11px;color:#9CA3AF;margin-top:6px;font-weight:500;text-align:center}.prog-track{width:100%;height:5px;background:#374151;border-radius:3px;margin-top:8px;overflow:hidden}.prog-fill{height:100%;border-radius:3px;transition:width .6s ease}.badge{margin-top:6px;font-size:10px;font-weight:600;padding:2px 10px;border-radius:20px;flex-shrink:0}.ok{background:rgba(16,185,129,0.12);color:#10B981;border:1px solid rgba(16,185,129,0.25)}.warn{background:rgba(245,158,11,0.12);color:#F59E0B;border:1px solid rgba(245,158,11,0.25)}.crit{background:rgba(239,68,68,0.12);color:#EF4444;border:1px solid rgba(239,68,68,0.25)}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class='kpi'><div class='icon-ring'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='2' y='7' width='20' height='14' rx='2'/><path d='M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2'/></svg></div><div class='val' id='val' style='color:#F9FAFB'>--</div><div class='unit'>% utilizado</div><div class='label'>Heap JVM</div><div class='prog-track'><div class='prog-fill' id='bar' style='width:0%;background:#8B5CF6'></div></div><div class='badge ok' id='badge'>Normal</div></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "var val=0;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var v=f[1].values;val=Array.isArray(v)?v[v.length-1]:(v.get?v.get(v.length-1):0)||0;}}}catch(e){}var pct=Math.min(Math.max(val||0,0),100);var el=htmlNode.querySelector('#val');var bar=htmlNode.querySelector('#bar');var badge=htmlNode.querySelector('#badge');var color=pct>=85?'#EF4444':pct>=70?'#F59E0B':'#8B5CF6';if(el){el.textContent=pct.toFixed(1)+'%';el.style.color=color;}if(bar){bar.style.width=pct+'%';bar.style.background=color;}if(badge){if(pct>=85){badge.textContent='Pressão Alta';badge.className='badge crit';}else if(pct>=70){badge.textContent='Atenção';badge.className='badge warn';}else{badge.textContent='Normal';badge.className='badge ok';}}",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull",
+                  "last",
+                  "firstNotNull",
+                  "first",
+                  "min",
+                  "max",
+                  "mean",
+                  "sum",
+                  "count",
+                  "range",
+                  "delta",
+                  "step",
+                  "diff",
+                  "logmin",
+                  "allIsZero",
+                  "allIsNull",
+                  "diffperc"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": true
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-6": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "up{application=\"$app_name\"}",
+                      "instant": true,
+                      "legendFormat": "{{job}}"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 6,
+        "links": [],
+        "title": "Mapa de Saúde - Topologia dos Serviços",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": false,
+              "codeData": "{}",
+              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.wrap{width:100%;height:100%;background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:12px}.map-title{font-size:12px;font-weight:600;color:#6B7280;text-transform:uppercase;letter-spacing:0.8px}.svg-wrap{flex:1;display:flex;align-items:center;justify-content:center;min-height:0}.legend{display:flex;gap:16px;justify-content:center;flex-shrink:0}.leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:#6B7280}.leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class='wrap'><div class='map-title'>Topologia de Servi&ccedil;os</div><div class='svg-wrap'><svg id='topo' viewBox='0 0 760 320' xmlns='http://www.w3.org/2000/svg' style='width:100%;height:100%;max-height:240px'><defs><marker id='arr' markerWidth='8' markerHeight='8' refX='6' refY='3' orient='auto'><path d='M0,0 L0,6 L8,3 z' fill='#4B5563'/></marker><marker id='arr-ok' markerWidth='8' markerHeight='8' refX='6' refY='3' orient='auto'><path d='M0,0 L0,6 L8,3 z' fill='#10B981'/></marker><filter id='glow'><feGaussianBlur stdDeviation='3' result='blur'/><feMerge><feMergeNode in='blur'/><feMergeNode in='SourceGraphic'/></feMerge></filter></defs><line x1='108' y1='160' x2='192' y2='160' stroke='#4B5563' stroke-width='1.5' stroke-dasharray='5,3' marker-end='url(#arr)'/><line x1='308' y1='160' x2='392' y2='160' stroke='#10B981' stroke-width='1.5' marker-end='url(#arr-ok)'/><line x1='508' y1='138' x2='568' y2='95' stroke='#4B5563' stroke-width='1.5' stroke-dasharray='4,3' marker-end='url(#arr)'/><line x1='508' y1='160' x2='568' y2='160' stroke='#4B5563' stroke-width='1.5' stroke-dasharray='4,3' marker-end='url(#arr)'/><line x1='508' y1='182' x2='568' y2='225' stroke='#4B5563' stroke-width='1.5' stroke-dasharray='4,3' marker-end='url(#arr)'/><rect x='20' y='135' width='88' height='50' rx='10' fill='#1a2535' stroke='#374151' stroke-width='1.5'/><text x='64' y='155' text-anchor='middle' fill='#9CA3AF' font-size='9' font-family='Inter'>Cliente</text><text x='64' y='170' text-anchor='middle' fill='#F9FAFB' font-size='11' font-weight='600' font-family='Inter'>Browser</text><circle cx='94' cy='140' r='5' fill='#10B981' filter='url(#glow)'/><rect x='192' y='135' width='116' height='50' rx='10' fill='#1a2535' stroke='#374151' stroke-width='1.5'/><text x='250' y='155' text-anchor='middle' fill='#9CA3AF' font-size='9' font-family='Inter'>Reverse Proxy</text><text x='250' y='170' text-anchor='middle' fill='#F9FAFB' font-size='11' font-weight='600' font-family='Inter'>Nginx / LB</text><circle cx='296' cy='140' r='5' fill='#10B981' filter='url(#glow)'/><rect x='392' y='128' width='116' height='64' rx='10' fill='#1a2535' stroke='#F97316' stroke-width='2' id='box-crm'/><text x='450' y='150' text-anchor='middle' fill='#F97316' font-size='9' font-weight='600' font-family='Inter'>Spring Boot 3</text><text x='450' y='165' text-anchor='middle' fill='#F9FAFB' font-size='11' font-weight='700' font-family='Inter'>LogNet CRM</text><text x='450' y='180' text-anchor='middle' fill='#6B7280' font-size='9' font-family='Inter'>:8080</text><circle cx='496' cy='133' r='5' fill='#F97316' id='dot-crm' filter='url(#glow)'/><rect x='568' y='68' width='104' height='50' rx='10' fill='#1a2535' stroke='#374151' stroke-width='1.5'/><text x='620' y='87' text-anchor='middle' fill='#9CA3AF' font-size='9' font-family='Inter'>Banco de Dados</text><text x='620' y='103' text-anchor='middle' fill='#F9FAFB' font-size='11' font-weight='600' font-family='Inter'>MySQL</text><circle cx='660' cy='73' r='5' fill='#374151' id='dot-mysql' filter='url(#glow)'/><rect x='568' y='135' width='104' height='50' rx='10' fill='#1a2535' stroke='#374151' stroke-width='1.5'/><text x='620' y='155' text-anchor='middle' fill='#9CA3AF' font-size='9' font-family='Inter'>Métricas</text><text x='620' y='170' text-anchor='middle' fill='#F9FAFB' font-size='11' font-weight='600' font-family='Inter'>Prometheus</text><circle cx='660' cy='140' r='5' fill='#374151' id='dot-prom' filter='url(#glow)'/><rect x='568' y='202' width='104' height='50' rx='10' fill='#1a2535' stroke='#374151' stroke-width='1.5'/><text x='620' y='221' text-anchor='middle' fill='#9CA3AF' font-size='9' font-family='Inter'>Logs</text><text x='620' y='237' text-anchor='middle' fill='#F9FAFB' font-size='11' font-weight='600' font-family='Inter'>Loki</text><circle cx='660' cy='207' r='5' fill='#374151' id='dot-loki' filter='url(#glow)'/></svg></div><div class='legend'><div class='leg-item'><div class='leg-dot' style='background:#10B981'></div><span>Online</span></div><div class='leg-item'><div class='leg-dot' style='background:#EF4444'></div><span>Offline</span></div><div class='leg-item'><div class='leg-dot' style='background:#F97316'></div><span>Serviço principal</span></div></div></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "var isUp=false;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var v=f[1].values;var val=Array.isArray(v)?v[v.length-1]:(v.get?v.get(v.length-1):0)||0;isUp=val===1;}}}catch(e){}var dotCrm=htmlNode.querySelector('#dot-crm');if(dotCrm)dotCrm.setAttribute('fill',isUp?'#F97316':'#EF4444');['mysql','prom','loki'].forEach(function(id){var dot=htmlNode.querySelector('#dot-'+id);if(dot)dot.setAttribute('fill','#10B981');});",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull",
+                  "last",
+                  "firstNotNull",
+                  "first",
+                  "min",
+                  "max",
+                  "mean",
+                  "sum",
+                  "count",
+                  "range",
+                  "delta",
+                  "step",
+                  "diff",
+                  "logmin",
+                  "allIsZero",
+                  "allIsNull",
+                  "diffperc"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": true
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-8": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(rate(http_server_requests_seconds_count{application=\"$app_name\"}[1m])) by (status)",
+                      "legendFormat": "HTTP {{status}}"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 8,
+        "links": [],
+        "title": "Requisições HTTP / segundo - por Status",
+        "vizConfig": {
+          "group": "timeseries",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "custom": {
+                  "axisBorderShow": false,
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "req/s",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "barWidthFactor": 0.6,
+                  "drawStyle": "line",
+                  "fillOpacity": 12,
+                  "gradientMode": "opacity",
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  },
+                  "insertNulls": false,
+                  "lineInterpolation": "smooth",
+                  "lineWidth": 2,
+                  "pointSize": 4,
+                  "scaleDistribution": {
+                    "type": "linear"
+                  },
+                  "showPoints": "never",
+                  "showValues": false,
+                  "spanNulls": true,
+                  "stacking": {
+                    "group": "A",
+                    "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                    "mode": "off"
+                  }
+                },
+                "min": 0,
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                },
+                "unit": "reqps"
+              },
+              "overrides": [
+                {
+                  "matcher": {
+                    "id": "byRegexp",
+                    "options": "HTTP 5.."
+                  },
+                  "properties": [
+                    {
+                      "id": "color",
+                      "value": {
+                        "fixedColor": "#EF4444",
+                        "mode": "fixed"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byRegexp",
+                    "options": "HTTP 4.."
+                  },
+                  "properties": [
+                    {
+                      "id": "color",
+                      "value": {
+                        "fixedColor": "#F59E0B",
+                        "mode": "fixed"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byRegexp",
+                    "options": "HTTP 3.."
+                  },
+                  "properties": [
+                    {
+                      "id": "color",
+                      "value": {
+                        "fixedColor": "#60A5FA",
+                        "mode": "fixed"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byRegexp",
+                    "options": "HTTP 2.."
+                  },
+                  "properties": [
+                    {
+                      "id": "color",
+                      "value": {
+                        "fixedColor": "#10B981",
+                        "mode": "fixed"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "options": {
+              "annotations": {
+                "clustering": -1,
+                "multiLane": false
+              },
+              "legend": {
+                "calcs": [
+                  "mean",
+                  "max",
+                  "lastNotNull"
+                ],
+                "displayMode": "table",
+                "placement": "bottom",
+                "showLegend": true,
+                "width": 200
+              },
+              "tooltip": {
+                "hideZeros": true,
+                "mode": "multi",
+                "sort": "desc"
+              }
+            }
+          },
+          "version": "13.0.2"
+        }
+      }
+    },
+    "panel-9": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(rate(http_server_requests_seconds_count{application=\"$app_name\",status=~\"5..\"}[5m])) / sum(rate(http_server_requests_seconds_count{application=\"$app_name\"}[5m])) * 100",
+                      "instant": true,
+                      "legendFormat": "err_pct"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 9,
+        "links": [],
+        "title": "Gauge - Taxa de Erro",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.gw{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:16px;position:relative;overflow:hidden}.gw::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#EF4444,#f87171);border-radius:14px 14px 0 0}.svg-g{width:170px;height:100px}.gi{display:flex;flex-direction:column;align-items:center;gap:3px}.gv{font-size:26px;font-weight:800;letter-spacing:-0.8px}.gl{font-size:12px;color:#9CA3AF;font-weight:500}.gs{font-size:10px;color:#6B7280}.thr{display:flex;gap:12px;margin-top:2px}.ti{display:flex;align-items:center;gap:4px;font-size:9.5px;color:#6B7280}.td{width:6px;height:6px;border-radius:50%;flex-shrink:0}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class='gw'><svg class='svg-g' viewBox='0 0 200 120' xmlns='http://www.w3.org/2000/svg'><defs><linearGradient id='g-ok' x1='0%' y1='0%' x2='100%' y2='0%'><stop offset='0%' stop-color='#10B981'/><stop offset='100%' stop-color='#34d399'/></linearGradient><linearGradient id='g-warn' x1='0%' y1='0%' x2='100%' y2='0%'><stop offset='0%' stop-color='#F59E0B'/><stop offset='100%' stop-color='#fbbf24'/></linearGradient><linearGradient id='g-crit' x1='0%' y1='0%' x2='100%' y2='0%'><stop offset='0%' stop-color='#EF4444'/><stop offset='100%' stop-color='#f87171'/></linearGradient></defs><path d='M 20 110 A 80 80 0 0 1 180 110' fill='none' stroke='#374151' stroke-width='14' stroke-linecap='round'/><path id='arc' d='M 20 110 A 80 80 0 0 1 180 110' fill='none' stroke='url(#g-ok)' stroke-width='14' stroke-linecap='round' stroke-dasharray='251.3' stroke-dashoffset='251.3'/><line id='needle' x1='100' y1='110' x2='100' y2='44' stroke='#F9FAFB' stroke-width='2.5' stroke-linecap='round' transform='rotate(0 100 110)'/><circle cx='100' cy='110' r='5' fill='#F9FAFB'/><text x='18' y='118' fill='#6B7280' font-size='9' font-family='Inter'>0%</text><text x='163' y='118' fill='#6B7280' font-size='9' font-family='Inter'>10%</text></svg><div class='gi'><div class='gv' id='gval' style='color:#10B981'>0.00%</div><div class='gl'>Taxa de Erro HTTP 5xx</div><div class='gs'>Janela: últimos 5 min</div></div><div class='thr'><div class='ti'><div class='td' style='background:#10B981'></div><span>&lt;0.5% OK</span></div><div class='ti'><div class='td' style='background:#F59E0B'></div><span>0.5–2% Aviso</span></div><div class='ti'><div class='td' style='background:#EF4444'></div><span>&gt;2% Crítico</span></div></div></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "var val=0;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var v=f[1].values;val=Array.isArray(v)?v[v.length-1]:(v.get?v.get(v.length-1):0)||0;}}}catch(e){}var pct=Math.min(Math.max(val||0,0),10);var ratio=pct/10;var totalLen=251.3;var arc=htmlNode.querySelector('#arc');var needle=htmlNode.querySelector('#needle');var gval=htmlNode.querySelector('#gval');var color=pct>=2?'#EF4444':pct>=0.5?'#F59E0B':'#10B981';var grad=pct>=2?'url(#g-crit)':pct>=0.5?'url(#g-warn)':'url(#g-ok)';if(arc){arc.setAttribute('stroke-dashoffset',(totalLen-(totalLen*ratio)).toFixed(1));arc.setAttribute('stroke',grad);}if(needle){needle.setAttribute('transform','rotate('+(-90+(ratio*180)).toFixed(1)+' 100 110)');}if(gval){gval.textContent=(val||0).toFixed(2)+'%';gval.style.color=color;}",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull",
+                  "last",
+                  "firstNotNull",
+                  "first",
+                  "min",
+                  "max",
+                  "mean",
+                  "sum",
+                  "count",
+                  "range",
+                  "delta",
+                  "step",
+                  "diff",
+                  "logmin",
+                  "allIsZero",
+                  "allIsNull",
+                  "diffperc"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": true
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    }
+  },
+  "layout": {
+    "kind": "GridLayout",
+    "spec": {
+      "items": [
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-1"
+            },
+            "height": 3,
+            "width": 24,
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-30"
+            },
+            "height": 2,
+            "width": 24,
+            "x": 0,
+            "y": 3
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-2"
+            },
+            "height": 7,
+            "width": 8,
+            "x": 0,
+            "y": 5
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-3"
+            },
+            "height": 7,
+            "width": 8,
+            "x": 8,
+            "y": 5
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-4"
+            },
+            "height": 7,
+            "width": 8,
+            "x": 16,
+            "y": 5
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-8"
+            },
+            "height": 9,
+            "width": 14,
+            "x": 0,
+            "y": 12
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-9"
+            },
+            "height": 9,
+            "width": 10,
+            "x": 14,
+            "y": 12
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-11"
+            },
+            "height": 9,
+            "width": 12,
+            "x": 0,
+            "y": 21
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-12"
+            },
+            "height": 9,
+            "width": 12,
+            "x": 12,
+            "y": 21
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-31"
+            },
+            "height": 2,
+            "width": 24,
+            "x": 0,
+            "y": 30
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-5"
+            },
+            "height": 7,
+            "width": 6,
+            "x": 0,
+            "y": 32
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-13"
+            },
+            "height": 7,
+            "width": 6,
+            "x": 6,
+            "y": 32
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-16"
+            },
+            "height": 7,
+            "width": 6,
+            "x": 12,
+            "y": 32
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-17"
+            },
+            "height": 7,
+            "width": 6,
+            "x": 18,
+            "y": 32
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-14"
+            },
+            "height": 8,
+            "width": 12,
+            "x": 0,
+            "y": 39
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-15"
+            },
+            "height": 8,
+            "width": 12,
+            "x": 12,
+            "y": 39
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-6"
+            },
+            "height": 10,
+            "width": 24,
+            "x": 0,
+            "y": 47
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-32"
+            },
+            "height": 2,
+            "width": 24,
+            "x": 0,
+            "y": 57
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-10"
+            },
+            "height": 11,
+            "width": 24,
+            "x": 0,
+            "y": 59
+          }
+        }
+      ]
+    }
+  },
+  "links": [],
+  "liveNow": false,
+  "preload": false,
+  "tags": [
+    "lognet",
+    "crm",
+    "observabilidade"
+  ],
+  "timeSettings": {
+    "autoRefresh": "10s",
+    "autoRefreshIntervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "fiscalYearStartMonth": 0,
+    "from": "now-5m",
+    "hideTimepicker": false,
+    "timezone": "browser",
+    "to": "now"
+  },
+  "title": "LogNet CRM",
+  "variables": [
+    {
+      "kind": "QueryVariable",
+      "spec": {
+        "allowCustomValue": true,
+        "current": {
+          "text": "lognet-crm",
+          "value": "lognet-crm"
+        },
+        "definition": "label_values(http_server_requests_seconds_count, application)",
+        "hide": "dontHide",
+        "includeAll": false,
+        "label": "Aplicação",
+        "multi": false,
+        "name": "app_name",
+        "options": [],
+        "query": {
+          "datasource": {
+            "name": "bfnr96wiwms5cd"
+          },
+          "group": "prometheus",
+          "kind": "DataQuery",
+          "spec": {
+            "__legacyStringValue": "label_values(http_server_requests_seconds_count, application)"
+          },
+          "version": "v0"
+        },
+        "refresh": "onTimeRangeChanged",
+        "regex": "lognet.*",
+        "regexApplyTo": "value",
+        "skipUrlSync": false,
+        "sort": "disabled"
+      }
+    },
+    {
+      "kind": "TextVariable",
+      "spec": {
+        "current": {
+          "text": "",
+          "value": ""
+        },
+        "description": "",
+        "hide": "dontHide",
+        "label": "",
+        "name": "log_keyword",
+        "query": "",
+        "skipUrlSync": false
+      }
+    }
+  ]
+}

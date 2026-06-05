@@ -1,0 +1,2096 @@
+{
+  "annotations": [
+    {
+      "kind": "AnnotationQuery",
+      "spec": {
+        "builtIn": true,
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "query": {
+          "datasource": {
+            "name": "-- Grafana --"
+          },
+          "group": "grafana",
+          "kind": "DataQuery",
+          "spec": {},
+          "version": "v0"
+        }
+      }
+    }
+  ],
+  "cursorSync": "Crosshair",
+  "description": "Dashboard de monitoramento do host Linux (node_exporter) - CPU, memória, disco, rede e load",
+  "editable": true,
+  "elements": {
+    "host-header": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "group": "",
+                    "kind": "DataQuery",
+                    "spec": {},
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 1,
+        "links": [],
+        "title": "",
+        "transparent": true,
+        "vizConfig": {
+          "group": "marcusolsson-dynamictext-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "afterRender": "",
+              "content": "",
+              "contentPartials": [],
+              "defaultContent": "<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.hdr{background:linear-gradient(135deg,#0d1520 0%,#141B27 40%,#1a2233 100%);border-bottom:2px solid #F97316;height:100%;display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:relative;overflow:hidden}.hdr::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(249,115,22,0.07) 0%,transparent 60%);pointer-events:none}.logo-wrap{display:flex;align-items:center;gap:14px}.logo-box{width:46px;height:46px;background:linear-gradient(135deg,#F97316,#ea580c);border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px rgba(249,115,22,0.4),0 4px 12px rgba(0,0,0,0.3);flex-shrink:0}.logo-box svg{width:24px;height:24px}.ht{font-size:19px;font-weight:800;color:#F9FAFB;letter-spacing:-0.5px;line-height:1}.hs{font-size:12px;color:#6B7280;margin-top:3px;font-weight:400}.hdr-r{display:flex;align-items:center;gap:14px}.pills{display:flex;gap:6px}.pill{background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.22);color:#F97316;font-size:10.5px;font-weight:600;padding:4px 10px;border-radius:6px;letter-spacing:0.3px}.env{background:linear-gradient(135deg,#F97316,#dc6011);color:#fff;font-size:10px;font-weight:800;padding:5px 14px;border-radius:20px;letter-spacing:1.2px;text-transform:uppercase;box-shadow:0 0 12px rgba(249,115,22,0.3)}.live{display:flex;align-items:center;gap:7px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);padding:5px 12px;border-radius:8px}.live-dot{width:7px;height:7px;background:#10B981;border-radius:50%;animation:blink 2s ease-in-out infinite;box-shadow:0 0 8px rgba(16,185,129,0.6)}.live-lbl{font-size:11px;font-weight:600;color:#10B981}@keyframes blink{0%,100%{opacity:1}50%{opacity:0.4}}</style><div class='hdr'><div class='logo-wrap'><div class='logo-box'><svg viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><rect x='2' y='2' width='20' height='8' rx='2'/><rect x='2' y='14' width='20' height='8' rx='2'/><line x1='6' y1='6' x2='6.01' y2='6'/><line x1='6' y1='18' x2='6.01' y2='18'/></svg></div><div><div class='ht'>LogNet - Host Linux</div><div class='hs'>Monitoramento de Infraestrutura &mdash; node_exporter</div></div></div><div class='hdr-r'><div class='pills'><span class='pill'>Prometheus</span><span class='pill'>node_exporter</span></div><span class='env'>Produ&ccedil;&atilde;o</span><div class='live'><div class='live-dot'></div><span class='live-lbl'>Ao vivo</span></div></div></div>",
+              "editor": {
+                "format": "auto",
+                "language": "markdown"
+              },
+              "editors": [],
+              "externalScripts": [],
+              "externalStyles": [],
+              "helpers": "",
+              "renderMode": "everyRow",
+              "styles": "",
+              "wrap": false
+            }
+          },
+          "version": "6.2.3"
+        }
+      }
+    },
+    "sys-info": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "node_uname_info{instance=~\"$node\"}",
+                      "instant": true,
+                      "legendFormat": "uname"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "node_os_info{instance=~\"$node\"}",
+                      "instant": true,
+                      "legendFormat": "os"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "B"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "count(count(node_cpu_seconds_total{instance=~\"$node\"}) by (cpu))",
+                      "instant": true,
+                      "legendFormat": "cores"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "C"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "time() - node_boot_time_seconds{instance=~\"$node\"}",
+                      "instant": true,
+                      "legendFormat": "uptime"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "D"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "node_load1{instance=~\"$node\"}",
+                      "instant": true,
+                      "legendFormat": "load1"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "E"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "node_load5{instance=~\"$node\"}",
+                      "instant": true,
+                      "legendFormat": "load5"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "F"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "node_load15{instance=~\"$node\"}",
+                      "instant": true,
+                      "legendFormat": "load15"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "G"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "node_memory_MemTotal_bytes{instance=~\"$node\"}",
+                      "instant": true,
+                      "legendFormat": "memTotal"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "H"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "node_memory_MemTotal_bytes{instance=~\"$node\"} - node_memory_MemAvailable_bytes{instance=~\"$node\"}",
+                      "instant": true,
+                      "legendFormat": "memUsed"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "I"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "node_memory_Cached_bytes{instance=~\"$node\"}",
+                      "instant": true,
+                      "legendFormat": "memCached"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "J"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "node_memory_SwapTotal_bytes{instance=~\"$node\"}",
+                      "instant": true,
+                      "legendFormat": "swapTotal"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "K"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "node_memory_SwapTotal_bytes{instance=~\"$node\"} - node_memory_SwapFree_bytes{instance=~\"$node\"}",
+                      "instant": true,
+                      "legendFormat": "swapUsed"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "L"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "node_filesystem_size_bytes{instance=~\"$node\",mountpoint=\"/\",fstype!~\"tmpfs|overlay\"}",
+                      "instant": true,
+                      "legendFormat": "diskTotal"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "M"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "node_filesystem_size_bytes{instance=~\"$node\",mountpoint=\"/\",fstype!~\"tmpfs|overlay\"} - node_filesystem_avail_bytes{instance=~\"$node\",mountpoint=\"/\",fstype!~\"tmpfs|overlay\"}",
+                      "instant": true,
+                      "legendFormat": "diskUsed"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "N"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "node_filesystem_avail_bytes{instance=~\"$node\",mountpoint=\"/\",fstype!~\"tmpfs|overlay\"}",
+                      "instant": true,
+                      "legendFormat": "diskFree"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "O"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "node_procs_running{instance=~\"$node\"}",
+                      "instant": true,
+                      "legendFormat": "procs"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "P"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 13,
+        "links": [],
+        "title": "Informações do Sistema",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": false,
+              "codeData": "{}",
+              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.wrap{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;padding:16px 20px;position:relative;overflow:hidden;display:flex;flex-direction:column}.wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#F97316,#fb923c);border-radius:14px 14px 0 0}.ttl{font-size:11px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:0.9px;margin-bottom:12px;display:flex;align-items:center;gap:8px;flex-shrink:0}.ttl svg{width:15px;height:15px;stroke:#F97316}.grid{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:7px 40px;align-content:center}.row{display:flex;align-items:baseline;gap:10px;min-width:0}.k{font-size:11.5px;color:#6B7280;font-weight:500;width:155px;flex-shrink:0}.v{font-size:12.5px;color:#F9FAFB;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.v.acc{color:#60A5FA}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class='wrap'><div class='ttl'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='2' y='2' width='20' height='8' rx='2'/><rect x='2' y='14' width='20' height='8' rx='2'/><line x1='6' y1='6' x2='6.01' y2='6'/><line x1='6' y1='18' x2='6.01' y2='18'/></svg>Informações do Sistema</div><div class='grid'><div class='row'><span class='k'>Hostname</span><span class='v acc' id='v-host'>--</span></div><div class='row'><span class='k'>Uptime do sistema</span><span class='v acc' id='v-up'>--</span></div><div class='row'><span class='k'>Sistema operacional</span><span class='v' id='v-os'>--</span></div><div class='row'><span class='k'>Load average</span><span class='v' id='v-load'>--</span></div><div class='row'><span class='k'>Kernel</span><span class='v' id='v-kernel'>--</span></div><div class='row'><span class='k'>Processos (runnable)</span><span class='v' id='v-procs'>--</span></div><div class='row'><span class='k'>CPU</span><span class='v' id='v-cpu'>--</span></div><div class='row'><span class='k'>Memória real</span><span class='v' id='v-mem'>--</span></div><div class='row'><span class='k'>Memória virtual (swap)</span><span class='v' id='v-swap'>--</span></div><div class='row'><span class='k'>Disco local (/)</span><span class='v' id='v-disk'>--</span></div></div></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "function fb(b){b=b||0;if(b>=1073741824)return (b/1073741824).toFixed(2)+' GiB';if(b>=1048576)return (b/1048576).toFixed(0)+' MiB';return (b/1024).toFixed(0)+' KiB';}var m={},lbl={};try{if(data&&data.series){data.series.forEach(function(s){var vf=null;if(s.fields){for(var i=0;i<s.fields.length;i++){var fd=s.fields[i];if(fd.type==='number')vf=fd;if(fd.labels){for(var k in fd.labels){if(fd.labels[k])lbl[k]=fd.labels[k];}}}}if(vf){var vs=vf.values;var v=Array.isArray(vs)?vs[vs.length-1]:(vs&&vs.get?vs.get(vs.length-1):0);m[s.refId]=v||0;}});}}catch(e){}function set(id,t){var el=htmlNode.querySelector(id);if(el)el.textContent=t;}var up=m.D||0;var dd=Math.floor(up/86400),hh=Math.floor((up%86400)/3600),mm=Math.floor((up%3600)/60);set('#v-host',lbl.nodename||'--');set('#v-up',dd+' dias, '+hh+' h '+mm+' min');set('#v-os',(lbl.pretty_name||lbl.name||'Linux'));set('#v-load',(m.E||0).toFixed(2)+'  (1m)   '+(m.F||0).toFixed(2)+'  (5m)   '+(m.G||0).toFixed(2)+'  (15m)');set('#v-kernel',(lbl.release||'--')+'  '+(lbl.machine||''));set('#v-procs',Math.round(m.P||0));set('#v-cpu',Math.round(m.C||0)+' núcleos ('+(lbl.machine||'')+')');set('#v-mem',fb(m.I)+' usados / '+fb(m.J)+' em cache / '+fb(m.H)+' total');set('#v-swap',fb(m.L)+' usados / '+fb(m.K)+' total');set('#v-disk',fb(m.N)+' usados / '+fb(m.O)+' livres / '+fb(m.M)+' total');",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "gauge-cpu": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "100 - (avg(rate(node_cpu_seconds_total{instance=~\"$node\",mode=\"idle\"}[5m])) * 100)",
+                      "instant": true,
+                      "legendFormat": "cpu"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 2,
+        "links": [],
+        "title": "CPU",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.ring-wrap{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;transition:border-color .3s}.ring-wrap:hover{border-color:#10B981}.ring-svg{width:100%;height:100%;max-width:230px;max-height:230px}.tick{stroke:#374151;stroke-width:1.5}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class='ring-wrap'><svg class='ring-svg' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><g id='ticks'></g><circle cx='100' cy='100' r='82' fill='none' stroke='#2b3648' stroke-width='6'/><circle id='arc' cx='100' cy='100' r='82' fill='none' stroke='#10B981' stroke-width='6' stroke-linecap='round' stroke-dasharray='515.2' stroke-dashoffset='515.2' transform='rotate(-90 100 100)'/><text id='val' x='86' y='102' text-anchor='middle' fill='#F9FAFB' font-size='34' font-weight='700' font-family='Inter'>--</text><text id='pct' x='126' y='102' text-anchor='middle' fill='#9CA3AF' font-size='15' font-weight='500' font-family='Inter'>%</text><text id='lbl' x='100' y='150' text-anchor='middle' fill='#6B7280' font-size='10' font-weight='700' letter-spacing='1.5' font-family='Inter'>CPU</text></svg></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "var val=0;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var v=f[1].values;val=Array.isArray(v)?v[v.length-1]:(v.get?v.get(v.length-1):0)||0;}}}catch(e){}var pct=Math.min(Math.max(val||0,0),100);var circ=515.2;var arc=htmlNode.querySelector('#arc');var el=htmlNode.querySelector('#val');var tk=htmlNode.querySelector('#ticks');var color=pct>=90?'#EF4444':pct>=75?'#F59E0B':'#10B981';if(tk&&!tk.childNodes.length){var ns='http://www.w3.org/2000/svg';for(var i=0;i<40;i++){var a=(i/40)*2*Math.PI-Math.PI/2;var x1=100+Math.cos(a)*94,y1=100+Math.sin(a)*94,x2=100+Math.cos(a)*(i%5===0?86:90),y2=100+Math.sin(a)*(i%5===0?86:90);var ln=document.createElementNS(ns,'line');ln.setAttribute('x1',x1.toFixed(1));ln.setAttribute('y1',y1.toFixed(1));ln.setAttribute('x2',x2.toFixed(1));ln.setAttribute('y2',y2.toFixed(1));ln.setAttribute('class','tick');tk.appendChild(ln);}}if(arc){arc.setAttribute('stroke-dashoffset',(circ-(circ*pct/100)).toFixed(1));arc.setAttribute('stroke',color);}if(el){el.textContent=Math.round(pct);el.setAttribute('fill',pct>=90?'#EF4444':'#F9FAFB');}var wrap=htmlNode.querySelector('.ring-wrap');if(wrap){wrap.style.borderColor=pct>=90?'rgba(239,68,68,0.6)':'#374151';}",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "gauge-mem": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "(1 - (node_memory_MemAvailable_bytes{instance=~\"$node\"} / node_memory_MemTotal_bytes{instance=~\"$node\"})) * 100",
+                      "instant": true,
+                      "legendFormat": "mem"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 3,
+        "links": [],
+        "title": "Memória Real (RAM)",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.ring-wrap{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;transition:border-color .3s}.ring-wrap:hover{border-color:#10B981}.ring-svg{width:100%;height:100%;max-width:230px;max-height:230px}.tick{stroke:#374151;stroke-width:1.5}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class='ring-wrap'><svg class='ring-svg' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><g id='ticks'></g><circle cx='100' cy='100' r='82' fill='none' stroke='#2b3648' stroke-width='6'/><circle id='arc' cx='100' cy='100' r='82' fill='none' stroke='#10B981' stroke-width='6' stroke-linecap='round' stroke-dasharray='515.2' stroke-dashoffset='515.2' transform='rotate(-90 100 100)'/><text id='val' x='86' y='102' text-anchor='middle' fill='#F9FAFB' font-size='34' font-weight='700' font-family='Inter'>--</text><text id='pct' x='126' y='102' text-anchor='middle' fill='#9CA3AF' font-size='15' font-weight='500' font-family='Inter'>%</text><text id='lbl' x='100' y='150' text-anchor='middle' fill='#6B7280' font-size='10' font-weight='700' letter-spacing='1.5' font-family='Inter'>MEMÓRIA REAL</text></svg></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "var val=0;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var v=f[1].values;val=Array.isArray(v)?v[v.length-1]:(v.get?v.get(v.length-1):0)||0;}}}catch(e){}var pct=Math.min(Math.max(val||0,0),100);var circ=515.2;var arc=htmlNode.querySelector('#arc');var el=htmlNode.querySelector('#val');var tk=htmlNode.querySelector('#ticks');var color=pct>=90?'#EF4444':pct>=75?'#F59E0B':'#10B981';if(tk&&!tk.childNodes.length){var ns='http://www.w3.org/2000/svg';for(var i=0;i<40;i++){var a=(i/40)*2*Math.PI-Math.PI/2;var x1=100+Math.cos(a)*94,y1=100+Math.sin(a)*94,x2=100+Math.cos(a)*(i%5===0?86:90),y2=100+Math.sin(a)*(i%5===0?86:90);var ln=document.createElementNS(ns,'line');ln.setAttribute('x1',x1.toFixed(1));ln.setAttribute('y1',y1.toFixed(1));ln.setAttribute('x2',x2.toFixed(1));ln.setAttribute('y2',y2.toFixed(1));ln.setAttribute('class','tick');tk.appendChild(ln);}}if(arc){arc.setAttribute('stroke-dashoffset',(circ-(circ*pct/100)).toFixed(1));arc.setAttribute('stroke',color);}if(el){el.textContent=Math.round(pct);el.setAttribute('fill',pct>=90?'#EF4444':'#F9FAFB');}var wrap=htmlNode.querySelector('.ring-wrap');if(wrap){wrap.style.borderColor=pct>=90?'rgba(239,68,68,0.6)':'#374151';}",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "gauge-swap": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "(1 - ((node_memory_SwapFree_bytes{instance=~\"$node\"} + node_memory_MemFree_bytes{instance=~\"$node\"}) / (node_memory_SwapTotal_bytes{instance=~\"$node\"} + node_memory_MemTotal_bytes{instance=~\"$node\"}))) * 100",
+                      "instant": true,
+                      "legendFormat": "virt"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 4,
+        "links": [],
+        "title": "Memória Virtual",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.ring-wrap{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;transition:border-color .3s}.ring-wrap:hover{border-color:#10B981}.ring-svg{width:100%;height:100%;max-width:230px;max-height:230px}.tick{stroke:#374151;stroke-width:1.5}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class='ring-wrap'><svg class='ring-svg' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><g id='ticks'></g><circle cx='100' cy='100' r='82' fill='none' stroke='#2b3648' stroke-width='6'/><circle id='arc' cx='100' cy='100' r='82' fill='none' stroke='#10B981' stroke-width='6' stroke-linecap='round' stroke-dasharray='515.2' stroke-dashoffset='515.2' transform='rotate(-90 100 100)'/><text id='val' x='86' y='102' text-anchor='middle' fill='#F9FAFB' font-size='34' font-weight='700' font-family='Inter'>--</text><text id='pct' x='126' y='102' text-anchor='middle' fill='#9CA3AF' font-size='15' font-weight='500' font-family='Inter'>%</text><text id='lbl' x='100' y='150' text-anchor='middle' fill='#6B7280' font-size='10' font-weight='700' letter-spacing='1.5' font-family='Inter'>MEMÓRIA VIRTUAL</text></svg></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "var val=0;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var v=f[1].values;val=Array.isArray(v)?v[v.length-1]:(v.get?v.get(v.length-1):0)||0;}}}catch(e){}var pct=Math.min(Math.max(val||0,0),100);var circ=515.2;var arc=htmlNode.querySelector('#arc');var el=htmlNode.querySelector('#val');var tk=htmlNode.querySelector('#ticks');var color=pct>=90?'#EF4444':pct>=75?'#F59E0B':'#10B981';if(tk&&!tk.childNodes.length){var ns='http://www.w3.org/2000/svg';for(var i=0;i<40;i++){var a=(i/40)*2*Math.PI-Math.PI/2;var x1=100+Math.cos(a)*94,y1=100+Math.sin(a)*94,x2=100+Math.cos(a)*(i%5===0?86:90),y2=100+Math.sin(a)*(i%5===0?86:90);var ln=document.createElementNS(ns,'line');ln.setAttribute('x1',x1.toFixed(1));ln.setAttribute('y1',y1.toFixed(1));ln.setAttribute('x2',x2.toFixed(1));ln.setAttribute('y2',y2.toFixed(1));ln.setAttribute('class','tick');tk.appendChild(ln);}}if(arc){arc.setAttribute('stroke-dashoffset',(circ-(circ*pct/100)).toFixed(1));arc.setAttribute('stroke',color);}if(el){el.textContent=Math.round(pct);el.setAttribute('fill',pct>=90?'#EF4444':'#F9FAFB');}var wrap=htmlNode.querySelector('.ring-wrap');if(wrap){wrap.style.borderColor=pct>=90?'rgba(239,68,68,0.6)':'#374151';}",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "gauge-disk": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "(1 - (node_filesystem_avail_bytes{instance=~\"$node\",mountpoint=\"/\",fstype!~\"tmpfs|overlay\"} / node_filesystem_size_bytes{instance=~\"$node\",mountpoint=\"/\",fstype!~\"tmpfs|overlay\"})) * 100",
+                      "instant": true,
+                      "legendFormat": "disk"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 5,
+        "links": [],
+        "title": "Disco Local (/)",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.ring-wrap{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;transition:border-color .3s}.ring-wrap:hover{border-color:#10B981}.ring-svg{width:100%;height:100%;max-width:230px;max-height:230px}.tick{stroke:#374151;stroke-width:1.5}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class='ring-wrap'><svg class='ring-svg' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><g id='ticks'></g><circle cx='100' cy='100' r='82' fill='none' stroke='#2b3648' stroke-width='6'/><circle id='arc' cx='100' cy='100' r='82' fill='none' stroke='#10B981' stroke-width='6' stroke-linecap='round' stroke-dasharray='515.2' stroke-dashoffset='515.2' transform='rotate(-90 100 100)'/><text id='val' x='86' y='102' text-anchor='middle' fill='#F9FAFB' font-size='34' font-weight='700' font-family='Inter'>--</text><text id='pct' x='126' y='102' text-anchor='middle' fill='#9CA3AF' font-size='15' font-weight='500' font-family='Inter'>%</text><text id='lbl' x='100' y='150' text-anchor='middle' fill='#6B7280' font-size='10' font-weight='700' letter-spacing='1.5' font-family='Inter'>DISCO LOCAL</text></svg></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "var val=0;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var v=f[1].values;val=Array.isArray(v)?v[v.length-1]:(v.get?v.get(v.length-1):0)||0;}}}catch(e){}var pct=Math.min(Math.max(val||0,0),100);var circ=515.2;var arc=htmlNode.querySelector('#arc');var el=htmlNode.querySelector('#val');var tk=htmlNode.querySelector('#ticks');var color=pct>=90?'#EF4444':pct>=75?'#F59E0B':'#10B981';if(tk&&!tk.childNodes.length){var ns='http://www.w3.org/2000/svg';for(var i=0;i<40;i++){var a=(i/40)*2*Math.PI-Math.PI/2;var x1=100+Math.cos(a)*94,y1=100+Math.sin(a)*94,x2=100+Math.cos(a)*(i%5===0?86:90),y2=100+Math.sin(a)*(i%5===0?86:90);var ln=document.createElementNS(ns,'line');ln.setAttribute('x1',x1.toFixed(1));ln.setAttribute('y1',y1.toFixed(1));ln.setAttribute('x2',x2.toFixed(1));ln.setAttribute('y2',y2.toFixed(1));ln.setAttribute('class','tick');tk.appendChild(ln);}}if(arc){arc.setAttribute('stroke-dashoffset',(circ-(circ*pct/100)).toFixed(1));arc.setAttribute('stroke',color);}if(el){el.textContent=Math.round(pct);el.setAttribute('fill',pct>=90?'#EF4444':'#F9FAFB');}var wrap=htmlNode.querySelector('.ring-wrap');if(wrap){wrap.style.borderColor=pct>=90?'rgba(239,68,68,0.6)':'#374151';}",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "sec-cpu-mem": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "group": "",
+                    "kind": "DataQuery",
+                    "spec": {},
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 6,
+        "links": [],
+        "title": "",
+        "transparent": true,
+        "vizConfig": {
+          "group": "marcusolsson-dynamictext-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "afterRender": "",
+              "content": "",
+              "contentPartials": [],
+              "defaultContent": "<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.sec{height:100%;display:flex;align-items:center;gap:13px;padding:0 16px;background:linear-gradient(90deg,rgba(249,115,22,0.12),rgba(31,41,55,0) 55%);border-left:3px solid #F97316;border-radius:8px}.sico{width:30px;height:30px;border-radius:8px;background:rgba(249,115,22,0.14);border:1px solid rgba(249,115,22,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0}.sico svg{width:16px;height:16px;stroke:#F97316}.stt{font-size:14px;font-weight:700;color:#F9FAFB;letter-spacing:-0.3px;white-space:nowrap}.sln{flex:1;height:1px;background:linear-gradient(90deg,rgba(75,85,99,0.55),transparent)}.ssub{font-size:11px;color:#6B7280;font-weight:500;white-space:nowrap}</style><div class='sec'><div class='sico'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='4' y='4' width='16' height='16' rx='2'/><rect x='9' y='9' width='6' height='6'/><line x1='9' y1='1' x2='9' y2='4'/><line x1='15' y1='1' x2='15' y2='4'/><line x1='9' y1='20' x2='9' y2='23'/><line x1='15' y1='20' x2='15' y2='23'/><line x1='20' y1='9' x2='23' y2='9'/><line x1='20' y1='14' x2='23' y2='14'/><line x1='1' y1='9' x2='4' y2='9'/><line x1='1' y1='14' x2='4' y2='14'/></svg></div><div class='stt'>CPU &amp; Mem&oacute;ria</div><div class='sln'></div><div class='ssub'>Utiliza&ccedil;&atilde;o ao longo do tempo e load average</div></div>",
+              "editor": {
+                "format": "auto",
+                "language": "markdown"
+              },
+              "editors": [],
+              "externalScripts": [],
+              "externalStyles": [],
+              "helpers": "",
+              "renderMode": "everyRow",
+              "styles": "",
+              "wrap": false
+            }
+          },
+          "version": "6.2.3"
+        }
+      }
+    },
+    "ts-cpu": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "100 - (avg(rate(node_cpu_seconds_total{instance=~\"$node\",mode=\"idle\"}[$__rate_interval])) * 100)",
+                      "legendFormat": "Uso de CPU"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 7,
+        "links": [],
+        "title": "Uso de CPU (%)",
+        "vizConfig": {
+          "group": "timeseries",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "custom": {
+                  "axisBorderShow": false,
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "%",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "barWidthFactor": 0.6,
+                  "drawStyle": "line",
+                  "fillOpacity": 20,
+                  "gradientMode": "opacity",
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  },
+                  "insertNulls": false,
+                  "lineInterpolation": "smooth",
+                  "lineWidth": 2,
+                  "pointSize": 4,
+                  "scaleDistribution": {
+                    "type": "linear"
+                  },
+                  "showPoints": "never",
+                  "showValues": false,
+                  "spanNulls": true,
+                  "stacking": {
+                    "group": "A",
+                    "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                    "mode": "off"
+                  }
+                },
+                "max": 100,
+                "min": 0,
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                },
+                "unit": "percent"
+              },
+              "overrides": [
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Uso de CPU"
+                  },
+                  "properties": [
+                    {
+                      "id": "color",
+                      "value": {
+                        "fixedColor": "#10B981",
+                        "mode": "fixed"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "options": {
+              "legend": {
+                "calcs": [
+                  "mean",
+                  "max",
+                  "lastNotNull"
+                ],
+                "displayMode": "table",
+                "placement": "bottom",
+                "showLegend": true
+              },
+              "tooltip": {
+                "hideZeros": false,
+                "mode": "multi",
+                "sort": "desc"
+              }
+            }
+          },
+          "version": "13.0.2"
+        }
+      }
+    },
+    "ts-mem": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "node_memory_MemTotal_bytes{instance=~\"$node\"}",
+                      "legendFormat": "Total"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "node_memory_MemTotal_bytes{instance=~\"$node\"} - node_memory_MemAvailable_bytes{instance=~\"$node\"}",
+                      "legendFormat": "Em uso"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "B"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 8,
+        "links": [],
+        "title": "Memória (bytes)",
+        "vizConfig": {
+          "group": "timeseries",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "custom": {
+                  "axisBorderShow": false,
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "barWidthFactor": 0.6,
+                  "drawStyle": "line",
+                  "fillOpacity": 16,
+                  "gradientMode": "opacity",
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  },
+                  "insertNulls": false,
+                  "lineInterpolation": "smooth",
+                  "lineWidth": 2,
+                  "pointSize": 4,
+                  "scaleDistribution": {
+                    "type": "linear"
+                  },
+                  "showPoints": "never",
+                  "showValues": false,
+                  "spanNulls": true,
+                  "stacking": {
+                    "group": "A",
+                    "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                    "mode": "off"
+                  }
+                },
+                "min": 0,
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                },
+                "unit": "bytes"
+              },
+              "overrides": [
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Em uso"
+                  },
+                  "properties": [
+                    {
+                      "id": "color",
+                      "value": {
+                        "fixedColor": "#10B981",
+                        "mode": "fixed"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Total"
+                  },
+                  "properties": [
+                    {
+                      "id": "color",
+                      "value": {
+                        "fixedColor": "#6B7280",
+                        "mode": "fixed"
+                      }
+                    },
+                    {
+                      "id": "custom.fillOpacity",
+                      "value": 0
+                    },
+                    {
+                      "id": "custom.lineStyle",
+                      "value": {
+                        "dash": [
+                          8,
+                          4
+                        ],
+                        "fill": "dash"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "options": {
+              "legend": {
+                "calcs": [
+                  "mean",
+                  "max",
+                  "lastNotNull"
+                ],
+                "displayMode": "table",
+                "placement": "bottom",
+                "showLegend": true
+              },
+              "tooltip": {
+                "hideZeros": false,
+                "mode": "multi",
+                "sort": "desc"
+              }
+            }
+          },
+          "version": "13.0.2"
+        }
+      }
+    },
+    "ts-load": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "node_load1{instance=~\"$node\"}",
+                      "legendFormat": "Load 1m"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "node_load5{instance=~\"$node\"}",
+                      "legendFormat": "Load 5m"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "B"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "count(count(node_cpu_seconds_total{instance=~\"$node\"}) by (cpu))",
+                      "legendFormat": "Núcleos"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "C"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 9,
+        "links": [],
+        "title": "Load Average",
+        "vizConfig": {
+          "group": "timeseries",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "custom": {
+                  "axisBorderShow": false,
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "carga",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "barWidthFactor": 0.6,
+                  "drawStyle": "line",
+                  "fillOpacity": 14,
+                  "gradientMode": "opacity",
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  },
+                  "insertNulls": false,
+                  "lineInterpolation": "smooth",
+                  "lineWidth": 2,
+                  "pointSize": 4,
+                  "scaleDistribution": {
+                    "type": "linear"
+                  },
+                  "showPoints": "never",
+                  "showValues": false,
+                  "spanNulls": true,
+                  "stacking": {
+                    "group": "A",
+                    "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                    "mode": "off"
+                  }
+                },
+                "min": 0,
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                },
+                "unit": "short"
+              },
+              "overrides": [
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Núcleos"
+                  },
+                  "properties": [
+                    {
+                      "id": "color",
+                      "value": {
+                        "fixedColor": "#F59E0B",
+                        "mode": "fixed"
+                      }
+                    },
+                    {
+                      "id": "custom.fillOpacity",
+                      "value": 0
+                    },
+                    {
+                      "id": "custom.lineStyle",
+                      "value": {
+                        "dash": [
+                          8,
+                          4
+                        ],
+                        "fill": "dash"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "options": {
+              "legend": {
+                "calcs": [
+                  "mean",
+                  "max",
+                  "lastNotNull"
+                ],
+                "displayMode": "table",
+                "placement": "bottom",
+                "showLegend": true
+              },
+              "tooltip": {
+                "hideZeros": false,
+                "mode": "multi",
+                "sort": "desc"
+              }
+            }
+          },
+          "version": "13.0.2"
+        }
+      }
+    },
+    "sec-disk-net": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "group": "",
+                    "kind": "DataQuery",
+                    "spec": {},
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 10,
+        "links": [],
+        "title": "",
+        "transparent": true,
+        "vizConfig": {
+          "group": "marcusolsson-dynamictext-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "afterRender": "",
+              "content": "",
+              "contentPartials": [],
+              "defaultContent": "<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.sec{height:100%;display:flex;align-items:center;gap:13px;padding:0 16px;background:linear-gradient(90deg,rgba(249,115,22,0.12),rgba(31,41,55,0) 55%);border-left:3px solid #F97316;border-radius:8px}.sico{width:30px;height:30px;border-radius:8px;background:rgba(249,115,22,0.14);border:1px solid rgba(249,115,22,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0}.sico svg{width:16px;height:16px;stroke:#F97316}.stt{font-size:14px;font-weight:700;color:#F9FAFB;letter-spacing:-0.3px;white-space:nowrap}.sln{flex:1;height:1px;background:linear-gradient(90deg,rgba(75,85,99,0.55),transparent)}.ssub{font-size:11px;color:#6B7280;font-weight:500;white-space:nowrap}</style><div class='sec'><div class='sico'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><ellipse cx='12' cy='5' rx='9' ry='3'/><path d='M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5'/><path d='M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3'/></svg></div><div class='stt'>Disco &amp; Rede</div><div class='sln'></div><div class='ssub'>I/O de disco e tr&aacute;fego de rede por interface</div></div>",
+              "editor": {
+                "format": "auto",
+                "language": "markdown"
+              },
+              "editors": [],
+              "externalScripts": [],
+              "externalStyles": [],
+              "helpers": "",
+              "renderMode": "everyRow",
+              "styles": "",
+              "wrap": false
+            }
+          },
+          "version": "6.2.3"
+        }
+      }
+    },
+    "ts-diskio": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(rate(node_disk_read_bytes_total{instance=~\"$node\"}[$__rate_interval]))",
+                      "legendFormat": "Leitura"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(rate(node_disk_written_bytes_total{instance=~\"$node\"}[$__rate_interval]))",
+                      "legendFormat": "Escrita"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "B"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 11,
+        "links": [],
+        "title": "Disco I/O",
+        "vizConfig": {
+          "group": "timeseries",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "custom": {
+                  "axisBorderShow": false,
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "barWidthFactor": 0.6,
+                  "drawStyle": "line",
+                  "fillOpacity": 16,
+                  "gradientMode": "opacity",
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  },
+                  "insertNulls": false,
+                  "lineInterpolation": "smooth",
+                  "lineWidth": 2,
+                  "pointSize": 4,
+                  "scaleDistribution": {
+                    "type": "linear"
+                  },
+                  "showPoints": "never",
+                  "showValues": false,
+                  "spanNulls": true,
+                  "stacking": {
+                    "group": "A",
+                    "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                    "mode": "off"
+                  }
+                },
+                "min": 0,
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                },
+                "unit": "Bps"
+              },
+              "overrides": [
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Leitura"
+                  },
+                  "properties": [
+                    {
+                      "id": "color",
+                      "value": {
+                        "fixedColor": "#3B82F6",
+                        "mode": "fixed"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Escrita"
+                  },
+                  "properties": [
+                    {
+                      "id": "color",
+                      "value": {
+                        "fixedColor": "#F97316",
+                        "mode": "fixed"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "options": {
+              "legend": {
+                "calcs": [
+                  "mean",
+                  "max",
+                  "lastNotNull"
+                ],
+                "displayMode": "table",
+                "placement": "bottom",
+                "showLegend": true
+              },
+              "tooltip": {
+                "hideZeros": false,
+                "mode": "multi",
+                "sort": "desc"
+              }
+            }
+          },
+          "version": "13.0.2"
+        }
+      }
+    },
+    "ts-net": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(rate(node_network_receive_bytes_total{instance=~\"$node\",device!~\"lo|veth.*|docker.*|br-.*\"}[$__rate_interval])) * 8",
+                      "legendFormat": "Download"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(rate(node_network_transmit_bytes_total{instance=~\"$node\",device!~\"lo|veth.*|docker.*|br-.*\"}[$__rate_interval])) * 8",
+                      "legendFormat": "Upload"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "B"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 12,
+        "links": [],
+        "title": "Tráfego de Rede",
+        "vizConfig": {
+          "group": "timeseries",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "palette-classic"
+                },
+                "custom": {
+                  "axisBorderShow": false,
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "barWidthFactor": 0.6,
+                  "drawStyle": "line",
+                  "fillOpacity": 16,
+                  "gradientMode": "opacity",
+                  "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                  },
+                  "insertNulls": false,
+                  "lineInterpolation": "smooth",
+                  "lineWidth": 2,
+                  "pointSize": 4,
+                  "scaleDistribution": {
+                    "type": "linear"
+                  },
+                  "showPoints": "never",
+                  "showValues": false,
+                  "spanNulls": true,
+                  "stacking": {
+                    "group": "A",
+                    "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                    "mode": "off"
+                  }
+                },
+                "min": 0,
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                },
+                "unit": "bps"
+              },
+              "overrides": [
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Download"
+                  },
+                  "properties": [
+                    {
+                      "id": "color",
+                      "value": {
+                        "fixedColor": "#10B981",
+                        "mode": "fixed"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Upload"
+                  },
+                  "properties": [
+                    {
+                      "id": "color",
+                      "value": {
+                        "fixedColor": "#F97316",
+                        "mode": "fixed"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "options": {
+              "legend": {
+                "calcs": [
+                  "mean",
+                  "max",
+                  "lastNotNull"
+                ],
+                "displayMode": "table",
+                "placement": "bottom",
+                "showLegend": true
+              },
+              "tooltip": {
+                "hideZeros": false,
+                "mode": "multi",
+                "sort": "desc"
+              }
+            }
+          },
+          "version": "13.0.2"
+        }
+      }
+    }
+  },
+  "layout": {
+    "kind": "GridLayout",
+    "spec": {
+      "items": [
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "host-header"
+            },
+            "height": 3,
+            "width": 24,
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "sys-info"
+            },
+            "height": 7,
+            "width": 24,
+            "x": 0,
+            "y": 3
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "gauge-cpu"
+            },
+            "height": 9,
+            "width": 6,
+            "x": 0,
+            "y": 10
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "gauge-mem"
+            },
+            "height": 9,
+            "width": 6,
+            "x": 6,
+            "y": 10
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "gauge-swap"
+            },
+            "height": 9,
+            "width": 6,
+            "x": 12,
+            "y": 10
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "gauge-disk"
+            },
+            "height": 9,
+            "width": 6,
+            "x": 18,
+            "y": 10
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "sec-cpu-mem"
+            },
+            "height": 2,
+            "width": 24,
+            "x": 0,
+            "y": 19
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "ts-cpu"
+            },
+            "height": 8,
+            "width": 12,
+            "x": 0,
+            "y": 21
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "ts-mem"
+            },
+            "height": 8,
+            "width": 12,
+            "x": 12,
+            "y": 21
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "ts-load"
+            },
+            "height": 8,
+            "width": 24,
+            "x": 0,
+            "y": 29
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "sec-disk-net"
+            },
+            "height": 2,
+            "width": 24,
+            "x": 0,
+            "y": 37
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "ts-diskio"
+            },
+            "height": 8,
+            "width": 12,
+            "x": 0,
+            "y": 39
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "ts-net"
+            },
+            "height": 8,
+            "width": 12,
+            "x": 12,
+            "y": 39
+          }
+        }
+      ]
+    }
+  },
+  "links": [],
+  "liveNow": false,
+  "preload": false,
+  "tags": [
+    "lognet",
+    "host",
+    "linux",
+    "node-exporter",
+    "infraestrutura"
+  ],
+  "timeSettings": {
+    "autoRefresh": "10s",
+    "autoRefreshIntervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "fiscalYearStartMonth": 0,
+    "from": "now-1h",
+    "hideTimepicker": false,
+    "timezone": "browser",
+    "to": "now"
+  },
+  "title": "LogNet - Host Linux",
+  "variables": [
+    {
+      "kind": "QueryVariable",
+      "spec": {
+        "allowCustomValue": true,
+        "current": {
+          "text": "",
+          "value": ""
+        },
+        "definition": "label_values(node_uname_info, instance)",
+        "hide": "dontHide",
+        "includeAll": false,
+        "label": "Host",
+        "multi": false,
+        "name": "node",
+        "options": [],
+        "query": {
+          "datasource": {
+            "name": "bfnr96wiwms5cd"
+          },
+          "group": "prometheus",
+          "kind": "DataQuery",
+          "spec": {
+            "__legacyStringValue": "label_values(node_uname_info, instance)"
+          },
+          "version": "v0"
+        },
+        "refresh": "onTimeRangeChanged",
+        "regex": "",
+        "regexApplyTo": "value",
+        "skipUrlSync": false,
+        "sort": "alphabeticalAsc"
+      }
+    }
+  ]
+}

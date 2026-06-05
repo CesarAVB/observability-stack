@@ -49,6 +49,7 @@ A stack cobre os três pilares da observabilidade:
 | Logs | **Loki** | Agrega e indexa logs das aplicações |
 | Traces | **Tempo** | Armazena e correlaciona traces distribuídos |
 | Visualização | **Grafana** | Dashboards, Explore e correlação entre pilares |
+| Métricas de infra | **node-exporter + cAdvisor** | Exporters de host e containers (lidos pelo Prometheus) |
 | Monitoramento de infra | **Zabbix** | Monitoramento de hosts, serviços e rede |
 
 ---
@@ -58,8 +59,12 @@ A stack cobre os três pilares da observabilidade:
 ```
 .
 ├── Grafana/                  # Stack do Grafana (dashboards e datasources)
+│   ├── dashboards/           # Templates de dashboard (JSON) + guia de import
 │   ├── docker-compose.yml
 │   ├── exemplo.env
+│   └── README.md
+├── Monitoring/               # Stack de exporters (node-exporter + cAdvisor)
+│   ├── docker-compose.yml
 │   └── README.md
 ├── Loki/                     # Stack do Grafana Loki (agregação de logs)
 │   ├── docker-compose.yml
@@ -89,6 +94,8 @@ A stack cobre os três pilares da observabilidade:
 | Ferramenta | README |
 |---|---|
 | Grafana | [Grafana/README.md](Grafana/README.md) |
+| Dashboards (templates) | [Grafana/dashboards/README-dashboard.md](Grafana/dashboards/README-dashboard.md) |
+| Monitoring (exporters) | [Monitoring/README.md](Monitoring/README.md) |
 | Loki | [Loki/README.md](Loki/README.md) |
 | Prometheus | [Prometheus/README.md](Prometheus/README.md) |
 | Tempo | [Tempo/README.md](Tempo/README.md) |

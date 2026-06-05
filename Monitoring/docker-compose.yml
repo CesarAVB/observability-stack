@@ -1,0 +1,52 @@
+version: "3.8"
+
+# Stack Swarm dos exporters de infraestrutura.
+# Deploy: docker stack deploy -c docker-compose.yml monitoring
+#
+# IMPORTANTE: a rede abaixo deve ser a MESMA rede overlay onde o Prometheus
+# já está. Ajuste "name:" para o nome retornado no README (pré-requisito).
+
+services:
+  # ── Métricas do HOST (um por nó do cluster) ──
+  node-exporter:
+    image: prom/node-exporter:v1.8.2
+    command:
+      - "--path.procfs=/host/proc"
+      - "--path.sysfs=/host/sys"
+      - "--path.rootfs=/rootfs"
+      - "--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)"
+      - "--collector.filesystem.fs-types-exclude=^(autofs|binfmt_misc|cgroup|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|mqueue|overlay|proc|procfs|pstore|securityfs|sysfs|tmpfs|tracefs)$$"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    networks:
+      - monitoring
+    deploy:
+      mode: global
+      restart_policy:
+        condition: any
+
+  # ── Métricas por CONTAINER (um por nó do cluster) ──
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.49.1
+    command:
+      - "--housekeeping_interval=15s"
+      - "--docker_only=true"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    networks:
+      - monitoring
+    deploy:
+      mode: global
+      restart_policy:
+        condition: any
+
+networks:
+  monitoring:
+    external: true
+    name: network_swarm_public
