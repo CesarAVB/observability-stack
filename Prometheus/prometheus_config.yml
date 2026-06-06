@@ -27,13 +27,13 @@ scrape_configs:
         labels:
           app: 'host-linux'
           env: 'production'
-          server: 'srv-251'
+          server: '224.251 - VPS LOGNET'
           instance: '45.187.224.251'
       - targets: ['45.187.224.248:9100']
         labels:
           app: 'host-linux'
           env: 'production'
-          server: 'srv-248'
+          server: '224.248 - VPS ASB'
           instance: '45.187.224.248'
 
   # cAdvisor — métricas de uso de recursos por container Docker
@@ -47,11 +47,11 @@ scrape_configs:
         labels:
           app: 'containers'
           env: 'production'
-          server: 'srv-251'
+          server: '224.251 - VPS LOGNET'
           instance: '45.187.224.251'
       - targets: ['45.187.224.248:8080']
         labels:
           app: 'containers'
           env: 'production'
-          server: 'srv-248'
+          server: '224.248 - VPS ASB'
           instance: '45.187.224.248'

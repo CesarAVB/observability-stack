@@ -42,7 +42,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "100 - (avg(rate(node_cpu_seconds_total{instance=~\"$node\",mode=\"idle\"}[5m])) * 100)",
+                      "expr": "100 - (avg(rate(node_cpu_seconds_total{server=~\"$node\",mode=\"idle\"}[5m])) * 100)",
                       "instant": true,
                       "legendFormat": "cpu"
                     },
@@ -135,7 +135,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "(1 - (node_filesystem_avail_bytes{instance=~\"$node\",mountpoint=\"/\",fstype!~\"tmpfs|overlay\"} / node_filesystem_size_bytes{instance=~\"$node\",mountpoint=\"/\",fstype!~\"tmpfs|overlay\"})) * 100",
+                      "expr": "(1 - (node_filesystem_avail_bytes{server=~\"$node\",mountpoint=\"/\",fstype!~\"tmpfs|overlay\"} / node_filesystem_size_bytes{server=~\"$node\",mountpoint=\"/\",fstype!~\"tmpfs|overlay\"})) * 100",
                       "instant": true,
                       "legendFormat": "disk"
                     },
@@ -228,7 +228,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "(1 - (node_memory_MemAvailable_bytes{instance=~\"$node\"} / node_memory_MemTotal_bytes{instance=~\"$node\"})) * 100",
+                      "expr": "(1 - (node_memory_MemAvailable_bytes{server=~\"$node\"} / node_memory_MemTotal_bytes{server=~\"$node\"})) * 100",
                       "instant": true,
                       "legendFormat": "mem"
                     },
@@ -321,7 +321,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "(1 - ((node_memory_SwapFree_bytes{instance=~\"$node\"} + node_memory_MemFree_bytes{instance=~\"$node\"}) / (node_memory_SwapTotal_bytes{instance=~\"$node\"} + node_memory_MemTotal_bytes{instance=~\"$node\"}))) * 100",
+                      "expr": "(1 - ((node_memory_SwapFree_bytes{server=~\"$node\"} + node_memory_MemFree_bytes{server=~\"$node\"}) / (node_memory_SwapTotal_bytes{server=~\"$node\"} + node_memory_MemTotal_bytes{server=~\"$node\"}))) * 100",
                       "instant": true,
                       "legendFormat": "virt"
                     },
@@ -488,7 +488,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "node_uname_info{instance=~\"$node\"}",
+                      "expr": "node_uname_info{server=~\"$node\"}",
                       "instant": true,
                       "legendFormat": "uname"
                     },
@@ -508,7 +508,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "node_os_info{instance=~\"$node\"}",
+                      "expr": "node_os_info{server=~\"$node\"}",
                       "instant": true,
                       "legendFormat": "os"
                     },
@@ -528,7 +528,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "count(count(node_cpu_seconds_total{instance=~\"$node\"}) by (cpu))",
+                      "expr": "count(count(node_cpu_seconds_total{server=~\"$node\"}) by (cpu))",
                       "instant": true,
                       "legendFormat": "cores"
                     },
@@ -548,7 +548,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "time() - node_boot_time_seconds{instance=~\"$node\"}",
+                      "expr": "time() - node_boot_time_seconds{server=~\"$node\"}",
                       "instant": true,
                       "legendFormat": "uptime"
                     },
@@ -568,7 +568,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "node_load1{instance=~\"$node\"}",
+                      "expr": "node_load1{server=~\"$node\"}",
                       "instant": true,
                       "legendFormat": "load1"
                     },
@@ -588,7 +588,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "node_load5{instance=~\"$node\"}",
+                      "expr": "node_load5{server=~\"$node\"}",
                       "instant": true,
                       "legendFormat": "load5"
                     },
@@ -608,7 +608,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "node_load15{instance=~\"$node\"}",
+                      "expr": "node_load15{server=~\"$node\"}",
                       "instant": true,
                       "legendFormat": "load15"
                     },
@@ -628,7 +628,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "node_memory_MemTotal_bytes{instance=~\"$node\"}",
+                      "expr": "node_memory_MemTotal_bytes{server=~\"$node\"}",
                       "instant": true,
                       "legendFormat": "memTotal"
                     },
@@ -648,7 +648,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "node_memory_MemTotal_bytes{instance=~\"$node\"} - node_memory_MemAvailable_bytes{instance=~\"$node\"}",
+                      "expr": "node_memory_MemTotal_bytes{server=~\"$node\"} - node_memory_MemAvailable_bytes{server=~\"$node\"}",
                       "instant": true,
                       "legendFormat": "memUsed"
                     },
@@ -668,7 +668,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "node_memory_Cached_bytes{instance=~\"$node\"}",
+                      "expr": "node_memory_Cached_bytes{server=~\"$node\"}",
                       "instant": true,
                       "legendFormat": "memCached"
                     },
@@ -688,7 +688,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "node_memory_SwapTotal_bytes{instance=~\"$node\"}",
+                      "expr": "node_memory_SwapTotal_bytes{server=~\"$node\"}",
                       "instant": true,
                       "legendFormat": "swapTotal"
                     },
@@ -708,7 +708,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "node_memory_SwapTotal_bytes{instance=~\"$node\"} - node_memory_SwapFree_bytes{instance=~\"$node\"}",
+                      "expr": "node_memory_SwapTotal_bytes{server=~\"$node\"} - node_memory_SwapFree_bytes{server=~\"$node\"}",
                       "instant": true,
                       "legendFormat": "swapUsed"
                     },
@@ -728,7 +728,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "node_filesystem_size_bytes{instance=~\"$node\",mountpoint=\"/\",fstype!~\"tmpfs|overlay\"}",
+                      "expr": "node_filesystem_size_bytes{server=~\"$node\",mountpoint=\"/\",fstype!~\"tmpfs|overlay\"}",
                       "instant": true,
                       "legendFormat": "diskTotal"
                     },
@@ -748,7 +748,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "node_filesystem_size_bytes{instance=~\"$node\",mountpoint=\"/\",fstype!~\"tmpfs|overlay\"} - node_filesystem_avail_bytes{instance=~\"$node\",mountpoint=\"/\",fstype!~\"tmpfs|overlay\"}",
+                      "expr": "node_filesystem_size_bytes{server=~\"$node\",mountpoint=\"/\",fstype!~\"tmpfs|overlay\"} - node_filesystem_avail_bytes{server=~\"$node\",mountpoint=\"/\",fstype!~\"tmpfs|overlay\"}",
                       "instant": true,
                       "legendFormat": "diskUsed"
                     },
@@ -768,7 +768,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "node_filesystem_avail_bytes{instance=~\"$node\",mountpoint=\"/\",fstype!~\"tmpfs|overlay\"}",
+                      "expr": "node_filesystem_avail_bytes{server=~\"$node\",mountpoint=\"/\",fstype!~\"tmpfs|overlay\"}",
                       "instant": true,
                       "legendFormat": "diskFree"
                     },
@@ -788,7 +788,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "node_procs_running{instance=~\"$node\"}",
+                      "expr": "node_procs_running{server=~\"$node\"}",
                       "instant": true,
                       "legendFormat": "procs"
                     },
@@ -1029,7 +1029,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "100 - (avg(rate(node_cpu_seconds_total{instance=~\"$node\",mode=\"idle\"}[$__rate_interval])) * 100)",
+                      "expr": "100 - (avg(rate(node_cpu_seconds_total{server=~\"$node\",mode=\"idle\"}[$__rate_interval])) * 100)",
                       "legendFormat": "Uso de CPU"
                     },
                     "version": "v0"
@@ -1168,7 +1168,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "sum(rate(node_disk_read_bytes_total{instance=~\"$node\"}[$__rate_interval]))",
+                      "expr": "sum(rate(node_disk_read_bytes_total{server=~\"$node\"}[$__rate_interval]))",
                       "legendFormat": "Leitura"
                     },
                     "version": "v0"
@@ -1187,7 +1187,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "sum(rate(node_disk_written_bytes_total{instance=~\"$node\"}[$__rate_interval]))",
+                      "expr": "sum(rate(node_disk_written_bytes_total{server=~\"$node\"}[$__rate_interval]))",
                       "legendFormat": "Escrita"
                     },
                     "version": "v0"
@@ -1340,7 +1340,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "node_load1{instance=~\"$node\"}",
+                      "expr": "node_load1{server=~\"$node\"}",
                       "legendFormat": "Load 1m"
                     },
                     "version": "v0"
@@ -1359,7 +1359,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "node_load5{instance=~\"$node\"}",
+                      "expr": "node_load5{server=~\"$node\"}",
                       "legendFormat": "Load 5m"
                     },
                     "version": "v0"
@@ -1378,7 +1378,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "count(count(node_cpu_seconds_total{instance=~\"$node\"}) by (cpu))",
+                      "expr": "count(count(node_cpu_seconds_total{server=~\"$node\"}) by (cpu))",
                       "legendFormat": "Núcleos"
                     },
                     "version": "v0"
@@ -1530,7 +1530,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "node_memory_MemTotal_bytes{instance=~\"$node\"}",
+                      "expr": "node_memory_MemTotal_bytes{server=~\"$node\"}",
                       "legendFormat": "Total"
                     },
                     "version": "v0"
@@ -1549,7 +1549,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "node_memory_MemTotal_bytes{instance=~\"$node\"} - node_memory_MemAvailable_bytes{instance=~\"$node\"}",
+                      "expr": "node_memory_MemTotal_bytes{server=~\"$node\"} - node_memory_MemAvailable_bytes{server=~\"$node\"}",
                       "legendFormat": "Em uso"
                     },
                     "version": "v0"
@@ -1716,7 +1716,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "sum(rate(node_network_receive_bytes_total{instance=~\"$node\",device!~\"lo|veth.*|docker.*|br-.*\"}[$__rate_interval])) * 8",
+                      "expr": "sum(rate(node_network_receive_bytes_total{server=~\"$node\",device!~\"lo|veth.*|docker.*|br-.*\"}[$__rate_interval])) * 8",
                       "legendFormat": "Download"
                     },
                     "version": "v0"
@@ -1735,7 +1735,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "sum(rate(node_network_transmit_bytes_total{instance=~\"$node\",device!~\"lo|veth.*|docker.*|br-.*\"}[$__rate_interval])) * 8",
+                      "expr": "sum(rate(node_network_transmit_bytes_total{server=~\"$node\",device!~\"lo|veth.*|docker.*|br-.*\"}[$__rate_interval])) * 8",
                       "legendFormat": "Upload"
                     },
                     "version": "v0"
@@ -2078,10 +2078,10 @@
       "spec": {
         "allowCustomValue": true,
         "current": {
-          "text": "45.187.224.251",
-          "value": "45.187.224.251"
+          "text": "224.251 - VPS LOGNET",
+          "value": "224.251 - VPS LOGNET"
         },
-        "definition": "label_values(node_uname_info, instance)",
+        "definition": "query_result(group by (server) (node_uname_info))",
         "hide": "dontHide",
         "includeAll": false,
         "label": "Host",
@@ -2095,12 +2095,12 @@
           "group": "prometheus",
           "kind": "DataQuery",
           "spec": {
-            "__legacyStringValue": "label_values(node_uname_info, instance)"
+            "__legacyStringValue": "query_result(group by (server) (node_uname_info))"
           },
           "version": "v0"
         },
         "refresh": "onTimeRangeChanged",
-        "regex": "",
+        "regex": "/server=\"([^\"]+)\"/",
         "regexApplyTo": "value",
         "skipUrlSync": false,
         "sort": "alphabeticalAsc"

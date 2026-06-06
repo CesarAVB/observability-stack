@@ -42,7 +42,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "topk(10, sum(rate(container_cpu_usage_seconds_total{instance=~\"$node\",name!=\"\"}[5m])) by (name))",
+                      "expr": "topk(10, sum(rate(container_cpu_usage_seconds_total{server=~\"$node\",name!=\"\"}[5m])) by (name))",
                       "instant": true,
                       "legendFormat": "{{name}}"
                     },
@@ -135,7 +135,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "topk(10, sum(container_memory_working_set_bytes{instance=~\"$node\",name!=\"\"}) by (name))",
+                      "expr": "topk(10, sum(container_memory_working_set_bytes{server=~\"$node\",name!=\"\"}) by (name))",
                       "instant": true,
                       "legendFormat": "{{name}}"
                     },
@@ -302,7 +302,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "count(count(container_last_seen{instance=~\"$node\",name!=\"\"}) by (name))",
+                      "expr": "count(count(container_last_seen{server=~\"$node\",name!=\"\"}) by (name))",
                       "instant": true,
                       "legendFormat": "total"
                     },
@@ -322,7 +322,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "count(count(container_last_seen{instance=~\"$node\",name!=\"\"}) by (image))",
+                      "expr": "count(count(container_last_seen{server=~\"$node\",name!=\"\"}) by (image))",
                       "instant": true,
                       "legendFormat": "images"
                     },
@@ -342,7 +342,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "sum(rate(container_cpu_usage_seconds_total{instance=~\"$node\",name!=\"\"}[5m])) / count(count(node_cpu_seconds_total{instance=~\"$node\"}) by (cpu)) * 100",
+                      "expr": "sum(rate(container_cpu_usage_seconds_total{server=~\"$node\",name!=\"\"}[5m])) / count(count(node_cpu_seconds_total{server=~\"$node\"}) by (cpu)) * 100",
                       "instant": true,
                       "legendFormat": "cpuHostPct"
                     },
@@ -362,7 +362,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "sum(container_memory_working_set_bytes{instance=~\"$node\",name!=\"\"}) / sum(node_memory_MemTotal_bytes{instance=~\"$node\"}) * 100",
+                      "expr": "sum(container_memory_working_set_bytes{server=~\"$node\",name!=\"\"}) / sum(node_memory_MemTotal_bytes{server=~\"$node\"}) * 100",
                       "instant": true,
                       "legendFormat": "ramHostPct"
                     },
@@ -382,7 +382,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "topk(1, sum(rate(container_cpu_usage_seconds_total{instance=~\"$node\",name!=\"\"}[5m])) by (name))",
+                      "expr": "topk(1, sum(rate(container_cpu_usage_seconds_total{server=~\"$node\",name!=\"\"}[5m])) by (name))",
                       "instant": true,
                       "legendFormat": "{{name}}"
                     },
@@ -402,7 +402,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "topk(1, sum(container_memory_working_set_bytes{instance=~\"$node\",name!=\"\"}) by (name))",
+                      "expr": "topk(1, sum(container_memory_working_set_bytes{server=~\"$node\",name!=\"\"}) by (name))",
                       "instant": true,
                       "legendFormat": "{{name}}"
                     },
@@ -495,7 +495,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "count(count(container_last_seen{instance=~\"$node\",name!=\"\"}) by (name))",
+                      "expr": "count(count(container_last_seen{server=~\"$node\",name!=\"\"}) by (name))",
                       "instant": true,
                       "legendFormat": "containers"
                     },
@@ -588,7 +588,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "sum(rate(container_cpu_usage_seconds_total{instance=~\"$node\",name!=\"\"}[5m]))",
+                      "expr": "sum(rate(container_cpu_usage_seconds_total{server=~\"$node\",name!=\"\"}[5m]))",
                       "instant": true,
                       "legendFormat": "cpu"
                     },
@@ -681,7 +681,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "sum(rate(container_network_receive_bytes_total{instance=~\"$node\",name!=\"\"}[5m])) + sum(rate(container_network_transmit_bytes_total{instance=~\"$node\",name!=\"\"}[5m]))",
+                      "expr": "sum(rate(container_network_receive_bytes_total{server=~\"$node\",name!=\"\"}[5m])) + sum(rate(container_network_transmit_bytes_total{server=~\"$node\",name!=\"\"}[5m]))",
                       "instant": true,
                       "legendFormat": "net"
                     },
@@ -774,7 +774,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "sum(container_memory_working_set_bytes{instance=~\"$node\",name!=\"\"})",
+                      "expr": "sum(container_memory_working_set_bytes{server=~\"$node\",name!=\"\"})",
                       "instant": true,
                       "legendFormat": "ram"
                     },
@@ -1089,7 +1089,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "sum(rate(container_cpu_usage_seconds_total{instance=~\"$node\",name!=\"\"}[$__rate_interval])) by (name)",
+                      "expr": "sum(rate(container_cpu_usage_seconds_total{server=~\"$node\",name!=\"\"}[$__rate_interval])) by (name)",
                       "legendFormat": "{{name}}"
                     },
                     "version": "v0"
@@ -1211,7 +1211,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "sum(rate(container_fs_reads_bytes_total{instance=~\"$node\",name!=\"\"}[$__rate_interval])) by (name)",
+                      "expr": "sum(rate(container_fs_reads_bytes_total{server=~\"$node\",name!=\"\"}[$__rate_interval])) by (name)",
                       "legendFormat": "{{name}} leitura"
                     },
                     "version": "v0"
@@ -1230,7 +1230,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "sum(rate(container_fs_writes_bytes_total{instance=~\"$node\",name!=\"\"}[$__rate_interval])) by (name)",
+                      "expr": "sum(rate(container_fs_writes_bytes_total{server=~\"$node\",name!=\"\"}[$__rate_interval])) by (name)",
                       "legendFormat": "{{name}} escrita"
                     },
                     "version": "v0"
@@ -1352,7 +1352,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "sum(rate(container_network_receive_bytes_total{instance=~\"$node\",name!=\"\"}[$__rate_interval])) by (name)",
+                      "expr": "sum(rate(container_network_receive_bytes_total{server=~\"$node\",name!=\"\"}[$__rate_interval])) by (name)",
                       "legendFormat": "{{name}} ↓"
                     },
                     "version": "v0"
@@ -1371,7 +1371,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "sum(rate(container_network_transmit_bytes_total{instance=~\"$node\",name!=\"\"}[$__rate_interval])) by (name)",
+                      "expr": "sum(rate(container_network_transmit_bytes_total{server=~\"$node\",name!=\"\"}[$__rate_interval])) by (name)",
                       "legendFormat": "{{name}} ↑"
                     },
                     "version": "v0"
@@ -1493,7 +1493,7 @@
                     "group": "prometheus",
                     "kind": "DataQuery",
                     "spec": {
-                      "expr": "sum(container_memory_working_set_bytes{instance=~\"$node\",name!=\"\"}) by (name)",
+                      "expr": "sum(container_memory_working_set_bytes{server=~\"$node\",name!=\"\"}) by (name)",
                       "legendFormat": "{{name}}"
                     },
                     "version": "v0"
@@ -1831,10 +1831,10 @@
       "spec": {
         "allowCustomValue": true,
         "current": {
-          "text": "45.187.224.248",
-          "value": "45.187.224.248"
+          "text": "224.248 - VPS ASB",
+          "value": "224.248 - VPS ASB"
         },
-        "definition": "label_values(container_last_seen, instance)",
+        "definition": "query_result(group by (server) (container_last_seen{name!=\"\"}))",
         "hide": "dontHide",
         "includeAll": false,
         "label": "Host",
@@ -1848,12 +1848,12 @@
           "group": "prometheus",
           "kind": "DataQuery",
           "spec": {
-            "__legacyStringValue": "label_values(container_last_seen, instance)"
+            "__legacyStringValue": "query_result(group by (server) (container_last_seen{name!=\"\"}))"
           },
           "version": "v0"
         },
         "refresh": "onTimeRangeChanged",
-        "regex": "",
+        "regex": "/server=\"([^\"]+)\"/",
         "regexApplyTo": "value",
         "skipUrlSync": false,
         "sort": "alphabeticalAsc"
