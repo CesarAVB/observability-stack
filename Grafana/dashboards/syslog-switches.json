@@ -22,6 +22,254 @@
   "links": [],
   "panels": [
     {
+      "id": 10,
+      "type": "marcusolsson-dynamictext-panel",
+      "title": "",
+      "transparent": true,
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "pluginVersion": "5.5.0",
+      "options": {
+        "content": "<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.hdr{background:linear-gradient(135deg,#0d1520 0%,#141B27 40%,#1a2233 100%);border-bottom:2px solid #F97316;height:100%;display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:relative;overflow:hidden}.hdr::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(249,115,22,0.07) 0%,transparent 60%);pointer-events:none}.logo-wrap{display:flex;align-items:center;gap:14px}.logo-box{width:46px;height:46px;background:linear-gradient(135deg,#F97316,#ea580c);border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px rgba(249,115,22,0.4),0 4px 12px rgba(0,0,0,0.3);flex-shrink:0}.logo-box svg{width:24px;height:24px}.ht{font-size:19px;font-weight:800;color:#F9FAFB;letter-spacing:-0.5px;line-height:1}.hs{font-size:12px;color:#6B7280;margin-top:3px;font-weight:400}.hdr-r{display:flex;align-items:center;gap:14px}.pills{display:flex;gap:6px}.pill{background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.22);color:#F97316;font-size:10.5px;font-weight:600;padding:4px 10px;border-radius:6px;letter-spacing:0.3px}.env{background:linear-gradient(135deg,#F97316,#dc6011);color:#fff;font-size:10px;font-weight:800;padding:5px 14px;border-radius:20px;letter-spacing:1.2px;text-transform:uppercase;box-shadow:0 0 12px rgba(249,115,22,0.3)}.live{display:flex;align-items:center;gap:7px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);padding:5px 12px;border-radius:8px}.live-dot{width:7px;height:7px;background:#10B981;border-radius:50%;animation:blink 2s ease-in-out infinite;box-shadow:0 0 8px rgba(16,185,129,0.6)}.live-lbl{font-size:11px;font-weight:600;color:#10B981}@keyframes blink{0%,100%{opacity:1}50%{opacity:0.4}}</style><div class='hdr'><div class='logo-wrap'><div class='logo-box'><svg viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='16' y='16' width='6' height='6' rx='1'/><rect x='2' y='16' width='6' height='6' rx='1'/><rect x='9' y='2' width='6' height='6' rx='1'/><path d='M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3'/><path d='M12 12V8'/></svg></div><div><div class='ht'>Syslog &middot; Switches Huawei</div><div class='hs'>Monitoramento de Logs de Rede - LOGNET</div></div></div><div class='hdr-r'><div class='pills'><span class='pill'>Huawei VRP</span><span class='pill'>syslog-ng</span><span class='pill'>Loki</span></div><span class='env'>LOGNET</span><div class='live'><div class='live-dot'></div><span class='live-lbl'>Ao vivo</span></div></div></div>",
+        "defaultContent": "<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.hdr{background:linear-gradient(135deg,#0d1520 0%,#141B27 40%,#1a2233 100%);border-bottom:2px solid #F97316;height:100%;display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:relative;overflow:hidden}.hdr::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(249,115,22,0.07) 0%,transparent 60%);pointer-events:none}.logo-wrap{display:flex;align-items:center;gap:14px}.logo-box{width:46px;height:46px;background:linear-gradient(135deg,#F97316,#ea580c);border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px rgba(249,115,22,0.4),0 4px 12px rgba(0,0,0,0.3);flex-shrink:0}.logo-box svg{width:24px;height:24px}.ht{font-size:19px;font-weight:800;color:#F9FAFB;letter-spacing:-0.5px;line-height:1}.hs{font-size:12px;color:#6B7280;margin-top:3px;font-weight:400}.hdr-r{display:flex;align-items:center;gap:14px}.pills{display:flex;gap:6px}.pill{background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.22);color:#F97316;font-size:10.5px;font-weight:600;padding:4px 10px;border-radius:6px;letter-spacing:0.3px}.env{background:linear-gradient(135deg,#F97316,#dc6011);color:#fff;font-size:10px;font-weight:800;padding:5px 14px;border-radius:20px;letter-spacing:1.2px;text-transform:uppercase;box-shadow:0 0 12px rgba(249,115,22,0.3)}.live{display:flex;align-items:center;gap:7px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);padding:5px 12px;border-radius:8px}.live-dot{width:7px;height:7px;background:#10B981;border-radius:50%;animation:blink 2s ease-in-out infinite;box-shadow:0 0 8px rgba(16,185,129,0.6)}.live-lbl{font-size:11px;font-weight:600;color:#10B981}@keyframes blink{0%,100%{opacity:1}50%{opacity:0.4}}</style><div class='hdr'><div class='logo-wrap'><div class='logo-box'><svg viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='16' y='16' width='6' height='6' rx='1'/><rect x='2' y='16' width='6' height='6' rx='1'/><rect x='9' y='2' width='6' height='6' rx='1'/><path d='M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3'/><path d='M12 12V8'/></svg></div><div><div class='ht'>Syslog &middot; Switches Huawei</div><div class='hs'>Monitoramento de Logs de Rede - LOGNET</div></div></div><div class='hdr-r'><div class='pills'><span class='pill'>Huawei VRP</span><span class='pill'>syslog-ng</span><span class='pill'>Loki</span></div><span class='env'>LOGNET</span><div class='live'><div class='live-dot'></div><span class='live-lbl'>Ao vivo</span></div></div></div>",
+        "editor": {
+          "format": "auto",
+          "language": "html"
+        },
+        "editors": [],
+        "renderMode": "allRows",
+        "wrap": true
+      }
+    },
+    {
+      "id": 11,
+      "type": "stat",
+      "title": "Total de logs",
+      "datasource": {
+        "type": "loki",
+        "uid": "$datasource"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 3
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#4f9cf9"
+          },
+          "unit": "short",
+          "decimals": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "loki",
+            "uid": "$datasource"
+          },
+          "expr": "sum(count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=~\"$severity\"}[$__range]))",
+          "queryType": "instant"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "type": "stat",
+      "title": "Switches ativos",
+      "datasource": {
+        "type": "loki",
+        "uid": "$datasource"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 3
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#a78bfa"
+          },
+          "unit": "short",
+          "decimals": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "loki",
+            "uid": "$datasource"
+          },
+          "expr": "count(sum by (host) (count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=~\"$severity\"}[$__range])))",
+          "queryType": "instant"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "type": "stat",
+      "title": "Avisos (warning)",
+      "datasource": {
+        "type": "loki",
+        "uid": "$datasource"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 3
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "unit": "short",
+          "decimals": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#22c55e",
+                "value": null
+              },
+              {
+                "color": "#f97316",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "loki",
+            "uid": "$datasource"
+          },
+          "expr": "sum(count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=\"warning\"}[$__range]))",
+          "queryType": "instant"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "type": "stat",
+      "title": "Críticos (err+)",
+      "datasource": {
+        "type": "loki",
+        "uid": "$datasource"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 3
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "unit": "short",
+          "decimals": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#22c55e",
+                "value": null
+              },
+              {
+                "color": "#ef4444",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "loki",
+            "uid": "$datasource"
+          },
+          "expr": "sum(count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=~\"emerg|alert|crit|err\"}[$__range]))",
+          "queryType": "instant"
+        }
+      ]
+    },
+    {
       "id": 1,
       "type": "timeseries",
       "title": "Volume de logs por switch",
@@ -30,10 +278,10 @@
         "uid": "$datasource"
       },
       "gridPos": {
-        "h": 8,
+        "h": 9,
         "w": 16,
         "x": 0,
-        "y": 0
+        "y": 7
       },
       "fieldConfig": {
         "defaults": {
@@ -42,8 +290,8 @@
           },
           "custom": {
             "drawStyle": "bars",
-            "fillOpacity": 60,
-            "lineWidth": 1,
+            "fillOpacity": 70,
+            "lineWidth": 0,
             "stacking": {
               "mode": "normal",
               "group": "A"
@@ -83,54 +331,174 @@
     },
     {
       "id": 2,
-      "type": "bargauge",
-      "title": "Total por severidade",
+      "type": "piechart",
+      "title": "Distribuição por severidade",
       "datasource": {
         "type": "loki",
         "uid": "$datasource"
       },
       "gridPos": {
-        "h": 8,
+        "h": 9,
         "w": 8,
         "x": 16,
-        "y": 0
+        "y": 7
       },
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "mode": "fixed",
+            "fixedColor": "#4f9cf9"
           },
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
+          "unit": "short",
+          "decimals": 0
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "emerg"
+            },
+            "properties": [
               {
-                "color": "blue",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 100
-              },
-              {
-                "color": "red",
-                "value": 1000
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#b91c1c"
+                }
               }
             ]
           },
-          "unit": "short"
-        },
-        "overrides": []
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "alert"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#dc2626"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "crit"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#ef4444"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "err"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#f87171"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "warning"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#f97316"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "notice"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#4f9cf9"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "info"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#22c55e"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "debug"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#64748b"
+                }
+              }
+            ]
+          }
+        ]
       },
       "options": {
-        "displayMode": "gradient",
-        "orientation": "horizontal",
-        "showUnfilled": true,
+        "pieType": "donut",
+        "displayLabels": [
+          "percent"
+        ],
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "values": [
+            "value",
+            "percent"
+          ]
+        },
         "reduceOptions": {
           "calcs": [
-            "lastNotNull"
+            "sum"
           ],
           "fields": "",
           "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "desc"
         }
       },
       "targets": [
@@ -140,36 +508,150 @@
             "type": "loki",
             "uid": "$datasource"
           },
-          "expr": "sum by (severity) (count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=~\"$severity\"}[$__range]))",
-          "queryType": "instant",
+          "expr": "sum by (severity) (count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=~\"$severity\"}[$__interval]))",
+          "queryType": "range",
           "legendFormat": "{{severity}}"
         }
       ]
     },
     {
       "id": 3,
-      "type": "logs",
+      "type": "table",
       "title": "Logs dos switches",
       "datasource": {
         "type": "loki",
         "uid": "$datasource"
       },
       "gridPos": {
-        "h": 18,
+        "h": 16,
         "w": 24,
         "x": 0,
-        "y": 8
+        "y": 16
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "filterable": true,
+            "align": "left",
+            "cellOptions": {
+              "type": "auto"
+            }
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Hora"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 175
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Switch"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 175
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Evento"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 230
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Mensagem"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "auto",
+                  "wrapText": false
+                }
+              }
+            ]
+          }
+        ]
       },
       "options": {
-        "showTime": true,
-        "showLabels": false,
-        "showCommonLabels": false,
-        "wrapLogMessage": true,
-        "prettifyLogMessage": false,
-        "enableLogDetails": true,
-        "dedupStrategy": "none",
-        "sortOrder": "Descending"
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false,
+          "reducer": [
+            "sum"
+          ],
+          "fields": ""
+        },
+        "sortBy": [
+          {
+            "displayName": "Hora",
+            "desc": true
+          }
+        ]
       },
+      "transformations": [
+        {
+          "id": "extractFields",
+          "options": {
+            "source": "labels",
+            "format": "json",
+            "replace": false,
+            "keepTime": false
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "labels": true,
+              "labelTypes": true,
+              "Line": true,
+              "tsNs": true,
+              "id": true,
+              "TraceID": true,
+              "modulo": true,
+              "sevn": true,
+              "facility": true,
+              "host": true,
+              "job": true,
+              "severity": true,
+              "source_ip": true
+            },
+            "indexByName": {
+              "Time": 0,
+              "switchname": 1,
+              "evento": 2,
+              "descricao": 3
+            },
+            "renameByName": {
+              "Time": "Hora",
+              "switchname": "Switch",
+              "evento": "Evento",
+              "descricao": "Mensagem"
+            }
+          }
+        }
+      ],
       "targets": [
         {
           "refId": "A",
@@ -177,12 +659,14 @@
             "type": "loki",
             "uid": "$datasource"
           },
-          "expr": "{job=\"huawei-switches\", host=~\"$switch\", severity=~\"$severity\"}",
-          "queryType": "range"
+          "expr": "{job=\"huawei-switches\", host=~\"$switch\", severity=~\"$severity\"} | regexp `^\\S+ (?P<switchname>\\S+) (?:%%\\d+)?(?P<modulo>[A-Z0-9]+)/(?P<sevn>\\d)/(?P<evento>[A-Z0-9_]+)(?:\\([^)]*\\))?(?:\\[\\d+\\])?:?\\s*(?P<descricao>.*)`",
+          "queryType": "range",
+          "maxLines": 500
         }
       ]
     }
   ],
+  "refresh": "30s",
   "schemaVersion": 39,
   "tags": [
     "syslog",
@@ -268,5 +752,5 @@
   "timezone": "browser",
   "title": "Syslog Switches LOGNET",
   "uid": "syslog-switches-lognet",
-  "version": 1
+  "version": 6
 }

@@ -125,13 +125,51 @@ Ambos dependem da stack de exporters em `../../Monitoring/` e dos jobs `node-exp
 ## Dashboard de Syslog (Switches Huawei)
 
 - **`syslog-switches.json`** — logs de syslog dos switches Huawei, coletados pelo
-  syslog-ng e enviados ao Loki (ver `../../Syslog/README.md`). Usa apenas painéis
-  nativos (Time Series, Bar Gauge, Logs) — não exige plugins.
+  syslog-ng e enviados ao Loki (ver `../../Syslog/README.md`). Header banner
+  (Business Text) no padrão LOGNET, cartões de stat, Time Series, Bar Gauge e Logs.
 
-### Pré-requisito
+### Layout
 
-Datasource **Loki** configurado no Grafana (`http://loki:3100`). Ao importar, mapeie
-a variável **Datasource Loki** para o datasource Loki existente.
+```
+┌──────────────────────────────────────────────────────────────┐
+│  HEADER BANNER — Syslog · Switches Huawei · LOGNET · Ao vivo  │
+├──────────────┬──────────────┬──────────────┬─────────────────┤
+│ Total de     │ Switches     │ Avisos       │ Críticos (err+) │
+│ logs         │ ativos       │ (warning)    │                 │
+├──────────────┴──────────────┴──────┬───────┴─────────────────┤
+│  VOLUME DE LOGS POR SWITCH         │  TOTAL POR SEVERIDADE    │
+│  Time Series (barras empilhadas)   │  Bar Gauge (cor/nível)   │
+├────────────────────────────────────┴─────────────────────────┤
+│  LOGS DOS SWITCHES — Tabela (Hora · Switch · Evento · Msg)   │
+└──────────────────────────────────────────────────────────────┘
+```
+
+Cartões de stat: **Avisos** fica laranja com ≥1 warning; **Críticos** fica
+vermelho com ≥1 evento `err`/`crit`/`alert`/`emerg` (ambos ignoram o filtro
+`$severity` de propósito, para sempre sinalizar). No Bar Gauge, cada severidade
+tem cor própria (vermelho = err/crit, laranja = warning, azul = notice, verde = info).
+
+A **tabela de logs** desmembra o formato proprietário Huawei
+(`%%01MÓDULO/nível/EVENTO(flag)[seq]:descrição`) em colunas, via um parser
+`| regexp` no LogQL, deixando a leitura limpa em vez de uma linha gigante:
+
+| Coluna | Origem |
+|---|---|
+| Hora | timestamp do log no Loki |
+| Switch | hostname (sysname) extraído da linha |
+| Evento | mnemônico Huawei (ex.: `PKT_OUTQUEDROP_ABNL`, `CPCAR_DROP_MPU`) |
+| Mensagem | descrição do evento |
+
+Colunas são filtráveis (ícone de filtro no cabeçalho) e mensagens longas ficam
+inspecionáveis na célula. Para ver a linha bruta completa, use o **Explore** do
+Grafana com `{job="huawei-switches"}`.
+
+### Pré-requisitos
+
+- Datasource **Loki** configurado no Grafana (`http://loki:3100`). Ao importar,
+  mapeie a variável **Datasource Loki** para o datasource Loki existente.
+- Plugin **`marcusolsson-dynamictext-panel`** (Business Text) para o header banner
+  — já incluído no `GF_INSTALL_PLUGINS` do `Grafana/docker-compose.yml`.
 
 ### Variáveis de template
 
