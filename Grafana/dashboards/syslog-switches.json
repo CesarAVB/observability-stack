@@ -47,41 +47,81 @@
     },
     {
       "id": 11,
-      "type": "stat",
+      "type": "gapit-htmlgraphics-panel",
       "title": "Total de logs",
       "datasource": {
         "type": "loki",
         "uid": "$datasource"
       },
       "gridPos": {
-        "h": 4,
+        "h": 6,
         "w": 6,
         "x": 0,
         "y": 3
       },
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "fixed",
-            "fixedColor": "#4f9cf9"
-          },
-          "unit": "short",
-          "decimals": 0
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
         },
         "overrides": []
       },
       "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "center",
-        "textMode": "value",
+        "SVGBaseFix": true,
+        "add100Percentage": true,
+        "calcsMutation": "standard",
+        "centerAlignContent": true,
+        "codeData": "{}",
+        "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.kpi{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;position:relative;overflow:hidden;cursor:default;transition:border-color .3s}.kpi:hover{border-color:#4f9cf9}.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#4f9cf9,#7cb6fb)}.kpi::after{content:'';position:absolute;bottom:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,rgba(79,156,249,0.08),transparent 70%);pointer-events:none}.icon-ring{width:38px;height:38px;background:rgba(79,156,249,0.12);border:1.5px solid rgba(79,156,249,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:8px;flex-shrink:0}.icon-ring svg{width:18px;height:18px;stroke:#4f9cf9}.val{font-size:30px;font-weight:800;color:#F9FAFB;letter-spacing:-1px;line-height:1}.unit{font-size:11px;color:#6B7280;margin-top:2px;font-weight:500}.label{font-size:11px;color:#9CA3AF;margin-top:6px;font-weight:500;text-align:center}.badge{margin-top:8px;font-size:10px;font-weight:600;padding:2px 10px;border-radius:20px;letter-spacing:0.3px;flex-shrink:0}.ok{background:rgba(16,185,129,0.12);color:#10B981;border:1px solid rgba(16,185,129,0.25)}.warn{background:rgba(245,158,11,0.12);color:#F59E0B;border:1px solid rgba(245,158,11,0.25)}.crit{background:rgba(239,68,68,0.12);color:#EF4444;border:1px solid rgba(239,68,68,0.25)}",
+        "dynamicData": false,
+        "dynamicFieldDisplayValues": false,
+        "dynamicHtmlGraphics": {
+          "dynamicData": true,
+          "dynamicFieldDisplayValues": false,
+          "dynamicProps": false
+        },
+        "dynamicProps": false,
+        "html": "<div class='kpi'><div class='icon-ring'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='8' y1='6' x2='21' y2='6'/><line x1='8' y1='12' x2='21' y2='12'/><line x1='8' y1='18' x2='21' y2='18'/><line x1='3' y1='6' x2='3.01' y2='6'/><line x1='3' y1='12' x2='3.01' y2='12'/><line x1='3' y1='18' x2='3.01' y2='18'/></svg></div><div class='val' id='val'>--</div><div class='unit'>logs no periodo</div><div class='label'>Total coletado</div><div class='badge ok' id='badge'>Coletando</div></div>",
+        "onInit": "",
+        "onInitOnResize": false,
+        "onRender": "var val=0;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var v=f[1].values;val=Array.isArray(v)?v[v.length-1]:(v.get?v.get(v.length-1):0);}}}catch(e){}val=val||0;var el=htmlNode.querySelector('#val');var badge=htmlNode.querySelector('#badge');if(el){el.textContent=Math.round(val).toLocaleString('pt-BR');}if(badge){badge.textContent='Coletando';badge.className='badge ok';}",
+        "overflow": "visible",
+        "panelupdateOnMount": true,
         "reduceOptions": {
           "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        }
+            "lastNotNull",
+            "last",
+            "firstNotNull",
+            "first",
+            "min",
+            "max",
+            "mean",
+            "sum",
+            "count",
+            "range",
+            "delta",
+            "step",
+            "diff",
+            "logmin",
+            "allIsZero",
+            "allIsNull",
+            "diffperc"
+          ]
+        },
+        "renderOnMount": true,
+        "rootCSS": ":host{overflow:hidden;display:block;}",
+        "useGrafanaScrollbar": false
       },
       "targets": [
         {
@@ -93,45 +133,86 @@
           "expr": "sum(count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=~\"$severity\"}[$__range]))",
           "queryType": "instant"
         }
-      ]
+      ],
+      "pluginVersion": "2.2.3"
     },
     {
       "id": 12,
-      "type": "stat",
+      "type": "gapit-htmlgraphics-panel",
       "title": "Switches ativos",
       "datasource": {
         "type": "loki",
         "uid": "$datasource"
       },
       "gridPos": {
-        "h": 4,
+        "h": 6,
         "w": 6,
         "x": 6,
         "y": 3
       },
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "fixed",
-            "fixedColor": "#a78bfa"
-          },
-          "unit": "short",
-          "decimals": 0
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
         },
         "overrides": []
       },
       "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "center",
-        "textMode": "value",
+        "SVGBaseFix": true,
+        "add100Percentage": true,
+        "calcsMutation": "standard",
+        "centerAlignContent": true,
+        "codeData": "{}",
+        "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.kpi{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;position:relative;overflow:hidden;cursor:default;transition:border-color .3s}.kpi:hover{border-color:#a78bfa}.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#a78bfa,#c4b5fd)}.kpi::after{content:'';position:absolute;bottom:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,rgba(167,139,250,0.08),transparent 70%);pointer-events:none}.icon-ring{width:38px;height:38px;background:rgba(167,139,250,0.12);border:1.5px solid rgba(167,139,250,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:8px;flex-shrink:0}.icon-ring svg{width:18px;height:18px;stroke:#a78bfa}.val{font-size:30px;font-weight:800;color:#F9FAFB;letter-spacing:-1px;line-height:1}.unit{font-size:11px;color:#6B7280;margin-top:2px;font-weight:500}.label{font-size:11px;color:#9CA3AF;margin-top:6px;font-weight:500;text-align:center}.badge{margin-top:8px;font-size:10px;font-weight:600;padding:2px 10px;border-radius:20px;letter-spacing:0.3px;flex-shrink:0}.ok{background:rgba(16,185,129,0.12);color:#10B981;border:1px solid rgba(16,185,129,0.25)}.warn{background:rgba(245,158,11,0.12);color:#F59E0B;border:1px solid rgba(245,158,11,0.25)}.crit{background:rgba(239,68,68,0.12);color:#EF4444;border:1px solid rgba(239,68,68,0.25)}",
+        "dynamicData": false,
+        "dynamicFieldDisplayValues": false,
+        "dynamicHtmlGraphics": {
+          "dynamicData": true,
+          "dynamicFieldDisplayValues": false,
+          "dynamicProps": false
+        },
+        "dynamicProps": false,
+        "html": "<div class='kpi'><div class='icon-ring'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='16' y='16' width='6' height='6' rx='1'/><rect x='2' y='16' width='6' height='6' rx='1'/><rect x='9' y='2' width='6' height='6' rx='1'/><path d='M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3'/><path d='M12 12V8'/></svg></div><div class='val' id='val'>--</div><div class='unit'>switches</div><div class='label'>Enviando syslog</div><div class='badge ok' id='badge'>Online</div></div>",
+        "onInit": "",
+        "onInitOnResize": false,
+        "onRender": "var val=0;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var v=f[1].values;val=Array.isArray(v)?v[v.length-1]:(v.get?v.get(v.length-1):0);}}}catch(e){}val=val||0;var el=htmlNode.querySelector('#val');var badge=htmlNode.querySelector('#badge');if(el){el.textContent=Math.round(val).toLocaleString('pt-BR');}if(badge){badge.textContent='Online';badge.className='badge ok';}",
+        "overflow": "visible",
+        "panelupdateOnMount": true,
         "reduceOptions": {
           "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        }
+            "lastNotNull",
+            "last",
+            "firstNotNull",
+            "first",
+            "min",
+            "max",
+            "mean",
+            "sum",
+            "count",
+            "range",
+            "delta",
+            "step",
+            "diff",
+            "logmin",
+            "allIsZero",
+            "allIsNull",
+            "diffperc"
+          ]
+        },
+        "renderOnMount": true,
+        "rootCSS": ":host{overflow:hidden;display:block;}",
+        "useGrafanaScrollbar": false
       },
       "targets": [
         {
@@ -143,39 +224,35 @@
           "expr": "count(sum by (host) (count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=~\"$severity\"}[$__range])))",
           "queryType": "instant"
         }
-      ]
+      ],
+      "pluginVersion": "2.2.3"
     },
     {
       "id": 13,
-      "type": "stat",
+      "type": "gapit-htmlgraphics-panel",
       "title": "Avisos (warning)",
       "datasource": {
         "type": "loki",
         "uid": "$datasource"
       },
       "gridPos": {
-        "h": 4,
+        "h": 6,
         "w": 6,
         "x": 12,
         "y": 3
       },
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "unit": "short",
-          "decimals": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "#22c55e",
+                "color": "green",
                 "value": null
               },
               {
-                "color": "#f97316",
-                "value": 1
+                "color": "red",
+                "value": 80
               }
             ]
           }
@@ -183,17 +260,50 @@
         "overrides": []
       },
       "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "center",
-        "textMode": "value",
+        "SVGBaseFix": true,
+        "add100Percentage": true,
+        "calcsMutation": "standard",
+        "centerAlignContent": true,
+        "codeData": "{}",
+        "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.kpi{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;position:relative;overflow:hidden;cursor:default;transition:border-color .3s}.kpi:hover{border-color:#f97316}.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#f97316,#fb923c)}.kpi::after{content:'';position:absolute;bottom:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,rgba(249,115,22,0.08),transparent 70%);pointer-events:none}.icon-ring{width:38px;height:38px;background:rgba(249,115,22,0.12);border:1.5px solid rgba(249,115,22,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:8px;flex-shrink:0}.icon-ring svg{width:18px;height:18px;stroke:#f97316}.val{font-size:30px;font-weight:800;color:#F9FAFB;letter-spacing:-1px;line-height:1}.unit{font-size:11px;color:#6B7280;margin-top:2px;font-weight:500}.label{font-size:11px;color:#9CA3AF;margin-top:6px;font-weight:500;text-align:center}.badge{margin-top:8px;font-size:10px;font-weight:600;padding:2px 10px;border-radius:20px;letter-spacing:0.3px;flex-shrink:0}.ok{background:rgba(16,185,129,0.12);color:#10B981;border:1px solid rgba(16,185,129,0.25)}.warn{background:rgba(245,158,11,0.12);color:#F59E0B;border:1px solid rgba(245,158,11,0.25)}.crit{background:rgba(239,68,68,0.12);color:#EF4444;border:1px solid rgba(239,68,68,0.25)}",
+        "dynamicData": false,
+        "dynamicFieldDisplayValues": false,
+        "dynamicHtmlGraphics": {
+          "dynamicData": true,
+          "dynamicFieldDisplayValues": false,
+          "dynamicProps": false
+        },
+        "dynamicProps": false,
+        "html": "<div class='kpi'><div class='icon-ring'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z'/><line x1='12' y1='9' x2='12' y2='13'/><line x1='12' y1='17' x2='12.01' y2='17'/></svg></div><div class='val' id='val'>--</div><div class='unit'>eventos</div><div class='label'>Severidade warning</div><div class='badge ok' id='badge'>Nenhum</div></div>",
+        "onInit": "",
+        "onInitOnResize": false,
+        "onRender": "var val=0;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var v=f[1].values;val=Array.isArray(v)?v[v.length-1]:(v.get?v.get(v.length-1):0);}}}catch(e){}val=val||0;var el=htmlNode.querySelector('#val');var badge=htmlNode.querySelector('#badge');if(el){el.textContent=Math.round(val).toLocaleString('pt-BR');}if(badge){if(val>0){badge.textContent='Atencao';badge.className='badge warn';}else{badge.textContent='Nenhum';badge.className='badge ok';}}",
+        "overflow": "visible",
+        "panelupdateOnMount": true,
         "reduceOptions": {
           "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        }
+            "lastNotNull",
+            "last",
+            "firstNotNull",
+            "first",
+            "min",
+            "max",
+            "mean",
+            "sum",
+            "count",
+            "range",
+            "delta",
+            "step",
+            "diff",
+            "logmin",
+            "allIsZero",
+            "allIsNull",
+            "diffperc"
+          ]
+        },
+        "renderOnMount": true,
+        "rootCSS": ":host{overflow:hidden;display:block;}",
+        "useGrafanaScrollbar": false
       },
       "targets": [
         {
@@ -205,39 +315,35 @@
           "expr": "sum(count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=\"warning\"}[$__range]))",
           "queryType": "instant"
         }
-      ]
+      ],
+      "pluginVersion": "2.2.3"
     },
     {
       "id": 14,
-      "type": "stat",
+      "type": "gapit-htmlgraphics-panel",
       "title": "Críticos (err+)",
       "datasource": {
         "type": "loki",
         "uid": "$datasource"
       },
       "gridPos": {
-        "h": 4,
+        "h": 6,
         "w": 6,
         "x": 18,
         "y": 3
       },
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "unit": "short",
-          "decimals": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "#22c55e",
+                "color": "green",
                 "value": null
               },
               {
-                "color": "#ef4444",
-                "value": 1
+                "color": "red",
+                "value": 80
               }
             ]
           }
@@ -245,17 +351,50 @@
         "overrides": []
       },
       "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "center",
-        "textMode": "value",
+        "SVGBaseFix": true,
+        "add100Percentage": true,
+        "calcsMutation": "standard",
+        "centerAlignContent": true,
+        "codeData": "{}",
+        "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.kpi{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;position:relative;overflow:hidden;cursor:default;transition:border-color .3s}.kpi:hover{border-color:#ef4444}.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#ef4444,#f87171)}.kpi::after{content:'';position:absolute;bottom:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,rgba(239,68,68,0.08),transparent 70%);pointer-events:none}.icon-ring{width:38px;height:38px;background:rgba(239,68,68,0.12);border:1.5px solid rgba(239,68,68,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:8px;flex-shrink:0}.icon-ring svg{width:18px;height:18px;stroke:#ef4444}.val{font-size:30px;font-weight:800;color:#F9FAFB;letter-spacing:-1px;line-height:1}.unit{font-size:11px;color:#6B7280;margin-top:2px;font-weight:500}.label{font-size:11px;color:#9CA3AF;margin-top:6px;font-weight:500;text-align:center}.badge{margin-top:8px;font-size:10px;font-weight:600;padding:2px 10px;border-radius:20px;letter-spacing:0.3px;flex-shrink:0}.ok{background:rgba(16,185,129,0.12);color:#10B981;border:1px solid rgba(16,185,129,0.25)}.warn{background:rgba(245,158,11,0.12);color:#F59E0B;border:1px solid rgba(245,158,11,0.25)}.crit{background:rgba(239,68,68,0.12);color:#EF4444;border:1px solid rgba(239,68,68,0.25)}",
+        "dynamicData": false,
+        "dynamicFieldDisplayValues": false,
+        "dynamicHtmlGraphics": {
+          "dynamicData": true,
+          "dynamicFieldDisplayValues": false,
+          "dynamicProps": false
+        },
+        "dynamicProps": false,
+        "html": "<div class='kpi'><div class='icon-ring'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polygon points='7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2'/><line x1='12' y1='8' x2='12' y2='12'/><line x1='12' y1='16' x2='12.01' y2='16'/></svg></div><div class='val' id='val'>--</div><div class='unit'>eventos</div><div class='label'>err / crit / alert / emerg</div><div class='badge ok' id='badge'>Saudavel</div></div>",
+        "onInit": "",
+        "onInitOnResize": false,
+        "onRender": "var val=0;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var v=f[1].values;val=Array.isArray(v)?v[v.length-1]:(v.get?v.get(v.length-1):0);}}}catch(e){}val=val||0;var el=htmlNode.querySelector('#val');var badge=htmlNode.querySelector('#badge');if(el){el.textContent=Math.round(val).toLocaleString('pt-BR');}if(badge){if(val>0){badge.textContent='Critico';badge.className='badge crit';}else{badge.textContent='Saudavel';badge.className='badge ok';}}",
+        "overflow": "visible",
+        "panelupdateOnMount": true,
         "reduceOptions": {
           "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        }
+            "lastNotNull",
+            "last",
+            "firstNotNull",
+            "first",
+            "min",
+            "max",
+            "mean",
+            "sum",
+            "count",
+            "range",
+            "delta",
+            "step",
+            "diff",
+            "logmin",
+            "allIsZero",
+            "allIsNull",
+            "diffperc"
+          ]
+        },
+        "renderOnMount": true,
+        "rootCSS": ":host{overflow:hidden;display:block;}",
+        "useGrafanaScrollbar": false
       },
       "targets": [
         {
@@ -267,7 +406,8 @@
           "expr": "sum(count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=~\"emerg|alert|crit|err\"}[$__range]))",
           "queryType": "instant"
         }
-      ]
+      ],
+      "pluginVersion": "2.2.3"
     },
     {
       "id": 1,
@@ -281,7 +421,7 @@
         "h": 9,
         "w": 16,
         "x": 0,
-        "y": 7
+        "y": 9
       },
       "fieldConfig": {
         "defaults": {
@@ -289,9 +429,14 @@
             "mode": "palette-classic"
           },
           "custom": {
-            "drawStyle": "bars",
-            "fillOpacity": 70,
-            "lineWidth": 0,
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "fillOpacity": 25,
+            "gradientMode": "opacity",
+            "showPoints": "never",
+            "pointSize": 5,
+            "spanNulls": true,
             "stacking": {
               "mode": "normal",
               "group": "A"
@@ -327,7 +472,8 @@
           "queryType": "range",
           "legendFormat": "{{host}}"
         }
-      ]
+      ],
+      "interval": "5m"
     },
     {
       "id": 2,
@@ -341,7 +487,7 @@
         "h": 9,
         "w": 8,
         "x": 16,
-        "y": 7
+        "y": 9
       },
       "fieldConfig": {
         "defaults": {
@@ -526,7 +672,7 @@
         "h": 16,
         "w": 24,
         "x": 0,
-        "y": 16
+        "y": 18
       },
       "fieldConfig": {
         "defaults": {
@@ -572,6 +718,68 @@
               {
                 "id": "custom.width",
                 "value": 230
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Sev"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 110
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "emerg": {
+                        "color": "#7f1d1d",
+                        "index": 0
+                      },
+                      "alert": {
+                        "color": "#991b1b",
+                        "index": 1
+                      },
+                      "crit": {
+                        "color": "#b91c1c",
+                        "index": 2
+                      },
+                      "err": {
+                        "color": "#9a3412",
+                        "index": 3
+                      },
+                      "warning": {
+                        "color": "#92400e",
+                        "index": 4
+                      },
+                      "notice": {
+                        "color": "#1e40af",
+                        "index": 5
+                      },
+                      "info": {
+                        "color": "#166534",
+                        "index": 6
+                      },
+                      "debug": {
+                        "color": "#374151",
+                        "index": 7
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background",
+                  "mode": "gradient",
+                  "applyToRow": false
+                }
               }
             ]
           },
@@ -634,18 +842,19 @@
               "facility": true,
               "host": true,
               "job": true,
-              "severity": true,
               "source_ip": true
             },
             "indexByName": {
               "Time": 0,
               "switchname": 1,
-              "evento": 2,
-              "descricao": 3
+              "severity": 2,
+              "evento": 3,
+              "descricao": 4
             },
             "renameByName": {
               "Time": "Hora",
               "switchname": "Switch",
+              "severity": "Sev",
               "evento": "Evento",
               "descricao": "Mensagem"
             }
@@ -752,5 +961,5 @@
   "timezone": "browser",
   "title": "Syslog Switches LOGNET",
   "uid": "syslog-switches-lognet",
-  "version": 6
+  "version": 12
 }

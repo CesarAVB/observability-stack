@@ -170,6 +170,8 @@ Grafana com `{job="huawei-switches"}`.
   mapeie a variável **Datasource Loki** para o datasource Loki existente.
 - Plugin **`marcusolsson-dynamictext-panel`** (Business Text) para o header banner
   — já incluído no `GF_INSTALL_PLUGINS` do `Grafana/docker-compose.yml`.
+- Plugin **`gapit-htmlgraphics-panel`** (HTML Graphics) para os 4 cartões de KPI
+  (mesmo plugin do dashboard de aplicação Spring — ver "Pré-requisitos" no topo).
 
 ### Variáveis de template
 
