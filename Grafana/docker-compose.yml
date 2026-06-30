@@ -18,7 +18,7 @@ services:
       GF_ENABLE_GZIP: "true"
       GF_SECURITY_ALLOW_EMBEDDING: "true"
       GF_USERS_ALLOW_SIGN_UP: "false"
-      GF_INSTALL_PLUGINS: alexanderzobnin-zabbix-app,agenty-flowcharting-panel,grafana-clock-panel,grafana-piechart-panel
+      GF_INSTALL_PLUGINS: alexanderzobnin-zabbix-app,agenty-flowcharting-panel,grafana-clock-panel,grafana-piechart-panel,marcusolsson-dynamictext-panel
 
 networks:
   network_swarm_public:

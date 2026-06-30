@@ -1,12 +1,13 @@
 # Dashboards Grafana — Stack de Observabilidade
 
-Três dashboards prontos para importar, cobrindo aplicação, host e containers.
+Dashboards prontos para importar, cobrindo aplicação, host, containers e logs de rede.
 
 | Arquivo | Fonte de dados | O que mostra |
 |---|---|---|
 | `spring-application-dashboard.json` | Prometheus + Loki | Aplicação Spring Boot: JVM, HTTP, latência, erros, logs, conexões de DB |
 | `host-linux-dashboard.json` | Prometheus (node-exporter) | Host Linux: CPU, memória, disco, rede, load |
 | `docker-containers-dashboard.json` | Prometheus (cAdvisor) | Por container Docker: CPU, memória, rede, I/O |
+| `syslog-switches.json` | Loki (syslog-ng) | Syslog dos switches Huawei: logs filtrados por switch, severidade e tempo |
 
 ---
 
@@ -118,3 +119,34 @@ var color = pct >= 2 ? '#EF4444' : pct >= 0.5 ? '#F59E0B' : '#10B981';
 - **`docker-containers-dashboard.json`** — métricas do cAdvisor, agrupadas por container.
 
 Ambos dependem da stack de exporters em `../../Monitoring/` e dos jobs `node-exporter` / `cadvisor` no `prometheus_config.yml`. Ver `Monitoring/README.md` para o deploy dos exporters.
+
+---
+
+## Dashboard de Syslog (Switches Huawei)
+
+- **`syslog-switches.json`** — logs de syslog dos switches Huawei, coletados pelo
+  syslog-ng e enviados ao Loki (ver `../../Syslog/README.md`). Usa apenas painéis
+  nativos (Time Series, Bar Gauge, Logs) — não exige plugins.
+
+### Pré-requisito
+
+Datasource **Loki** configurado no Grafana (`http://loki:3100`). Ao importar, mapeie
+a variável **Datasource Loki** para o datasource Loki existente.
+
+### Variáveis de template
+
+| Variável | Origem | Uso |
+|---|---|---|
+| `$datasource` | tipo `datasource` / `loki` | Torna o dashboard portátil entre instâncias. |
+| `$switch` | `label_values({job="huawei-switches"}, host)` | Seletor **Switch**, multi-select + "All". |
+| `$severity` | `label_values({job="huawei-switches"}, severity)` | Seletor **Severidade**, multi-select + "All". |
+
+### Painéis
+
+| Título | Painel | Query (LogQL) |
+|---|---|---|
+| Volume de logs por switch | Time Series (barras empilhadas) | `sum by (host) (count_over_time({job="huawei-switches", host=~"$switch", severity=~"$severity"}[$__interval]))` |
+| Total por severidade | Bar Gauge | `sum by (severity) (count_over_time({job="huawei-switches", host=~"$switch", severity=~"$severity"}[$__range]))` |
+| Logs dos switches | Logs | `{job="huawei-switches", host=~"$switch", severity=~"$severity"}` |
+
+O filtro **por intervalo de tempo** usa o time picker nativo do Grafana (default `now-6h`).

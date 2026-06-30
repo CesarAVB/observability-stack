@@ -1,0 +1,36 @@
+services:
+  syslog-ng:
+    image: ghcr.io/axoflow/axosyslog:4.13.0   # AxoSyslog: inclui destino loki() nativo
+    container_name: syslog-ng
+    restart: unless-stopped
+    # mode: host preserva o IP real de origem (ex.: 10.129.190.42 pós-NAT).
+    # No modo ingress (padrão) o Swarm faz SNAT e o contêiner veria 10.0.0.x,
+    # quebrando o label source_ip e o filtro de origem do firewall.
+    ports:
+      - target: 514
+        published: 514
+        protocol: udp
+        mode: host
+      - target: 514
+        published: 514
+        protocol: tcp
+        mode: host
+    volumes:
+      - syslog_buffer:/var/lib/syslog-ng       # disk-buffer p/ resiliência se o Loki cair
+    configs:
+      - source: syslog_config
+        target: /etc/syslog-ng/syslog-ng.conf
+    command: ["--no-caps", "-F", "-f", "/etc/syslog-ng/syslog-ng.conf"]
+    networks:
+      - network_swarm_public
+
+configs:
+  syslog_config:
+    external: true
+
+volumes:
+  syslog_buffer:
+
+networks:
+  network_swarm_public:
+    external: true

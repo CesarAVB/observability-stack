@@ -51,6 +51,7 @@ A stack cobre os três pilares da observabilidade:
 | Visualização | **Grafana** | Dashboards, Explore e correlação entre pilares |
 | Métricas de infra | **node-exporter + cAdvisor** | Exporters de host e containers (lidos pelo Prometheus) |
 | Monitoramento de infra | **Zabbix** | Monitoramento de hosts, serviços e rede |
+| Logs de rede | **syslog-ng (AxoSyslog)** | Recebe syslog dos switches Huawei e encaminha ao Loki |
 
 ---
 
@@ -85,6 +86,10 @@ A stack cobre os três pilares da observabilidade:
 │   ├── docker-compose.yml
 │   ├── exemplo.env
 │   └── README.md
+├── Syslog/                    # Stack do syslog-ng (switches Huawei → Loki)
+│   ├── docker-compose.yml
+│   ├── syslog-ng.conf
+│   └── README.md
 ├── firewall-setup.sh         # Script de configuração de firewall para Docker
 └── README.md                 # Este arquivo
 ```
@@ -100,6 +105,7 @@ A stack cobre os três pilares da observabilidade:
 | Prometheus | [Prometheus/README.md](Prometheus/README.md) |
 | Tempo | [Tempo/README.md](Tempo/README.md) |
 | Zabbix | [Zabbix/README.md](Zabbix/README.md) |
+| Syslog (switches Huawei) | [Syslog/README.md](Syslog/README.md) |
 
 ---
 
@@ -109,8 +115,8 @@ A stack cobre os três pilares da observabilidade:
 
 O script `firewall-setup.sh` automatiza essa configuração: detecta a interface de rede, aplica as regras imediatamente e persiste no `/etc/ufw/after.rules` para sobreviver a reboots.
 
-**Redes permitidas:** `168.90.16.0/22` e `45.187.224.0/22`  
-**Portas protegidas:** `9090` (Prometheus), `3100` (Loki), `3200` / `4317` / `4318` (Tempo)
+**Portas internas** (`9090` Prometheus, `3100` Loki, `3200` / `4317` / `4318` Tempo) → liberadas para `168.90.16.0/22` e `45.187.224.0/22`.  
+**Syslog `514` (UDP/TCP)** → liberado também para `10.129.190.0/24` (IP pós-NAT do gateway de gerência dos switches), sem abrir as portas internas para essa faixa.
 
 ```bash
 # no servidor via SSH
@@ -138,6 +144,7 @@ Todos os serviços rodam no mesmo servidor VPS via Docker Swarm gerenciado pelo 
 | Tempo (OTLP HTTP) | `4318` | Recebimento de traces via HTTP |
 | Zabbix Web | `8080` | Interface web do Zabbix |
 | Zabbix Server | `10051` | Comunicação com agentes e proxies |
+| Syslog (syslog-ng) | `514` UDP/TCP | Recebimento de syslog dos switches Huawei |
 
 **Rede Docker:** `network_swarm_public` — compartilhada por todos os serviços.
 

@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Topologia de Rede - LOGNET</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0f1117;
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    user-select: none;
+  }
+
+  /* ── Sidebar ── */
+  #sidebar {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 240px;
+    background: rgba(12,14,20,0.98);
+    border-right: 1px solid #2d3748;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    padding: 16px 14px 16px 14px;
+    overflow-y: auto;
+  }
+
+  #title { margin-bottom: 16px; }
+
+  #title h1 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #f97316;
+  }
+
+  #title p {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 2px;
+  }
+
+  /* ── Canvas ── */
+  #canvas {
+    position: fixed;
+    left: 240px; top: 0; right: 0; bottom: 0;
+    overflow: hidden;
+    cursor: grab;
+    background: #0f1117;
+  }
+
+  #canvas.panning { cursor: grabbing; }
+
+  #viewport {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    transform-origin: 0 0;
+  }
+
+  svg#links {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    overflow: visible;
+    z-index: 1;
+  }
+
+  /* ── Nós ── */
+  .node {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 86px;
+    height: 86px;
+    border-radius: 50%;
+    cursor: grab;
+    z-index: 10;
+    transform: translate(-50%, -50%);
+    transition: box-shadow 0.2s;
+    border: 3px solid;
+  }
+
+  .node:active { cursor: grabbing; }
+  .node:hover  { box-shadow: 0 0 22px currentColor; }
+
+  .node-label {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    pointer-events: none;
+  }
+
+  .node-type {
+    font-size: 9px;
+    opacity: 0.7;
+    margin-top: 2px;
+    pointer-events: none;
+  }
+
+  .node.pop {
+    background: #1a1f35;
+    border-color: #4f9cf9;
+    color: #4f9cf9;
+    box-shadow: 0 0 12px rgba(79,156,249,0.35);
+  }
+
+  .node.pop-ix {
+    background: #1c1a30;
+    border-color: #a78bfa;
+    color: #a78bfa;
+    box-shadow: 0 0 16px rgba(167,139,250,0.5);
+  }
+
+  .node.pop-core {
+    background: #0a1628;
+    border-color: #60a5fa;
+    border-width: 4px;
+    color: #bfdbfe;
+    box-shadow: 0 0 0 4px rgba(96,165,250,0.18), 0 0 28px rgba(96,165,250,0.7), 0 0 60px rgba(96,165,250,0.3);
+    animation: core-pulse 2.4s ease-in-out infinite;
+  }
+
+  @keyframes core-pulse {
+    0%, 100% { box-shadow: 0 0 0 4px rgba(96,165,250,0.18), 0 0 28px rgba(96,165,250,0.7), 0 0 60px rgba(96,165,250,0.3); }
+    50%       { box-shadow: 0 0 0 7px rgba(96,165,250,0.10), 0 0 42px rgba(96,165,250,0.9), 0 0 80px rgba(96,165,250,0.45); }
+  }
+
+  .node.pop-core .badge.core {
+    background: #1e40af;
+    color: #bfdbfe;
+    border-color: #60a5fa;
+    font-size: 8px;
+    letter-spacing: 1px;
+  }
+
+  /* Losango */
+  .node.ext-ix,
+  .node.ext-cdn {
+    transform: translate(-50%, -50%) rotate(45deg);
+    border-radius: 8px;
+    width: 78px;
+    height: 78px;
+  }
+
+  .node.ext-ix {
+    background: #180f2e;
+    border-color: #a78bfa;
+    color: #a78bfa;
+    box-shadow: 0 0 14px rgba(167,139,250,0.35);
+  }
+
+  .node.ext-cdn {
+    background: #0b1f12;
+    border-color: #22c55e;
+    color: #22c55e;
+    box-shadow: 0 0 14px rgba(34,197,94,0.35);
+  }
+
+  .node.ext-ix:hover,
+  .node.ext-cdn:hover { box-shadow: 0 0 26px currentColor; }
+
+  /* ── Painel de peers externos ── */
+  .node.ext-panel {
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    width: 152px;
+    height: auto;
+    padding: 8px 10px 6px;
+    background: #0d1221;
+    border-color: #a78bfa;
+    color: #e2e8f0;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    box-shadow: 0 0 14px rgba(167,139,250,0.22);
+  }
+  .node.ext-panel:hover { box-shadow: 0 0 22px rgba(167,139,250,0.5); }
+
+  .panel-title {
+    font-size: 8px; font-weight: 700; letter-spacing: 1.2px;
+    text-transform: uppercase; color: #a78bfa;
+    margin-bottom: 5px; pointer-events: none; width: 100%;
+  }
+  .panel-sep {
+    width: 100%; height: 1px; background: #2d3748;
+    margin-bottom: 5px; pointer-events: none;
+  }
+  .panel-peer {
+    display: flex; align-items: center; gap: 5px;
+    margin-bottom: 4px; pointer-events: none; width: 100%;
+  }
+  .peer-name { font-size: 11px; font-weight: 700; color: #e2e8f0; }
+  .peer-sub  { font-size: 9px; color: #64748b; margin-left: auto; }
+
+  .node-inner {
+    transform: rotate(-45deg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .node-badges {
+    display: flex;
+    gap: 3px;
+    margin-top: 4px;
+    pointer-events: none;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .badge {
+    font-size: 7px;
+    font-weight: 700;
+    padding: 1px 4px;
+    border-radius: 3px;
+    letter-spacing: 0.5px;
+    pointer-events: none;
+  }
+
+  .badge.ix   { background: #7c3aed; color: #ede9fe; }
+  .badge.cdn  { background: #0e7490; color: #cffafe; }
+  .badge.tr   { background: #15803d; color: #dcfce7; }
+  .badge.edge { background: #92400e; color: #fef3c7; }
+  .badge.core { background: #1e3a5f; color: #93c5fd; border: 1px solid #3b82f6; }
+
+  /* ── Links SVG ── */
+  .link-100g { stroke: #4f9cf9; stroke-width: 3; }
+  .link-40g  { stroke: #a78bfa; stroke-width: 2.5; }
+  .link-10g  { stroke: #f97316; stroke-width: 2; stroke-dasharray: 8 4; }
+
+  .link-label {
+    fill: #e2e8f0;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  /* ── Legenda (dentro da sidebar) ── */
+  #legend { color: #e2e8f0; flex: 1; }
+
+  #legend-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #2d3748;
+    margin-bottom: 10px;
+  }
+
+  #legend-header h3 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #94a3b8;
+    margin: 0;
+  }
+
+  #legend-toggle { font-size: 13px; color: #94a3b8; }
+
+  #legend-body {
+    overflow: hidden;
+    max-height: 2000px;
+    opacity: 1;
+    transition: max-height 0.3s ease, opacity 0.25s ease;
+  }
+
+  #legend-body.collapsed { max-height: 0; opacity: 0; }
+
+  #legend h3 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #94a3b8;
+    margin: 6px 0 7px;
+  }
+
+  .legend-section {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    color: #475569;
+    background: #161b2a;
+    border-left: 2px solid #2d3748;
+    padding: 3px 6px;
+    margin: 10px -4px 6px;
+    border-radius: 0 3px 3px 0;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+    font-size: 11px;
+    color: #cbd5e1;
+  }
+
+  .legend-line { width: 28px; height: 3px; border-radius: 2px; flex-shrink: 0; }
+  .legend-dot  { width: 11px; height: 11px; border-radius: 50%; border: 2px solid; flex-shrink: 0; }
+
+  /* ── Info bar ── */
+  #info {
+    position: fixed;
+    top: 12px;
+    left: calc(240px + 50%);
+    transform: translateX(-50%);
+    background: rgba(15,17,23,0.85);
+    border: 1px solid #2d3748;
+    border-radius: 8px;
+    padding: 6px 16px;
+    color: #64748b;
+    font-size: 11px;
+    z-index: 300;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  /* ── Controles de zoom ── */
+  #zoom-controls {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 300;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  #zoom-controls button {
+    width: 34px;
+    height: 34px;
+    background: rgba(15,17,23,0.92);
+    border: 1px solid #2d3748;
+    border-radius: 7px;
+    color: #94a3b8;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  #zoom-controls button:hover { background: #1e2535; color: #e2e8f0; }
+</style>
+</head>
+<body>
+
+<!-- ── Sidebar ── -->
+<div id="sidebar">
+  <div id="title">
+    <h1>LOGNET</h1>
+    <p>Topologia de Rede</p>
+  </div>
+
+  <div id="legend">
+    <div id="legend-header" onclick="toggleLegend()">
+      <h3>Legenda</h3>
+      <span id="legend-toggle">▲</span>
+    </div>
+    <div id="legend-body">
+
+      <div class="legend-section">Capacidade</div>
+      <div class="legend-item">
+        <div class="legend-line" style="background:#4f9cf9"></div>
+        <span>100G - Backbone</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-line" style="background:#a78bfa"></div>
+        <span>40G - Uplink</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-line" style="background:#f97316;border-top:2px dashed #f97316;height:0"></div>
+        <span>10G - Acesso</span>
+      </div>
+
+      <div class="legend-section">Siglas - POPs</div>
+      <div class="legend-item" style="display:grid;grid-template-columns:44px 1fr;gap:4px"><span style="font-weight:700;color:#a78bfa">RJ2</span><span>Equinix RJ2</span></div>
+      <div class="legend-item" style="display:grid;grid-template-columns:44px 1fr;gap:4px"><span style="font-weight:700;color:#a78bfa">UFN</span><span>Ufinet</span></div>
+      <div class="legend-item" style="display:grid;grid-template-columns:44px 1fr;gap:4px"><span style="font-weight:700;color:#4f9cf9">MCO</span><span>Miguel Couto</span></div>
+      <div class="legend-item" style="display:grid;grid-template-columns:44px 1fr;gap:4px"><span style="font-weight:700;color:#93c5fd">RNC</span><span>Rancho Novo</span></div>
+      <div class="legend-item" style="display:grid;grid-template-columns:44px 1fr;gap:4px"><span style="font-weight:700;color:#4f9cf9">STR</span><span>Santa Rita</span></div>
+      <div class="legend-item" style="display:grid;grid-template-columns:44px 1fr;gap:4px"><span style="font-weight:700;color:#4f9cf9">SUM</span><span>Summer</span></div>
+      <div class="legend-item" style="display:grid;grid-template-columns:44px 1fr;gap:4px"><span style="font-weight:700;color:#4f9cf9">MAG</span><span>Morro Agudo</span></div>
+      <div class="legend-item" style="display:grid;grid-template-columns:44px 1fr;gap:4px"><span style="font-weight:700;color:#4f9cf9">NIG</span><span>Nova Iguaçu</span></div>
+      <div class="legend-item" style="display:grid;grid-template-columns:44px 1fr;gap:4px"><span style="font-weight:700;color:#4f9cf9">ASB</span><span>AN Bezerra</span></div>
+
+      <div class="legend-section">Siglas - Peers</div>
+      <div class="legend-item" style="display:grid;grid-template-columns:44px 1fr;gap:4px"><span style="font-weight:700;color:#a78bfa">NGT</span><span>NGT Trânsito</span></div>
+      <div class="legend-item" style="display:grid;grid-template-columns:44px 1fr;gap:4px"><span style="font-weight:700;color:#22c55e">Google</span><span>Google PNI</span></div>
+      <div class="legend-item" style="display:grid;grid-template-columns:44px 1fr;gap:4px"><span style="font-weight:700;color:#a78bfa">SEA</span><span>Seaborn (Cabo)</span></div>
+      <div class="legend-item" style="display:grid;grid-template-columns:44px 1fr;gap:4px"><span style="font-weight:700;color:#a78bfa">WIX</span><span>WIX Net</span></div>
+      <div class="legend-item" style="display:grid;grid-template-columns:44px 1fr;gap:4px"><span style="font-weight:700;color:#a78bfa">OI</span><span>OI (STFC)</span></div>
+      <div class="legend-item" style="display:grid;grid-template-columns:44px 1fr;gap:4px"><span style="font-weight:700;color:#a78bfa">IX-RJ</span><span>IX Rio de Janeiro</span></div>
+      <div class="legend-item" style="display:grid;grid-template-columns:44px 1fr;gap:4px"><span style="font-weight:700;color:#22c55e">Globo</span><span>GloboPlay CDN</span></div>
+      <div class="legend-item" style="display:grid;grid-template-columns:44px 1fr;gap:4px"><span style="font-weight:700;color:#a78bfa">ITX</span><span>ITX Teleporto</span></div>
+
+    </div><!-- /legend-body -->
+  </div>
+</div>
+
+<!-- ── Canvas ── -->
+<div id="canvas">
+  <div id="viewport">
+    <svg id="links"></svg>
+  </div>
+</div>
+
+
+<div id="zoom-controls">
+  <button onclick="zoomBy(1.2)" title="Zoom in">+</button>
+  <button onclick="zoomBy(0.83)" title="Zoom out">−</button>
+  <button onclick="resetView()" title="Resetar view" style="font-size:13px">⌂</button>
+</div>
+
+<script>
+function toggleLegend() {
+  const body   = document.getElementById('legend-body');
+  const toggle = document.getElementById('legend-toggle');
+  const col    = body.classList.toggle('collapsed');
+  toggle.textContent = col ? '▼' : '▲';
+}
+</script>
+
+<script>
+const SIDEBAR = 240;
+const W = window.innerWidth - SIDEBAR;
+const H = window.innerHeight;
+
+const nodes = [
+  // ── Coluna 2: backbone vertical ──
+  { id: 'RJ2',  label: 'RJ2',  type: 'pop-ix', ix: true,             x: W*0.26, y: H*0.18, r:43 },
+  { id: 'UFN',  label: 'UFN',  type: 'pop-ix', ix: true,             x: W*0.26, y: H*0.82, r:43 },
+  // ── Coluna 3: distribuição ──
+  { id: 'MCO',  label: 'MCO',  type: 'pop',    ix: false,            x: W*0.45, y: H*0.18, r:43 },
+  { id: 'RNC',  label: 'RNC',  type: 'pop',    ix: false, core:true, x: W*0.45, y: H*0.52, r:43 },
+  // ── Coluna 4: anel centro ──
+  { id: 'STR',  label: 'STR',  type: 'pop',    ix: false,            x: W*0.65, y: H*0.18, r:43 },
+  { id: 'SUM',  label: 'SUM',  type: 'pop',    ix: false,            x: W*0.65, y: H*0.52, r:43 },
+  { id: 'NIG',  label: 'NIG',  type: 'pop',    ix: false,            x: W*0.65, y: H*0.82, r:43 },
+  // ── Coluna 5: anel direito ──
+  { id: 'MAG',  label: 'MAG',  type: 'pop',    ix: false,            x: W*0.88, y: H*0.18, r:43 },
+  { id: 'ASB',  label: 'ASB',  type: 'pop',    ix: false,            x: W*0.88, y: H*0.82, r:43 },
+  // ── Coluna 1: painéis de peers ──
+  { id: 'PRIJ2_100', type: 'ext-panel', title: 'Peers RJ2 · 100G',
+    peers: [
+      { label:'Google',  sub:'100GE0/0/6' },
+      { label:'WIX Net', sub:'100GE0/0/1' },
+      { label:'Seaborn', sub:'100GE0/0/2' },
+    ], x: W*0.06, y: H*0.10, r: 76 },
+  { id: 'PRIJ2_10', type: 'ext-panel', title: 'Peers RJ2 · 10G',
+    peers: [
+      { label:'Google', sub:'XGE0/0/2' },
+      { label:'NGT',    sub:'XGE0/0/3' },
+      { label:'OI',     sub:'XGE0/0/7' },
+    ], x: W*0.06, y: H*0.30, r: 76 },
+  { id: 'PUFN_100', type: 'ext-panel', title: 'Peers UFN · 100G',
+    peers: [
+      { label:'IX-RJ', sub:'100GE0/0/5' },
+    ], x: W*0.06, y: H*0.74, r: 76 },
+  { id: 'PUFN_10', type: 'ext-panel', title: 'Peers UFN · 10G',
+    peers: [
+      { label:'GloboPlay',   sub:'XGE0/0/8' },
+      { label:'ITX Teleporto', sub:'XGE0/0/6' },
+    ], x: W*0.06, y: H*0.90, r: 76 },
+];
+
+const links = [
+  { from:'MCO',  to:'STR',  bw:'100G', type:'100g', dir:'uni'  },
+  { from:'MCO',  to:'RNC',  bw:'100G', type:'100g', dir:'uni'  },
+  { from:'RJ2',  to:'MCO',  bw:'100G', type:'100g', dir:'uni',  cable:'CABO 03' },
+  { from:'RJ2',  to:'UFN',  bw:'40G',  type:'40g',  dir:'dual' },
+  { from:'UFN',  to:'RNC',  bw:'100G', type:'100g', dir:'uni',  cable:'CABO 02' },
+  { from:'RNC',  to:'NIG',  bw:'100G', type:'100g', dir:'uni'  },
+  { from:'UFN',  to:'NIG',  bw:'100G', type:'100g', dir:'uni',  cable:'CABO 01' },
+  { from:'NIG',  to:'MAG',  bw:'100G', type:'100g', dir:'uni'  },
+  { from:'NIG',  to:'ASB',  bw:'10G',  type:'10g',  dir:'uni'  },
+  { from:'STR',  to:'MAG',  bw:'100G', type:'100g', dir:'uni'  },
+  { from:'STR',  to:'SUM',  bw:'100G', type:'100g', dir:'uni'  },
+  { from:'MAG',  to:'SUM',  bw:'100G', type:'100g', dir:'bi'   },
+  { from:'MAG',  to:'ASB',  bw:'10G',  type:'10g',  dir:'uni'  },
+  { from:'PRIJ2_100', to:'RJ2', bw:'100G', type:'100g', dir:'bi' },
+  { from:'PRIJ2_10',  to:'RJ2', bw:'10G',  type:'10g',  dir:'bi' },
+  { from:'PUFN_100', to:'UFN', bw:'100G', type:'100g', dir:'bi' },
+  { from:'PUFN_10',  to:'UFN', bw:'10G',  type:'10g',  dir:'bi' },
+];
+
+// ── Estado ──
+const pos = {};
+nodes.forEach(n => { pos[n.id] = { x: n.x, y: n.y }; });
+
+let viewX = 0, viewY = 0, viewScale = 1;
+
+const canvas   = document.getElementById('canvas');
+const viewport = document.getElementById('viewport');
+const svg      = document.getElementById('links');
+
+function applyTransform() {
+  viewport.style.transform = `translate(${viewX}px,${viewY}px) scale(${viewScale})`;
+}
+
+// ── Zoom ──
+canvas.addEventListener('wheel', e => {
+  e.preventDefault();
+  const factor = e.deltaY < 0 ? 1.12 : 1/1.12;
+  const rect = canvas.getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+  viewX = mx - (mx - viewX) * factor;
+  viewY = my - (my - viewY) * factor;
+  viewScale = Math.min(Math.max(viewScale * factor, 0.12), 5);
+  applyTransform();
+}, { passive: false });
+
+function zoomBy(factor) {
+  const cx = canvas.offsetWidth  / 2;
+  const cy = canvas.offsetHeight / 2;
+  viewX = cx - (cx - viewX) * factor;
+  viewY = cy - (cy - viewY) * factor;
+  viewScale = Math.min(Math.max(viewScale * factor, 0.12), 5);
+  applyTransform();
+}
+
+function resetView() { viewX=0; viewY=0; viewScale=1; applyTransform(); }
+
+// ── Pan do fundo ──
+let panning=false, panSX=0, panSY=0, panVX=0, panVY=0;
+
+canvas.addEventListener('mousedown', e => {
+  const t = e.target;
+  if (t===canvas || t===viewport || t===svg || t.tagName==='line' || t.tagName==='rect' || t.tagName==='text') {
+    panning=true;
+    panSX=e.clientX; panSY=e.clientY;
+    panVX=viewX; panVY=viewY;
+    canvas.classList.add('panning');
+    e.preventDefault();
+  }
+});
+
+document.addEventListener('mousemove', e => {
+  if (!panning) return;
+  viewX = panVX + (e.clientX - panSX);
+  viewY = panVY + (e.clientY - panSY);
+  applyTransform();
+});
+
+document.addEventListener('mouseup', () => {
+  panning = false;
+  canvas.classList.remove('panning');
+});
+
+// ── Nós DOM ──
+const nodeEls = {};
+const nodeRadius = {};
+nodes.forEach(n => { nodeRadius[n.id] = n.r || 43; });
+
+nodes.forEach(n => {
+  const el = document.createElement('div');
+  el.className = `node ${n.core ? 'pop-core' : n.type}`;
+  el.id = `node-${n.id}`;
+
+  const isDiamond = n.type === 'ext-ix' || n.type === 'ext-cdn';
+  const isPanel   = n.type === 'ext-panel';
+  let html = '';
+
+  if (isPanel) {
+    const rows = n.peers.map(p =>
+      `<div class="panel-peer">
+         <span class="peer-name">${p.label}</span>
+         <span class="peer-sub">${p.sub}</span>
+       </div>`
+    ).join('');
+    html = `<div class="panel-title">${n.title}</div>
+            <div class="panel-sep"></div>
+            ${rows}`;
+  } else if (isDiamond) {
+    const fs = n.label.length > 7 ? '10px' : n.label.length > 5 ? '11px' : '12px';
+    html = `<div class="node-inner">
+      <span class="node-label" style="font-size:${fs}">${n.label}</span>
+      <span class="node-type">${n.sublabel||''}</span>
+    </div>`;
+  } else {
+    let badges = '';
+    if (n.core) badges = `<div class="node-badges"><span class="badge core">Core</span></div>`;
+    else if (n.edge) badges = `<div class="node-badges"><span class="badge edge">Juniper</span></div>`;
+    html = `<span class="node-label">${n.label}</span>${badges}`;
+  }
+
+  el.innerHTML = html;
+  el.style.left = n.x + 'px';
+  el.style.top  = n.y + 'px';
+  viewport.appendChild(el);
+  nodeEls[n.id] = el;
+
+  // Drag do nó
+  let dragging=false, ox=0, oy=0;
+
+  el.addEventListener('mousedown', e => {
+    dragging = true;
+    const rect = canvas.getBoundingClientRect();
+    ox = (e.clientX - rect.left  - viewX) / viewScale - pos[n.id].x;
+    oy = (e.clientY - rect.top   - viewY) / viewScale - pos[n.id].y;
+    el.style.zIndex = 20;
+    e.stopPropagation();
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    const rect = canvas.getBoundingClientRect();
+    pos[n.id].x = (e.clientX - rect.left - viewX) / viewScale - ox;
+    pos[n.id].y = (e.clientY - rect.top  - viewY) / viewScale - oy;
+    el.style.left = pos[n.id].x + 'px';
+    el.style.top  = pos[n.id].y + 'px';
+    renderLinks();
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (dragging) { dragging=false; el.style.zIndex=10; }
+  });
+
+  // Touch
+  el.addEventListener('touchstart', e => {
+    const t = e.touches[0];
+    dragging = true;
+    const rect = canvas.getBoundingClientRect();
+    ox = (t.clientX - rect.left - viewX) / viewScale - pos[n.id].x;
+    oy = (t.clientY - rect.top  - viewY) / viewScale - pos[n.id].y;
+    e.stopPropagation();
+    e.preventDefault();
+  }, { passive:false });
+
+  document.addEventListener('touchmove', e => {
+    if (!dragging) return;
+    const t = e.touches[0];
+    const rect = canvas.getBoundingClientRect();
+    pos[n.id].x = (t.clientX - rect.left - viewX) / viewScale - ox;
+    pos[n.id].y = (t.clientY - rect.top  - viewY) / viewScale - oy;
+    el.style.left = pos[n.id].x + 'px';
+    el.style.top  = pos[n.id].y + 'px';
+    renderLinks();
+  }, { passive:false });
+
+  document.addEventListener('touchend', () => { dragging=false; });
+});
+
+// ── Links SVG ──
+const colorMap = { '100g':'#4f9cf9', '40g':'#a78bfa', '10g':'#f97316' };
+
+function arrow(id, color) {
+  return `<marker id="${id}" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+    <polygon points="0 0,10 3.5,0 7" fill="${color}"/>
+  </marker>`;
+}
+
+function labelSVG(x, y, text, color, cable, cableBelow, cableInline) {
+  const w = text.length * 7 + 10;
+  let out = `<rect x="${x-w/2}" y="${y-10}" width="${w}" height="18" rx="4"
+               fill="#0f1117" stroke="${color}" stroke-width="1" opacity="0.92"/>
+          <text x="${x}" y="${y+4}" text-anchor="middle" class="link-label" fill="${color}">${text}</text>`;
+  if (cable) {
+    const cw = cable.length * 6.5 + 10;
+    if (cableInline) {
+      const cx = x - w/2 - cw/2 - 4;
+      out += `<rect x="${cx-cw/2}" y="${y-10}" width="${cw}" height="18" rx="3"
+                   fill="#1e2535" stroke="#4ade80" stroke-width="1" opacity="0.95"/>
+              <text x="${cx}" y="${y+4}" text-anchor="middle" font-size="9" font-weight="700"
+                    font-family="'Segoe UI',sans-serif" fill="#4ade80" opacity="0.95">${cable}</text>`;
+    } else if (cableBelow) {
+      out += `<rect x="${x-cw/2}" y="${y+12}" width="${cw}" height="16" rx="3"
+                   fill="#1e2535" stroke="${color}" stroke-width="1" opacity="0.95"/>
+              <text x="${x}" y="${y+24}" text-anchor="middle" font-size="9" font-weight="700"
+                    font-family="'Segoe UI',sans-serif" fill="#4ade80" opacity="0.95">${cable}</text>`;
+    } else {
+      out += `<rect x="${x-cw/2}" y="${y-30}" width="${cw}" height="16" rx="3"
+                   fill="#1e2535" stroke="${color}" stroke-width="1" opacity="0.95"/>
+              <text x="${x}" y="${y-18}" text-anchor="middle" font-size="9" font-weight="700"
+                    font-family="'Segoe UI',sans-serif" fill="#4ade80" opacity="0.95">${cable}</text>`;
+    }
+  }
+  return out;
+}
+
+
+function renderLinks() {
+  let defs = `<defs>
+    ${arrow('arr-100g', colorMap['100g'])}
+    ${arrow('arr-40g',  colorMap['40g'])}
+    ${arrow('arr-10g',  colorMap['10g'])}
+  </defs>`;
+
+  let lines = '';
+
+  links.forEach(lk => {
+    const a = pos[lk.from], b = pos[lk.to];
+    const dx=b.x-a.x, dy=b.y-a.y;
+    const dist=Math.sqrt(dx*dx+dy*dy);
+    const ux=dx/dist, uy=dy/dist;
+    const color=colorMap[lk.type], cls=`link-${lk.type}`;
+    const Ra=nodeRadius[lk.from]||43, Rb=nodeRadius[lk.to]||43;
+    const off = lk.offset || 0;
+    const ox = -uy * off, oy = ux * off;
+    const x1=a.x+ux*Ra+ox, y1=a.y+uy*Ra+oy;
+    const x2=b.x-ux*Rb+ox, y2=b.y-uy*Rb+oy;
+    const frac = lk.labelFrac !== undefined ? lk.labelFrac : 0.5;
+    const mx=x1+(x2-x1)*frac, my=y1+(y2-y1)*frac;
+
+    if (lk.dir==='dual') {
+      const px=-uy*6, py=ux*6;
+      lines += `<line x1="${x1+px}" y1="${y1+py}" x2="${x2+px}" y2="${y2+py}" class="${cls}" marker-end="url(#arr-${lk.type})"/>`;
+      lines += `<line x1="${x2-px}" y1="${y2-py}" x2="${x1-px}" y2="${y1-py}" class="${cls}" marker-end="url(#arr-${lk.type})"/>`;
+      lines += labelSVG(mx, my, lk.bw, color, lk.cable, lk.cableBelow, lk.cableInline);
+    } else if (lk.dir==='bi') {
+      lines += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" class="${cls}" marker-end="url(#arr-${lk.type})" marker-start="url(#arr-${lk.type})"/>`;
+      lines += labelSVG(mx, my, lk.bw, color, lk.cable, lk.cableBelow, lk.cableInline);
+    } else {
+      lines += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" class="${cls}" marker-end="url(#arr-${lk.type})"/>`;
+      lines += labelSVG(mx, my, lk.bw, color, lk.cable, lk.cableBelow, lk.cableInline);
+    }
+  });
+
+  svg.innerHTML = defs + lines;
+}
+
+renderLinks();
+</script>
+</body>
+</html>
+
