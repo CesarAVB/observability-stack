@@ -22,7 +22,6 @@ Stack completa de observabilidade em Docker via Portainer: métricas, logs, trac
 
 - [Visão Geral](#visão-geral)
 - [Estrutura do Repositório](#estrutura-do-repositório)
-- [Firewall](#firewall)
 - [Infraestrutura](#infraestrutura)
 - [Onboarding - Novo Projeto Spring Boot](#onboarding--novo-projeto-spring-boot)
   - [1. Dependências (pom.xml)](#1-dependências-pomxml)
@@ -100,10 +99,6 @@ A stack cobre os três pilares da observabilidade:
 ├── Blackbox/                  # Stack do blackbox_exporter (probe HTTP externo)
 │   ├── docker-compose.yml
 │   └── blackbox_config.yml
-├── Firewall/                  # Scripts de firewall (DOCKER-USER/iptables)
-│   ├── firewall-setup-lognet.sh              # Servidor principal (45.187.224.251)
-│   ├── firewall-setup-asb.sh              # Nó adicional (45.187.224.248)
-│   └── README.md
 └── README.md                 # Este arquivo
 ```
 
@@ -115,43 +110,11 @@ A stack cobre os três pilares da observabilidade:
 | Dashboards (templates) | [Grafana/dashboards/README.md](Grafana/dashboards/README.md) |
 | NodeExporter | [NodeExporter/README.md](NodeExporter/README.md) |
 | Cadvisor | [Cadvisor/README.md](Cadvisor/README.md) |
-| Firewall | [Firewall/README.md](Firewall/README.md) |
 | Loki | [Loki/README.md](Loki/README.md) |
 | Prometheus | [Prometheus/README.md](Prometheus/README.md) |
 | Tempo | [Tempo/README.md](Tempo/README.md) |
 | Zabbix | [Zabbix/README.md](Zabbix/README.md) |
 | Syslog (switches Huawei) | [Syslog/README.md](Syslog/README.md) |
-
----
-
-## Firewall
-
-> **Importante:** o Docker ignora o UFW — ele insere regras diretamente no `iptables`, antes das regras do UFW. Para restringir portas publicadas pelo Docker, as regras precisam ser aplicadas na chain `DOCKER-USER`.
-
-Os scripts vivem em `Firewall/` (ver [Firewall/README.md](Firewall/README.md) para o detalhamento) — cada um automatiza a configuração: detecta a interface de rede, aplica as regras imediatamente e persiste no `/etc/ufw/after.rules` para sobreviver a reboots.
-
-**Servidor principal (`45.187.224.251`)** — `Firewall/firewall-setup-lognet.sh`:
-**Portas internas/publicadas restritas** (`9090` Prometheus, `3100` Loki, `3200` / `4317` / `4318` Tempo, `10051` Zabbix Server, `3306` MySQL, `5433` Postgres, `5672`/`15672`/`15674`/`61613` RabbitMQ, `9000`/`9001` MinIO, `5514` VictoriaLogs, `5038` Asterisk AMI) → liberadas para `168.90.16.0/22` e `45.187.224.0/22`.
-**Asterisk SIP/RTP** (`5060` TCP/UDP e `10000:10100` UDP) → liberado para `ALLOWED_NETWORKS_ASTERISK`; adicione ali os IPs do provedor SIP se necessário.
-**Syslog `514` (UDP/TCP)** → liberado também para `10.129.190.0/24` (IP pós-NAT do gateway de gerência dos switches), sem abrir as portas internas para essa faixa.
-
-```bash
-# no servidor .251 via SSH
-chmod +x Firewall/firewall-setup-lognet.sh
-sudo Firewall/firewall-setup-lognet.sh
-```
-
-Para reaplicar após um reboot sem rodar os scripts novamente, o UFW já carrega as regras do `after.rules` automaticamente ao iniciar.
-
-**Nó adicional (`45.187.224.248`)** — `Firewall/firewall-setup-asb.sh` protege as portas publicadas no Swarm separado: MySQL `3306`, node-exporter `9100` e cAdvisor `8080`, liberando acesso somente às redes confiáveis:
-
-```bash
-# no servidor .248 via SSH
-chmod +x Firewall/firewall-setup-asb.sh
-sudo Firewall/firewall-setup-asb.sh
-```
-
----
 
 ## Infraestrutura
 

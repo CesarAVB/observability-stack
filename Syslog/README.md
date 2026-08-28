@@ -38,7 +38,7 @@ Loki 3.0.0  →  Grafana (dashboard "Syslog Switches LOGNET")
 
 ## Deploy
 
-Segue o padrão de **Docker Config referenciado por arquivo** do repositório (ver `CLAUDE.md`): o `docker-compose.yml` referencia `file: ./syslog-ng.conf` — não `external`. Pra isso resolver no servidor, a stack precisa ser criada no Portainer com **Build method → Repository**, apontando pro remoto Git deste repositório, com **Compose path** `Syslog/docker-compose.yml`.
+Segue o padrão de **Docker Config referenciado por arquivo** do repositório: o `docker-compose.yml` referencia `file: ./syslog-ng.conf` — não `external`. Pra isso resolver no servidor, a stack precisa ser criada no Portainer com **Build method → Repository**, apontando pro remoto Git deste repositório, com **Compose path** `Syslog/docker-compose.yml`.
 
 **Primeiro deploy:** Portainer → **Stacks → Add stack** → Build method **Repository** → cole a URL do repositório → Compose path `Syslog/docker-compose.yml` → **Deploy the stack**.
 
@@ -54,16 +54,11 @@ A rede `network_swarm_public` precisa existir (compartilhada com o Loki).
 
 ## Firewall
 
-A porta `514` (UDP e TCP) é liberada pelo `Firewall/firewall-setup-251.sh`, via
-`ALLOWED_NETWORKS_SYSLOG` — que inclui `10.129.190.0/24`, o IP **pós-NAT** do
-gateway de gerência dos switches (os switches têm IP `10.129.180.x`, mas
-atravessam um NAT antes de chegar ao servidor, então a origem vista na 514 é
-`10.129.190.x`). Essa faixa libera só o syslog, sem abrir as portas internas.
-Rode no servidor após o deploy:
-
-```bash
-sudo ../Firewall/firewall-setup-251.sh
-```
+A porta `514` (UDP e TCP) deve ficar liberada para as redes confiáveis e para
+`10.129.190.0/24`, o IP **pós-NAT** do gateway de gerência dos switches. Os
+switches têm IP `10.129.180.x`, mas atravessam um NAT antes de chegar ao
+servidor, então a origem vista na 514 é `10.129.190.x`. Essa faixa deve liberar
+só o syslog, sem abrir as portas internas.
 
 ## Configuração nos switches Huawei (VRP)
 

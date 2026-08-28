@@ -104,7 +104,7 @@ O dashboard expõe a variável `$app_name`, populada via `label_values(http_serv
 {app="$app_name", namespace="producao"} | pattern `...`
 ```
 
-**Campo `correlationId` nos logs:** o painel de logs extrai `correlationId`, `traceId` e `spanId` via `pattern` do LogQL. O backend já injeta esses campos via MDC (ver `CLAUDE.md`).
+**Campo `correlationId` nos logs:** o painel de logs extrai `correlationId`, `traceId` e `spanId` via `pattern` do LogQL. O backend deve injetar esses campos via MDC.
 
 **Ajustar thresholds do gauge:** no `onRender` do painel, edite as constantes:
 ```javascript

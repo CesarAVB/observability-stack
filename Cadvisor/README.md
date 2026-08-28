@@ -61,11 +61,7 @@ O `.248` está em outro Swarm/Portainer. Por isso o Prometheus do `.251` não en
 
 Portainer do ASB/`.248` → **Stacks → Add stack** → Build method **Repository** → Compose path `Cadvisor/docker-compose.swarm-asb.yml` → **Deploy the stack**.
 
-Esse compose publica `8080:8080` em `mode: host`. Depois rode o firewall do `.248`:
-
-```bash
-sudo chmod +x ../Firewall/firewall-setup-asb.sh && sudo ../Firewall/firewall-setup-asb.sh
-```
+Esse compose publica `8080:8080` em `mode: host`. Depois aplique a regra de firewall do servidor ASB para permitir acesso somente às redes confiáveis.
 
 ## Testar o DNS a partir do Prometheus (cluster Swarm)
 
