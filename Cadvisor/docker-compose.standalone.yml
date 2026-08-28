@@ -1,0 +1,34 @@
+version: "3.8"
+
+# Stack STANDALONE do cAdvisor — para o servidor 45.187.224.248.
+#
+# Diferente do docker-compose.yml (que roda no MESMO cluster Swarm do
+# Prometheus e é resolvido por DNS interno da overlay), aqui o Docker é
+# independente: o Prometheus em 45.187.224.251 coleta via IP PÚBLICO na
+# porta publicada no host (8081).
+#
+# Deploy (Docker Compose, NÃO Swarm):
+#   docker compose -f docker-compose.standalone.yml up -d
+#
+# IMPORTANTE: proteja a porta 8081 com ../Firewall/firewall-setup-248-cadvisor.sh,
+# pois ao publicar portas o Docker ignora o UFW.
+#
+# OBS: o cAdvisor é publicado na porta 8081 do HOST (a 8080 já está em uso
+# neste servidor). Dentro do container ele continua escutando na 8080.
+
+services:
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.49.1
+    command:
+      - "--housekeeping_interval=15s"
+      - "--docker_only=true"
+    privileged: true
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    ports:
+      - "8081:8080"
+    restart: unless-stopped

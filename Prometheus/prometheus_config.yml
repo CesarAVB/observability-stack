@@ -51,7 +51,7 @@ scrape_configs:
   #   - srv-248: Docker standalone, scrape via IP público.
   - job_name: 'node-exporter'
     static_configs:
-      - targets: ['monitoring_node-exporter:9100']
+      - targets: ['node-exporter:9100']
         labels:
           app: 'host-linux'
           env: 'production'
@@ -71,7 +71,7 @@ scrape_configs:
   #   - srv-248: Docker standalone, scrape via IP público.
   - job_name: 'cadvisor'
     static_configs:
-      - targets: ['monitoring_cadvisor:8080']
+      - targets: ['cadvisor:8080']
         labels:
           app: 'containers'
           env: 'production'

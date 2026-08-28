@@ -118,7 +118,7 @@ var color = pct >= 2 ? '#EF4444' : pct >= 0.5 ? '#F59E0B' : '#10B981';
 - **`host-linux-dashboard.json`** — métricas do node-exporter. O seletor **Host** no topo lista a instância automaticamente.
 - **`docker-containers-dashboard.json`** — métricas do cAdvisor, agrupadas por container.
 
-Ambos dependem da stack de exporters em `../../Monitoring/` e dos jobs `node-exporter` / `cadvisor` no `prometheus_config.yml`. Ver `Monitoring/README.md` para o deploy dos exporters.
+Ambos dependem das stacks `../../NodeExporter/` e `../../Cadvisor/` e dos jobs `node-exporter` / `cadvisor` no `prometheus_config.yml`. Ver `NodeExporter/README.md` e `Cadvisor/README.md` para o deploy dos exporters.
 
 ---
 

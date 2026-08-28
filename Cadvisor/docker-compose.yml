@@ -1,0 +1,34 @@
+version: "3.8"
+
+# Stack Swarm do cAdvisor (métricas por container: CPU, RAM, rede, I/O).
+# Deploy: docker stack deploy -c docker-compose.yml cadvisor
+#
+# A rede abaixo deve ser a MESMA rede overlay onde o Prometheus já está.
+#
+# NOTA: `docker stack deploy` ignora `privileged:` — por isso o compose não
+# usa. O cAdvisor funciona com os volumes montados; no máximo perde alguma
+# métrica de baixo nível.
+
+services:
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.49.1
+    command:
+      - "--housekeeping_interval=15s"
+      - "--docker_only=true"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    networks:
+      - monitoring
+    deploy:
+      mode: global
+      restart_policy:
+        condition: any
+
+networks:
+  monitoring:
+    external: true
+    name: network_swarm_public

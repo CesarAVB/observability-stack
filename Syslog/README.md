@@ -54,15 +54,15 @@ A rede `network_swarm_public` precisa existir (compartilhada com o Loki).
 
 ## Firewall
 
-A porta `514` (UDP e TCP) é liberada pelo `firewall-setup.sh` na raiz do
-repositório, via `ALLOWED_NETWORKS_SYSLOG` — que inclui `10.129.190.0/24`, o IP
-**pós-NAT** do gateway de gerência dos switches (os switches têm IP `10.129.180.x`,
-mas atravessam um NAT antes de chegar ao servidor, então a origem vista na 514 é
+A porta `514` (UDP e TCP) é liberada pelo `Firewall/firewall-setup-251.sh`, via
+`ALLOWED_NETWORKS_SYSLOG` — que inclui `10.129.190.0/24`, o IP **pós-NAT** do
+gateway de gerência dos switches (os switches têm IP `10.129.180.x`, mas
+atravessam um NAT antes de chegar ao servidor, então a origem vista na 514 é
 `10.129.190.x`). Essa faixa libera só o syslog, sem abrir as portas internas.
 Rode no servidor após o deploy:
 
 ```bash
-sudo ./firewall-setup.sh
+sudo ../Firewall/firewall-setup-251.sh
 ```
 
 ## Configuração nos switches Huawei (VRP)

@@ -49,7 +49,8 @@ A stack cobre os três pilares da observabilidade:
 | Logs | **Loki** | Agrega e indexa logs das aplicações |
 | Traces | **Tempo** | Armazena e correlaciona traces distribuídos |
 | Visualização | **Grafana** | Dashboards, Explore e correlação entre pilares |
-| Métricas de infra | **node-exporter + cAdvisor** | Exporters de host e containers (lidos pelo Prometheus) |
+| Métricas de infra (host) | **node-exporter** | Exporter de métricas do host (CPU, RAM, disco, rede, load) |
+| Métricas de infra (containers) | **cAdvisor** | Exporter de métricas por container Docker |
 | Monitoramento de infra | **Zabbix** | Monitoramento de hosts, serviços e rede |
 | Logs de rede | **syslog-ng (AxoSyslog)** | Recebe syslog dos switches Huawei e encaminha ao Loki |
 | Probe HTTP externo | **blackbox_exporter** | Sonda HTTP endpoints sem exporter próprio (ex.: reverse proxy de apps) |
@@ -65,8 +66,13 @@ A stack cobre os três pilares da observabilidade:
 │   ├── docker-compose.yml
 │   ├── exemplo.env
 │   └── README.md
-├── Monitoring/               # Stack de exporters (node-exporter + cAdvisor)
+├── NodeExporter/             # Stack do node-exporter (métricas do host)
 │   ├── docker-compose.yml
+│   ├── docker-compose.standalone.yml
+│   └── README.md
+├── Cadvisor/                 # Stack do cAdvisor (métricas por container)
+│   ├── docker-compose.yml
+│   ├── docker-compose.standalone.yml
 │   └── README.md
 ├── Loki/                     # Stack do Grafana Loki (agregação de logs)
 │   ├── docker-compose.yml
@@ -94,7 +100,11 @@ A stack cobre os três pilares da observabilidade:
 ├── Blackbox/                  # Stack do blackbox_exporter (probe HTTP externo)
 │   ├── docker-compose.yml
 │   └── blackbox_config.yml
-├── firewall-setup.sh         # Script de configuração de firewall para Docker
+├── Firewall/                  # Scripts de firewall (DOCKER-USER/iptables) dos dois servidores
+│   ├── firewall-setup-251.sh              # Servidor principal (45.187.224.251)
+│   ├── firewall-setup-248-node-exporter.sh # Servidor standalone (45.187.224.248)
+│   ├── firewall-setup-248-cadvisor.sh      # Servidor standalone (45.187.224.248)
+│   └── README.md
 └── README.md                 # Este arquivo
 ```
 
@@ -104,7 +114,9 @@ A stack cobre os três pilares da observabilidade:
 |---|---|
 | Grafana | [Grafana/README.md](Grafana/README.md) |
 | Dashboards (templates) | [Grafana/dashboards/README.md](Grafana/dashboards/README.md) |
-| Monitoring (exporters) | [Monitoring/README.md](Monitoring/README.md) |
+| NodeExporter | [NodeExporter/README.md](NodeExporter/README.md) |
+| Cadvisor | [Cadvisor/README.md](Cadvisor/README.md) |
+| Firewall | [Firewall/README.md](Firewall/README.md) |
 | Loki | [Loki/README.md](Loki/README.md) |
 | Prometheus | [Prometheus/README.md](Prometheus/README.md) |
 | Tempo | [Tempo/README.md](Tempo/README.md) |
@@ -117,18 +129,28 @@ A stack cobre os três pilares da observabilidade:
 
 > **Importante:** o Docker ignora o UFW — ele insere regras diretamente no `iptables`, antes das regras do UFW. Para restringir portas publicadas pelo Docker, as regras precisam ser aplicadas na chain `DOCKER-USER`.
 
-O script `firewall-setup.sh` automatiza essa configuração: detecta a interface de rede, aplica as regras imediatamente e persiste no `/etc/ufw/after.rules` para sobreviver a reboots.
+Os scripts vivem em `Firewall/` (ver [Firewall/README.md](Firewall/README.md) para o detalhamento) — cada um automatiza a configuração: detecta a interface de rede, aplica as regras imediatamente e persiste no `/etc/ufw/after.rules` para sobreviver a reboots.
 
-**Portas internas** (`9090` Prometheus, `3100` Loki, `3200` / `4317` / `4318` Tempo) → liberadas para `168.90.16.0/22` e `45.187.224.0/22`.  
+**Servidor principal (`45.187.224.251`)** — `Firewall/firewall-setup-251.sh`:
+**Portas internas** (`9090` Prometheus, `3100` Loki, `3200` / `4317` / `4318` Tempo) → liberadas para `168.90.16.0/22` e `45.187.224.0/22`.
 **Syslog `514` (UDP/TCP)** → liberado também para `10.129.190.0/24` (IP pós-NAT do gateway de gerência dos switches), sem abrir as portas internas para essa faixa.
 
 ```bash
-# no servidor via SSH
-chmod +x firewall-setup.sh
-sudo ./firewall-setup.sh
+# no servidor .251 via SSH
+chmod +x Firewall/firewall-setup-251.sh
+sudo Firewall/firewall-setup-251.sh
 ```
 
-Para reaplicar após um reboot sem rodar o script novamente, o UFW já carrega as regras do `after.rules` automaticamente ao iniciar.
+**Servidor standalone (`45.187.224.248`)** — `Firewall/firewall-setup-248-node-exporter.sh` (porta `9100`) e `Firewall/firewall-setup-248-cadvisor.sh` (porta `8081`), ambos liberados só para `168.90.16.0/22` e `45.187.224.0/22`:
+
+```bash
+# no servidor .248 via SSH
+chmod +x Firewall/firewall-setup-248-node-exporter.sh Firewall/firewall-setup-248-cadvisor.sh
+sudo Firewall/firewall-setup-248-node-exporter.sh
+sudo Firewall/firewall-setup-248-cadvisor.sh
+```
+
+Para reaplicar após um reboot sem rodar os scripts novamente, o UFW já carrega as regras do `after.rules` automaticamente ao iniciar.
 
 ---
 

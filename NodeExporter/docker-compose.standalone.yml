@@ -1,0 +1,31 @@
+version: "3.8"
+
+# Stack STANDALONE do node-exporter — para o servidor 45.187.224.248.
+#
+# Diferente do docker-compose.yml (que roda no MESMO cluster Swarm do
+# Prometheus e é resolvido por DNS interno da overlay), aqui o Docker é
+# independente: o Prometheus em 45.187.224.251 coleta via IP PÚBLICO na
+# porta publicada no host (9100).
+#
+# Deploy (Docker Compose, NÃO Swarm):
+#   docker compose -f docker-compose.standalone.yml up -d
+#
+# IMPORTANTE: proteja a porta 9100 com ../Firewall/firewall-setup-248-node-exporter.sh,
+# pois ao publicar portas o Docker ignora o UFW.
+
+services:
+  node-exporter:
+    image: prom/node-exporter:v1.8.2
+    command:
+      - "--path.procfs=/host/proc"
+      - "--path.sysfs=/host/sys"
+      - "--path.rootfs=/rootfs"
+      - "--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)"
+      - "--collector.filesystem.fs-types-exclude=^(autofs|binfmt_misc|cgroup|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|mqueue|overlay|proc|procfs|pstore|securityfs|sysfs|tmpfs|tracefs)$$"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    ports:
+      - "9100:9100"
+    restart: unless-stopped
