@@ -1,965 +1,1726 @@
 {
-  "annotations": {
-    "list": [
-      {
-        "builtIn": 1,
-        "datasource": {
-          "type": "grafana",
-          "uid": "-- Grafana --"
-        },
+  "annotations": [
+    {
+      "kind": "AnnotationQuery",
+      "spec": {
+        "builtIn": true,
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
-        "type": "dashboard"
+        "query": {
+          "datasource": {
+            "name": "-- Grafana --"
+          },
+          "group": "grafana",
+          "kind": "DataQuery",
+          "spec": {},
+          "version": "v0"
+        }
       }
-    ]
-  },
+    }
+  ],
+  "cursorSync": "Off",
   "description": "Logs de syslog dos switches Huawei (LOGNET) coletados via syslog-ng -> Loki. Filtros por switch, severidade e intervalo de tempo.",
   "editable": true,
-  "fiscalYearStartMonth": 0,
-  "graphTooltip": 0,
-  "links": [],
-  "panels": [
-    {
-      "id": 10,
-      "type": "marcusolsson-dynamictext-panel",
-      "title": "",
-      "transparent": true,
-      "gridPos": {
-        "h": 3,
-        "w": 24,
-        "x": 0,
-        "y": 0
-      },
-      "pluginVersion": "5.5.0",
-      "options": {
-        "content": "<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.hdr{background:linear-gradient(135deg,#0d1520 0%,#141B27 40%,#1a2233 100%);border-bottom:2px solid #F97316;height:100%;display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:relative;overflow:hidden}.hdr::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(249,115,22,0.07) 0%,transparent 60%);pointer-events:none}.logo-wrap{display:flex;align-items:center;gap:14px}.logo-box{width:46px;height:46px;background:linear-gradient(135deg,#F97316,#ea580c);border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px rgba(249,115,22,0.4),0 4px 12px rgba(0,0,0,0.3);flex-shrink:0}.logo-box svg{width:24px;height:24px}.ht{font-size:19px;font-weight:800;color:#F9FAFB;letter-spacing:-0.5px;line-height:1}.hs{font-size:12px;color:#6B7280;margin-top:3px;font-weight:400}.hdr-r{display:flex;align-items:center;gap:14px}.pills{display:flex;gap:6px}.pill{background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.22);color:#F97316;font-size:10.5px;font-weight:600;padding:4px 10px;border-radius:6px;letter-spacing:0.3px}.env{background:linear-gradient(135deg,#F97316,#dc6011);color:#fff;font-size:10px;font-weight:800;padding:5px 14px;border-radius:20px;letter-spacing:1.2px;text-transform:uppercase;box-shadow:0 0 12px rgba(249,115,22,0.3)}.live{display:flex;align-items:center;gap:7px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);padding:5px 12px;border-radius:8px}.live-dot{width:7px;height:7px;background:#10B981;border-radius:50%;animation:blink 2s ease-in-out infinite;box-shadow:0 0 8px rgba(16,185,129,0.6)}.live-lbl{font-size:11px;font-weight:600;color:#10B981}@keyframes blink{0%,100%{opacity:1}50%{opacity:0.4}}</style><div class='hdr'><div class='logo-wrap'><div class='logo-box'><svg viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='16' y='16' width='6' height='6' rx='1'/><rect x='2' y='16' width='6' height='6' rx='1'/><rect x='9' y='2' width='6' height='6' rx='1'/><path d='M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3'/><path d='M12 12V8'/></svg></div><div><div class='ht'>Syslog &middot; Switches Huawei</div><div class='hs'>Monitoramento de Logs de Rede - LOGNET</div></div></div><div class='hdr-r'><div class='pills'><span class='pill'>Huawei VRP</span><span class='pill'>syslog-ng</span><span class='pill'>Loki</span></div><span class='env'>LOGNET</span><div class='live'><div class='live-dot'></div><span class='live-lbl'>Ao vivo</span></div></div></div>",
-        "defaultContent": "<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.hdr{background:linear-gradient(135deg,#0d1520 0%,#141B27 40%,#1a2233 100%);border-bottom:2px solid #F97316;height:100%;display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:relative;overflow:hidden}.hdr::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(249,115,22,0.07) 0%,transparent 60%);pointer-events:none}.logo-wrap{display:flex;align-items:center;gap:14px}.logo-box{width:46px;height:46px;background:linear-gradient(135deg,#F97316,#ea580c);border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px rgba(249,115,22,0.4),0 4px 12px rgba(0,0,0,0.3);flex-shrink:0}.logo-box svg{width:24px;height:24px}.ht{font-size:19px;font-weight:800;color:#F9FAFB;letter-spacing:-0.5px;line-height:1}.hs{font-size:12px;color:#6B7280;margin-top:3px;font-weight:400}.hdr-r{display:flex;align-items:center;gap:14px}.pills{display:flex;gap:6px}.pill{background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.22);color:#F97316;font-size:10.5px;font-weight:600;padding:4px 10px;border-radius:6px;letter-spacing:0.3px}.env{background:linear-gradient(135deg,#F97316,#dc6011);color:#fff;font-size:10px;font-weight:800;padding:5px 14px;border-radius:20px;letter-spacing:1.2px;text-transform:uppercase;box-shadow:0 0 12px rgba(249,115,22,0.3)}.live{display:flex;align-items:center;gap:7px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);padding:5px 12px;border-radius:8px}.live-dot{width:7px;height:7px;background:#10B981;border-radius:50%;animation:blink 2s ease-in-out infinite;box-shadow:0 0 8px rgba(16,185,129,0.6)}.live-lbl{font-size:11px;font-weight:600;color:#10B981}@keyframes blink{0%,100%{opacity:1}50%{opacity:0.4}}</style><div class='hdr'><div class='logo-wrap'><div class='logo-box'><svg viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='16' y='16' width='6' height='6' rx='1'/><rect x='2' y='16' width='6' height='6' rx='1'/><rect x='9' y='2' width='6' height='6' rx='1'/><path d='M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3'/><path d='M12 12V8'/></svg></div><div><div class='ht'>Syslog &middot; Switches Huawei</div><div class='hs'>Monitoramento de Logs de Rede - LOGNET</div></div></div><div class='hdr-r'><div class='pills'><span class='pill'>Huawei VRP</span><span class='pill'>syslog-ng</span><span class='pill'>Loki</span></div><span class='env'>LOGNET</span><div class='live'><div class='live-dot'></div><span class='live-lbl'>Ao vivo</span></div></div></div>",
-        "editor": {
-          "format": "auto",
-          "language": "html"
-        },
-        "editors": [],
-        "renderMode": "allRows",
-        "wrap": true
-      }
-    },
-    {
-      "id": 11,
-      "type": "gapit-htmlgraphics-panel",
-      "title": "Total de logs",
-      "datasource": {
-        "type": "loki",
-        "uid": "$datasource"
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 0,
-        "y": 3
-      },
-      "fieldConfig": {
-        "defaults": {
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
+  "elements": {
+    "panel-1": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
               {
-                "color": "green",
-                "value": null
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "$datasource"
+                    },
+                    "group": "loki",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=~\"info|notice\"}[$__interval]))",
+                      "legendFormat": "Normal",
+                      "queryType": "range"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "TN"
+                }
               },
               {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "SVGBaseFix": true,
-        "add100Percentage": true,
-        "calcsMutation": "standard",
-        "centerAlignContent": true,
-        "codeData": "{}",
-        "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.kpi{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;position:relative;overflow:hidden;cursor:default;transition:border-color .3s}.kpi:hover{border-color:#4f9cf9}.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#4f9cf9,#7cb6fb)}.kpi::after{content:'';position:absolute;bottom:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,rgba(79,156,249,0.08),transparent 70%);pointer-events:none}.icon-ring{width:38px;height:38px;background:rgba(79,156,249,0.12);border:1.5px solid rgba(79,156,249,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:8px;flex-shrink:0}.icon-ring svg{width:18px;height:18px;stroke:#4f9cf9}.val{font-size:30px;font-weight:800;color:#F9FAFB;letter-spacing:-1px;line-height:1}.unit{font-size:11px;color:#6B7280;margin-top:2px;font-weight:500}.label{font-size:11px;color:#9CA3AF;margin-top:6px;font-weight:500;text-align:center}.badge{margin-top:8px;font-size:10px;font-weight:600;padding:2px 10px;border-radius:20px;letter-spacing:0.3px;flex-shrink:0}.ok{background:rgba(16,185,129,0.12);color:#10B981;border:1px solid rgba(16,185,129,0.25)}.warn{background:rgba(245,158,11,0.12);color:#F59E0B;border:1px solid rgba(245,158,11,0.25)}.crit{background:rgba(239,68,68,0.12);color:#EF4444;border:1px solid rgba(239,68,68,0.25)}",
-        "dynamicData": false,
-        "dynamicFieldDisplayValues": false,
-        "dynamicHtmlGraphics": {
-          "dynamicData": true,
-          "dynamicFieldDisplayValues": false,
-          "dynamicProps": false
-        },
-        "dynamicProps": false,
-        "html": "<div class='kpi'><div class='icon-ring'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='8' y1='6' x2='21' y2='6'/><line x1='8' y1='12' x2='21' y2='12'/><line x1='8' y1='18' x2='21' y2='18'/><line x1='3' y1='6' x2='3.01' y2='6'/><line x1='3' y1='12' x2='3.01' y2='12'/><line x1='3' y1='18' x2='3.01' y2='18'/></svg></div><div class='val' id='val'>--</div><div class='unit'>logs no periodo</div><div class='label'>Total coletado</div><div class='badge ok' id='badge'>Coletando</div></div>",
-        "onInit": "",
-        "onInitOnResize": false,
-        "onRender": "var val=0;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var v=f[1].values;val=Array.isArray(v)?v[v.length-1]:(v.get?v.get(v.length-1):0);}}}catch(e){}val=val||0;var el=htmlNode.querySelector('#val');var badge=htmlNode.querySelector('#badge');if(el){el.textContent=Math.round(val).toLocaleString('pt-BR');}if(badge){badge.textContent='Coletando';badge.className='badge ok';}",
-        "overflow": "visible",
-        "panelupdateOnMount": true,
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull",
-            "last",
-            "firstNotNull",
-            "first",
-            "min",
-            "max",
-            "mean",
-            "sum",
-            "count",
-            "range",
-            "delta",
-            "step",
-            "diff",
-            "logmin",
-            "allIsZero",
-            "allIsNull",
-            "diffperc"
-          ]
-        },
-        "renderOnMount": true,
-        "rootCSS": ":host{overflow:hidden;display:block;}",
-        "useGrafanaScrollbar": false
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "loki",
-            "uid": "$datasource"
-          },
-          "expr": "sum(count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=~\"$severity\"}[$__range]))",
-          "queryType": "instant"
-        }
-      ],
-      "pluginVersion": "2.2.3"
-    },
-    {
-      "id": 12,
-      "type": "gapit-htmlgraphics-panel",
-      "title": "Switches ativos",
-      "datasource": {
-        "type": "loki",
-        "uid": "$datasource"
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 6,
-        "y": 3
-      },
-      "fieldConfig": {
-        "defaults": {
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "$datasource"
+                    },
+                    "group": "loki",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=\"warning\"}[$__interval]))",
+                      "legendFormat": "Atencao",
+                      "queryType": "range"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "TW"
+                }
               },
               {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "SVGBaseFix": true,
-        "add100Percentage": true,
-        "calcsMutation": "standard",
-        "centerAlignContent": true,
-        "codeData": "{}",
-        "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.kpi{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;position:relative;overflow:hidden;cursor:default;transition:border-color .3s}.kpi:hover{border-color:#a78bfa}.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#a78bfa,#c4b5fd)}.kpi::after{content:'';position:absolute;bottom:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,rgba(167,139,250,0.08),transparent 70%);pointer-events:none}.icon-ring{width:38px;height:38px;background:rgba(167,139,250,0.12);border:1.5px solid rgba(167,139,250,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:8px;flex-shrink:0}.icon-ring svg{width:18px;height:18px;stroke:#a78bfa}.val{font-size:30px;font-weight:800;color:#F9FAFB;letter-spacing:-1px;line-height:1}.unit{font-size:11px;color:#6B7280;margin-top:2px;font-weight:500}.label{font-size:11px;color:#9CA3AF;margin-top:6px;font-weight:500;text-align:center}.badge{margin-top:8px;font-size:10px;font-weight:600;padding:2px 10px;border-radius:20px;letter-spacing:0.3px;flex-shrink:0}.ok{background:rgba(16,185,129,0.12);color:#10B981;border:1px solid rgba(16,185,129,0.25)}.warn{background:rgba(245,158,11,0.12);color:#F59E0B;border:1px solid rgba(245,158,11,0.25)}.crit{background:rgba(239,68,68,0.12);color:#EF4444;border:1px solid rgba(239,68,68,0.25)}",
-        "dynamicData": false,
-        "dynamicFieldDisplayValues": false,
-        "dynamicHtmlGraphics": {
-          "dynamicData": true,
-          "dynamicFieldDisplayValues": false,
-          "dynamicProps": false
-        },
-        "dynamicProps": false,
-        "html": "<div class='kpi'><div class='icon-ring'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='16' y='16' width='6' height='6' rx='1'/><rect x='2' y='16' width='6' height='6' rx='1'/><rect x='9' y='2' width='6' height='6' rx='1'/><path d='M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3'/><path d='M12 12V8'/></svg></div><div class='val' id='val'>--</div><div class='unit'>switches</div><div class='label'>Enviando syslog</div><div class='badge ok' id='badge'>Online</div></div>",
-        "onInit": "",
-        "onInitOnResize": false,
-        "onRender": "var val=0;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var v=f[1].values;val=Array.isArray(v)?v[v.length-1]:(v.get?v.get(v.length-1):0);}}}catch(e){}val=val||0;var el=htmlNode.querySelector('#val');var badge=htmlNode.querySelector('#badge');if(el){el.textContent=Math.round(val).toLocaleString('pt-BR');}if(badge){badge.textContent='Online';badge.className='badge ok';}",
-        "overflow": "visible",
-        "panelupdateOnMount": true,
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull",
-            "last",
-            "firstNotNull",
-            "first",
-            "min",
-            "max",
-            "mean",
-            "sum",
-            "count",
-            "range",
-            "delta",
-            "step",
-            "diff",
-            "logmin",
-            "allIsZero",
-            "allIsNull",
-            "diffperc"
-          ]
-        },
-        "renderOnMount": true,
-        "rootCSS": ":host{overflow:hidden;display:block;}",
-        "useGrafanaScrollbar": false
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "loki",
-            "uid": "$datasource"
-          },
-          "expr": "count(sum by (host) (count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=~\"$severity\"}[$__range])))",
-          "queryType": "instant"
-        }
-      ],
-      "pluginVersion": "2.2.3"
-    },
-    {
-      "id": 13,
-      "type": "gapit-htmlgraphics-panel",
-      "title": "Avisos (warning)",
-      "datasource": {
-        "type": "loki",
-        "uid": "$datasource"
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 12,
-        "y": 3
-      },
-      "fieldConfig": {
-        "defaults": {
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "$datasource"
+                    },
+                    "group": "loki",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=~\"emerg|alert|crit|err\"}[$__interval]))",
+                      "legendFormat": "Critico",
+                      "queryType": "range"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "TC"
+                }
               },
               {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "SVGBaseFix": true,
-        "add100Percentage": true,
-        "calcsMutation": "standard",
-        "centerAlignContent": true,
-        "codeData": "{}",
-        "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.kpi{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;position:relative;overflow:hidden;cursor:default;transition:border-color .3s}.kpi:hover{border-color:#f97316}.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#f97316,#fb923c)}.kpi::after{content:'';position:absolute;bottom:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,rgba(249,115,22,0.08),transparent 70%);pointer-events:none}.icon-ring{width:38px;height:38px;background:rgba(249,115,22,0.12);border:1.5px solid rgba(249,115,22,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:8px;flex-shrink:0}.icon-ring svg{width:18px;height:18px;stroke:#f97316}.val{font-size:30px;font-weight:800;color:#F9FAFB;letter-spacing:-1px;line-height:1}.unit{font-size:11px;color:#6B7280;margin-top:2px;font-weight:500}.label{font-size:11px;color:#9CA3AF;margin-top:6px;font-weight:500;text-align:center}.badge{margin-top:8px;font-size:10px;font-weight:600;padding:2px 10px;border-radius:20px;letter-spacing:0.3px;flex-shrink:0}.ok{background:rgba(16,185,129,0.12);color:#10B981;border:1px solid rgba(16,185,129,0.25)}.warn{background:rgba(245,158,11,0.12);color:#F59E0B;border:1px solid rgba(245,158,11,0.25)}.crit{background:rgba(239,68,68,0.12);color:#EF4444;border:1px solid rgba(239,68,68,0.25)}",
-        "dynamicData": false,
-        "dynamicFieldDisplayValues": false,
-        "dynamicHtmlGraphics": {
-          "dynamicData": true,
-          "dynamicFieldDisplayValues": false,
-          "dynamicProps": false
-        },
-        "dynamicProps": false,
-        "html": "<div class='kpi'><div class='icon-ring'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z'/><line x1='12' y1='9' x2='12' y2='13'/><line x1='12' y1='17' x2='12.01' y2='17'/></svg></div><div class='val' id='val'>--</div><div class='unit'>eventos</div><div class='label'>Severidade warning</div><div class='badge ok' id='badge'>Nenhum</div></div>",
-        "onInit": "",
-        "onInitOnResize": false,
-        "onRender": "var val=0;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var v=f[1].values;val=Array.isArray(v)?v[v.length-1]:(v.get?v.get(v.length-1):0);}}}catch(e){}val=val||0;var el=htmlNode.querySelector('#val');var badge=htmlNode.querySelector('#badge');if(el){el.textContent=Math.round(val).toLocaleString('pt-BR');}if(badge){if(val>0){badge.textContent='Atencao';badge.className='badge warn';}else{badge.textContent='Nenhum';badge.className='badge ok';}}",
-        "overflow": "visible",
-        "panelupdateOnMount": true,
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull",
-            "last",
-            "firstNotNull",
-            "first",
-            "min",
-            "max",
-            "mean",
-            "sum",
-            "count",
-            "range",
-            "delta",
-            "step",
-            "diff",
-            "logmin",
-            "allIsZero",
-            "allIsNull",
-            "diffperc"
-          ]
-        },
-        "renderOnMount": true,
-        "rootCSS": ":host{overflow:hidden;display:block;}",
-        "useGrafanaScrollbar": false
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "loki",
-            "uid": "$datasource"
-          },
-          "expr": "sum(count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=\"warning\"}[$__range]))",
-          "queryType": "instant"
-        }
-      ],
-      "pluginVersion": "2.2.3"
-    },
-    {
-      "id": 14,
-      "type": "gapit-htmlgraphics-panel",
-      "title": "Críticos (err+)",
-      "datasource": {
-        "type": "loki",
-        "uid": "$datasource"
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 18,
-        "y": 3
-      },
-      "fieldConfig": {
-        "defaults": {
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "$datasource"
+                    },
+                    "group": "loki",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=~\"info|notice\"}[$__range]))",
+                      "queryType": "instant"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "N"
+                }
               },
               {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "SVGBaseFix": true,
-        "add100Percentage": true,
-        "calcsMutation": "standard",
-        "centerAlignContent": true,
-        "codeData": "{}",
-        "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.kpi{background:linear-gradient(145deg,#1F2937,#141B27);border:1px solid #374151;border-radius:14px;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;position:relative;overflow:hidden;cursor:default;transition:border-color .3s}.kpi:hover{border-color:#ef4444}.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#ef4444,#f87171)}.kpi::after{content:'';position:absolute;bottom:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,rgba(239,68,68,0.08),transparent 70%);pointer-events:none}.icon-ring{width:38px;height:38px;background:rgba(239,68,68,0.12);border:1.5px solid rgba(239,68,68,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:8px;flex-shrink:0}.icon-ring svg{width:18px;height:18px;stroke:#ef4444}.val{font-size:30px;font-weight:800;color:#F9FAFB;letter-spacing:-1px;line-height:1}.unit{font-size:11px;color:#6B7280;margin-top:2px;font-weight:500}.label{font-size:11px;color:#9CA3AF;margin-top:6px;font-weight:500;text-align:center}.badge{margin-top:8px;font-size:10px;font-weight:600;padding:2px 10px;border-radius:20px;letter-spacing:0.3px;flex-shrink:0}.ok{background:rgba(16,185,129,0.12);color:#10B981;border:1px solid rgba(16,185,129,0.25)}.warn{background:rgba(245,158,11,0.12);color:#F59E0B;border:1px solid rgba(245,158,11,0.25)}.crit{background:rgba(239,68,68,0.12);color:#EF4444;border:1px solid rgba(239,68,68,0.25)}",
-        "dynamicData": false,
-        "dynamicFieldDisplayValues": false,
-        "dynamicHtmlGraphics": {
-          "dynamicData": true,
-          "dynamicFieldDisplayValues": false,
-          "dynamicProps": false
-        },
-        "dynamicProps": false,
-        "html": "<div class='kpi'><div class='icon-ring'><svg viewBox='0 0 24 24' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polygon points='7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2'/><line x1='12' y1='8' x2='12' y2='12'/><line x1='12' y1='16' x2='12.01' y2='16'/></svg></div><div class='val' id='val'>--</div><div class='unit'>eventos</div><div class='label'>err / crit / alert / emerg</div><div class='badge ok' id='badge'>Saudavel</div></div>",
-        "onInit": "",
-        "onInitOnResize": false,
-        "onRender": "var val=0;try{if(data&&data.series&&data.series.length>0){var f=data.series[0].fields;if(f&&f.length>1){var v=f[1].values;val=Array.isArray(v)?v[v.length-1]:(v.get?v.get(v.length-1):0);}}}catch(e){}val=val||0;var el=htmlNode.querySelector('#val');var badge=htmlNode.querySelector('#badge');if(el){el.textContent=Math.round(val).toLocaleString('pt-BR');}if(badge){if(val>0){badge.textContent='Critico';badge.className='badge crit';}else{badge.textContent='Saudavel';badge.className='badge ok';}}",
-        "overflow": "visible",
-        "panelupdateOnMount": true,
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull",
-            "last",
-            "firstNotNull",
-            "first",
-            "min",
-            "max",
-            "mean",
-            "sum",
-            "count",
-            "range",
-            "delta",
-            "step",
-            "diff",
-            "logmin",
-            "allIsZero",
-            "allIsNull",
-            "diffperc"
-          ]
-        },
-        "renderOnMount": true,
-        "rootCSS": ":host{overflow:hidden;display:block;}",
-        "useGrafanaScrollbar": false
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "loki",
-            "uid": "$datasource"
-          },
-          "expr": "sum(count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=~\"emerg|alert|crit|err\"}[$__range]))",
-          "queryType": "instant"
-        }
-      ],
-      "pluginVersion": "2.2.3"
-    },
-    {
-      "id": 1,
-      "type": "timeseries",
-      "title": "Volume de logs por switch",
-      "datasource": {
-        "type": "loki",
-        "uid": "$datasource"
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 16,
-        "x": 0,
-        "y": 9
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "drawStyle": "line",
-            "lineInterpolation": "linear",
-            "lineWidth": 2,
-            "fillOpacity": 25,
-            "gradientMode": "opacity",
-            "showPoints": "never",
-            "pointSize": 5,
-            "spanNulls": true,
-            "stacking": {
-              "mode": "normal",
-              "group": "A"
-            },
-            "axisPlacement": "auto"
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "table",
-          "placement": "right",
-          "showLegend": true,
-          "calcs": [
-            "sum"
-          ]
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "loki",
-            "uid": "$datasource"
-          },
-          "expr": "sum by (host) (count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=~\"$severity\"}[$__interval]))",
-          "queryType": "range",
-          "legendFormat": "{{host}}"
-        }
-      ],
-      "interval": "5m"
-    },
-    {
-      "id": 2,
-      "type": "piechart",
-      "title": "Distribuição por severidade",
-      "datasource": {
-        "type": "loki",
-        "uid": "$datasource"
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 8,
-        "x": 16,
-        "y": 9
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "fixed",
-            "fixedColor": "#4f9cf9"
-          },
-          "unit": "short",
-          "decimals": 0
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "emerg"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "mode": "fixed",
-                  "fixedColor": "#b91c1c"
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "$datasource"
+                    },
+                    "group": "loki",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=\"warning\"}[$__range]))",
+                      "queryType": "instant"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "W"
                 }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "alert"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "mode": "fixed",
-                  "fixedColor": "#dc2626"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "crit"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "mode": "fixed",
-                  "fixedColor": "#ef4444"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "err"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "mode": "fixed",
-                  "fixedColor": "#f87171"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "warning"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "mode": "fixed",
-                  "fixedColor": "#f97316"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "notice"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "mode": "fixed",
-                  "fixedColor": "#4f9cf9"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "info"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "mode": "fixed",
-                  "fixedColor": "#22c55e"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "debug"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "mode": "fixed",
-                  "fixedColor": "#64748b"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "options": {
-        "pieType": "donut",
-        "displayLabels": [
-          "percent"
-        ],
-        "legend": {
-          "displayMode": "table",
-          "placement": "right",
-          "showLegend": true,
-          "values": [
-            "value",
-            "percent"
-          ]
-        },
-        "reduceOptions": {
-          "calcs": [
-            "sum"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "desc"
-        }
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "loki",
-            "uid": "$datasource"
-          },
-          "expr": "sum by (severity) (count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=~\"$severity\"}[$__interval]))",
-          "queryType": "range",
-          "legendFormat": "{{severity}}"
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "type": "table",
-      "title": "Logs dos switches",
-      "datasource": {
-        "type": "loki",
-        "uid": "$datasource"
-      },
-      "gridPos": {
-        "h": 16,
-        "w": 24,
-        "x": 0,
-        "y": 18
-      },
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "filterable": true,
-            "align": "left",
-            "cellOptions": {
-              "type": "auto"
-            }
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Hora"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 175
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Switch"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 175
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Evento"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 230
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Sev"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 110
               },
               {
-                "id": "mappings",
-                "value": [
-                  {
-                    "type": "value",
-                    "options": {
-                      "emerg": {
-                        "color": "#7f1d1d",
-                        "index": 0
-                      },
-                      "alert": {
-                        "color": "#991b1b",
-                        "index": 1
-                      },
-                      "crit": {
-                        "color": "#b91c1c",
-                        "index": 2
-                      },
-                      "err": {
-                        "color": "#9a3412",
-                        "index": 3
-                      },
-                      "warning": {
-                        "color": "#92400e",
-                        "index": 4
-                      },
-                      "notice": {
-                        "color": "#1e40af",
-                        "index": 5
-                      },
-                      "info": {
-                        "color": "#166534",
-                        "index": 6
-                      },
-                      "debug": {
-                        "color": "#374151",
-                        "index": 7
-                      }
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "$datasource"
+                    },
+                    "group": "loki",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=~\"emerg|alert|crit|err\"}[$__range]))",
+                      "queryType": "instant"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "C"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "$datasource"
+                    },
+                    "group": "loki",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=~\"$severity\"}[$__range]))",
+                      "queryType": "instant"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "X"
+                }
+              }
+            ],
+            "queryOptions": {
+              "interval": "5m"
+            },
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 1,
+        "links": [],
+        "title": "",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
                     }
-                  }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@500;700;900&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}#pbi-logs-dashboard{--panel:rgba(255,255,255,0.045);--border:rgba(255,255,255,0.10);--text:#f4f7fb;--muted:#9aa4b2;--green:#22c55e;--yellow:#facc15;--red:#ef4444;--blue:#38bdf8;width:100%;height:100%;box-sizing:border-box;padding:14px;color:var(--text);background:radial-gradient(circle at top left,rgba(56,189,248,0.12),transparent 32%),radial-gradient(circle at bottom right,rgba(167,139,250,0.08),transparent 30%),linear-gradient(135deg,#11161d 0%,#0c1016 100%);border-radius:14px;overflow:visible}.pbi-root{width:100%;height:100%;min-height:0;display:grid;grid-template-rows:auto auto 1fr;gap:10px;overflow:visible}.pbi-header{position:relative;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:9px;border-bottom:1px solid var(--border)}.pbi-title{display:flex;align-items:center;gap:10px;min-width:0}.pbi-title-icon{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;color:var(--blue);background:rgba(56,189,248,0.12);border:1px solid rgba(56,189,248,0.25)}.pbi-title-text strong{display:block;font-size:15px;font-weight:900;color:#ffffff}.pbi-title-text span{display:block;margin-top:1px;font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em}.pbi-actions{display:flex;align-items:center;gap:8px}.pbi-refresh{flex-shrink:0;font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted);padding:7px 10px;border-radius:999px;background:var(--panel);border:1px solid var(--border)}.pbi-insight-btn{width:34px;height:34px;border-radius:10px;cursor:pointer;display:grid;place-items:center;color:var(--yellow);background:rgba(250,204,21,0.10);border:1px solid rgba(250,204,21,0.28);transition:all 0.2s ease}.pbi-insight-btn:hover{color:#ffffff;background:rgba(255,255,255,0.10)}.pbi-insight-popover{position:absolute;z-index:9999;display:none;padding:12px;border-radius:12px;background:rgba(17,22,29,0.98);border:1px solid rgba(250,204,21,0.22);box-shadow:0 18px 46px rgba(0,0,0,0.58);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);top:44px;right:0;width:min(360px,90vw)}.pbi-insight-popover.open{display:block}.pbi-insight-popover strong{display:block;font-size:12px;color:#ffffff;margin-bottom:5px}.pbi-insight-popover span{display:block;color:var(--muted);font-size:11px;line-height:1.45}.pbi-gauge-grid{position:relative;z-index:80;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;overflow:visible}.pbi-gauge-card{position:relative;z-index:1;min-width:0;display:grid;grid-template-columns:92px 1fr;align-items:center;gap:12px;padding:10px 12px;border-radius:13px;background:var(--panel);border:1px solid var(--border);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);overflow:visible}.pbi-gauge{--value:0;--color:var(--blue);width:88px;height:88px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at center,#11161d 0 58%,transparent 59%),conic-gradient(var(--color) calc(var(--value) * 1%),rgba(255,255,255,0.10) 0);position:relative}.pbi-gauge::after{content:'';position:absolute;inset:9px;border-radius:50%;border:1px solid rgba(255,255,255,0.08)}.pbi-gauge-value{position:relative;z-index:2;font-family:'Roboto Mono',monospace;font-size:17px;font-weight:900;color:#ffffff}.pbi-gauge-info{min-width:0}.pbi-gauge-label{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em}.pbi-gauge-title{margin-top:5px;font-size:14px;font-weight:900;color:#ffffff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pbi-gauge-status{width:fit-content;margin-top:7px;padding:4px 8px;border-radius:999px;font-size:10px;font-weight:900;text-transform:uppercase}.pbi-gauge-status.good{color:var(--green);background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.24)}.pbi-gauge-status.warn{color:var(--yellow);background:rgba(250,204,21,0.12);border:1px solid rgba(250,204,21,0.24)}.pbi-gauge-status.bad{color:var(--red);background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.24)}.pbi-panel{position:relative;z-index:1;min-width:0;min-height:0;padding:12px;border-radius:12px;background:var(--panel);border:1px solid var(--border);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);overflow:visible}.pbi-panel-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}.pbi-panel-heading{min-width:0}.pbi-panel-title strong{display:block;font-size:13px;font-weight:900;color:#ffffff}.pbi-panel-title small{display:block;margin-top:3px;font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:0}.pbi-legend{display:flex;flex-wrap:wrap;gap:8px;font-size:10px;color:var(--muted);font-weight:800}.pbi-legend span{display:inline-flex;align-items:center;gap:5px}.pbi-dot{width:8px;height:8px;border-radius:999px;display:inline-block;flex-shrink:0}.pbi-chart-wrap{position:relative;z-index:1;width:100%;height:calc(100% - 38px);min-height:180px;overflow:visible}.pbi-chart{position:relative;z-index:1;width:100%;height:100%;display:block}.pbi-axis,.pbi-axis-y{fill:#9aa4b2;font-size:11px;font-weight:800;font-family:'Roboto Mono',monospace}.pbi-grid-line{stroke:rgba(255,255,255,0.08);stroke-width:1}.pbi-line{fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 5px rgba(255,255,255,0.10))}.pbi-crosshair-line{stroke:rgba(255,255,255,0.48);stroke-width:1.3;stroke-dasharray:4 4;pointer-events:none}.pbi-chart-tooltip{position:absolute;display:none;min-width:190px;z-index:99999;padding:10px 12px;border-radius:9px;background:rgba(15,22,33,0.96);border:1px solid rgba(255,255,255,0.16);box-shadow:0 10px 28px rgba(0,0,0,0.55);color:#ffffff;pointer-events:none;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}.pbi-tooltip-time{color:#9aa4b2;font-size:11px;font-weight:900;padding-bottom:7px;margin-bottom:7px;border-bottom:1px solid rgba(255,255,255,0.10)}.pbi-tooltip-row{display:flex;justify-content:space-between;gap:14px;margin-top:6px;font-size:12px;font-weight:800}.pbi-tooltip-row strong{color:#ffffff;font-family:'Roboto Mono',monospace}.pbi-empty{height:100%;min-height:150px;display:grid;place-items:center;text-align:center;color:var(--muted);font-size:13px;font-weight:700;border-radius:12px;border:1px dashed rgba(255,255,255,0.18);background:rgba(255,255,255,0.035)}@media (max-width:1100px){#pbi-logs-dashboard{overflow:auto}.pbi-root{height:auto}.pbi-gauge-grid{grid-template-columns:1fr}.pbi-chart-wrap{height:250px}}.svg-icon{display:inline-grid;place-items:center;width:1em;height:1em;line-height:1;vertical-align:-.125em;flex-shrink:0}.svg-icon svg{width:1em;height:1em;display:block}.pbi-gauge-help{position:absolute;right:12px;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:8px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);color:#d7dde8;display:grid;place-items:center;font-size:14px;cursor:help;z-index:3}.pbi-gauge-help:hover,.pbi-gauge-help:focus{background:rgba(255,255,255,.11);border-color:var(--color);color:#fff;outline:none}.pbi-gauge-help .svg-icon{font-size:14px}.pbi-gauge-tip{position:absolute;right:10px;top:calc(100% - 6px);z-index:1000;width:min(300px,calc(100vw - 32px));padding:10px 12px;border-radius:8px;background:rgba(15,22,33,.98);border:1px solid var(--color);box-shadow:0 14px 34px rgba(0,0,0,.48);color:#d7dde8;font-size:11px;font-weight:700;line-height:1.45;opacity:0;transform:translateY(-4px);pointer-events:none;transition:opacity .15s ease,transform .15s ease}.pbi-gauge-tip strong{display:block;color:#fff;font-size:12px;margin-bottom:4px}.pbi-gauge-help:hover+.pbi-gauge-tip,.pbi-gauge-help:focus+.pbi-gauge-tip{opacity:1;transform:translateY(0)}.pbi-gauge-card{padding-right:54px}.pbi-gauge-card{cursor:pointer}.pbi-gauge-card:hover{border-color:rgba(255,255,255,.22)}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div id='pbi-logs-dashboard'></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "(function(){\nvar container=htmlNode.querySelector('#pbi-logs-dashboard');\nif(!container)return;\nfunction escapeHTML(v){return String(v==null?'':v).replace(/[&<>]/g,function(c){return c==='&'?'&amp;':(c==='<'?'&lt;':'&gt;');});}\nfunction valuesToArray(values){if(!values)return[];if(Array.isArray(values))return values;if(typeof values.toArray==='function')return values.toArray();var len=values.length||values.size||(values.buffer?values.buffer.length:0)||0;var out=[];for(var i=0;i<len;i++){out.push(typeof values.get==='function'?values.get(i):values[i]);}return out;}\nfunction toNumber(v){if(v===null||v===undefined||v==='')return null;var n=Number(v);return Number.isFinite(n)?n:null;}\nfunction toTimestamp(v){if(v instanceof Date)return v.getTime();if(typeof v==='number')return v;var p=new Date(v).getTime();return Number.isFinite(p)?p:null;}\nfunction formatTime(v){if(!Number.isFinite(v))return '--';var d=new Date(v);var dd=String(d.getDate()).padStart(2,'0');var mm=String(d.getMonth()+1).padStart(2,'0');var hh=String(d.getHours()).padStart(2,'0');var mi=String(d.getMinutes()).padStart(2,'0');return dd+'/'+mm+' '+hh+':'+mi;}\nfunction frameLast(frame){try{var f=(frame&&frame.fields)||[];for(var fi=1;fi<f.length;fi++){var vals=valuesToArray(f[fi].values);for(var i=vals.length-1;i>=0;i--){var n=toNumber(vals[i]);if(n!==null)return n;}}return 0;}catch(e){return 0;}}\nfunction pct(part,total){return total>0?Math.max(0,Math.min(100,(part/total)*100)):0;}\nfunction findTimeField(fields){for(var i=0;i<fields.length;i++){if(fields[i].type==='time'||/^time$/i.test(fields[i].name||''))return fields[i];}return null;}\nfunction readTemporal(frame){var fields=(frame&&frame.fields)||[];var timeField=findTimeField(fields);if(!timeField)return[];var times=valuesToArray(timeField.values).map(toTimestamp);var points=[];fields.forEach(function(field){if(field===timeField)return;var vals=valuesToArray(field.values);vals.forEach(function(raw,idx){var t=times[idx];var v=toNumber(raw);if(Number.isFinite(t)&&Number.isFinite(v)&&v>0)points.push({time:t,value:v});});});points.sort(function(a,b){return a.time-b.time;});return points;}\nfunction scaleToTotal(points,total,minTime,maxTime){var exact=Number(total)||0;var sum=points.reduce(function(s,p){return s+p.value;},0);var out=points.slice();if(out.length&&exact>0&&sum>0){var factor=exact/sum;out=out.map(function(p){return{time:p.time,value:p.value*factor};});}\nif(!out.length&&exact>0&&Number.isFinite(minTime)&&Number.isFinite(maxTime)){out=[{time:maxTime,value:exact,synthetic:true}];}\nreturn out;}\nvar frames=(data&&data.series)||[];\nif(!frames.length||data.state!=='Done'){container.innerHTML=\"<div class='pbi-root'><div class='pbi-empty'>Aguardando dados...</div></div>\";return;}\nvar byRef={};\nframes.forEach(function(fr){if(fr&&fr.refId)byRef[fr.refId]=fr;});\nvar normalCount=Math.round(frameLast(byRef.N));\nvar warnCount=Math.round(frameLast(byRef.W));\nvar critCount=Math.round(frameLast(byRef.C));\nvar totalCount=Math.round(frameLast(byRef.X));\nvar rawNormal=readTemporal(byRef.TN);\nvar rawWarn=readTemporal(byRef.TW);\nvar rawCrit=readTemporal(byRef.TC);\nvar allTimes=[];\n[rawNormal,rawWarn,rawCrit].forEach(function(arr){arr.forEach(function(p){allTimes.push(p.time);});});\nvar minTime=allTimes.length?Math.min.apply(null,allTimes):Date.now()-3600000;\nvar maxTime=allTimes.length?Math.max.apply(null,allTimes):Date.now();\nvar series=[\n{key:'normal',label:'Normal',color:'#22c55e',total:normalCount,points:scaleToTotal(rawNormal,normalCount,minTime,maxTime)},\n{key:'atencao',label:'Atencao',color:'#facc15',total:warnCount,points:scaleToTotal(rawWarn,warnCount,minTime,maxTime)},\n{key:'critico',label:'Critico',color:'#ef4444',total:critCount,points:scaleToTotal(rawCrit,critCount,minTime,maxTime)}\n];\nvar normalPct=pct(normalCount,totalCount),warnPct=pct(warnCount,totalCount),critPct=pct(critCount,totalCount);\nfunction icon(name){var map={chart:\"<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'><path d='M3 3v18h18'/><path d='M7 15v3'/><path d='M12 10v8'/><path d='M17 6v12'/></svg>\",bulb:\"<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M9 18h6'/><path d='M10 22h4'/><path d='M8.5 14.5a6 6 0 1 1 7 0c-.8.7-1.2 1.5-1.4 2.5H9.9c-.2-1-.6-1.8-1.4-2.5Z'/></svg>\",info:\"<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><path d='M12 11v5'/><path d='M12 8h.01'/></svg>\",ok:\"<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><path d='m8.5 12.5 2.3 2.3 4.9-5.4'/></svg>\",warn:\"<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'><path d='M12 3 2.8 19a2 2 0 0 0 1.7 3h15a2 2 0 0 0 1.7-3L12 3Z'/><path d='M12 9v5'/><path d='M12 18h.01'/></svg>\",bad:\"<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><path d='M12 7v6'/><path d='M12 17h.01'/></svg>\"};return\"<span class='svg-icon' aria-hidden='true'>\"+(map[name]||map.info)+\"</span>\";}\nfunction renderGauge(iconName,label,ringColorVar,value,count,statusLevel,statusLabel,hint,drill){return \"<article class='pbi-gauge-card' data-drill='\"+(drill||'')+\"' title='Clique para filtrar por severidade' style='--color:var(\"+ringColorVar+\");'><div class='pbi-gauge' style='--value:\"+value.toFixed(0)+\";--color:var(\"+ringColorVar+\");'><span class='pbi-gauge-value'>\"+value.toFixed(0)+\"%</span></div><div class='pbi-gauge-info'><div class='pbi-gauge-label'>\"+icon(iconName)+\" \"+label+\"</div><div class='pbi-gauge-title'>\"+count.toLocaleString('pt-BR')+\" logs</div><div class='pbi-gauge-status \"+statusLevel+\"'>\"+statusLabel+\"</div></div><button class='pbi-gauge-help' type='button' aria-label='Resumo \"+label+\"'>\"+icon('info')+\"</button><div class='pbi-gauge-tip'><strong>Resumo \"+label+\"</strong>\"+hint+\"<br><b>\"+count.toLocaleString('pt-BR')+\"</b> logs no periodo (\"+value.toFixed(0)+\"% do total).</div></article>\";}\nfunction buildChart(width,height){\nvar left=98,right=20,top=14,bottom=28,rowGap=14;\nvar plotW=width-left-right;\nvar rowH=(height-top-bottom-rowGap*2)/3;\nif(rowH<34)rowH=34;\nfunction xScale(t){return maxTime===minTime?left+plotW:left+((t-minTime)/(maxTime-minTime))*plotW;}\nvar grid='',bars='';\nfor(var j=0;j<=5;j++){var x=left+(plotW/5)*j;var t=minTime+((maxTime-minTime)/5)*j;var lbl=(formatTime(t).split(' ')[1])||'--';grid+=\"<line class='pbi-grid-line' x1='\"+x+\"' y1='\"+top+\"' x2='\"+x+\"' y2='\"+(top+rowH*3+rowGap*2)+\"'></line><text class='pbi-axis' x='\"+(x-16)+\"' y='\"+(height-8)+\"'>\"+lbl+\"</text>\";}\nseries.forEach(function(s,idx){var y0=top+idx*(rowH+rowGap);var yBase=y0+rowH;var max=Math.max(1,Math.max.apply(null,s.points.map(function(p){return p.value;})),s.total>0?1:0);grid+=\"<line class='pbi-grid-line' x1='\"+left+\"' y1='\"+yBase+\"' x2='\"+(width-right)+\"' y2='\"+yBase+\"'></line><text class='pbi-axis-y' x='12' y='\"+(y0+16)+\"' style='fill:\"+s.color+\"'>\"+s.label+\"</text><text class='pbi-axis-y' x='12' y='\"+(y0+32)+\"'>\"+s.total.toLocaleString('pt-BR')+\" logs</text><text class='pbi-axis-y' x='\"+(left-8)+\"' y='\"+(y0+5)+\"' text-anchor='end'>\"+Math.round(max).toLocaleString('pt-BR')+\"</text>\";\nvar points=s.points;\nif(!points.length)return;\nvar barW=Math.max(4,Math.min(18,plotW/Math.max(points.length,24)*0.72));\npoints.forEach(function(p){var h=Math.max(4,(p.value/max)*rowH);var x=xScale(p.time)-barW/2;var y=yBase-h;bars+=\"<rect x='\"+x.toFixed(1)+\"' y='\"+y.toFixed(1)+\"' width='\"+barW.toFixed(1)+\"' height='\"+h.toFixed(1)+\"' rx='2' fill='\"+s.color+\"' opacity='\"+(p.synthetic?\".98\":\".88\")+\"'><title>\"+s.label+\" - \"+Math.round(p.value).toLocaleString('pt-BR')+\" logs em \"+formatTime(p.time)+\"</title></rect>\";});\n});\nreturn \"<svg class='pbi-chart' viewBox='0 0 \"+width+\" \"+height+\"' style='overflow:visible;'>\"+grid+bars+\"</svg>\";\n}\nfunction renderChart(){var wrap=container.querySelector('.pbi-chart-wrap');if(!wrap)return;var rect=wrap.getBoundingClientRect();var w=rect.width>0?rect.width:900,h=rect.height>0?rect.height:220;wrap.innerHTML=buildChart(w,h);}\nvar legendHtml=series.map(function(s){return \"<span><i class='pbi-dot' style='background:\"+s.color+\"'></i> \"+escapeHTML(s.label)+\"</span>\";}).join('');\nvar insightText=totalCount>0?\"Normal: \"+normalCount.toLocaleString('pt-BR')+\", Atencao: \"+warnCount.toLocaleString('pt-BR')+\", Critico: \"+critCount.toLocaleString('pt-BR')+\".\":\"Nenhum log encontrado no periodo selecionado.\";\nvar lastRefresh=formatTime(Date.now());\ncontainer.innerHTML=\"<div class='pbi-root'><header class='pbi-header'><div class='pbi-title'><div class='pbi-title-icon'>\"+icon('chart')+\"</div><div class='pbi-title-text'><strong>Volume de Logs por Severidade</strong><span>Barras temporais por categoria</span></div></div><div class='pbi-actions'><div class='pbi-refresh'>Atualizado \"+lastRefresh+\"</div><button class='pbi-insight-btn' id='insight-btn' title='Insight rapido'>\"+icon('bulb')+\"</button></div><div class='pbi-insight-popover' id='insight-popover'><strong>Insight rapido</strong><span>\"+escapeHTML(insightText)+\"</span></div></header><section class='pbi-gauge-grid'>\"+renderGauge('ok','Normal','--green',normalPct,normalCount,'good','Normal','Info e notice agrupados como eventos normais.','info,notice')+renderGauge('warn','Atencao','--yellow',warnPct,warnCount,warnCount>0?'warn':'good',warnCount>0?'Atencao':'Normal','Eventos warning indicam atencao sem queda critica.','warning')+renderGauge('bad','Critico','--red',critPct,critCount,critCount>0?'bad':'good',critCount>0?'Critico':'Normal','Emerg, alert, crit e err agrupados como eventos criticos.','emerg,alert,crit,err')+\"</section><section class='pbi-panel'><div class='pbi-panel-title'><div class='pbi-panel-heading'><strong>Atividade de logs por janela</strong><small>histograma separado por categoria</small></div><div class='pbi-legend'>\"+legendHtml+\"</div></div><div class='pbi-chart-wrap'></div></section></div>\";\nrenderChart();\nvar insightBtn=container.querySelector('#insight-btn');\nvar insightPopover=container.querySelector('#insight-popover');\nif(insightBtn&&insightPopover){insightBtn.addEventListener('click',function(ev){ev.stopPropagation();insightPopover.classList.toggle('open');});}\ncontainer.addEventListener('click',function(ev){if(!ev.target.closest('.pbi-insight-popover')&&!ev.target.closest('.pbi-insight-btn')){if(insightPopover)insightPopover.classList.remove('open');}});\nif(typeof ResizeObserver!=='undefined'){if(container.__logsResizeObserver){container.__logsResizeObserver.disconnect();}var resizeTimer=null;container.__logsResizeObserver=new ResizeObserver(function(){clearTimeout(resizeTimer);resizeTimer=setTimeout(function(){renderChart();},120);});var cw=container.querySelector('.pbi-chart-wrap');if(cw)container.__logsResizeObserver.observe(cw);}\n})();\n\nfunction drillFromGauge(value){\n  if(!value) return;\n  var url = new URL(window.location.href);\n  url.searchParams.delete('var-severity');\n  value.split(',').forEach(function(v){ if(v) url.searchParams.append('var-severity', v); });\n  window.location.href = url.toString();\n}\nhtmlNode.querySelectorAll('.pbi-gauge-card[data-drill]').forEach(function(card){\n  card.addEventListener('click',function(ev){\n    if(ev.target.closest('.pbi-gauge-help')) return;\n    drillFromGauge(card.getAttribute('data-drill'));\n  });\n});\n",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull",
+                  "last",
+                  "firstNotNull",
+                  "first",
+                  "min",
+                  "max",
+                  "mean",
+                  "sum",
+                  "count",
+                  "range",
+                  "delta",
+                  "step",
+                  "diff",
+                  "logmin",
+                  "allIsZero",
+                  "allIsNull",
+                  "diffperc"
                 ]
               },
-              {
-                "id": "custom.cellOptions",
-                "value": {
-                  "type": "color-background",
-                  "mode": "gradient",
-                  "applyToRow": false
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Mensagem"
-            },
-            "properties": [
-              {
-                "id": "custom.cellOptions",
-                "value": {
-                  "type": "auto",
-                  "wrapText": false
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "options": {
-        "showHeader": true,
-        "cellHeight": "sm",
-        "footer": {
-          "show": false,
-          "reducer": [
-            "sum"
-          ],
-          "fields": ""
-        },
-        "sortBy": [
-          {
-            "displayName": "Hora",
-            "desc": true
-          }
-        ]
-      },
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "source": "labels",
-            "format": "json",
-            "replace": false,
-            "keepTime": false
-          }
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "labels": true,
-              "labelTypes": true,
-              "Line": true,
-              "tsNs": true,
-              "id": true,
-              "TraceID": true,
-              "modulo": true,
-              "sevn": true,
-              "facility": true,
-              "host": true,
-              "job": true,
-              "source_ip": true
-            },
-            "indexByName": {
-              "Time": 0,
-              "switchname": 1,
-              "severity": 2,
-              "evento": 3,
-              "descricao": 4
-            },
-            "renameByName": {
-              "Time": "Hora",
-              "switchname": "Switch",
-              "severity": "Sev",
-              "evento": "Evento",
-              "descricao": "Mensagem"
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
             }
-          }
-        }
-      ],
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "loki",
-            "uid": "$datasource"
           },
-          "expr": "{job=\"huawei-switches\", host=~\"$switch\", severity=~\"$severity\"} | regexp `^\\S+ (?P<switchname>\\S+) (?:%%\\d+)?(?P<modulo>[A-Z0-9]+)/(?P<sevn>\\d)/(?P<evento>[A-Z0-9_]+)(?:\\([^)]*\\))?(?:\\[\\d+\\])?:?\\s*(?P<descricao>.*)`",
-          "queryType": "range",
-          "maxLines": 500
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-10": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "cfnqeelluv8qob"
+                    },
+                    "group": "alexanderzobnin-zabbix-datasource",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "application": {
+                        "filter": ""
+                      },
+                      "countTriggersBy": "",
+                      "evaltype": "0",
+                      "functions": [],
+                      "group": {
+                        "filter": ""
+                      },
+                      "host": {
+                        "filter": ""
+                      },
+                      "item": {
+                        "filter": ""
+                      },
+                      "itemTag": {
+                        "filter": ""
+                      },
+                      "macro": {
+                        "filter": ""
+                      },
+                      "options": {
+                        "count": false,
+                        "disableDataAlignment": false,
+                        "showDisabledItems": false,
+                        "skipEmptyValues": false,
+                        "useTrends": "default",
+                        "useZabbixValueMapping": false
+                      },
+                      "proxy": {
+                        "filter": ""
+                      },
+                      "queryType": "0",
+                      "resultFormat": "time_series",
+                      "schema": 12,
+                      "table": {
+                        "skipEmptyValues": false
+                      },
+                      "tags": {
+                        "filter": ""
+                      },
+                      "textFilter": "",
+                      "trigger": {
+                        "filter": ""
+                      }
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 10,
+        "links": [],
+        "title": "",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "thresholds"
+                },
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{\n  \"text\": \"Random text\"\n}",
+              "css": "html, body {\n  background-color: #11161d;\n  margin: 0;\n  padding: 0;\n  height: 100%;\n  width: 100%;\n  font-family: 'Segoe UI', sans-serif;\n}\n.dashboard-container {\n  background-color: #11161d;\n  color: #ffffff;\n  padding: 0;\n  box-sizing: border-box;\n  width: 100%;\n  height: 100%;\n  overflow: hidden;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n.dashboard-head {\n  width: 100%;\n  height: 100%;\n  box-sizing: border-box;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 22px;\n  padding: 16px 24px;\n  background:\n    linear-gradient(90deg, rgba(255, 95, 0, 0.12), transparent 24%),\n    linear-gradient(135deg, #151a22 0%, #10141b 100%);\n  border: 1px solid rgba(255, 255, 255, 0.07);\n  border-radius: 12px;\n}\n.hdr-left {\n  display: flex;\n  align-items: center;\n  flex: 1;\n  min-width: 0;\n  gap: 18px;\n}\n.brand-mark {\n  width: 92px;\n  height: 64px;\n  flex: 0 0 92px;\n  display: grid;\n  place-items: center;\n  border-radius: 8px;\n  background: #ff5f00;\n  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.14), 0 10px 28px rgba(255, 95, 0, 0.18);\n}\n.brand-word {\n  color: #ffffff;\n  font-size: 26px;\n  font-weight: 900;\n  line-height: 0.78;\n  letter-spacing: 0;\n  text-transform: uppercase;\n}\n.brand-word span {\n  display: block;\n}\n.title-box {\n  min-width: 0;\n  flex: 1;\n  padding: 2px 0 2px 22px;\n  border-left: 5px solid #ff5f00;\n}\n.title-box h1 {\n  font-size: clamp(1.05rem, 1.8vw, 1.36rem);\n  text-transform: uppercase;\n  margin: 0;\n  color: #ffffff;\n  letter-spacing: 0;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.title-box p {\n  font-size: clamp(0.72rem, 1.15vw, 0.82rem);\n  color: #d7dde8;\n  margin: 8px 0 0;\n  line-height: 1.35;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.hdr-right {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  flex-shrink: 0;\n}\n.pills {\n  display: flex;\n  align-items: center;\n  gap: 7px;\n  flex-wrap: wrap;\n  justify-content: flex-end;\n}\n.pill {\n  font-size: 10.5px;\n  font-weight: 800;\n  padding: 5px 10px;\n  border-radius: 6px;\n  letter-spacing: 0;\n  white-space: nowrap;\n  border: 1px solid transparent;\n}\n.pill-huawei {\n  background: rgba(255, 95, 0, 0.12);\n  border-color: rgba(255, 95, 0, 0.32);\n  color: #ff9b5c;\n}\n.pill-syslog {\n  background: rgba(56, 189, 248, 0.12);\n  border-color: rgba(56, 189, 248, 0.32);\n  color: #7dd3fc;\n}\n.pill-loki {\n  background: rgba(167, 139, 250, 0.12);\n  border-color: rgba(167, 139, 250, 0.32);\n  color: #c4b5fd;\n}\n.pill-otlp {\n  background: rgba(34, 197, 94, 0.10);\n  border-color: rgba(34, 197, 94, 0.28);\n  color: #86efac;\n}\n.live {\n  display: flex;\n  align-items: center;\n  gap: 7px;\n  background: rgba(16, 185, 129, 0.08);\n  border: 1px solid rgba(16, 185, 129, 0.22);\n  padding: 6px 12px;\n  border-radius: 6px;\n  white-space: nowrap;\n}\n.live-dot {\n  width: 7px;\n  height: 7px;\n  background: #10b981;\n  border-radius: 50%;\n  animation: blink 2s ease-in-out infinite;\n  box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);\n  flex-shrink: 0;\n}\n.live-lbl {\n  font-size: 11px;\n  font-weight: 700;\n  color: #10b981;\n}\n@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }\n@media (max-width: 1000px) {\n  .dashboard-head {\n    align-items: flex-start;\n    flex-direction: column;\n    padding: 14px;\n  }\n  .hdr-right {\n    width: 100%;\n    justify-content: space-between;\n  }\n  .pills {\n    justify-content: flex-start;\n  }\n  .title-box h1, .title-box p {\n    white-space: normal;\n  }\n}\n@media (max-width: 620px) {\n  .hdr-left {\n    align-items: flex-start;\n    flex-direction: column;\n  }\n  .brand-mark {\n    width: 82px;\n    height: 56px;\n    flex-basis: 56px;\n  }\n  .brand-word {\n    font-size: 23px;\n  }\n  .title-box {\n    padding-left: 14px;\n  }\n  .hdr-right {\n    align-items: stretch;\n    flex-direction: column;\n  }\n}.svg-icon{display:inline-grid;place-items:center;width:1em;height:1em;line-height:1;vertical-align:-.125em;flex-shrink:0}.svg-icon svg{width:1em;height:1em;display:block}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": false,
+              "dynamicProps": false,
+              "html": "<div class=\"dashboard-head\">\n  <div class=\"hdr-left\">\n    <div class=\"brand-mark\" aria-label=\"LOGNET\">\n      <div class=\"brand-word\"><span>LOG</span><span>NET</span></div>\n    </div>\n    <div class=\"title-box\">\n      <h1>Syslog · Switches Huawei</h1>\n      <p>Monitoramento de logs de rede dos switches Huawei via syslog-ng e Loki, com filtros por switch, severidade e intervalo.</p>\n    </div>\n  </div>\n  <div class=\"hdr-right\">\n    <div class=\"pills\">\n      <span class=\"pill pill-huawei\">Huawei VRP</span>\n      <span class=\"pill pill-syslog\">syslog-ng</span>\n      <span class=\"pill pill-loki\">Loki</span>\n      <span class=\"pill pill-otlp\">RFC3164</span>\n    </div>\n    <div class=\"live\">\n      <div class=\"live-dot\"></div>\n      <span class=\"live-lbl\">Ao vivo</span>\n    </div>\n  </div>\n</div>\n",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull",
+                  "last",
+                  "firstNotNull",
+                  "first",
+                  "min",
+                  "max",
+                  "mean",
+                  "sum",
+                  "count",
+                  "range",
+                  "delta",
+                  "step",
+                  "diff",
+                  "logmin",
+                  "allIsZero",
+                  "allIsNull",
+                  "diffperc"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": "",
+              "useGrafanaScrollbar": true
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-11": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "$datasource"
+                    },
+                    "group": "loki",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "direction": "backward",
+                      "editorMode": "code",
+                      "expr": "sum(count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=~\"$severity\"}[$__range]))",
+                      "queryType": "instant"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "$datasource"
+                    },
+                    "group": "loki",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "direction": "backward",
+                      "editorMode": "code",
+                      "expr": "sum(count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=~\"info|notice\"}[$__range]))",
+                      "queryType": "instant"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "B"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "$datasource"
+                    },
+                    "group": "loki",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "direction": "backward",
+                      "editorMode": "code",
+                      "expr": "sum(count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=\"warning\"}[$__range]))",
+                      "queryType": "instant"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "C"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "$datasource"
+                    },
+                    "group": "loki",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "direction": "backward",
+                      "editorMode": "code",
+                      "expr": "sum(count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=~\"emerg|alert|crit|err\"}[$__range]))",
+                      "queryType": "instant"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "D"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 11,
+        "links": [],
+        "title": "",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "\n@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Roboto+Mono:wght@600;700;900&display=swap');\n* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }\n#kpi2-container {\n  width: 100%;\n  height: 100%;\n  display: grid;\n  grid-template-columns: repeat(4, minmax(0, 1fr));\n  align-items: stretch;\n  gap: 12px;\n  padding: 12px 10px;\n  background: linear-gradient(135deg, #151a22 0%, #10141b 100%);\n  border: 1px solid rgba(255, 255, 255, 0.06);\n  border-radius: 12px;\n  overflow: visible;\n}\n.kpi2-card {\n  --accent: #8b949e;\n  --accent-soft: rgba(139, 148, 158, 0.12);\n  position: relative;\n  z-index: 1;\n  min-width: 0;\n  display: grid;\n  grid-template-columns: 46px minmax(0, 1fr);\n  align-items: center;\n  gap: 14px;\n  padding: 14px 16px;\n  border-radius: 8px;\n  background:\n    linear-gradient(135deg, var(--accent-soft), rgba(255, 255, 255, 0.015) 42%),\n    #11161d;\n  border: 1px solid rgba(255, 255, 255, 0.09);\n  box-shadow: inset 4px 0 0 var(--accent);\n  overflow: visible;\n}\n.kpi2-card::after {\n  content: '';\n  position: absolute;\n  inset: 0;\n  border-radius: inherit;\n  pointer-events: none;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);\n}\n.kpi2-icon {\n  width: 44px;\n  height: 44px;\n  display: grid;\n  place-items: center;\n  border-radius: 8px;\n  color: var(--accent);\n  background: var(--accent-soft);\n  border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent);\n  font-size: 18px;\n}\n.kpi2-content {\n  min-width: 0;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  gap: 5px;\n}\n.kpi2-label {\n  font-size: 0.67rem;\n  font-weight: 900;\n  color: var(--accent);\n  text-transform: uppercase;\n  letter-spacing: 0;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.kpi2-value {\n  font-family: 'Roboto Mono', monospace;\n  font-size: clamp(1.25rem, 2.35vw, 1.72rem);\n  font-weight: 900;\n  color: #ffffff;\n  line-height: 1;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.kpi2-sub {\n  font-size: 0.64rem;\n  font-weight: 700;\n  color: #8792a2;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.c-total {\n  --accent: #38bdf8;\n  --accent-soft: rgba(56, 189, 248, 0.12);\n}\n.c-normal {\n  --accent: #2ecc71;\n  --accent-soft: rgba(46, 204, 113, 0.12);\n}\n.c-atencao {\n  --accent: #facc15;\n  --accent-soft: rgba(250, 204, 21, 0.12);\n}\n.c-critico {\n  --accent: #ef4444;\n  --accent-soft: rgba(239, 68, 68, 0.12);\n}\n@supports not (color: color-mix(in srgb, red 50%, transparent)) {\n  .kpi2-icon { border-color: rgba(255, 255, 255, 0.16); }\n}\n@media (max-width: 1100px) {\n  #kpi2-container {\n    grid-template-columns: repeat(2, minmax(0, 1fr));\n  }\n}\n@media (max-width: 620px) {\n  #kpi2-container {\n    grid-template-columns: 1fr;\n    overflow: auto;\n  }\n  .kpi2-card {\n    min-height: 76px;\n  }\n}\n.svg-icon{display:inline-grid;place-items:center;width:1em;height:1em;line-height:1;vertical-align:-.125em;flex-shrink:0}.svg-icon svg{width:1em;height:1em;display:block}.kpi2-info-btn{position:absolute;right:14px;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:8px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);color:#d7dde8;display:grid;place-items:center;font-size:14px;cursor:help;z-index:20}.kpi2-info-btn:hover,.kpi2-info-btn:focus{background:var(--accent-soft);border-color:var(--accent);color:#fff;outline:none}.kpi2-info-btn .svg-icon{font-size:14px}.kpi2-tip{position:absolute;right:52px;top:50%;z-index:200;width:min(280px,calc(100vw - 32px));padding:10px 12px;border-radius:8px;background:rgba(15,22,33,.98);border:1px solid var(--accent);box-shadow:0 14px 34px rgba(0,0,0,.48);color:#d7dde8;font-size:11px;font-weight:700;line-height:1.45;opacity:0;transform:translate(8px,-50%);pointer-events:none;transition:opacity .15s ease,transform .15s ease}.kpi2-tip strong{display:block;color:#fff;font-size:12px;margin-bottom:4px}.kpi2-card:hover{z-index:30}.kpi2-info-btn:hover+.kpi2-tip,.kpi2-info-btn:focus+.kpi2-tip{opacity:1;transform:translate(0,-50%)}.kpi2-card{padding-right:58px}@media (max-width:620px){#kpi2-container{overflow:visible}.kpi2-tip{right:52px;left:auto;width:min(260px,calc(100vw - 88px))}}.kpi2-card{cursor:pointer}.kpi2-card:hover{border-color:rgba(255,255,255,.22)}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div id=\"kpi2-container\">\n  <div class=\"kpi2-card c-total\">\n    <div class=\"kpi2-icon\"><span class=\"svg-icon \" aria-hidden=\"true\"><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'><line x1='8' y1='6' x2='21' y2='6'/><line x1='8' y1='12' x2='21' y2='12'/><line x1='8' y1='18' x2='21' y2='18'/><circle cx='4' cy='6' r='1'/><circle cx='4' cy='12' r='1'/><circle cx='4' cy='18' r='1'/></svg></span></div>\n    <div class=\"kpi2-content\">\n      <span class=\"kpi2-label\">Total</span>\n      <span class=\"kpi2-value\" id=\"v-total\">--</span>\n      <span class=\"kpi2-sub\">logs no periodo</span>\n    </div><button class=\"kpi2-info-btn\" type=\"button\" aria-label=\"Total de logs\"><span class=\"svg-icon\" aria-hidden=\"true\"><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><path d='M12 11v5'/><path d='M12 8h.01'/></svg></span></button><div class=\"kpi2-tip\"><strong>Total de logs</strong>Soma todos os logs retornados pelos filtros atuais de switch, severidade e periodo.</div>\n  </div>\n  <div class=\"kpi2-card c-normal\">\n    <div class=\"kpi2-icon\"><span class=\"svg-icon \" aria-hidden=\"true\"><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><path d='m8.5 12.5 2.3 2.3 4.9-5.4'/></svg></span></div>\n    <div class=\"kpi2-content\">\n      <span class=\"kpi2-label\">Normal</span>\n      <span class=\"kpi2-value\" id=\"v-normal\">--</span>\n      <span class=\"kpi2-sub\">info e notice</span>\n    </div><button class=\"kpi2-info-btn\" type=\"button\" aria-label=\"Normal\"><span class=\"svg-icon\" aria-hidden=\"true\"><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><path d='M12 11v5'/><path d='M12 8h.01'/></svg></span></button><div class=\"kpi2-tip\"><strong>Normal</strong>Agrupa severidades informativas: info e notice. Debug fica separado na distribuicao.</div>\n  </div>\n  <div class=\"kpi2-card c-atencao\">\n    <div class=\"kpi2-icon\"><span class=\"svg-icon \" aria-hidden=\"true\"><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'><path d='M12 3 2.8 19a2 2 0 0 0 1.7 3h15a2 2 0 0 0 1.7-3L12 3Z'/><path d='M12 9v5'/><path d='M12 18h.01'/></svg></span></div>\n    <div class=\"kpi2-content\">\n      <span class=\"kpi2-label\">Atencao</span>\n      <span class=\"kpi2-value\" id=\"v-atencao\">--</span>\n      <span class=\"kpi2-sub\">warning</span>\n    </div><button class=\"kpi2-info-btn\" type=\"button\" aria-label=\"Atencao\"><span class=\"svg-icon\" aria-hidden=\"true\"><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><path d='M12 11v5'/><path d='M12 8h.01'/></svg></span></button><div class=\"kpi2-tip\"><strong>Atencao</strong>Conta eventos warning no periodo selecionado. Picos costumam indicar mudanca de estado ou limiar atingido.</div>\n  </div>\n  <div class=\"kpi2-card c-critico\">\n    <div class=\"kpi2-icon\"><span class=\"svg-icon \" aria-hidden=\"true\"><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><path d='M12 7v6'/><path d='M12 17h.01'/></svg></span></div>\n    <div class=\"kpi2-content\">\n      <span class=\"kpi2-label\">Critico</span>\n      <span class=\"kpi2-value\" id=\"v-critico\">--</span>\n      <span class=\"kpi2-sub\">emerg, alert, crit e err</span>\n    </div><button class=\"kpi2-info-btn\" type=\"button\" aria-label=\"Critico\"><span class=\"svg-icon\" aria-hidden=\"true\"><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><path d='M12 11v5'/><path d='M12 8h.01'/></svg></span></button><div class=\"kpi2-tip\"><strong>Critico</strong>Agrupa emerg, alert, crit e err. Use para priorizar investigacao operacional.</div>\n  </div>\n</div>\n",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "(function () {\r\n  function valuesToArray(values) {\r\n    if (!values) return [];\r\n    if (Array.isArray(values)) return values;\r\n    if (typeof values.toArray === 'function') return values.toArray();\r\n    var len = values.length || values.size || (values.buffer ? values.buffer.length : 0) || 0;\r\n    var out = [];\r\n    for (var i = 0; i < len; i++) out.push(typeof values.get === 'function' ? values.get(i) : values[i]);\r\n    return out;\r\n  }\r\n\r\n  function lastInstantValue(frame) {\r\n    try {\r\n      var f = frame.fields;\r\n      if (!f || f.length < 2) return 0;\r\n      var vals = valuesToArray(f[1].values);\r\n      for (var i = vals.length - 1; i >= 0; i--) {\r\n        var n = Number(vals[i]);\r\n        if (Number.isFinite(n)) return n;\r\n      }\r\n      return 0;\r\n    } catch (e) { return 0; }\r\n  }\r\n\r\n  var byRef = {};\r\n  (data && data.series ? data.series : []).forEach(function (s) {\r\n    byRef[s.refId] = lastInstantValue(s);\r\n  });\r\n\r\n  var total = Math.round(byRef['A'] || 0);\r\n  var normal = Math.round(byRef['B'] || 0);\r\n  var atencao = Math.round(byRef['C'] || 0);\r\n  var critico = Math.round(byRef['D'] || 0);\r\n\r\n  var elTotal = htmlNode.querySelector('#v-total');\r\n  var elNormal = htmlNode.querySelector('#v-normal');\r\n  var elAtencao = htmlNode.querySelector('#v-atencao');\r\n  var elCritico = htmlNode.querySelector('#v-critico');\r\n  if (elTotal) elTotal.textContent = total.toLocaleString('pt-BR');\r\n  if (elNormal) elNormal.textContent = normal.toLocaleString('pt-BR');\r\n  if (elAtencao) elAtencao.textContent = atencao.toLocaleString('pt-BR');\r\n  if (elCritico) elCritico.textContent = critico.toLocaleString('pt-BR');\r\n})();\r\n\n\nfunction drillSeverity(values){\n  var url = new URL(window.location.href);\n  url.searchParams.delete('var-severity');\n  values.forEach(function(v){ url.searchParams.append('var-severity', v); });\n  window.location.href = url.toString();\n}\n[\n  ['.c-total',['$__all']],\n  ['.c-normal',['info','notice']],\n  ['.c-atencao',['warning']],\n  ['.c-critico',['emerg','alert','crit','err']]\n].forEach(function(item){\n  var el = htmlNode.querySelector(item[0]);\n  if(!el) return;\n  el.title = 'Clique para filtrar por severidade';\n  el.onclick = function(ev){\n    if(ev.target.closest('.kpi2-info-btn')) return;\n    drillSeverity(item[1]);\n  };\n});\n",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull",
+                  "last",
+                  "firstNotNull",
+                  "first",
+                  "min",
+                  "max",
+                  "mean",
+                  "sum",
+                  "count",
+                  "range",
+                  "delta",
+                  "step",
+                  "diff",
+                  "logmin",
+                  "allIsZero",
+                  "allIsNull",
+                  "diffperc"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-12": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "cfnqeelluv8qob"
+                    },
+                    "group": "alexanderzobnin-zabbix-datasource",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "application": {
+                        "filter": ""
+                      },
+                      "countTriggersBy": "",
+                      "evaltype": "0",
+                      "functions": [],
+                      "group": {
+                        "filter": ""
+                      },
+                      "host": {
+                        "filter": ""
+                      },
+                      "item": {
+                        "filter": ""
+                      },
+                      "itemTag": {
+                        "filter": ""
+                      },
+                      "macro": {
+                        "filter": ""
+                      },
+                      "options": {
+                        "count": false,
+                        "disableDataAlignment": false,
+                        "showDisabledItems": false,
+                        "skipEmptyValues": false,
+                        "useTrends": "default",
+                        "useZabbixValueMapping": false
+                      },
+                      "proxy": {
+                        "filter": ""
+                      },
+                      "queryType": "0",
+                      "resultFormat": "time_series",
+                      "schema": 12,
+                      "table": {
+                        "skipEmptyValues": false
+                      },
+                      "tags": {
+                        "filter": ""
+                      },
+                      "textFilter": "",
+                      "trigger": {
+                        "filter": ""
+                      }
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 12,
+        "links": [],
+        "title": "Switch",
+        "vizConfig": {
+          "group": "volkovlabs-variable-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "custom": {
+                  "thresholdsStyle": {
+                    "mode": "color",
+                    "thresholds": []
+                  }
+                },
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "alertCustomMessage": "",
+              "alwaysVisibleFilter": false,
+              "autoScroll": false,
+              "browserTabNamePattern": "",
+              "collapsedByDefault": false,
+              "customValue": false,
+              "dashboardVariable": "",
+              "displayMode": "minimize",
+              "emptyValue": false,
+              "favorites": {
+                "enabled": false,
+                "storage": "browser"
+              },
+              "filter": false,
+              "groupSelection": false,
+              "header": true,
+              "isMinimizeForTable": false,
+              "isMinimizeViewShowCustomIcon": false,
+              "isPinTabsEnabled": false,
+              "isUseLocalTime": false,
+              "minimizeOutputFormat": "text",
+              "minimizeViewCustomIcon": "",
+              "minimizeViewNativeIcon": "gf-movepane-right",
+              "padding": 10,
+              "persistent": false,
+              "requestLatency": "low",
+              "saveSelectedGroup": false,
+              "saveSelectedGroupKey": "",
+              "selectedValues": {
+                "showSelected": false
+              },
+              "showGroupTotal": false,
+              "showLabel": false,
+              "showName": false,
+              "showResetButton": false,
+              "showTotal": false,
+              "statusSort": false,
+              "tableViewPosition": "normal",
+              "tabsInOrder": true,
+              "toolbarMode": "tabs",
+              "variable": "switch",
+              "wordBreak": "normal"
+            }
+          },
+          "version": "5.2.0"
+        }
+      }
+    },
+    "panel-2": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "$datasource"
+                    },
+                    "group": "loki",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum by (severity) (count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=~\"$severity\"}[$__range]))",
+                      "legendFormat": "{{severity}}",
+                      "queryType": "instant"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 2,
+        "links": [],
+        "title": "",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Roboto+Mono:wght@500;700&display=swap');*{box-sizing:border-box}#summary-panel{font-family:'Inter',sans-serif;color:#E0E6F1;width:100%;height:100%;box-sizing:border-box;display:flex;flex-direction:column;padding:18px 20px;background:radial-gradient(circle at top left,rgba(46,204,113,0.06),transparent 32%),linear-gradient(135deg,#161B22 0%,#101419 100%);border:1px solid rgba(255,255,255,0.06);border-radius:14px;overflow:hidden}.summary-header{display:flex;align-items:center;justify-content:space-between;margin:0 0 16px 0;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0}.summary-header-left{display:flex;align-items:center;gap:10px;min-width:0}.summary-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:9px;color:#38bdf8;background:rgba(56,189,248,0.12);border:1px solid rgba(56,189,248,0.30);font-size:1rem;flex-shrink:0}.panel-title{font-size:1rem;font-weight:700;color:#ffffff;line-height:1.1;margin:0}.panel-subtitle{font-size:0.65rem;font-weight:600;color:#8b949e;text-transform:uppercase;letter-spacing:0.04em;margin-top:4px}.summary-content{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:24px;width:100%;flex-grow:1;min-height:0}.chart-container{display:flex;justify-content:center;align-items:center;min-width:180px;flex-basis:200px}#donut-chart{position:relative;width:180px;height:180px;border-radius:50%;background:conic-gradient(#30363d 0deg 360deg);transition:background 0.5s ease}#donut-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:126px;height:126px;background-color:#12151c;border-radius:50%;display:flex;flex-direction:column;justify-content:center;align-items:center}#donut-total{font-family:'Roboto Mono',monospace;font-size:2em;font-weight:700;color:#ffffff;line-height:1.1}#donut-label{font-size:0.62rem;font-weight:600;color:#8b949e;text-transform:uppercase;letter-spacing:0.04em;margin-top:4px}#legend-cards-wrapper{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;flex-basis:280px;flex-grow:1;align-content:center}.legend-card{background:#12151c;border:1px solid #30363d;border-left-width:3px;border-radius:8px;padding:7px 10px;display:flex;justify-content:space-between;align-items:center;min-width:0}.legend-info{display:flex;align-items:center;gap:6px;min-width:0}.legend-info i{font-size:0.8rem;width:14px;text-align:center;flex-shrink:0}.legend-label{font-size:0.6rem;font-weight:700;color:#c9d1d9;text-transform:uppercase;letter-spacing:0.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.legend-value{font-family:'Roboto Mono',monospace;font-size:0.9rem;font-weight:700;color:#ffffff;flex-shrink:0;margin-left:6px}.border-emerg{border-left-color:#dc2626}.border-alert{border-left-color:#e11d48}.border-crit{border-left-color:#ef4444}.border-err{border-left-color:#f97316}.border-warning{border-left-color:#eab308}.border-notice{border-left-color:#0ea5e9}.border-info{border-left-color:#16a34a}.border-debug{border-left-color:#64748b}.color-emerg{color:#dc2626}.color-alert{color:#e11d48}.color-crit{color:#ef4444}.color-err{color:#f97316}.color-warning{color:#eab308}.color-notice{color:#0ea5e9}.color-info{color:#16a34a}.color-debug{color:#64748b}.kpi-message{font-size:0.85rem;color:#8b949e;width:100%;text-align:center}.svg-icon{display:inline-grid;place-items:center;width:1em;height:1em;line-height:1;vertical-align:-.125em;flex-shrink:0}.svg-icon svg{width:1em;height:1em;display:block}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div id='summary-panel'><div class='summary-header'><div class='summary-header-left'><span class='summary-icon'><span class='svg-icon' aria-hidden='true'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'><path d='M12 3v18'/><path d='M3 12h18'/><circle cx='12' cy='12' r='8'/></svg></span></span><div><div class='panel-title'>Distribuicao total por Severidade</div><div class='panel-subtitle'>Total do periodo selecionado</div></div></div></div><div class='summary-content'><div class='chart-container'><div id='donut-chart'><div id='donut-center'><span id='donut-total'>0</span><span id='donut-label'>Total</span></div></div></div><div id='legend-cards-wrapper'></div></div></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "(function(){\nvar panelNode = htmlNode;\nvar wrapper = panelNode.querySelector('#legend-cards-wrapper');\nvar donutChart = panelNode.querySelector('#donut-chart');\nvar donutTotal = panelNode.querySelector('#donut-total');\nif(!wrapper||!donutChart||!donutTotal) return;\n\nvar SEV_ORDER = ['emerg','alert','crit','err','warning','notice','info','debug'];\nvar SEV_META = {\n  emerg:{icon:\"<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.1' stroke-linecap='round' stroke-linejoin='round'><path d='M12 3a8 8 0 0 0-8 8c0 3 1.7 5.5 4 6.8V21h8v-3.2c2.3-1.3 4-3.8 4-6.8a8 8 0 0 0-8-8Z'/><circle cx='9' cy='11' r='1'/><circle cx='15' cy='11' r='1'/><path d='M10 16h4'/></svg>\",label:'Emerg',border:'border-emerg',color:'color-emerg',hex:'#dc2626'},\n  alert:{icon:\"<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9'/><path d='M10 21h4'/></svg>\",label:'Alert',border:'border-alert',color:'color-alert',hex:'#e11d48'},\n  crit:{icon:\"<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M8.5 14.5A4.5 4.5 0 0 0 17 12c0-4-4-6-4-9-3 2-6 5-6 10a5 5 0 0 0 10 0'/></svg>\",label:'Crit',border:'border-crit',color:'color-crit',hex:'#ef4444'},\n  err:{icon:\"<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><path d='m15 9-6 6'/><path d='m9 9 6 6'/></svg>\",label:'Err',border:'border-err',color:'color-err',hex:'#f97316'},\n  warning:{icon:\"<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'><path d='M12 3 2.8 19a2 2 0 0 0 1.7 3h15a2 2 0 0 0 1.7-3L12 3Z'/><path d='M12 9v5'/><path d='M12 18h.01'/></svg>\",label:'Aviso',border:'border-warning',color:'color-warning',hex:'#eab308'},\n  notice:{icon:\"<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><path d='M12 11v5'/><path d='M12 8h.01'/></svg>\",label:'Notice',border:'border-notice',color:'color-notice',hex:'#0ea5e9'},\n  info:{icon:\"<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><path d='m8.5 12.5 2.3 2.3 4.9-5.4'/></svg>\",label:'Info',border:'border-info',color:'color-info',hex:'#16a34a'},\n  debug:{icon:\"<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.1' stroke-linecap='round' stroke-linejoin='round'><rect x='8' y='7' width='8' height='12' rx='4'/><path d='M8 11H4'/><path d='M16 11h4'/><path d='M8 15H4'/><path d='M16 15h4'/><path d='m9 4 2 3'/><path d='m15 4-2 3'/></svg>\",label:'Debug',border:'border-debug',color:'color-debug',hex:'#64748b'}\n};\n\nfunction valuesToArray(values){\n  if(!values) return [];\n  if(Array.isArray(values)) return values;\n  if(typeof values.toArray==='function') return values.toArray();\n  var len = values.length || values.size || (values.buffer?values.buffer.length:0) || 0;\n  var out=[];\n  for(var i=0;i<len;i++){ out.push(typeof values.get==='function'?values.get(i):values[i]); }\n  return out;\n}\nfunction lastNumericValue(field){\n  var arr = valuesToArray(field && field.values);\n  for(var i=arr.length-1;i>=0;i--){\n    var v = Number(arr[i]);\n    if(Number.isFinite(v)) return v;\n  }\n  return null;\n}\nfunction severityFromText(value){\n  var text = String(value || '').toLowerCase();\n  var match = text.match(/severity=\"?([^,\"} ]+)\"?/);\n  if(match) text = match[1];\n  for(var i=0;i<SEV_ORDER.length;i++){\n    if(text === SEV_ORDER[i] || text.indexOf(SEV_ORDER[i]) !== -1) return SEV_ORDER[i];\n  }\n  return null;\n}\nfunction fieldSeverity(frame, field){\n  if(field && field.labels && field.labels.severity) return severityFromText(field.labels.severity);\n  var candidates = [\n    field && field.config && field.config.displayName,\n    field && field.name,\n    frame && frame.name,\n    frame && frame.refId\n  ];\n  for(var i=0;i<candidates.length;i++){\n    var sv = severityFromText(candidates[i]);\n    if(sv) return sv;\n  }\n  return null;\n}\nfunction formatValue(value){\n  return Math.round(value).toLocaleString('pt-BR');\n}\n\nif(!data || !data.series || data.series.length===0 || data.state!=='Done'){\n  wrapper.innerHTML = \"<p class='kpi-message'>Aguardando dados...</p>\";\n  return;\n}\n\nvar totals = {};\nSEV_ORDER.forEach(function(sv){ totals[sv] = 0; });\ndata.series.forEach(function(frame){\n  var fields = (frame && frame.fields) || [];\n  var severityFields = fields.filter(function(field){\n    var name = String((field && (field.name || (field.config && field.config.displayName))) || '').toLowerCase();\n    return name === 'severity' || name === 'sev' || name.indexOf('severity') !== -1;\n  });\n  fields.forEach(function(field){\n    if(!field || field.type === 'time' || /^time$/i.test(field.name || '')) return;\n    var values = valuesToArray(field.values);\n    var fieldMatched = fieldSeverity(frame, field);\n    for(var idx=0; idx<values.length; idx++){\n      var val = Number(values[idx]);\n      if(!Number.isFinite(val)) continue;\n      var matched = fieldMatched;\n      if(!matched){\n        for(var sidx=0; sidx<severityFields.length; sidx++){\n          var sevValues = valuesToArray(severityFields[sidx].values);\n          matched = severityFromText(sevValues[idx]);\n          if(matched) break;\n        }\n      }\n      if(!matched) continue;\n      totals[matched] += val;\n    }\n  });\n});\n\nvar grandTotal = SEV_ORDER.reduce(function(sum, sv){ return sum + totals[sv]; }, 0);\n\nwrapper.innerHTML = SEV_ORDER.map(function(sv){\n  var meta = SEV_META[sv];\n  return \"<div class='legend-card \" + meta.border + \"'>\" +\n    \"<div class='legend-info'><span class='svg-icon \" + meta.color + \"' aria-hidden='true'>\" + meta.icon + \"</span><span class='legend-label'>\" + meta.label + \"</span></div>\" +\n    \"<span class='legend-value'>\" + formatValue(totals[sv]) + \"</span></div>\";\n}).join('');\n\nif(grandTotal === 0){\n  donutTotal.innerText = \"0\";\n  donutChart.style.background = 'conic-gradient(#30363d 0deg 360deg)';\n  return;\n}\n\ndonutTotal.innerText = formatValue(grandTotal);\n\nvar acc = 0;\nvar stops = [];\nSEV_ORDER.forEach(function(sv){\n  var val = totals[sv];\n  if(val <= 0) return;\n  var start = (acc / grandTotal) * 360;\n  acc += val;\n  var end = (acc / grandTotal) * 360;\n  stops.push(SEV_META[sv].hex + ' ' + start.toFixed(2) + 'deg ' + end.toFixed(2) + 'deg');\n});\nif(acc < grandTotal){\n  stops.push('#30363d ' + ((acc/grandTotal)*360).toFixed(2) + 'deg 360deg');\n}\n\ndonutChart.style.background = 'conic-gradient(' + stops.join(', ') + ')';\n})();",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull",
+                  "last",
+                  "firstNotNull",
+                  "first",
+                  "min",
+                  "max",
+                  "mean",
+                  "sum",
+                  "count",
+                  "range",
+                  "delta",
+                  "step",
+                  "diff",
+                  "logmin",
+                  "allIsZero",
+                  "allIsNull",
+                  "diffperc"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-5": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "$datasource"
+                    },
+                    "group": "loki",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "{job=\"huawei-switches\", host=~\"$switch\", severity=~\"$severity\"} | regexp `^\\S+ (?P<switchname>\\S+) (?:%%\\d+)?(?P<modulo>[A-Z0-9]+)/(?P<sevn>\\d)/(?P<evento>[A-Z0-9_]+)(?:\\([^)]*\\))?(?:\\[\\d+\\])?:?\\s*(?P<descricao>.*)`",
+                      "maxLines": 500,
+                      "queryType": "range"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": [
+              {
+                "group": "extractFields",
+                "kind": "Transformation",
+                "spec": {
+                  "options": {
+                    "format": "json",
+                    "keepTime": false,
+                    "replace": false,
+                    "source": "labels"
+                  }
+                }
+              },
+              {
+                "group": "organize",
+                "kind": "Transformation",
+                "spec": {
+                  "options": {
+                    "excludeByName": {
+                      "Line": true,
+                      "TraceID": true,
+                      "facility": true,
+                      "host": true,
+                      "id": true,
+                      "job": true,
+                      "labelTypes": true,
+                      "labels": true,
+                      "modulo": true,
+                      "sevn": true,
+                      "source_ip": true,
+                      "tsNs": true
+                    },
+                    "indexByName": {
+                      "Time": 0,
+                      "descricao": 4,
+                      "evento": 3,
+                      "severity": 2,
+                      "switchname": 1
+                    },
+                    "renameByName": {
+                      "Time": "Hora",
+                      "descricao": "Mensagem",
+                      "evento": "Evento",
+                      "severity": "Sev",
+                      "switchname": "Switch"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "description": "",
+        "id": 5,
+        "links": [],
+        "title": "",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@500&display=swap');:host, :root{--color-emerg:#dc2626;--color-alert:#e11d48;--color-crit:#ef4444;--color-err:#f97316;--color-warning:#eab308;--color-notice:#0ea5e9;--color-info:#16a34a;--color-debug:#64748b;--color-text-primary:#e0e6f1;--color-text-secondary:#9ca6b7;--color-bg-panel:rgba(14,18,25,0.94);--color-bg-hover:rgba(255,255,255,0.035);--color-border:#30363d;--color-btn-bg:#21262d;--color-btn-active-default:#2563eb}*{box-sizing:border-box}button,input{font-family:'Inter',sans-serif}#log-section-root{width:100%;height:100%;box-sizing:border-box;display:flex;flex-direction:column;padding:18px 20px;background:radial-gradient(circle at top left,rgba(239,68,68,0.06),transparent 32%),linear-gradient(135deg,#161B22 0%,#101419 100%);border:1px solid rgba(255,255,255,0.06);border-radius:14px;overflow:hidden}.log-section-header{display:flex;align-items:center;justify-content:space-between;margin:0 0 16px 0;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0}.log-section-header-left{display:flex;align-items:center;gap:10px}.log-section-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:9px;color:#e74c3c;background:rgba(231,76,60,0.12);border:1px solid rgba(231,76,60,0.30);font-size:1rem;flex-shrink:0}.log-section-title{font-size:1rem;font-weight:700;color:#ffffff;line-height:1.1}.log-section-sub{font-size:0.65rem;font-weight:600;color:#8b949e;text-transform:uppercase;letter-spacing:0.04em;margin-top:2px}#log-problems-container{flex:1;min-height:0;width:100%;font-family:'Inter',sans-serif;display:flex;flex-direction:column;overflow:hidden}.problems-table-panel{width:100%;flex:1;min-height:0;border:1px solid var(--color-border);border-radius:12px;background-color:var(--color-bg-panel);display:flex;flex-direction:column;overflow:hidden}.filter-bar{padding:10px 16px;border-bottom:1px solid var(--color-border);display:flex;align-items:center;flex-wrap:wrap;gap:16px;flex-shrink:0}.filter-group{display:flex;align-items:center;flex-wrap:wrap;gap:8px}.filter-label{color:var(--color-text-secondary);font-size:.8rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase}.filter-btn{padding:6px 14px;border:1px solid var(--color-border);border-radius:6px;background-color:var(--color-btn-bg);color:var(--color-text-secondary);display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-size:.75rem;font-weight:600;transition:background .2s ease,border-color .2s ease,color .2s ease}.filter-btn:hover{background-color:var(--color-border);color:var(--color-text-primary)}.filter-btn.active{background-color:var(--color-btn-active-default);border-color:var(--color-btn-active-default);color:#fff}.filter-btn.active.btn-emerg{background:var(--color-emerg);border-color:var(--color-emerg)}.filter-btn.active.btn-alert{background:var(--color-alert);border-color:var(--color-alert)}.filter-btn.active.btn-crit{background:var(--color-crit);border-color:var(--color-crit)}.filter-btn.active.btn-err{background:var(--color-err);border-color:var(--color-err)}.filter-btn.active.btn-warning{background:var(--color-warning);border-color:var(--color-warning);color:#402c00}.filter-btn.active.btn-notice{background:var(--color-notice);border-color:var(--color-notice)}.filter-btn.active.btn-info{background:var(--color-info);border-color:var(--color-info);color:#fff}.filter-btn.active.btn-debug{background:var(--color-debug);border-color:var(--color-debug)}.search-bar-group{margin-left:auto;display:flex;align-items:center;gap:8px}.search-input-wrapper{padding:0 10px;border:1px solid var(--color-border);border-radius:6px;background-color:var(--color-btn-bg);display:flex;align-items:center}.search-input-wrapper .svg-icon{color:var(--color-text-secondary);font-size:14px}.search-input{width:220px;padding:8px;border:none;outline:none;background:transparent;color:var(--color-text-primary)}.search-input::placeholder{color:#7d8590}.export-btn{padding:6px 10px}.table-wrapper{min-height:0;flex:1 1 auto;overflow-y:auto;overflow-x:auto;overscroll-behavior:contain}.table-wrapper::-webkit-scrollbar{width:7px;height:7px}.table-wrapper::-webkit-scrollbar-thumb{border-radius:999px;background:#30363d}.problems-table{width:100%;min-width:850px;border-collapse:collapse;table-layout:fixed}.problems-table th,.problems-table td{padding:12px 16px;border-bottom:1px solid rgba(48,54,61,0.7);color:var(--color-text-primary);font-size:12px;line-height:1.35;text-align:left;vertical-align:middle}.problems-table thead{position:sticky;top:0;z-index:2;background-color:#21262d}.problems-table th{color:#9ca6b7;font-size:11px;font-weight:700;letter-spacing:.3px;text-transform:uppercase}.problems-table tbody tr:hover{background-color:var(--color-bg-hover)}.problems-table th:nth-child(1),.problems-table td:nth-child(1){width:14%}.problems-table th:nth-child(2),.problems-table td:nth-child(2){width:9%}.problems-table th:nth-child(3),.problems-table td:nth-child(3){width:16%}.problems-table th:nth-child(4),.problems-table td:nth-child(4){width:38%}.problems-table th:nth-child(5),.problems-table td:nth-child(5){width:11%}.problems-table th:nth-child(6),.problems-table td:nth-child(6){width:12%}.cell-host{color:#fff!important;font-weight:700}.cell-problem{word-break:break-word;overflow-wrap:anywhere}.problems-empty-row td{padding:30px!important;color:var(--color-text-secondary)!important;text-align:center!important}.severity-badge{min-width:78px;padding:5px 10px;border-radius:999px;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.3px;box-shadow:0 1px 4px rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.25)}.severity-badge.sev-emerg{background:var(--color-emerg)}.severity-badge.sev-alert{background:var(--color-alert)}.severity-badge.sev-crit{background:var(--color-crit)}.severity-badge.sev-err{background:var(--color-err)}.severity-badge.sev-warning{background:var(--color-warning);color:#402c00}.severity-badge.sev-notice{background:var(--color-notice)}.severity-badge.sev-info{background:var(--color-info)}.severity-badge.sev-debug{background:var(--color-debug);border-color:rgba(255,255,255,0.4)}.problems-table tbody tr.row-crit{background:rgba(239,68,68,0.08)}.problems-table tbody tr.row-crit:hover{background:rgba(239,68,68,0.14)}.problems-table tbody tr.row-warning{background:rgba(249,115,22,0.06)}.problems-table tbody tr.row-warning:hover{background:rgba(249,115,22,0.11)}.pagination-controls{padding:10px 16px;border-top:1px solid var(--color-border);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-shrink:0}.pagination-info{color:var(--color-text-secondary);font-size:12px}.pagination-buttons{display:flex;gap:8px}.pagination-btn{padding:6px 14px;border:1px solid var(--color-border);border-radius:6px;background:var(--color-btn-bg);color:var(--color-text-primary);cursor:pointer;font-size:12px;font-weight:600;transition:background .18s ease,border-color .18s ease}.pagination-btn:hover:not(:disabled){background:#2d333b;border-color:#4b5563}.pagination-btn:disabled{opacity:.4;cursor:not-allowed}@media (max-width:680px){.filter-bar{align-items:stretch}.filter-group{width:100%}.search-bar-group{width:100%}.search-input-wrapper{flex:1}.search-input{width:100%}.pagination-controls{align-items:stretch;flex-direction:column}.pagination-buttons{width:100%}.pagination-buttons .pagination-btn{flex:1}}.svg-icon{display:inline-grid;place-items:center;width:1em;height:1em;line-height:1;vertical-align:-.125em;flex-shrink:0}.svg-icon svg{width:1em;height:1em;display:block}.copy-log-btn{width:28px;height:28px;border:1px solid var(--color-border);border-radius:6px;background:var(--color-btn-bg);color:var(--color-text-secondary);display:inline-grid;place-items:center;cursor:pointer}.copy-log-btn:hover{color:#fff;border-color:#4b5563}.copy-log-btn.copied{color:#22c55e;border-color:#22c55e}.cell-problem-wrap{display:grid;grid-template-columns:minmax(0,1fr) 30px;gap:8px;align-items:start}.cell-problem-text{min-width:0;word-break:break-word;overflow-wrap:anywhere}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div id='log-section-root'><div id='log-problems-container'></div></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "(function(){\nfunction escapeHtml(v){return String(v==null?'':v).replace(/[&<>]/g,function(c){return c==='&'?'&amp;':(c==='<'?'&lt;':'&gt;');});}\nfunction normalizeSearchText(v){return String(v||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');}\nfunction valuesToArray(values){if(!values)return[];if(Array.isArray(values))return values;if(typeof values.toArray==='function')return values.toArray();var len=values.length||values.size||(values.buffer?values.buffer.length:0)||0;var out=[];for(var i=0;i<len;i++){out.push(typeof values.get==='function'?values.get(i):values[i]);}return out;}\nfunction toMs(v){if(v instanceof Date)return v.getTime();if(typeof v==='number')return v;var p=new Date(v).getTime();return Number.isFinite(p)?p:0;}\nfunction fieldByName(frame,name){var fields=(frame&&frame.fields)||[];var lower=name.toLowerCase();for(var i=0;i<fields.length;i++){var f=fields[i];var n1=String(f.name||'').toLowerCase();var n2=String((f.config&&f.config.displayName)||'').toLowerCase();if(n1===lower||n2===lower)return f;}return null;}\nvar TABLE_ICON=\"<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='4' width='18' height='16' rx='2'/><path d='M3 10h18'/><path d='M9 4v16'/></svg>\";\nvar SEARCH_ICON=\"<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='7'/><path d='m20 20-3.5-3.5'/></svg>\";\nvar CSV_ICON=\"<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.1' stroke-linecap='round' stroke-linejoin='round'><path d='M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7Z'/><path d='M14 2v5h5'/><path d='M8 16h8'/><path d='M8 12h8'/></svg>\";\nvar SEV_ORDER=['emerg','alert','crit','err','warning','notice','info','debug'];\nvar SEV_META={emerg:{label:'Emerg',cls:'sev-emerg'},alert:{label:'Alert',cls:'sev-alert'},crit:{label:'Crit',cls:'sev-crit'},err:{label:'Err',cls:'sev-err'},warning:{label:'Warn',cls:'sev-warning'},notice:{label:'Notice',cls:'sev-notice'},info:{label:'Info',cls:'sev-info'},debug:{label:'Debug',cls:'sev-debug'}};\nvar rows=[];\nvar frame=data&&data.series&&data.series[0];\nif(frame){\nvar timeField=fieldByName(frame,'Hora')||fieldByName(frame,'Time');\nvar switchField=fieldByName(frame,'Switch');\nvar sevField=fieldByName(frame,'Sev');\nvar eventoField=fieldByName(frame,'Evento');\nvar msgField=fieldByName(frame,'Mensagem');\nvar times=timeField?valuesToArray(timeField.values):[];\nvar switches=switchField?valuesToArray(switchField.values):[];\nvar sevs=sevField?valuesToArray(sevField.values):[];\nvar eventos=eventoField?valuesToArray(eventoField.values):[];\nvar msgs=msgField?valuesToArray(msgField.values):[];\nvar n=times.length;\nfor(var i=0;i<n;i++){\nvar sevRaw=String(sevs[i]||'').toLowerCase();\nrows.push({time:toMs(times[i]),host:String(switches[i]||'N/A'),severity:SEV_META[sevRaw]?sevRaw:'debug',evento:String(eventos[i]||'-'),mensagem:String(msgs[i]||'-')});\n}\n}\nwindow.__logPanelState=window.__logPanelState||{activeSeverity:'all',searchTerm:'',currentPage:1};\nvar state=window.__logPanelState;\nvar itemsPerPage=15;\nvar debounceTimer=null;\nvar rightContainer=htmlNode.querySelector('#log-problems-container');\nfunction formatAge(ms){if(!ms)return '-';var diff=Math.floor((Date.now()-ms)/1000);if(diff<60)return Math.max(0,diff)+'s atras';if(diff<3600)return Math.floor(diff/60)+'m atras';if(diff<86400)return Math.floor(diff/3600)+'h atras';return Math.floor(diff/86400)+'d atras';}\nfunction formatHora(ms){if(!ms)return '-';var d=new Date(ms);return d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})+' '+d.toLocaleTimeString('pt-BR');}\nfunction exportCsv(list){var Q=String.fromCharCode(34);var esc=function(v){v=String(v==null?'':v).split(Q).join(Q+Q);return Q+v+Q;};var header=[esc('Switch'),esc('Sev'),esc('Evento'),esc('Mensagem'),esc('Hora')].join(';');var lines=[header];list.forEach(function(r){lines.push([esc(r.host),esc(r.severity),esc(r.evento),esc(r.mensagem),esc(formatHora(r.time))].join(';'));});var csv=String.fromCharCode(65279)+lines.join(String.fromCharCode(13,10));var blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='logs-switches-'+Date.now()+'.csv';document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(url);},1000);}\nfunction renderRightPanel(){\nif(!rightContainer)return;\nvar filtered=rows.filter(function(r){\nif(state.activeSeverity!=='all'&&r.severity!==state.activeSeverity)return false;\nif(state.searchTerm){var s=normalizeSearchText(state.searchTerm);var hay=normalizeSearchText(r.host+' '+r.evento+' '+r.mensagem);if(hay.indexOf(s)===-1)return false;}\nreturn true;\n});\nfiltered.sort(function(a,b){return b.time-a.time;});\nvar totalPages=Math.max(1,Math.ceil(filtered.length/itemsPerPage));\nif(state.currentPage>totalPages)state.currentPage=totalPages;\nif(state.currentPage<1)state.currentPage=1;\nvar start=(state.currentPage-1)*itemsPerPage;\nvar pageItems=filtered.slice(start,start+itemsPerPage);\nvar rowsHtml='';\npageItems.forEach(function(r){\nvar meta=SEV_META[r.severity];\nvar rowClass=(r.severity==='emerg'||r.severity==='alert'||r.severity==='crit'||r.severity==='err')?'row-crit':(r.severity==='warning'?'row-warning':'');\nrowsHtml+=\"<tr class='\"+rowClass+\"'><td class='cell-host'>\"+escapeHtml(r.host)+\"</td><td><span class='severity-badge \"+meta.cls+\"'>\"+escapeHtml(r.severity)+\"</span></td><td>\"+escapeHtml(r.evento)+\"</td><td class='cell-problem'><div class='cell-problem-wrap'><span class='cell-problem-text'>\"+escapeHtml(r.mensagem)+\"</span><button class='copy-log-btn' type='button' title='Copiar mensagem' data-copy='\"+escapeHtml(r.mensagem)+\"'>\"+CSV_ICON+\"</button></div></td><td>\"+formatAge(r.time)+\"</td><td>\"+formatHora(r.time)+\"</td></tr>\";\n});\nif(!rowsHtml){\nrowsHtml=\"<tr class='problems-empty-row'><td colspan='6'>Nenhum log encontrado para os filtros selecionados.</td></tr>\";\n}\nvar filterButtonsHtml=\"<button class='filter-btn filter-btn-severity \"+(state.activeSeverity==='all'?'active':'')+\"' data-sev='all' type='button'>All</button>\";\nfilterButtonsHtml+=SEV_ORDER.map(function(sv){\nvar meta=SEV_META[sv];\nreturn \"<button class='filter-btn filter-btn-severity btn-\"+sv+\" \"+(state.activeSeverity===sv?'active':'')+\"' data-sev='\"+sv+\"' type='button'>\"+meta.label+\"</button>\";\n}).join('');\nrightContainer.innerHTML =\n\"<div class='log-section-header'><div class='log-section-header-left'><span class='log-section-icon'><span class='svg-icon' aria-hidden='true'>\"+TABLE_ICON+\"</span></span><div><div class='log-section-title'>Logs dos Switches</div><div class='log-section-sub'>Busca detalhada por switch e severidade</div></div></div></div>\"+\n\"<div class='problems-table-panel'>\"+\n\"<div class='filter-bar'>\"+\n\"<div class='filter-group'><span class='filter-label'>Severidade:</span>\"+filterButtonsHtml+\"</div>\"+\n\"<div class='search-bar-group'>\"+\n\"<div class='search-input-wrapper'><span class='svg-icon' aria-hidden='true'>\"+SEARCH_ICON+\"</span>\"+\n\"<input type='text' id='problem-search-input' class='search-input' placeholder='Buscar switch ou evento...' value='\"+escapeHtml(state.searchTerm)+\"'/></div>\"+\n\"<button class='pagination-btn export-btn' id='btn-export' type='button' title='Exportar CSV'><span class='svg-icon' aria-hidden='true'>\"+CSV_ICON+\"</span></button>\"+\n\"</div></div>\"+\n\"<div class='table-wrapper'><table class='problems-table'><thead><tr><th>Switch</th><th>Sev</th><th>Evento</th><th>Mensagem</th><th>Idade</th><th>Hora</th></tr></thead><tbody>\"+rowsHtml+\"</tbody></table></div>\"+\n\"<div class='pagination-controls'><span class='pagination-info'>Pagina \"+state.currentPage+\" de \"+totalPages+\" &middot; \"+filtered.length+\" log(s)</span>\"+\n\"<div class='pagination-buttons'>\"+\n\"<button class='pagination-btn' id='btn-prev' type='button' \"+(state.currentPage===1?'disabled':'')+\">Anterior</button>\"+\n\"<button class='pagination-btn' id='btn-next' type='button' \"+(state.currentPage===totalPages?'disabled':'')+\">Proxima</button>\"+\n\"</div></div></div>\";\nvar searchInput=rightContainer.querySelector('#problem-search-input');\nif(searchInput){\nsearchInput.oninput=function(ev){\nvar value=ev.target.value;\nclearTimeout(debounceTimer);\ndebounceTimer=setTimeout(function(){\nstate.searchTerm=value;\nstate.currentPage=1;\nrenderRightPanel();\nvar updated=rightContainer.querySelector('#problem-search-input');\nif(updated){updated.focus();updated.setSelectionRange(value.length,value.length);}\n},400);\n};\n}\nvar sevButtons=rightContainer.querySelectorAll('.filter-btn-severity');\nfor(var i=0;i<sevButtons.length;i++){\n(function(btn){\nbtn.onclick=function(){\nstate.activeSeverity=btn.getAttribute('data-sev')||'all';\nstate.currentPage=1;\nrenderRightPanel();\n};\n})(sevButtons[i]);\n}\nvar prevBtn=rightContainer.querySelector('#btn-prev');\nif(prevBtn){prevBtn.onclick=function(){if(state.currentPage>1){state.currentPage-=1;renderRightPanel();}};}\nvar nextBtn=rightContainer.querySelector('#btn-next');\nif(nextBtn){nextBtn.onclick=function(){if(state.currentPage<totalPages){state.currentPage+=1;renderRightPanel();}};}\nvar exportBtn=rightContainer.querySelector('#btn-export');\nif(exportBtn){exportBtn.onclick=function(){exportCsv(filtered);};}\nvar copyButtons=rightContainer.querySelectorAll('.copy-log-btn');\nfor(var ci=0;ci<copyButtons.length;ci++){\n(function(btn){btn.onclick=function(){var text=btn.getAttribute('data-copy')||'';if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text);}btn.classList.add('copied');setTimeout(function(){btn.classList.remove('copied');},900);};})(copyButtons[ci]);\n}\n}\nrenderRightPanel();\n})();",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull",
+                  "last",
+                  "firstNotNull",
+                  "first",
+                  "min",
+                  "max",
+                  "mean",
+                  "sum",
+                  "count",
+                  "range",
+                  "delta",
+                  "step",
+                  "diff",
+                  "logmin",
+                  "allIsZero",
+                  "allIsNull",
+                  "diffperc"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-13": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "$datasource"
+                    },
+                    "group": "loki",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "{job=\"huawei-switches\", host=~\"$switch\", severity=~\"emerg|alert|crit|err\"} | regexp `^\\S+ (?P<switchname>\\S+) (?:%%\\d+)?(?P<modulo>[A-Z0-9]+)/(?P<sevn>\\d)/(?P<evento>[A-Z0-9_]+)(?:\\([^)]*\\))?(?:\\[\\d+\\])?:?\\s*(?P<descricao>.*)`",
+                      "queryType": "range",
+                      "maxLines": 100
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": [
+              {
+                "group": "extractFields",
+                "kind": "Transformation",
+                "spec": {
+                  "options": {
+                    "format": "json",
+                    "keepTime": false,
+                    "replace": false,
+                    "source": "labels"
+                  }
+                }
+              },
+              {
+                "group": "organize",
+                "kind": "Transformation",
+                "spec": {
+                  "options": {
+                    "excludeByName": {
+                      "Line": true,
+                      "TraceID": true,
+                      "facility": true,
+                      "host": true,
+                      "id": true,
+                      "job": true,
+                      "labelTypes": true,
+                      "labels": true,
+                      "modulo": true,
+                      "sevn": true,
+                      "source_ip": true,
+                      "tsNs": true
+                    },
+                    "indexByName": {
+                      "Time": 0,
+                      "descricao": 4,
+                      "evento": 3,
+                      "severity": 2,
+                      "switchname": 1
+                    },
+                    "renameByName": {
+                      "Time": "Hora",
+                      "descricao": "Mensagem",
+                      "evento": "Evento",
+                      "severity": "Sev",
+                      "switchname": "Switch"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "description": "evento mais recente de alta prioridade",
+        "id": 13,
+        "links": [],
+        "title": "",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "\n@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Roboto+Mono:wght@600;700;900&display=swap');\n*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}\n.ops-panel{--accent:#38bdf8;--accent-soft:rgba(56,189,248,.12);width:100%;height:100%;padding:14px 16px;color:#e7edf6;background:radial-gradient(circle at top left,var(--accent-soft),transparent 34%),linear-gradient(135deg,#161b22 0%,#101419 100%);border:1px solid rgba(255,255,255,.07);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;gap:10px}\n.ops-header{display:flex;align-items:center;gap:10px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}\n.ops-icon{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;color:var(--accent);background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);flex-shrink:0}\n.ops-title strong{display:block;font-size:14px;font-weight:900;color:#fff;line-height:1.1}\n.ops-title span{display:block;margin-top:3px;font-size:10px;font-weight:800;color:#9aa4b2;text-transform:uppercase;letter-spacing:0}\n.ops-body{min-height:0;flex:1;display:flex;flex-direction:column;gap:7px;overflow-y:auto;overflow-x:hidden;padding-right:4px}.ops-body::-webkit-scrollbar{width:6px}.ops-body::-webkit-scrollbar-thumb{background:#30363d;border-radius:999px}\n.ops-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;padding:7px 10px;border:1px solid rgba(255,255,255,.09);border-left:3px solid var(--accent);border-radius:8px;background:rgba(255,255,255,.035);min-height:34px;flex-shrink:0}\n.ops-main{min-width:0}\n.ops-name{display:block;font-size:12px;font-weight:900;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.ops-sub{display:block;margin-top:2px;font-size:10px;font-weight:700;color:#9aa4b2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.ops-value{font-family:'Roboto Mono',monospace;font-size:15px;font-weight:900;color:#fff;white-space:nowrap}\n.ops-empty{height:100%;display:grid;place-items:center;text-align:center;color:#9aa4b2;font-size:12px;font-weight:800;border:1px dashed rgba(255,255,255,.16);border-radius:10px;background:rgba(255,255,255,.025);padding:12px}\n.ops-critical{--accent:#ef4444;--accent-soft:rgba(239,68,68,.12)}\n.ops-warning{--accent:#facc15;--accent-soft:rgba(250,204,21,.12)}\n.ops-blue{--accent:#38bdf8;--accent-soft:rgba(56,189,248,.12)}\n.ops-badge{display:inline-flex;align-items:center;width:fit-content;margin-top:6px;padding:4px 8px;border-radius:999px;font-size:10px;font-weight:900;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}\n.ops-message{font-size:12px;font-weight:700;color:#dbe4ef;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}\n.svg-icon{display:inline-grid;place-items:center;width:1em;height:1em;line-height:1;vertical-align:-.125em;flex-shrink:0}.svg-icon svg{width:1em;height:1em;display:block}\n@supports not (color:color-mix(in srgb,red 50%,transparent)){.ops-icon,.ops-badge{border-color:rgba(255,255,255,.16)}}\n.ops-latest-grid{display:grid;grid-template-columns:minmax(220px,.34fr) minmax(0,1fr);gap:16px;align-items:stretch;min-height:0;flex:1}.ops-latest-main{min-width:0;display:flex;flex-direction:column;justify-content:center;gap:8px}.ops-latest-name-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.ops-latest-name-row .ops-badge{margin-top:0}.ops-latest-time{display:block;font-size:10px;font-weight:700;color:#9aa4b2}.ops-latest-time strong{color:#dbe4ef;font-weight:900}.ops-latest-message{min-width:0;min-height:0;display:flex;border:1px solid rgba(255,255,255,.09);border-left:3px solid var(--accent);border-radius:8px;background:rgba(255,255,255,.035);overflow:hidden}.ops-latest-message .ops-message{flex:1;min-height:0;margin:0;padding:12px 14px;font-size:13px;line-height:1.6;color:#dbe4ef;font-weight:700;display:block;overflow-y:auto;white-space:normal;word-break:break-word;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent}.ops-latest-message .ops-message::-webkit-scrollbar{width:6px}.ops-latest-message .ops-message::-webkit-scrollbar-track{background:transparent}.ops-latest-message .ops-message::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2);border-radius:999px}.ops-latest-message .ops-message::-webkit-scrollbar-button{width:0;height:0;display:none}#ops-latest-critical .ops-body{overflow:hidden}@media(max-width:900px){.ops-latest-grid{grid-template-columns:1fr}}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div id=\"ops-latest-critical\" class=\"ops-panel ops-critical\"><div class=\"ops-header\"><span class=\"ops-icon\"><span class=\"svg-icon\" aria-hidden=\"true\"><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M8.5 14.5A4.5 4.5 0 0 0 17 12c0-4-4-6-4-9-3 2-6 5-6 10a5 5 0 0 0 10 0'/></svg></span></span><div class=\"ops-title\"><strong>Ultimo critico</strong><span>evento mais recente de alta prioridade</span></div></div><div class=\"ops-body\"></div></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "(function(){\nfunction valuesToArray(values){if(!values)return[];if(Array.isArray(values))return values;if(typeof values.toArray==='function')return values.toArray();var len=values.length||values.size||(values.buffer?values.buffer.length:0)||0;var out=[];for(var i=0;i<len;i++){out.push(typeof values.get==='function'?values.get(i):values[i]);}return out;}\nfunction esc(v){return String(v==null?'':v).replace(/[&<>]/g,function(c){return c==='&'?'&amp;':(c==='<'?'&lt;':'&gt;');});}\nfunction lastNumber(field){var vals=valuesToArray(field&&field.values);for(var i=vals.length-1;i>=0;i--){var n=Number(vals[i]);if(Number.isFinite(n))return n;}return 0;}\nfunction labelFrom(field,frame,names){var labels=(field&&field.labels)||(frame&&frame.labels)||{};for(var i=0;i<names.length;i++){if(labels[names[i]])return labels[names[i]];}var candidates=[field&&field.name,field&&field.config&&field.config.displayName,frame&&frame.name];for(var j=0;j<candidates.length;j++){var text=String(candidates[j]||'');for(var k=0;k<names.length;k++){var re=new RegExp(names[k]+'=\"?([^,}\" ]+)\"?','i');var m=text.match(re);if(m)return m[1];}}return null;}\nfunction metricRows(data,labelNames){var rows=[];(data&&data.series||[]).forEach(function(frame){(frame.fields||[]).forEach(function(field){if(field.type==='time'||/^time$/i.test(field.name||''))return;var value=lastNumber(field);var name=labelFrom(field,frame,labelNames)||field.name||frame.name||'N/A';if(Number.isFinite(value)&&value>0)rows.push({name:String(name),value:value});});});rows.sort(function(a,b){return b.value-a.value;});return rows;}\n\nfunction fieldByName(frame,name){var fields=(frame&&frame.fields)||[];var lower=name.toLowerCase();for(var i=0;i<fields.length;i++){var f=fields[i];var n1=String(f.name||'').toLowerCase();var n2=String((f.config&&f.config.displayName)||'').toLowerCase();if(n1===lower||n2===lower)return f;}return null;}\nfunction toMs(v){if(v instanceof Date)return v.getTime();if(typeof v==='number')return v;var p=new Date(v).getTime();return Number.isFinite(p)?p:0;}\nfunction fmt(ms){if(!ms)return '--';var d=new Date(ms);return d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})+' '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});}\nfunction ago(ms){if(!ms)return '--';var diff=Math.floor((Date.now()-ms)/1000);if(diff<60)return Math.max(0,diff)+'s atras';if(diff<3600)return Math.floor(diff/60)+'m atras';if(diff<86400)return Math.floor(diff/3600)+'h atras';return Math.floor(diff/86400)+'d atras';}\nvar root=htmlNode.querySelector('#ops-latest-critical');if(!root)return;var body=root.querySelector('.ops-body');if(!body)return;var rows=[];(data&&data.series||[]).forEach(function(frame){var timeF=fieldByName(frame,'Hora')||fieldByName(frame,'Time');var hostF=fieldByName(frame,'Switch')||fieldByName(frame,'host');var sevF=fieldByName(frame,'Sev')||fieldByName(frame,'severity');var evtF=fieldByName(frame,'Evento')||fieldByName(frame,'evento');var msgF=fieldByName(frame,'Mensagem')||fieldByName(frame,'descricao')||fieldByName(frame,'line');var times=valuesToArray(timeF&&timeF.values);var hosts=valuesToArray(hostF&&hostF.values);var sevs=valuesToArray(sevF&&sevF.values);var evts=valuesToArray(evtF&&evtF.values);var msgs=valuesToArray(msgF&&msgF.values);var n=Math.max(times.length,hosts.length,sevs.length,evts.length,msgs.length);for(var i=0;i<n;i++){rows.push({time:toMs(times[i]),host:hosts[i]||'N/A',severity:sevs[i]||'critico',event:evts[i]||'-',message:msgs[i]||'-'});}});rows=rows.filter(function(r){return r.time>0;}).sort(function(a,b){return b.time-a.time;});if(!rows.length){body.innerHTML=\"<div class='ops-empty'>Nenhum evento critico no periodo.</div>\";return;}var r=rows[0];body.innerHTML=\"<div class='ops-latest-grid'><div class='ops-latest-main'><div class='ops-latest-name-row'><span class='ops-name'>\"+esc(r.host)+\"</span><span class='ops-badge'>\"+esc(r.severity)+\"</span></div><span class='ops-sub'>\"+esc(r.event)+\"</span><span class='ops-latest-time'>\"+fmt(r.time)+\" &middot; <strong>\"+ago(r.time)+\"</strong></span></div><div class='ops-latest-message'><div class='ops-message'>\"+esc(r.message)+\"</div></div></div>\";})();",
+              "overflow": "hidden",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull",
+                  "last",
+                  "firstNotNull",
+                  "first",
+                  "min",
+                  "max",
+                  "mean",
+                  "sum",
+                  "count",
+                  "range",
+                  "delta",
+                  "step",
+                  "diff",
+                  "logmin",
+                  "allIsZero",
+                  "allIsNull",
+                  "diffperc"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-14": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "$datasource"
+                    },
+                    "group": "loki",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "{job=\"huawei-switches\", host=~\"$switch\", severity=~\"$severity\"} | regexp `^\\S+ (?P<switchname>\\S+) (?:%%\\d+)?(?P<modulo>[A-Z0-9]+)/(?P<sevn>\\d)/(?P<evento>[A-Z0-9_]+)(?:\\([^)]*\\))?(?:\\[\\d+\\])?:?\\s*(?P<descricao>.*)`",
+                      "queryType": "range",
+                      "maxLines": 2000
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": [
+              {
+                "group": "extractFields",
+                "kind": "Transformation",
+                "spec": {
+                  "options": {
+                    "format": "json",
+                    "keepTime": false,
+                    "replace": false,
+                    "source": "labels"
+                  }
+                }
+              },
+              {
+                "group": "organize",
+                "kind": "Transformation",
+                "spec": {
+                  "options": {
+                    "excludeByName": {
+                      "Line": true,
+                      "TraceID": true,
+                      "facility": true,
+                      "host": true,
+                      "id": true,
+                      "job": true,
+                      "labelTypes": true,
+                      "labels": true,
+                      "modulo": true,
+                      "sevn": true,
+                      "source_ip": true,
+                      "tsNs": true
+                    },
+                    "indexByName": {
+                      "Time": 0,
+                      "descricao": 4,
+                      "evento": 3,
+                      "severity": 2,
+                      "switchname": 1
+                    },
+                    "renameByName": {
+                      "Time": "Hora",
+                      "descricao": "Mensagem",
+                      "evento": "Evento",
+                      "severity": "Sev",
+                      "switchname": "Switch"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "description": "eventos mais frequentes no periodo",
+        "id": 14,
+        "links": [],
+        "title": "",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "\n@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Roboto+Mono:wght@600;700;900&display=swap');\n*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}\n.ops-panel{--accent:#38bdf8;--accent-soft:rgba(56,189,248,.12);width:100%;height:100%;padding:14px 16px;color:#e7edf6;background:radial-gradient(circle at top left,var(--accent-soft),transparent 34%),linear-gradient(135deg,#161b22 0%,#101419 100%);border:1px solid rgba(255,255,255,.07);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;gap:10px}\n.ops-header{display:flex;align-items:center;gap:10px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}\n.ops-icon{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;color:var(--accent);background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);flex-shrink:0}\n.ops-title strong{display:block;font-size:14px;font-weight:900;color:#fff;line-height:1.1}\n.ops-title span{display:block;margin-top:3px;font-size:10px;font-weight:800;color:#9aa4b2;text-transform:uppercase;letter-spacing:0}\n.ops-body{min-height:0;flex:1;display:flex;flex-direction:column;gap:7px;overflow-y:auto;overflow-x:hidden;padding-right:4px}.ops-body::-webkit-scrollbar{width:6px}.ops-body::-webkit-scrollbar-thumb{background:#30363d;border-radius:999px}\n.ops-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;padding:7px 10px;border:1px solid rgba(255,255,255,.09);border-left:3px solid var(--accent);border-radius:8px;background:rgba(255,255,255,.035);min-height:34px;flex-shrink:0}\n.ops-main{min-width:0}\n.ops-name{display:block;font-size:12px;font-weight:900;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.ops-sub{display:block;margin-top:2px;font-size:10px;font-weight:700;color:#9aa4b2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.ops-value{font-family:'Roboto Mono',monospace;font-size:15px;font-weight:900;color:#fff;white-space:nowrap}\n.ops-empty{height:100%;display:grid;place-items:center;text-align:center;color:#9aa4b2;font-size:12px;font-weight:800;border:1px dashed rgba(255,255,255,.16);border-radius:10px;background:rgba(255,255,255,.025);padding:12px}\n.ops-critical{--accent:#ef4444;--accent-soft:rgba(239,68,68,.12)}\n.ops-warning{--accent:#facc15;--accent-soft:rgba(250,204,21,.12)}\n.ops-blue{--accent:#38bdf8;--accent-soft:rgba(56,189,248,.12)}\n.ops-badge{display:inline-flex;align-items:center;width:fit-content;margin-top:6px;padding:4px 8px;border-radius:999px;font-size:10px;font-weight:900;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}\n.ops-message{font-size:12px;font-weight:700;color:#dbe4ef;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}\n.svg-icon{display:inline-grid;place-items:center;width:1em;height:1em;line-height:1;vertical-align:-.125em;flex-shrink:0}.svg-icon svg{width:1em;height:1em;display:block}\n@supports not (color:color-mix(in srgb,red 50%,transparent)){.ops-icon,.ops-badge{border-color:rgba(255,255,255,.16)}}\n.ops-latest-grid{display:grid;grid-template-columns:minmax(220px,.34fr) minmax(0,1fr);gap:14px;align-items:start;min-height:0}.ops-latest-main{min-width:0}.ops-latest-message{min-width:0;padding:10px 12px;border:1px solid rgba(255,255,255,.09);border-left:3px solid var(--accent);border-radius:8px;background:rgba(255,255,255,.035)}@media(max-width:900px){.ops-latest-grid{grid-template-columns:1fr}.ops-message{-webkit-line-clamp:2}}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div id=\"ops-top-events\" class=\"ops-panel ops-warning\"><div class=\"ops-header\"><span class=\"ops-icon\"><span class=\"svg-icon\" aria-hidden=\"true\"><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><line x1='8' y1='6' x2='21' y2='6'/><line x1='8' y1='12' x2='21' y2='12'/><line x1='8' y1='18' x2='21' y2='18'/><circle cx='4' cy='6' r='1'/><circle cx='4' cy='12' r='1'/><circle cx='4' cy='18' r='1'/></svg></span></span><div class=\"ops-title\"><strong>Top eventos</strong><span>eventos mais frequentes no periodo</span></div></div><div class=\"ops-body\"></div></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "(function(){\nfunction valuesToArray(values){if(!values)return[];if(Array.isArray(values))return values;if(typeof values.toArray==='function')return values.toArray();var len=values.length||values.size||(values.buffer?values.buffer.length:0)||0;var out=[];for(var i=0;i<len;i++){out.push(typeof values.get==='function'?values.get(i):values[i]);}return out;}\nfunction esc(v){return String(v==null?'':v).replace(/[&<>]/g,function(c){return c==='&'?'&amp;':(c==='<'?'&lt;':'&gt;');});}\nfunction fieldByName(frame,names){var fields=(frame&&frame.fields)||[];var lowered=names.map(function(n){return String(n).toLowerCase();});for(var i=0;i<fields.length;i++){var f=fields[i];var n1=String(f.name||'').toLowerCase();var n2=String((f.config&&f.config.displayName)||'').toLowerCase();if(lowered.indexOf(n1)!==-1||lowered.indexOf(n2)!==-1)return f;}return null;}\nvar root=htmlNode.querySelector('#ops-top-events');if(!root)return;var body=root.querySelector('.ops-body');if(!body)return;\nvar counts={};\n(data&&data.series||[]).forEach(function(frame){\n  var field=fieldByName(frame,[\"Evento\",\"evento\"]);\n  if(!field)return;\n  valuesToArray(field.values).forEach(function(raw){\n    var name=String(raw||'').trim();\n    if(!name||name==='-'||name==='N/A')return;\n    counts[name]=(counts[name]||0)+1;\n  });\n});\nvar rows=Object.keys(counts).map(function(name){return{name:name,value:counts[name]};}).sort(function(a,b){return b.value-a.value||a.name.localeCompare(b.name);}).slice(0,5);\nif(!rows.length){body.innerHTML=\"<div class='ops-empty'>Sem eventos no periodo.</div>\";return;}\nbody.innerHTML=rows.map(function(r,idx){return \"<div class='ops-row'><div class='ops-main'><span class='ops-name'>\"+esc(r.name)+\"</span><span class='ops-sub'>\"+(idx+1)+\" - ocorrencias por evento</span></div><span class='ops-value'>\"+Math.round(r.value).toLocaleString('pt-BR')+\"</span></div>\";}).join('');\n})();",
+              "overflow": "hidden",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull",
+                  "last",
+                  "firstNotNull",
+                  "first",
+                  "min",
+                  "max",
+                  "mean",
+                  "sum",
+                  "count",
+                  "range",
+                  "delta",
+                  "step",
+                  "diff",
+                  "logmin",
+                  "allIsZero",
+                  "allIsNull",
+                  "diffperc"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-15": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "$datasource"
+                    },
+                    "group": "loki",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "{job=\"huawei-switches\", host=~\"$switch\", severity=~\"$severity\"} | regexp `^\\S+ (?P<switchname>\\S+) (?:%%\\d+)?(?P<modulo>[A-Z0-9]+)/(?P<sevn>\\d)/(?P<evento>[A-Z0-9_]+)(?:\\([^)]*\\))?(?:\\[\\d+\\])?:?\\s*(?P<descricao>.*)`",
+                      "queryType": "range",
+                      "maxLines": 2000
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": [
+              {
+                "group": "extractFields",
+                "kind": "Transformation",
+                "spec": {
+                  "options": {
+                    "format": "json",
+                    "keepTime": false,
+                    "replace": false,
+                    "source": "labels"
+                  }
+                }
+              },
+              {
+                "group": "organize",
+                "kind": "Transformation",
+                "spec": {
+                  "options": {
+                    "excludeByName": {
+                      "Line": true,
+                      "TraceID": true,
+                      "facility": true,
+                      "host": true,
+                      "id": true,
+                      "job": true,
+                      "labelTypes": true,
+                      "labels": true,
+                      "modulo": true,
+                      "sevn": true,
+                      "source_ip": true,
+                      "tsNs": true
+                    },
+                    "indexByName": {
+                      "Time": 0,
+                      "descricao": 4,
+                      "evento": 3,
+                      "severity": 2,
+                      "switchname": 1
+                    },
+                    "renameByName": {
+                      "Time": "Hora",
+                      "descricao": "Mensagem",
+                      "evento": "Evento",
+                      "severity": "Sev",
+                      "switchname": "Switch"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "description": "origens com mais logs no periodo",
+        "id": 15,
+        "links": [],
+        "title": "",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "\n@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Roboto+Mono:wght@600;700;900&display=swap');\n*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}\n.ops-panel{--accent:#38bdf8;--accent-soft:rgba(56,189,248,.12);width:100%;height:100%;padding:14px 16px;color:#e7edf6;background:radial-gradient(circle at top left,var(--accent-soft),transparent 34%),linear-gradient(135deg,#161b22 0%,#101419 100%);border:1px solid rgba(255,255,255,.07);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;gap:10px}\n.ops-header{display:flex;align-items:center;gap:10px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}\n.ops-icon{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;color:var(--accent);background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);flex-shrink:0}\n.ops-title strong{display:block;font-size:14px;font-weight:900;color:#fff;line-height:1.1}\n.ops-title span{display:block;margin-top:3px;font-size:10px;font-weight:800;color:#9aa4b2;text-transform:uppercase;letter-spacing:0}\n.ops-body{min-height:0;flex:1;display:flex;flex-direction:column;gap:7px;overflow-y:auto;overflow-x:hidden;padding-right:4px}.ops-body::-webkit-scrollbar{width:6px}.ops-body::-webkit-scrollbar-thumb{background:#30363d;border-radius:999px}\n.ops-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;padding:7px 10px;border:1px solid rgba(255,255,255,.09);border-left:3px solid var(--accent);border-radius:8px;background:rgba(255,255,255,.035);min-height:34px;flex-shrink:0}\n.ops-main{min-width:0}\n.ops-name{display:block;font-size:12px;font-weight:900;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.ops-sub{display:block;margin-top:2px;font-size:10px;font-weight:700;color:#9aa4b2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.ops-value{font-family:'Roboto Mono',monospace;font-size:15px;font-weight:900;color:#fff;white-space:nowrap}\n.ops-empty{height:100%;display:grid;place-items:center;text-align:center;color:#9aa4b2;font-size:12px;font-weight:800;border:1px dashed rgba(255,255,255,.16);border-radius:10px;background:rgba(255,255,255,.025);padding:12px}\n.ops-critical{--accent:#ef4444;--accent-soft:rgba(239,68,68,.12)}\n.ops-warning{--accent:#facc15;--accent-soft:rgba(250,204,21,.12)}\n.ops-blue{--accent:#38bdf8;--accent-soft:rgba(56,189,248,.12)}\n.ops-badge{display:inline-flex;align-items:center;width:fit-content;margin-top:6px;padding:4px 8px;border-radius:999px;font-size:10px;font-weight:900;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}\n.ops-message{font-size:12px;font-weight:700;color:#dbe4ef;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}\n.svg-icon{display:inline-grid;place-items:center;width:1em;height:1em;line-height:1;vertical-align:-.125em;flex-shrink:0}.svg-icon svg{width:1em;height:1em;display:block}\n@supports not (color:color-mix(in srgb,red 50%,transparent)){.ops-icon,.ops-badge{border-color:rgba(255,255,255,.16)}}\n.ops-latest-grid{display:grid;grid-template-columns:minmax(220px,.34fr) minmax(0,1fr);gap:14px;align-items:start;min-height:0}.ops-latest-main{min-width:0}.ops-latest-message{min-width:0;padding:10px 12px;border:1px solid rgba(255,255,255,.09);border-left:3px solid var(--accent);border-radius:8px;background:rgba(255,255,255,.035)}@media(max-width:900px){.ops-latest-grid{grid-template-columns:1fr}.ops-message{-webkit-line-clamp:2}}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div id=\"ops-top-switches\" class=\"ops-panel ops-blue\"><div class=\"ops-header\"><span class=\"ops-icon\"><span class=\"svg-icon\" aria-hidden=\"true\"><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='4' width='18' height='6' rx='2'/><rect x='3' y='14' width='18' height='6' rx='2'/><path d='M7 7h.01'/><path d='M7 17h.01'/></svg></span></span><div class=\"ops-title\"><strong>Top switches</strong><span>origens com mais logs no periodo</span></div></div><div class=\"ops-body\"></div></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "(function(){\nfunction valuesToArray(values){if(!values)return[];if(Array.isArray(values))return values;if(typeof values.toArray==='function')return values.toArray();var len=values.length||values.size||(values.buffer?values.buffer.length:0)||0;var out=[];for(var i=0;i<len;i++){out.push(typeof values.get==='function'?values.get(i):values[i]);}return out;}\nfunction esc(v){return String(v==null?'':v).replace(/[&<>]/g,function(c){return c==='&'?'&amp;':(c==='<'?'&lt;':'&gt;');});}\nfunction fieldByName(frame,names){var fields=(frame&&frame.fields)||[];var lowered=names.map(function(n){return String(n).toLowerCase();});for(var i=0;i<fields.length;i++){var f=fields[i];var n1=String(f.name||'').toLowerCase();var n2=String((f.config&&f.config.displayName)||'').toLowerCase();if(lowered.indexOf(n1)!==-1||lowered.indexOf(n2)!==-1)return f;}return null;}\nvar root=htmlNode.querySelector('#ops-top-switches');if(!root)return;var body=root.querySelector('.ops-body');if(!body)return;\nvar counts={};\n(data&&data.series||[]).forEach(function(frame){\n  var field=fieldByName(frame,[\"Switch\",\"switchname\",\"host\"]);\n  if(!field)return;\n  valuesToArray(field.values).forEach(function(raw){\n    var name=String(raw||'').trim();\n    if(!name||name==='-'||name==='N/A')return;\n    counts[name]=(counts[name]||0)+1;\n  });\n});\nvar rows=Object.keys(counts).map(function(name){return{name:name,value:counts[name]};}).sort(function(a,b){return b.value-a.value||a.name.localeCompare(b.name);}).slice(0,5);\nif(!rows.length){body.innerHTML=\"<div class='ops-empty'>Sem switches no periodo.</div>\";return;}\nbody.innerHTML=rows.map(function(r,idx){return \"<div class='ops-row'><div class='ops-main'><span class='ops-name'>\"+esc(r.name)+\"</span><span class='ops-sub'>\"+(idx+1)+\" - logs por switch</span></div><span class='ops-value'>\"+Math.round(r.value).toLocaleString('pt-BR')+\"</span></div>\";}).join('');\n})();",
+              "overflow": "hidden",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull",
+                  "last",
+                  "firstNotNull",
+                  "first",
+                  "min",
+                  "max",
+                  "mean",
+                  "sum",
+                  "count",
+                  "range",
+                  "delta",
+                  "step",
+                  "diff",
+                  "logmin",
+                  "allIsZero",
+                  "allIsNull",
+                  "diffperc"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    }
+  },
+  "layout": {
+    "kind": "GridLayout",
+    "spec": {
+      "items": [
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-10"
+            },
+            "height": 3,
+            "width": 24,
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-12"
+            },
+            "height": 3,
+            "width": 24,
+            "x": 0,
+            "y": 3
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-11"
+            },
+            "height": 4,
+            "width": 24,
+            "x": 0,
+            "y": 6
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-1"
+            },
+            "height": 14,
+            "width": 16,
+            "x": 0,
+            "y": 10
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-2"
+            },
+            "height": 14,
+            "width": 8,
+            "x": 16,
+            "y": 10
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-13"
+            },
+            "height": 5,
+            "width": 24,
+            "x": 0,
+            "y": 24
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-14"
+            },
+            "height": 8,
+            "width": 12,
+            "x": 0,
+            "y": 29
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-15"
+            },
+            "height": 8,
+            "width": 12,
+            "x": 12,
+            "y": 29
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-5"
+            },
+            "height": 19,
+            "width": 24,
+            "x": 0,
+            "y": 37
+          }
         }
       ]
     }
-  ],
-  "refresh": "30s",
-  "schemaVersion": 39,
+  },
+  "links": [],
+  "liveNow": false,
+  "preload": false,
   "tags": [
     "syslog",
     "switches",
     "lognet",
     "loki"
   ],
-  "templating": {
-    "list": [
-      {
-        "type": "datasource",
-        "name": "datasource",
-        "label": "Datasource Loki",
-        "query": "loki",
-        "current": {},
-        "hide": 0,
+  "timeSettings": {
+    "autoRefresh": "30s",
+    "autoRefreshIntervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "fiscalYearStartMonth": 0,
+    "from": "2026-08-27T11:09:00.548Z",
+    "hideTimepicker": false,
+    "timezone": "America/Sao_Paulo",
+    "to": "2026-08-27T23:09:00.548Z"
+  },
+  "title": "Syslog Switches LOGNET",
+  "variables": [
+    {
+      "kind": "DatasourceVariable",
+      "spec": {
+        "allowCustomValue": true,
+        "current": {
+          "text": "Loki",
+          "value": "cfo52u38mplogd"
+        },
+        "hide": "hideVariable",
         "includeAll": false,
+        "label": "Datasource Loki",
         "multi": false,
-        "refresh": 1,
+        "name": "datasource",
+        "options": [],
+        "pluginId": "loki",
+        "refresh": "onDashboardLoad",
         "regex": "",
-        "options": [],
-        "skipUrlSync": false
-      },
-      {
-        "type": "query",
-        "name": "switch",
-        "label": "Switch",
-        "datasource": {
-          "type": "loki",
-          "uid": "$datasource"
-        },
-        "query": {
-          "label": "host",
-          "stream": "{job=\"huawei-switches\"}",
-          "type": 1,
-          "refId": "LokiVariableQueryEditor-VariableQuery"
-        },
-        "refresh": 2,
-        "sort": 1,
-        "includeAll": true,
-        "allValue": ".*",
-        "multi": true,
-        "current": {
-          "text": "All",
-          "value": "$__all"
-        },
-        "options": [],
-        "skipUrlSync": false
-      },
-      {
-        "type": "query",
-        "name": "severity",
-        "label": "Severidade",
-        "datasource": {
-          "type": "loki",
-          "uid": "$datasource"
-        },
-        "query": {
-          "label": "severity",
-          "stream": "{job=\"huawei-switches\"}",
-          "type": 1,
-          "refId": "LokiVariableQueryEditor-VariableQuery"
-        },
-        "refresh": 2,
-        "sort": 1,
-        "includeAll": true,
-        "allValue": ".*",
-        "multi": true,
-        "current": {
-          "text": "All",
-          "value": "$__all"
-        },
-        "options": [],
         "skipUrlSync": false
       }
-    ]
-  },
-  "time": {
-    "from": "now-6h",
-    "to": "now"
-  },
-  "timepicker": {},
-  "timezone": "browser",
-  "title": "Syslog Switches LOGNET",
-  "uid": "syslog-switches-lognet",
-  "version": 12
+    },
+    {
+      "kind": "QueryVariable",
+      "spec": {
+        "allValue": ".*",
+        "allowCustomValue": true,
+        "current": {
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "hide": "hideVariable",
+        "includeAll": true,
+        "label": "Switch",
+        "multi": true,
+        "name": "switch",
+        "options": [],
+        "query": {
+          "datasource": {
+            "name": "$datasource"
+          },
+          "group": "loki",
+          "kind": "DataQuery",
+          "spec": {
+            "label": "host",
+            "refId": "LokiVariableQueryEditor-VariableQuery",
+            "stream": "{job=\"huawei-switches\"}",
+            "type": 1
+          },
+          "version": "v0"
+        },
+        "refresh": "onTimeRangeChanged",
+        "regex": "",
+        "regexApplyTo": "value",
+        "skipUrlSync": false,
+        "sort": "alphabeticalAsc"
+      }
+    },
+    {
+      "kind": "QueryVariable",
+      "spec": {
+        "allValue": ".*",
+        "allowCustomValue": true,
+        "current": {
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "hide": "hideVariable",
+        "includeAll": true,
+        "label": "Severidade",
+        "multi": true,
+        "name": "severity",
+        "options": [],
+        "query": {
+          "datasource": {
+            "name": "$datasource"
+          },
+          "group": "loki",
+          "kind": "DataQuery",
+          "spec": {
+            "label": "severity",
+            "refId": "LokiVariableQueryEditor-VariableQuery",
+            "stream": "{job=\"huawei-switches\"}",
+            "type": 1
+          },
+          "version": "v0"
+        },
+        "refresh": "onTimeRangeChanged",
+        "regex": "",
+        "regexApplyTo": "value",
+        "skipUrlSync": false,
+        "sort": "alphabeticalAsc"
+      }
+    }
+  ]
 }

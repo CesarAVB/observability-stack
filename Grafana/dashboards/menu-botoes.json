@@ -1,0 +1,160 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 43,
+  "links": [],
+  "panels": [
+    {
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<!DOCTYPE html>\n<html lang=\"pt-br\">\n\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Fundo com Imagem</title>\n  <style>\n    /* Ajustes básicos para ocupar toda a área */\n    html, body {\n      height: 100%;\n      width: 100%;\n      margin: 0;\n      padding: 0;\n      box-sizing: border-box;\n      \n      /* Definição do fundo com imagem */\n      background: url('https://storage.googleapis.com/flowbix-img/TimeGrafana/menuultra.jpg') no-repeat center center;\n      background-size: cover; /* Ajusta a imagem para cobrir toda a tela */\n    }\n  </style>\n</head>\n\n<body>\n</body>\n\n</html>\n",
+        "mode": "html"
+      },
+      "pluginVersion": "12.0.0",
+      "title": "",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "efuacr9r3m7swd"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 20,
+        "w": 13,
+        "x": 6,
+        "y": 8
+      },
+      "id": 2,
+      "options": {
+        "SVGBaseFix": true,
+        "add100Percentage": true,
+        "calcsMutation": "standard",
+        "centerAlignContent": true,
+        "codeData": "{\n  \"text\": \"Random text\"\n}",
+        "css": "/* Reset básico */\n* {\n    margin: 0;\n    padding: 0;\n    box-sizing: border-box;\n}\n\n/* Centraliza todo o conteúdo na tela */\nbody {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 100vh;\n    background-color: #f5f5f5;\n}\n\n/* Contêiner dos botões */\n.button-container {\n    display: flex;\n    flex-direction: column;\n    gap: 20px;\n    align-items: center; /* Centraliza os botões */\n}\n\n/* Linhas de botões */\n.button-row {\n    display: flex;\n    justify-content: center;\n    gap: 20px;\n}\n\n/* Estilo dos botões */\n.button {\n    padding: 0.6rem 1.5rem;\n    background-color: #dddddd;\n    color: #000000;\n    font-weight: bold;\n    font-size: 15px;\n    border-radius: 9999px;\n    text-decoration: none;\n    min-width: 170px;\n    text-align: center;\n    transition: all 0.3s ease-in-out;\n    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);\n}\n\n/* Efeito hover */\n.button:hover {\n    transform: scale(1.05);\n    border-color: #fff9;\n}\n\n/* Responsividade */\n@media (max-width: 768px) {\n    .button-row {\n        flex-direction: column; /* Empilha os botões no celular */\n        gap: 10px;\n    }\n}\n",
+        "dynamicData": false,
+        "dynamicFieldDisplayValues": false,
+        "dynamicHtmlGraphics": false,
+        "dynamicProps": false,
+        "html": "<!DOCTYPE html>\n<html lang=\"pt-br\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title></title>\n    <link rel=\"stylesheet\" href=\"style.css\">\n</head>\n<body>\n    <div class=\"button-container\">\n        <!-- Primeira linha de botões -->\n        <div class=\"button-row\">\n            <a href=\"http://45.187.224.252:3000/d/f08b8eQSDASdwefew/cgnat-a10?orgId=1&from=now-3h&to=now&timezone=browser&var-g=CGNAT&var-host=CGNAT%20PARCEIROS&refresh=1m\" class=\"button\">CGNAT</a>\n            <a href=\"http://45.187.224.252:3000/d/ff6pmchjv0zWEDWDWQDQWqwdqwdqw/incidentes?orgId=1&from=now-90d&to=now&timezone=browser&var-GRUPO=$__all&var-HOST=$__all&refresh=5m\" class=\"button\">INCIDENTES</a>\n            <a href=\"http://45.187.224.252:3000/d/WEDEWFef5bgtlkepds0f/infraestrutura-zabbix-server?orgId=1&from=now-3h&to=now&timezone=browser&refresh=1m\" class=\"button\">INFRAESTRUTURA</a>\n        \n        \n        \n        </div>\n\n        <!-- Segunda linha de botões -->\n        <div class=\"button-row\">\n            <a href=\"http://45.187.224.252:3000/dashboards/f/ffpgt1tyob280d/?orgId=1\" class=\"button\">LATÊNCIA</a>\n            <a href=\"http://45.187.224.252:3000/dashboards/f/ffuaczqqusoaod/?orgId=1\" class=\"button\">OLT</a>\n            <a href=\"http://45.187.224.252:3000/d/adc8h27WEFEWFEWFDEWDWEDW/monitoramento-de-saltos?orgId=1&from=now-6h&to=now&timezone=browser\" class=\"button\">SALTOS AV</a>\n            <a href=\"http://45.187.224.252:3000/d/wqfqwefwefewewfewwq/monitoramento-de-sites?orgId=1&from=now-3h&to=now&timezone=browser&var-g=&var-hgeral=&refresh=1m\" class=\"button\">SITES</a>\n        </div>\n\n        <!-- Terceira linha de botões -->\n        <div class=\"button-row\">\n       <a href=\"http://45.187.224.252:3000/d/f08b8eQWDQWDQWDQWDXQA/switch-huawei?orgId=1&from=now-3h&to=now&timezone=browser&var-g=Switch%20-%20Huawei&var-hgeral=SW01-POP-RAN-RJ&refresh=1m\" class=\"button\">SWITCH</a>\n       <a href=\"http://45.187.224.252:3000/dashboards/f/dfr0gxgpzr37kd/?orgId=1\" class=\"button\">NETFLOW</a>\n       <a href=\"/d/fevhtwecfWEFQWDwefWEFwfe/bgp-juniper?orgId=1&from=now-12h&to=now&timezone=browser&var-host=JUNIPER%20-%20BORDA&refresh=1m\" class=\"button\">BGP</a>\n       <a href=\"/d/aehw3oc99vg1saDQWEFEWFQWDQWD/clientes-por-vlan-huawei?orgId=1&from=now-3h&to=now&timezone=browser&var-IP=$__all&var-VLANS=$__all&var-TOPS=$__all&var-CLIENTES=$__all&refresh=1m\" class=\"button\">CONCENTRADOR</a>\n            \n        </div>\n    </div>\n</body>\n</html>\n",
+        "onInit": "// Sets the text from customProperties\nconst htmlgraphicsText = htmlNode.getElementById('htmlgraphics-text');\n\nif (htmlgraphicsText) {\n  htmlgraphicsText.textContent = customProperties.text;\n\n  // Change the text color based on the theme\n  if (theme.isDark) {\n    htmlgraphicsText.style.color = 'green';\n  } else {\n    htmlgraphicsText.style.color = 'red';\n  }\n}\n",
+        "onInitOnResize": false,
+        "onRender": "// Sets the value from the first series on every refresh\nconst htmlgraphicsValue = htmlNode.getElementById('htmlgraphics-value');\n\nif (htmlgraphicsValue) {\n  const valueField = data.series[0]?.fields[1];\n  if (valueField) {\n    const length = valueField.values.length;\n    htmlgraphicsValue.textContent = valueField.values.get(length - 1);\n  } else {\n    htmlgraphicsValue.textContent = \"No data\"\n  }\n}\n",
+        "overflow": "visible",
+        "panelupdateOnMount": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull",
+            "last",
+            "firstNotNull",
+            "first",
+            "min",
+            "max",
+            "mean",
+            "median",
+            "sum",
+            "count",
+            "range",
+            "delta",
+            "step",
+            "diff",
+            "logmin",
+            "allIsZero",
+            "allIsNull",
+            "diffperc"
+          ]
+        },
+        "renderOnMount": true,
+        "rootCSS": "",
+        "useGrafanaScrollbar": true
+      },
+      "pluginVersion": "2.2.3",
+      "targets": [
+        {
+          "dataset": "fiberhome",
+          "datasource": {
+            "type": "mysql",
+            "uid": "efuacr9r3m7swd"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "rawSql": "",
+          "refId": "A"
+        }
+      ],
+      "title": "",
+      "transparent": true,
+      "type": "gapit-htmlgraphics-panel"
+    }
+  ],
+  "preload": false,
+  "refresh": "",
+  "schemaVersion": 41,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {
+    "hidden": true
+  },
+  "timezone": "browser",
+  "title": "MENU2",
+  "uid": "eequo331vrdhceqqweweWED",
+  "version": 8
+}

@@ -3,6 +3,16 @@ global:
   evaluation_interval: 15s
 
 scrape_configs:
+  # Prometheus se auto-monitorando (scrape do próprio processo).
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Loki expõe métricas Prometheus nativamente na própria porta HTTP (3100).
+  - job_name: 'loki'
+    static_configs:
+      - targets: ['loki:3100']
+
   # App Spring Boot do CRM Lognet — coleta métricas via Actuator/Micrometer
   # sobre HTTPS no endpoint público da API.
   - job_name: 'lognet-crm'

@@ -1,0 +1,94 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "Menu de navegacao entre os dashboards de observabilidade da LOGNET.",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "links": [],
+  "panels": [
+    {
+      "id": 1,
+      "type": "marcusolsson-dynamictext-panel",
+      "title": "",
+      "transparent": true,
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "pluginVersion": "5.5.0",
+      "options": {
+        "content": "<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css'><link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap' rel='stylesheet'><style>*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}html,body{background-color:#1A1D24;height:100%;width:100%}.hdr{background-color:#1A1D24;height:100%;display:flex;align-items:center;justify-content:space-between;padding:0 28px;box-sizing:border-box}.logo-wrap{display:flex;align-items:center;gap:18px}.logo-box{height:44px;display:flex;align-items:center;justify-content:center}.logo-box img{max-height:100%;max-width:150px;object-fit:contain;filter:drop-shadow(0 0 6px rgba(255,255,255,0.25))}.title-box{border-left:6px solid #F97316;padding:4px 0 4px 16px}.title-box h1{font-size:1.05rem;font-weight:800;color:#ffffff;text-transform:uppercase;letter-spacing:0.5px;margin:0}.title-box p{font-size:0.75rem;color:#A0A0C0;margin:3px 0 0;font-weight:500}.hdr-r{display:flex;align-items:center;gap:14px}.live{display:flex;align-items:center;gap:7px;background:rgba(46,204,113,0.08);border:1px solid rgba(46,204,113,0.22);padding:5px 12px;border-radius:20px}.live-dot{width:7px;height:7px;background:#2ecc71;border-radius:50%;animation:blink 2s ease-in-out infinite;box-shadow:0 0 8px rgba(46,204,113,0.6)}.live-lbl{font-size:11px;font-weight:600;color:#2ecc71}@keyframes blink{0%,100%{opacity:1}50%{opacity:0.35}}</style><div class='hdr'><div class='logo-wrap'><div class='logo-box'><img src='https://storage.googleapis.com/flowbix-img/LOGNETLOGNN.png' alt='LOGNET' onerror='this.hidden=true'></div><div class='title-box'><h1>Painel de Navegacao</h1><p>Central de Dashboards - LOGNET</p></div></div><div class='hdr-r'><div class='live'><div class='live-dot'></div><span class='live-lbl'>Ao vivo</span></div></div></div>",
+        "defaultContent": "<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css'><link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap' rel='stylesheet'><style>*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}html,body{background-color:#1A1D24;height:100%;width:100%}.hdr{background-color:#1A1D24;height:100%;display:flex;align-items:center;justify-content:space-between;padding:0 28px;box-sizing:border-box}.logo-wrap{display:flex;align-items:center;gap:18px}.logo-box{height:44px;display:flex;align-items:center;justify-content:center}.logo-box img{max-height:100%;max-width:150px;object-fit:contain;filter:drop-shadow(0 0 6px rgba(255,255,255,0.25))}.title-box{border-left:6px solid #F97316;padding:4px 0 4px 16px}.title-box h1{font-size:1.05rem;font-weight:800;color:#ffffff;text-transform:uppercase;letter-spacing:0.5px;margin:0}.title-box p{font-size:0.75rem;color:#A0A0C0;margin:3px 0 0;font-weight:500}.hdr-r{display:flex;align-items:center;gap:14px}.live{display:flex;align-items:center;gap:7px;background:rgba(46,204,113,0.08);border:1px solid rgba(46,204,113,0.22);padding:5px 12px;border-radius:20px}.live-dot{width:7px;height:7px;background:#2ecc71;border-radius:50%;animation:blink 2s ease-in-out infinite;box-shadow:0 0 8px rgba(46,204,113,0.6)}.live-lbl{font-size:11px;font-weight:600;color:#2ecc71}@keyframes blink{0%,100%{opacity:1}50%{opacity:0.35}}</style><div class='hdr'><div class='logo-wrap'><div class='logo-box'><img src='https://storage.googleapis.com/flowbix-img/LOGNETLOGNN.png' alt='LOGNET' onerror='this.hidden=true'></div><div class='title-box'><h1>Painel de Navegacao</h1><p>Central de Dashboards - LOGNET</p></div></div><div class='hdr-r'><div class='live'><div class='live-dot'></div><span class='live-lbl'>Ao vivo</span></div></div></div>",
+        "editor": {
+          "format": "auto",
+          "language": "html"
+        },
+        "editors": [],
+        "renderMode": "allRows",
+        "wrap": true
+      }
+    },
+    {
+      "id": 2,
+      "type": "marcusolsson-dynamictext-panel",
+      "title": "",
+      "transparent": true,
+      "gridPos": {
+        "h": 20,
+        "w": 24,
+        "x": 0,
+        "y": 3
+      },
+      "pluginVersion": "5.5.0",
+      "options": {
+        "content": "<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css'><link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap' rel='stylesheet'><style>*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}html,body{background:#1A1D24;height:100%;width:100%}#nav-container{padding:22px 28px;background:#1A1D24;min-height:100%}.nav-section{margin-bottom:26px}.nav-section-title{font-size:0.7rem;font-weight:800;color:#8b949e;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.08)}.nav-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}.nav-card{display:flex;align-items:center;gap:14px;padding:16px;border-radius:12px;background:#12151c;border:1px solid rgba(255,255,255,0.08);text-decoration:none;transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease}.nav-card:hover{transform:translateY(-2px);border-color:var(--c);box-shadow:0 8px 20px rgba(0,0,0,0.35)}.nav-icon{width:42px;height:42px;flex-shrink:0;display:grid;place-items:center;border-radius:11px;font-size:1.1rem;color:var(--c);background:var(--cbg);border:1px solid var(--cbd)}.nav-text{min-width:0}.nav-title{font-size:0.92rem;font-weight:700;color:#ffffff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.nav-sub{font-size:0.72rem;color:#8b949e;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.nav-card.disabled{opacity:0.5;cursor:not-allowed}</style><div id='nav-container'><div class='nav-section'><div class='nav-section-title'>Rede</div><div class='nav-grid'><a class='nav-card' href='/d/syslog-switches-lognet/' style='--c:#4f9cf9;--cbg:rgba(79,156,249,0.12);--cbd:rgba(79,156,249,0.28)'><div class='nav-icon'><i class='fa-solid fa-server'></i></div><div class='nav-text'><div class='nav-title'>Syslog Switches</div><div class='nav-sub'>Logs Huawei via Loki</div></div></a><a class='nav-card' href='/d/mapa-rede-lognet/' style='--c:#a78bfa;--cbg:rgba(167,139,250,0.12);--cbd:rgba(167,139,250,0.28)'><div class='nav-icon'><i class='fa-solid fa-diagram-project'></i></div><div class='nav-text'><div class='nav-title'>Mapa de Rede</div><div class='nav-sub'>Topologia dos enlaces</div></div></a><a class='nav-card' href='/d/mapa-rede-lognet-dyn/' style='--c:#22d3ee;--cbg:rgba(34,211,238,0.12);--cbd:rgba(34,211,238,0.28)'><div class='nav-icon'><i class='fa-solid fa-map'></i></div><div class='nav-text'><div class='nav-title'>Mapa de Rede (Zabbix)</div><div class='nav-sub'>Status dinamico via Zabbix</div></div></a></div></div><div class='nav-section'><div class='nav-section-title'>Infraestrutura</div><div class='nav-grid'><a class='nav-card' href='/d/SUBSTITUA-UID-DOCKER/' style='--c:#2ecc71;--cbg:rgba(46,204,113,0.12);--cbd:rgba(46,204,113,0.28)'><div class='nav-icon'><i class='fa-brands fa-docker'></i></div><div class='nav-text'><div class='nav-title'>Docker - Containers</div><div class='nav-sub'>CPU, memoria e rede por container</div></div></a><a class='nav-card' href='/d/SUBSTITUA-UID-LINUX/' style='--c:#facc15;--cbg:rgba(250,204,21,0.12);--cbd:rgba(250,204,21,0.28)'><div class='nav-icon'><i class='fa-solid fa-desktop'></i></div><div class='nav-text'><div class='nav-title'>Server - Linux</div><div class='nav-sub'>Host, CPU, disco e memoria</div></div></a></div></div><div class='nav-section'><div class='nav-section-title'>Aplicacoes</div><div class='nav-grid'><a class='nav-card' href='/d/SUBSTITUA-UID-SPRING/' style='--c:#F97316;--cbg:rgba(249,115,22,0.12);--cbd:rgba(249,115,22,0.28)'><div class='nav-icon'><i class='fa-solid fa-cubes'></i></div><div class='nav-text'><div class='nav-title'>Spring Boot</div><div class='nav-sub'>Metricas JVM, HTTP e logs</div></div></a></div></div></div>",
+        "defaultContent": "<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css'><link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap' rel='stylesheet'><style>*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}html,body{background:#1A1D24;height:100%;width:100%}#nav-container{padding:22px 28px;background:#1A1D24;min-height:100%}.nav-section{margin-bottom:26px}.nav-section-title{font-size:0.7rem;font-weight:800;color:#8b949e;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.08)}.nav-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}.nav-card{display:flex;align-items:center;gap:14px;padding:16px;border-radius:12px;background:#12151c;border:1px solid rgba(255,255,255,0.08);text-decoration:none;transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease}.nav-card:hover{transform:translateY(-2px);border-color:var(--c);box-shadow:0 8px 20px rgba(0,0,0,0.35)}.nav-icon{width:42px;height:42px;flex-shrink:0;display:grid;place-items:center;border-radius:11px;font-size:1.1rem;color:var(--c);background:var(--cbg);border:1px solid var(--cbd)}.nav-text{min-width:0}.nav-title{font-size:0.92rem;font-weight:700;color:#ffffff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.nav-sub{font-size:0.72rem;color:#8b949e;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.nav-card.disabled{opacity:0.5;cursor:not-allowed}</style><div id='nav-container'><div class='nav-section'><div class='nav-section-title'>Rede</div><div class='nav-grid'><a class='nav-card' href='/d/syslog-switches-lognet/' style='--c:#4f9cf9;--cbg:rgba(79,156,249,0.12);--cbd:rgba(79,156,249,0.28)'><div class='nav-icon'><i class='fa-solid fa-server'></i></div><div class='nav-text'><div class='nav-title'>Syslog Switches</div><div class='nav-sub'>Logs Huawei via Loki</div></div></a><a class='nav-card' href='/d/mapa-rede-lognet/' style='--c:#a78bfa;--cbg:rgba(167,139,250,0.12);--cbd:rgba(167,139,250,0.28)'><div class='nav-icon'><i class='fa-solid fa-diagram-project'></i></div><div class='nav-text'><div class='nav-title'>Mapa de Rede</div><div class='nav-sub'>Topologia dos enlaces</div></div></a><a class='nav-card' href='/d/mapa-rede-lognet-dyn/' style='--c:#22d3ee;--cbg:rgba(34,211,238,0.12);--cbd:rgba(34,211,238,0.28)'><div class='nav-icon'><i class='fa-solid fa-map'></i></div><div class='nav-text'><div class='nav-title'>Mapa de Rede (Zabbix)</div><div class='nav-sub'>Status dinamico via Zabbix</div></div></a></div></div><div class='nav-section'><div class='nav-section-title'>Infraestrutura</div><div class='nav-grid'><a class='nav-card' href='/d/SUBSTITUA-UID-DOCKER/' style='--c:#2ecc71;--cbg:rgba(46,204,113,0.12);--cbd:rgba(46,204,113,0.28)'><div class='nav-icon'><i class='fa-brands fa-docker'></i></div><div class='nav-text'><div class='nav-title'>Docker - Containers</div><div class='nav-sub'>CPU, memoria e rede por container</div></div></a><a class='nav-card' href='/d/SUBSTITUA-UID-LINUX/' style='--c:#facc15;--cbg:rgba(250,204,21,0.12);--cbd:rgba(250,204,21,0.28)'><div class='nav-icon'><i class='fa-solid fa-desktop'></i></div><div class='nav-text'><div class='nav-title'>Server - Linux</div><div class='nav-sub'>Host, CPU, disco e memoria</div></div></a></div></div><div class='nav-section'><div class='nav-section-title'>Aplicacoes</div><div class='nav-grid'><a class='nav-card' href='/d/SUBSTITUA-UID-SPRING/' style='--c:#F97316;--cbg:rgba(249,115,22,0.12);--cbd:rgba(249,115,22,0.28)'><div class='nav-icon'><i class='fa-solid fa-cubes'></i></div><div class='nav-text'><div class='nav-title'>Spring Boot</div><div class='nav-sub'>Metricas JVM, HTTP e logs</div></div></a></div></div></div>",
+        "editor": {
+          "format": "auto",
+          "language": "html"
+        },
+        "editors": [],
+        "renderMode": "allRows",
+        "wrap": true
+      }
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 39,
+  "tags": [
+    "menu",
+    "navegacao",
+    "lognet"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {
+    "hidden": true
+  },
+  "timezone": "browser",
+  "title": "Painel de Navegacao LOGNET",
+  "uid": "menu-lognet",
+  "version": 1
+}
