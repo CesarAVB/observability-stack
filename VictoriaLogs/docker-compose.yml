@@ -1,3 +1,5 @@
+version: "3.7"
+
 services:
   # Coletor dedicado para logs de CGNAT enviados por MikroTik via syslog.
   victorialogs:
@@ -42,7 +44,10 @@ services:
 
 volumes:
   victorialogs_data:
+    external: true
+    name: victorialogs_data
 
 networks:
   network_swarm_public:
+    name: network_swarm_public
     external: true
