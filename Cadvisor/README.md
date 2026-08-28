@@ -35,11 +35,8 @@ Esta stack sobe apenas o **cAdvisor**. Ele expõe métricas que o **Prometheus**
 ```
 .
 ├── docker-compose.yml            # Stack Swarm (mesmo cluster do Prometheus)
-├── docker-compose.standalone.yml # Docker Compose puro (host fora do Swarm, ex.: 45.187.224.248)
 └── README.md
 ```
-
-> O script de firewall do host standalone (45.187.224.248) fica centralizado em `../Firewall/firewall-setup-248-cadvisor.sh` — ver `../Firewall/README.md`.
 
 ## Pré-requisito: rede overlay do Prometheus
 
@@ -57,17 +54,6 @@ Verifique:
 docker service ls | grep cadvisor   # deve ficar 1/1 (ou N/N por nó, em mode: global)
 ```
 
-## Deploy standalone (servidor fora do Swarm, ex.: 45.187.224.248)
-
-```bash
-docker compose -f docker-compose.standalone.yml up -d
-sudo chmod +x ../Firewall/firewall-setup-248-cadvisor.sh && sudo ../Firewall/firewall-setup-248-cadvisor.sh
-```
-
-> **OBS:** no standalone o cAdvisor é publicado na porta **8081** do host (a 8080 já está em uso nesse servidor). Dentro do container ele continua escutando na 8080 — é por isso que o target no Prometheus usa `:8081`, e o firewall protege a `8081`.
-
-O Prometheus coleta via **IP público** do host na porta `8081` (mapeada para a `8080` do container) — protegida pelo firewall pra só aceitar as redes confiáveis (que incluem o Prometheus em `45.187.224.251`).
-
 ## Testar o DNS a partir do Prometheus (cluster Swarm)
 
 ```bash
@@ -79,7 +65,7 @@ Retornou IP / métricas → DNS resolvendo.
 
 ## Scrape job no `prometheus_config.yml`
 
-Já configurado em `Prometheus/prometheus_config.yml`, job `cadvisor`, com dois targets: `cadvisor:8080` (srv-251, via DNS do Swarm) e `45.187.224.248:8081` (srv-248, standalone via IP público mapeado da 8081).
+Já configurado em `Prometheus/prometheus_config.yml`, job `cadvisor`, com descoberta DNS em `tasks.cadvisor:8080`. Como a stack roda em `mode: global`, o Prometheus coleta uma task por nó Swarm.
 
 Confira em **Prometheus → Status → Targets**: `cadvisor` = `UP` para os dois targets.
 
@@ -89,8 +75,8 @@ Confira em **Prometheus → Status → Targets**: `cadvisor` = `UP` para os dois
 
 ## Notas
 
-- **Multi-nó:** com `mode: global`, sobe 1 cAdvisor por nó. Para o Prometheus coletar **todos** os nós (e não só o VIP), troque o `static_configs` por `dns_sd_configs` apontando para `tasks.cadvisor` (porta no campo `port`). Para 1 nó só, o static basta.
-- **`docker stack deploy` ignora `privileged:` e `devices:`** — por isso o `docker-compose.yml` (modo Swarm) não os usa. O cAdvisor funciona com os volumes montados; no máximo perde alguma métrica de baixo nível. Já o `docker-compose.standalone.yml` (Compose puro) usa `privileged: true` normalmente.
+- **Multi-nó:** com `mode: global`, sobe 1 cAdvisor por nó. O Prometheus usa `dns_sd_configs` apontando para `tasks.cadvisor`, evitando o VIP do serviço e coletando todas as tasks.
+- **`docker stack deploy` ignora `privileged:` e `devices:`** — por isso o `docker-compose.yml` não os usa. O cAdvisor funciona com os volumes montados; no máximo perde alguma métrica de baixo nível.
 
 ### Consultas úteis
 

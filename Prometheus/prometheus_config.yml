@@ -44,42 +44,30 @@ scrape_configs:
           app: 'lognet-crm'
           env: 'production'
 
-  # node-exporter — métricas de hardware/SO do host Linux
-  # (CPU, memória, disco, rede).
-  #   - srv-251: mesmo cluster Swarm, scrape via DNS interno; o label
-  #     `instance` é fixado no IP para aparecer assim no seletor do Grafana.
-  #   - srv-248: Docker standalone, scrape via IP público.
+  # node-exporter — métricas de hardware/SO do host Linux.
+  # Em mode: global, o DNS tasks.node-exporter retorna uma task por nó Swarm.
   - job_name: 'node-exporter'
-    static_configs:
-      - targets: ['node-exporter:9100']
-        labels:
-          app: 'host-linux'
-          env: 'production'
-          server: '224.251 - VPS LOGNET'
-          instance: '45.187.224.251'
-      - targets: ['45.187.224.248:9100']
-        labels:
-          app: 'host-linux'
-          env: 'production'
-          server: '224.248 - VPS ASB'
-          instance: '45.187.224.248'
+    dns_sd_configs:
+      - names:
+          - tasks.node-exporter
+        type: A
+        port: 9100
+    relabel_configs:
+      - target_label: app
+        replacement: host-linux
+      - target_label: env
+        replacement: production
 
-  # cAdvisor — métricas de uso de recursos por container Docker
-  # (CPU, memória, I/O).
-  #   - srv-251: mesmo cluster Swarm, scrape via DNS interno; `instance`
-  #     fixado no IP para aparecer assim no seletor do Grafana.
-  #   - srv-248: Docker standalone, scrape via IP público.
+  # cAdvisor — métricas de uso de recursos por container Docker.
+  # Em mode: global, o DNS tasks.cadvisor retorna uma task por nó Swarm.
   - job_name: 'cadvisor'
-    static_configs:
-      - targets: ['cadvisor:8080']
-        labels:
-          app: 'containers'
-          env: 'production'
-          server: '224.251 - VPS LOGNET'
-          instance: '45.187.224.251'
-      - targets: ['45.187.224.248:8080']
-        labels:
-          app: 'containers'
-          env: 'production'
-          server: '224.248 - VPS ASB'
-          instance: '45.187.224.248'
+    dns_sd_configs:
+      - names:
+          - tasks.cadvisor
+        type: A
+        port: 8080
+    relabel_configs:
+      - target_label: app
+        replacement: containers
+      - target_label: env
+        replacement: production

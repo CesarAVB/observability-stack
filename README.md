@@ -68,11 +68,9 @@ A stack cobre os três pilares da observabilidade:
 │   └── README.md
 ├── NodeExporter/             # Stack do node-exporter (métricas do host)
 │   ├── docker-compose.yml
-│   ├── docker-compose.standalone.yml
 │   └── README.md
 ├── Cadvisor/                 # Stack do cAdvisor (métricas por container)
 │   ├── docker-compose.yml
-│   ├── docker-compose.standalone.yml
 │   └── README.md
 ├── Loki/                     # Stack do Grafana Loki (agregação de logs)
 │   ├── docker-compose.yml
@@ -100,10 +98,8 @@ A stack cobre os três pilares da observabilidade:
 ├── Blackbox/                  # Stack do blackbox_exporter (probe HTTP externo)
 │   ├── docker-compose.yml
 │   └── blackbox_config.yml
-├── Firewall/                  # Scripts de firewall (DOCKER-USER/iptables) dos dois servidores
+├── Firewall/                  # Scripts de firewall (DOCKER-USER/iptables)
 │   ├── firewall-setup-251.sh              # Servidor principal (45.187.224.251)
-│   ├── firewall-setup-248-node-exporter.sh # Servidor standalone (45.187.224.248)
-│   ├── firewall-setup-248-cadvisor.sh      # Servidor standalone (45.187.224.248)
 │   └── README.md
 └── README.md                 # Este arquivo
 ```
@@ -132,7 +128,7 @@ A stack cobre os três pilares da observabilidade:
 Os scripts vivem em `Firewall/` (ver [Firewall/README.md](Firewall/README.md) para o detalhamento) — cada um automatiza a configuração: detecta a interface de rede, aplica as regras imediatamente e persiste no `/etc/ufw/after.rules` para sobreviver a reboots.
 
 **Servidor principal (`45.187.224.251`)** — `Firewall/firewall-setup-251.sh`:
-**Portas internas** (`9090` Prometheus, `3100` Loki, `3200` / `4317` / `4318` Tempo) → liberadas para `168.90.16.0/22` e `45.187.224.0/22`.
+**Portas internas** (`9090` Prometheus, `3100` Loki, `3200` / `4317` / `4318` Tempo, `10051` Zabbix Server) → liberadas para `168.90.16.0/22` e `45.187.224.0/22`.
 **Syslog `514` (UDP/TCP)** → liberado também para `10.129.190.0/24` (IP pós-NAT do gateway de gerência dos switches), sem abrir as portas internas para essa faixa.
 
 ```bash
@@ -141,24 +137,16 @@ chmod +x Firewall/firewall-setup-251.sh
 sudo Firewall/firewall-setup-251.sh
 ```
 
-**Servidor standalone (`45.187.224.248`)** — `Firewall/firewall-setup-248-node-exporter.sh` (porta `9100`) e `Firewall/firewall-setup-248-cadvisor.sh` (porta `8081`), ambos liberados só para `168.90.16.0/22` e `45.187.224.0/22`:
-
-```bash
-# no servidor .248 via SSH
-chmod +x Firewall/firewall-setup-248-node-exporter.sh Firewall/firewall-setup-248-cadvisor.sh
-sudo Firewall/firewall-setup-248-node-exporter.sh
-sudo Firewall/firewall-setup-248-cadvisor.sh
-```
-
 Para reaplicar após um reboot sem rodar os scripts novamente, o UFW já carrega as regras do `after.rules` automaticamente ao iniciar.
 
 ---
 
 ## Infraestrutura
 
-Todos os serviços rodam no mesmo servidor VPS via Docker Swarm gerenciado pelo Portainer.
+Os serviços rodam via Docker Swarm gerenciado pelo Portainer. `node-exporter` e `cAdvisor` usam `mode: global`, então sobem em cada nó do Swarm e são coletados pelo Prometheus via DNS interno `tasks.*`.
 
-**Servidor:** `45.187.224.251`
+**Servidor principal:** `45.187.224.251`
+**Nó adicional:** `45.187.224.248`
 
 | Serviço | Porta | Acesso |
 |---|---|---|

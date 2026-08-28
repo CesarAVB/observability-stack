@@ -35,11 +35,8 @@ Esta stack sobe apenas o **node-exporter**. Ele expõe métricas que o **Prometh
 ```
 .
 ├── docker-compose.yml            # Stack Swarm (mesmo cluster do Prometheus)
-├── docker-compose.standalone.yml # Docker Compose puro (host fora do Swarm, ex.: 45.187.224.248)
 └── README.md
 ```
-
-> O script de firewall do host standalone (45.187.224.248) fica centralizado em `../Firewall/firewall-setup-248-node-exporter.sh` — ver `../Firewall/README.md`.
 
 ## Pré-requisito: rede overlay do Prometheus
 
@@ -57,15 +54,6 @@ Verifique:
 docker service ls | grep node-exporter   # deve ficar 1/1 (ou N/N por nó, em mode: global)
 ```
 
-## Deploy standalone (servidor fora do Swarm, ex.: 45.187.224.248)
-
-```bash
-docker compose -f docker-compose.standalone.yml up -d
-sudo chmod +x ../Firewall/firewall-setup-248-node-exporter.sh && sudo ../Firewall/firewall-setup-248-node-exporter.sh
-```
-
-O Prometheus coleta via **IP público** do host na porta `9100` — protegida pelo firewall pra só aceitar as redes confiáveis (que incluem o Prometheus em `45.187.224.251`).
-
 ## Testar o DNS a partir do Prometheus (cluster Swarm)
 
 ```bash
@@ -77,7 +65,7 @@ Retornou IP / métricas → DNS resolvendo.
 
 ## Scrape job no `prometheus_config.yml`
 
-Já configurado em `Prometheus/prometheus_config.yml`, job `node-exporter`, com dois targets: `node-exporter:9100` (srv-251, via DNS do Swarm) e `45.187.224.248:9100` (srv-248, standalone via IP público).
+Já configurado em `Prometheus/prometheus_config.yml`, job `node-exporter`, com descoberta DNS em `tasks.node-exporter:9100`. Como a stack roda em `mode: global`, o Prometheus coleta uma task por nó Swarm.
 
 Confira em **Prometheus → Status → Targets**: `node-exporter` = `UP` para os dois targets.
 
@@ -89,7 +77,7 @@ O seletor **Host** no topo lista a instância automaticamente.
 
 ## Notas
 
-- **Multi-nó:** com `mode: global`, sobe 1 exporter por nó. Para o Prometheus coletar **todos** os nós (e não só o VIP), troque o `static_configs` por `dns_sd_configs` apontando para `tasks.node-exporter` (porta no campo `port`). Para 1 nó só, o static basta.
+- **Multi-nó:** com `mode: global`, sobe 1 exporter por nó. O Prometheus usa `dns_sd_configs` apontando para `tasks.node-exporter`, evitando o VIP do serviço e coletando todas as tasks.
 
 ### Consulta útil
 
