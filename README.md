@@ -68,9 +68,11 @@ A stack cobre os três pilares da observabilidade:
 │   └── README.md
 ├── NodeExporter/             # Stack do node-exporter (métricas do host)
 │   ├── docker-compose.yml
+│   ├── docker-compose.248.yml
 │   └── README.md
 ├── Cadvisor/                 # Stack do cAdvisor (métricas por container)
 │   ├── docker-compose.yml
+│   ├── docker-compose.248.yml
 │   └── README.md
 ├── Loki/                     # Stack do Grafana Loki (agregação de logs)
 │   ├── docker-compose.yml
@@ -141,7 +143,7 @@ sudo Firewall/firewall-setup-251.sh
 
 Para reaplicar após um reboot sem rodar os scripts novamente, o UFW já carrega as regras do `after.rules` automaticamente ao iniciar.
 
-**Nó adicional (`45.187.224.248`)** — `Firewall/firewall-setup-248.sh` protege portas publicadas por outras stacks no host. Hoje o Portainer mostra MySQL `3306:3306`, então essa porta fica restrita às redes confiáveis:
+**Nó adicional (`45.187.224.248`)** — `Firewall/firewall-setup-248.sh` protege as portas publicadas no Swarm separado: MySQL `3306`, node-exporter `9100` e cAdvisor `8080`, liberando acesso somente às redes confiáveis:
 
 ```bash
 # no servidor .248 via SSH
@@ -153,10 +155,10 @@ sudo Firewall/firewall-setup-248.sh
 
 ## Infraestrutura
 
-Os serviços rodam via Docker Swarm gerenciado pelo Portainer. `node-exporter` e `cAdvisor` usam `mode: global`, então sobem em cada nó do Swarm e são coletados pelo Prometheus via DNS interno `tasks.*`.
+Os serviços rodam em Docker Swarm gerenciado pelo Portainer. Existem dois Swarms separados: no `.251`, o Prometheus coleta `node-exporter` e `cAdvisor` via DNS interno da overlay; no `.248`, esses exporters precisam publicar `9100` e `8080` para o Prometheus coletar via IP público.
 
 **Servidor principal:** `45.187.224.251`
-**Nó adicional:** `45.187.224.248`
+**Servidor adicional:** `45.187.224.248` (outro Swarm/Portainer; exporters coletados por IP público)
 
 | Serviço | Porta | Acesso |
 |---|---|---|

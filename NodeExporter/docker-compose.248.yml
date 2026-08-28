@@ -1,0 +1,33 @@
+# Stack Swarm do node-exporter no servidor 45.187.224.248.
+# Este servidor esta em outro Swarm/Portainer, entao o Prometheus do .251
+# coleta via IP publico na porta publicada 9100.
+
+services:
+  node-exporter:
+    image: prom/node-exporter:v1.8.2
+    command:
+      - "--path.procfs=/host/proc"
+      - "--path.sysfs=/host/sys"
+      - "--path.rootfs=/rootfs"
+      - "--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)"
+      - "--collector.filesystem.fs-types-exclude=^(autofs|binfmt_misc|cgroup|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|mqueue|overlay|proc|procfs|pstore|securityfs|sysfs|tmpfs|tracefs)$$"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    ports:
+      - target: 9100
+        published: 9100
+        protocol: tcp
+        mode: host
+    networks:
+      - monitoring
+    deploy:
+      mode: global
+      restart_policy:
+        condition: any
+
+networks:
+  monitoring:
+    external: true
+    name: network_swarm_public

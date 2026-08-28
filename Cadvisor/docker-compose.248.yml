@@ -1,0 +1,35 @@
+# Stack Swarm do cAdvisor no servidor 45.187.224.248.
+# Este servidor esta em outro Swarm/Portainer, entao o Prometheus do .251
+# coleta via IP publico na porta publicada 8080.
+
+services:
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.49.1
+    command:
+      - "--housekeeping_interval=15s"
+      - "--docker_only=true"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    ports:
+      - target: 8080
+        published: 8080
+        protocol: tcp
+        mode: host
+    networks:
+      monitoring:
+        aliases:
+          - cadvisor
+          - monitoring_cadvisor
+    deploy:
+      mode: global
+      restart_policy:
+        condition: any
+
+networks:
+  monitoring:
+    external: true
+    name: network_swarm_public

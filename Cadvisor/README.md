@@ -35,6 +35,7 @@ Esta stack sobe apenas o **cAdvisor**. Ele expõe métricas que o **Prometheus**
 ```
 .
 ├── docker-compose.yml            # Stack Swarm (mesmo cluster do Prometheus)
+├── docker-compose.248.yml        # Stack Swarm no .248, com porta publicada
 └── README.md
 ```
 
@@ -54,6 +55,18 @@ Verifique:
 docker service ls | grep cadvisor   # deve ficar 1/1 (ou N/N por nó, em mode: global)
 ```
 
+## Deploy no Swarm do servidor 45.187.224.248
+
+O `.248` está em outro Swarm/Portainer. Por isso o Prometheus do `.251` não enxerga o DNS interno desse Swarm e precisa coletar via IP público.
+
+Portainer do `.248` → **Stacks → Add stack** → Build method **Repository** → Compose path `Cadvisor/docker-compose.248.yml` → **Deploy the stack**.
+
+Esse compose publica `8080:8080` em `mode: host`. Depois rode o firewall do `.248`:
+
+```bash
+sudo chmod +x ../Firewall/firewall-setup-248.sh && sudo ../Firewall/firewall-setup-248.sh
+```
+
 ## Testar o DNS a partir do Prometheus (cluster Swarm)
 
 ```bash
@@ -65,7 +78,7 @@ Retornou IP / métricas → DNS resolvendo.
 
 ## Scrape job no `prometheus_config.yml`
 
-Já configurado em `Prometheus/prometheus_config.yml`, job `cadvisor`, com descoberta DNS em `tasks.cadvisor:8080`. Como a stack roda em `mode: global`, o Prometheus coleta uma task por nó Swarm.
+Já configurado em `Prometheus/prometheus_config.yml`, job `cadvisor`, com dois targets: `cadvisor:8080` para o Swarm do `.251` e `45.187.224.248:8080` para o Swarm separado do `.248`.
 
 Confira em **Prometheus → Status → Targets**: `cadvisor` = `UP` para os dois targets.
 
@@ -75,7 +88,7 @@ Confira em **Prometheus → Status → Targets**: `cadvisor` = `UP` para os dois
 
 ## Notas
 
-- **Multi-nó:** com `mode: global`, sobe 1 cAdvisor por nó. O Prometheus usa `dns_sd_configs` apontando para `tasks.cadvisor`, evitando o VIP do serviço e coletando todas as tasks.
+- **Dois Swarms:** DNS interno (`cadvisor`) só funciona dentro do Swarm do `.251`. Para o `.248`, o scrape é via IP público e porta publicada.
 - **`docker stack deploy` ignora `privileged:` e `devices:`** — por isso o `docker-compose.yml` não os usa. O cAdvisor funciona com os volumes montados; no máximo perde alguma métrica de baixo nível.
 
 ### Consultas úteis

@@ -35,6 +35,7 @@ Esta stack sobe apenas o **node-exporter**. Ele expõe métricas que o **Prometh
 ```
 .
 ├── docker-compose.yml            # Stack Swarm (mesmo cluster do Prometheus)
+├── docker-compose.248.yml        # Stack Swarm no .248, com porta publicada
 └── README.md
 ```
 
@@ -54,6 +55,18 @@ Verifique:
 docker service ls | grep node-exporter   # deve ficar 1/1 (ou N/N por nó, em mode: global)
 ```
 
+## Deploy no Swarm do servidor 45.187.224.248
+
+O `.248` está em outro Swarm/Portainer. Por isso o Prometheus do `.251` não enxerga o DNS interno desse Swarm e precisa coletar via IP público.
+
+Portainer do `.248` → **Stacks → Add stack** → Build method **Repository** → Compose path `NodeExporter/docker-compose.248.yml` → **Deploy the stack**.
+
+Esse compose publica `9100:9100` em `mode: host`. Depois rode o firewall do `.248`:
+
+```bash
+sudo chmod +x ../Firewall/firewall-setup-248.sh && sudo ../Firewall/firewall-setup-248.sh
+```
+
 ## Testar o DNS a partir do Prometheus (cluster Swarm)
 
 ```bash
@@ -65,7 +78,7 @@ Retornou IP / métricas → DNS resolvendo.
 
 ## Scrape job no `prometheus_config.yml`
 
-Já configurado em `Prometheus/prometheus_config.yml`, job `node-exporter`, com descoberta DNS em `tasks.node-exporter:9100`. Como a stack roda em `mode: global`, o Prometheus coleta uma task por nó Swarm.
+Já configurado em `Prometheus/prometheus_config.yml`, job `node-exporter`, com dois targets: `node-exporter:9100` para o Swarm do `.251` e `45.187.224.248:9100` para o Swarm separado do `.248`.
 
 Confira em **Prometheus → Status → Targets**: `node-exporter` = `UP` para os dois targets.
 
@@ -77,7 +90,7 @@ O seletor **Host** no topo lista a instância automaticamente.
 
 ## Notas
 
-- **Multi-nó:** com `mode: global`, sobe 1 exporter por nó. O Prometheus usa `dns_sd_configs` apontando para `tasks.node-exporter`, evitando o VIP do serviço e coletando todas as tasks.
+- **Dois Swarms:** DNS interno (`node-exporter`) só funciona dentro do Swarm do `.251`. Para o `.248`, o scrape é via IP público e porta publicada.
 
 ### Consulta útil
 

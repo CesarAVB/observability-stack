@@ -6,7 +6,7 @@ services:
     volumes:
       - prometheus_data:/prometheus
     configs:
-      - source: prometheus_config_v3
+      - source: prometheus_config
         target: /etc/prometheus/prometheus.yml
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
@@ -17,7 +17,7 @@ services:
       - network_swarm_public
 
 configs:
-  prometheus_config_v3:
+  prometheus_config:
     file: ./prometheus_config.yml
 
 volumes:

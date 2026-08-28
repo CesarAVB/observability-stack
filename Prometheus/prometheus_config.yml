@@ -45,29 +45,37 @@ scrape_configs:
           env: 'production'
 
   # node-exporter — métricas de hardware/SO do host Linux.
-  # Em mode: global, o DNS tasks.node-exporter retorna uma task por nó Swarm.
+  #   - srv-251: mesmo Swarm do Prometheus, scrape via DNS interno.
+  #   - srv-248: outro Swarm/Portainer, scrape via IP público e porta publicada.
   - job_name: 'node-exporter'
-    dns_sd_configs:
-      - names:
-          - tasks.node-exporter
-        type: A
-        port: 9100
-    relabel_configs:
-      - target_label: app
-        replacement: host-linux
-      - target_label: env
-        replacement: production
+    static_configs:
+      - targets: ['node-exporter:9100']
+        labels:
+          app: 'host-linux'
+          env: 'production'
+          server: '224.251 - VPS LOGNET'
+          instance: '45.187.224.251'
+      - targets: ['45.187.224.248:9100']
+        labels:
+          app: 'host-linux'
+          env: 'production'
+          server: '224.248 - VPS ASB'
+          instance: '45.187.224.248'
 
   # cAdvisor — métricas de uso de recursos por container Docker.
-  # Em mode: global, o DNS tasks.cadvisor retorna uma task por nó Swarm.
+  #   - srv-251: mesmo Swarm do Prometheus, scrape via DNS interno.
+  #   - srv-248: outro Swarm/Portainer, scrape via IP público e porta publicada.
   - job_name: 'cadvisor'
-    dns_sd_configs:
-      - names:
-          - tasks.cadvisor
-        type: A
-        port: 8080
-    relabel_configs:
-      - target_label: app
-        replacement: containers
-      - target_label: env
-        replacement: production
+    static_configs:
+      - targets: ['cadvisor:8080']
+        labels:
+          app: 'containers'
+          env: 'production'
+          server: '224.251 - VPS LOGNET'
+          instance: '45.187.224.251'
+      - targets: ['45.187.224.248:8080']
+        labels:
+          app: 'containers'
+          env: 'production'
+          server: '224.248 - VPS ASB'
+          instance: '45.187.224.248'
