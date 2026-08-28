@@ -22,7 +22,10 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
       - /dev/disk/:/dev/disk:ro
     networks:
-      - monitoring
+      monitoring:
+        aliases:
+          - cadvisor
+          - monitoring_cadvisor
     deploy:
       mode: global
       restart_policy:

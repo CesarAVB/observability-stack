@@ -77,7 +77,7 @@ scrape_configs:
           env: 'production'
           server: '224.251 - VPS LOGNET'
           instance: '45.187.224.251'
-      - targets: ['45.187.224.248:8080']
+      - targets: ['45.187.224.248:8081']
         labels:
           app: 'containers'
           env: 'production'

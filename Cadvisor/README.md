@@ -64,7 +64,7 @@ docker compose -f docker-compose.standalone.yml up -d
 sudo chmod +x ../Firewall/firewall-setup-248-cadvisor.sh && sudo ../Firewall/firewall-setup-248-cadvisor.sh
 ```
 
-> **OBS:** no standalone o cAdvisor é publicado na porta **8081** do host (a 8080 já está em uso nesse servidor). Dentro do container ele continua escutando na 8080 — é por isso que o target no Prometheus usa `:8080`, mas o firewall protege a `8081`.
+> **OBS:** no standalone o cAdvisor é publicado na porta **8081** do host (a 8080 já está em uso nesse servidor). Dentro do container ele continua escutando na 8080 — é por isso que o target no Prometheus usa `:8081`, e o firewall protege a `8081`.
 
 O Prometheus coleta via **IP público** do host na porta `8081` (mapeada para a `8080` do container) — protegida pelo firewall pra só aceitar as redes confiáveis (que incluem o Prometheus em `45.187.224.251`).
 
@@ -79,7 +79,7 @@ Retornou IP / métricas → DNS resolvendo.
 
 ## Scrape job no `prometheus_config.yml`
 
-Já configurado em `Prometheus/prometheus_config.yml`, job `cadvisor`, com dois targets: `cadvisor:8080` (srv-251, via DNS do Swarm) e `45.187.224.248:8080` (srv-248, standalone via IP público mapeado da 8081).
+Já configurado em `Prometheus/prometheus_config.yml`, job `cadvisor`, com dois targets: `cadvisor:8080` (srv-251, via DNS do Swarm) e `45.187.224.248:8081` (srv-248, standalone via IP público mapeado da 8081).
 
 Confira em **Prometheus → Status → Targets**: `cadvisor` = `UP` para os dois targets.
 
