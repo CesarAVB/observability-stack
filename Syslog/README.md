@@ -19,7 +19,7 @@ Loki 3.0.0  →  Grafana (dashboard "Syslog Switches LOGNET")
 
 | Arquivo | Função |
 |---|---|
-| `docker-compose.yml` | Stack do syslog-ng. Publica `514/udp` e `514/tcp`, monta o config externo `syslog_config` e o volume `syslog_buffer` (disk-buffer). |
+| `docker-compose.yml` | Stack do syslog-ng. Publica `514/udp` e `514/tcp`, monta o config via `file: ./syslog-ng.conf` e o volume `syslog_buffer` (disk-buffer). |
 | `syslog-ng.conf` | **Fonte de verdade** do config. Recebe RFC3164 em UDP/TCP 514, normaliza e empurra pro Loki com os labels `job`, `host`, `source_ip`, `severity`, `facility`. |
 
 ## Labels no Loki
@@ -38,24 +38,11 @@ Loki 3.0.0  →  Grafana (dashboard "Syslog Switches LOGNET")
 
 ## Deploy
 
-Segue o padrão de **Docker Config externo** do repositório (ver `CLAUDE.md`).
+Segue o padrão de **Docker Config referenciado por arquivo** do repositório (ver `CLAUDE.md`): o `docker-compose.yml` referencia `file: ./syslog-ng.conf` — não `external`. Pra isso resolver no servidor, a stack precisa ser criada no Portainer com **Build method → Repository**, apontando pro remoto Git deste repositório, com **Compose path** `Syslog/docker-compose.yml`.
 
-**Primeiro deploy:**
-```bash
-# no servidor via SSH
-sudo mkdir -p /opt/docker/syslog
-# copiar syslog-ng.conf deste repo para /opt/docker/syslog/syslog-ng.conf
-docker config create syslog_config /opt/docker/syslog/syslog-ng.conf
-# depois: deploy da stack no Portainer
-```
+**Primeiro deploy:** Portainer → **Stacks → Add stack** → Build method **Repository** → cole a URL do repositório → Compose path `Syslog/docker-compose.yml` → **Deploy the stack**.
 
-**Atualizar config de stack em execução:**
-```bash
-# editar /opt/docker/syslog/syslog-ng.conf
-docker config rm syslog_config
-docker config create syslog_config /opt/docker/syslog/syslog-ng.conf
-# depois: redeploy da stack no Portainer
-```
+**Atualizar a configuração:** edite `syslog-ng.conf` neste repo, dê push pro remoto e, no Portainer, rode **Pull and redeploy** na stack — sem SSH, sem `docker config create/rm` manual.
 
 A rede `network_swarm_public` precisa existir (compartilhada com o Loki).
 

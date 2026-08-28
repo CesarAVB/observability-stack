@@ -25,7 +25,7 @@ Grafana Tempo 2.6.0 em Docker via Portainer, com recebimento de traces via OTLP 
 
 ## Sobre o Projeto
 
-Este repositório documenta a implementação do **Grafana Tempo** utilizando Docker via Portainer, com Stack (Docker Compose), configuração via Docker Config externo e infraestrutura reproduzível.
+Este repositório documenta a implementação do **Grafana Tempo** utilizando Docker via Portainer, com Stack (Docker Compose), configuração via Docker Config referenciado por arquivo (deploy via Portainer "Repository") e infraestrutura reproduzível.
 
 O objetivo é manter um ambiente limpo, organizado e próximo de produção, com foco em:
 
@@ -64,31 +64,15 @@ distributor:
 
 ## Deploy via Portainer
 
+O `docker-compose.yml` referencia o config via `file: ./tempo_config.yml` — não é `external`. Pra isso resolver no servidor, a stack precisa ser criada com **Build method → Repository**, apontando pro remoto Git deste repositório, com **Compose path** `Tempo/docker-compose.yml`.
+
 ### Primeiro deploy
 
-Antes de subir a stack, o Docker Config precisa existir — a stack referencia `tempo_config` pelo nome e falhará se ele não estiver criado.
-
-Acesse o servidor via SSH, crie o diretório, edite o `tempo_config.yml` e registre o config:
-
-```bash
-sudo mkdir -p /opt/docker/tempo
-vim /opt/docker/tempo/tempo_config.yml
-docker config create tempo_config /opt/docker/tempo/tempo_config.yml
-```
-
-Em seguida, acesse o Portainer, vá em **Stacks → Add stack**, cole o conteúdo do `docker-compose.yml` e clique em **Deploy the stack**.
+Portainer → **Stacks → Add stack** → Build method **Repository** → cole a URL do repositório → Compose path `Tempo/docker-compose.yml` → **Deploy the stack**.
 
 ### Atualizar a configuração
 
-Docker Configs são imutáveis — para alterar o `tempo_config.yml` de uma stack já em execução:
-
-```bash
-vim /opt/docker/tempo/tempo_config.yml
-docker config rm tempo_config
-docker config create tempo_config /opt/docker/tempo/tempo_config.yml
-```
-
-Em seguida, faça o redeploy da stack no Portainer para que o serviço monte o config atualizado.
+Edite `tempo_config.yml` neste repo, dê push pro remoto e, no Portainer, rode **Pull and redeploy** na stack. O Portainer recria o Docker Config automaticamente — sem SSH, sem `docker config create/rm` manual.
 
 ## Portas
 

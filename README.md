@@ -30,7 +30,7 @@ Stack completa de observabilidade em Docker via Portainer: métricas, logs, trac
   - [3. Propriedades (application.properties)](#3-propriedades-applicationproperties)
   - [4. Filtro de Correlation ID](#4-filtro-de-correlation-id)
   - [5. Variáveis de Ambiente (Coolify)](#5-variáveis-de-ambiente-coolify)
-  - [6. Registrar no Prometheus (host via SSH)](#6-registrar-no-prometheus-host-via-ssh)
+  - [6. Registrar no Prometheus (Portainer)](#6-registrar-no-prometheus-portainer)
   - [7. Grafana - nenhuma ação necessária](#7-grafana--nenhuma-ação-necessária)
 - [Checklist de Verificação](#checklist-de-verificação)
 - [Contato](#contato)
@@ -52,6 +52,7 @@ A stack cobre os três pilares da observabilidade:
 | Métricas de infra | **node-exporter + cAdvisor** | Exporters de host e containers (lidos pelo Prometheus) |
 | Monitoramento de infra | **Zabbix** | Monitoramento de hosts, serviços e rede |
 | Logs de rede | **syslog-ng (AxoSyslog)** | Recebe syslog dos switches Huawei e encaminha ao Loki |
+| Probe HTTP externo | **blackbox_exporter** | Sonda HTTP endpoints sem exporter próprio (ex.: reverse proxy de apps) |
 
 ---
 
@@ -90,6 +91,9 @@ A stack cobre os três pilares da observabilidade:
 │   ├── docker-compose.yml
 │   ├── syslog-ng.conf
 │   └── README.md
+├── Blackbox/                  # Stack do blackbox_exporter (probe HTTP externo)
+│   ├── docker-compose.yml
+│   └── blackbox_config.yml
 ├── firewall-setup.sh         # Script de configuração de firewall para Docker
 └── README.md                 # Este arquivo
 ```
@@ -339,17 +343,9 @@ TRACING_SAMPLING_PROBABILITY=1.0
 
 ---
 
-### 6. Registrar no Prometheus (host via SSH)
+### 6. Registrar no Prometheus (Portainer)
 
-Acesse o servidor via SSH e edite diretamente o `prometheus_config.yml`:
-
-```bash
-ssh usuario@45.187.224.251
-sudo mkdir -p /opt/docker/prometheus
-vim /opt/docker/prometheus/prometheus_config.yml
-```
-
-Adicione um novo bloco em `scrape_configs` para a nova aplicação:
+O `Prometheus/docker-compose.yml` referencia `Prometheus/prometheus_config.yml` via `file: ./prometheus_config.yml` — não é `external`. Edite o arquivo neste repo e adicione um novo bloco em `scrape_configs` para a nova aplicação:
 
 ```yaml
   - job_name: 'nome-do-novo-projeto'
@@ -364,14 +360,7 @@ Adicione um novo bloco em `scrape_configs` para a nova aplicação:
           env: 'production'
 ```
 
-Após salvar o arquivo, remova o config antigo e recrie-o — Docker Configs são imutáveis e precisam ser recriados a cada atualização:
-
-```bash
-docker config rm prometheus_config
-docker config create prometheus_config /opt/docker/prometheus/prometheus_config.yml
-```
-
-Em seguida, acesse o Portainer e faça o redeploy da stack do Prometheus para que o serviço monte o config atualizado.
+Dê push pro remoto Git e, no Portainer, rode **Pull and redeploy** na stack do Prometheus (a stack precisa ter sido criada com Build method **Repository**, não "Web editor"/"Upload" — só assim o `file:` enxerga o arquivo atualizado). O Portainer recria o Docker Config automaticamente, sem precisar de SSH.
 
 ---
 

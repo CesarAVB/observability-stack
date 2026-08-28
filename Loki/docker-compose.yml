@@ -16,7 +16,7 @@ services:
 
 configs:
   loki_config:
-    external: true
+    file: ./loki_config.yml
 
 volumes:
   loki_data:

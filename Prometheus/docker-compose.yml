@@ -20,7 +20,7 @@ services:
 
 configs:
   prometheus_config:
-    external: true
+    file: ./prometheus_config.yml
 
 volumes:
   prometheus_data:

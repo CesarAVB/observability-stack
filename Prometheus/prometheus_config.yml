@@ -13,6 +13,24 @@ scrape_configs:
     static_configs:
       - targets: ['loki:3100']
 
+  # blackbox_exporter — probe HTTP externo no endpoint público do CRM.
+  # Usado para monitorar a saúde do Reverse Proxy/edge, que roda fora
+  # desta infra (não temos acesso direto a ele nem exporter interno).
+  - job_name: 'blackbox-http'
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    static_configs:
+      - targets:
+          - https://crm-api.redelognet.com.br/api/v1/actuator/health
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox-exporter:9115
+
   # App Spring Boot do CRM Lognet — coleta métricas via Actuator/Micrometer
   # sobre HTTPS no endpoint público da API.
   - job_name: 'lognet-crm'

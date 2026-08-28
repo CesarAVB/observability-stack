@@ -25,7 +25,7 @@ Prometheus em Docker via Portainer, com configuração de scrape via Docker Conf
 
 ## Sobre o Projeto
 
-Este repositório documenta a implementação do **Prometheus** utilizando Docker via Portainer, com Stack (Docker Compose), configuração de scrape via Docker Config externo e infraestrutura reproduzível.
+Este repositório documenta a implementação do **Prometheus** utilizando Docker via Portainer, com Stack (Docker Compose), configuração de scrape via Docker Config referenciado por arquivo (deploy via Portainer "Repository") e infraestrutura reproduzível.
 
 O objetivo é manter um ambiente limpo, organizado e próximo de produção, com foco em:
 
@@ -61,33 +61,17 @@ scrape_configs:
 
 ## Deploy via Portainer
 
+O `docker-compose.yml` referencia o config via `file: ./prometheus_config.yml` — não é `external`. Pra isso resolver no servidor, a stack precisa ser criada com **Build method → Repository** (não "Web editor" nem "Upload"), apontando pro remoto Git deste repositório, com **Compose path** `Prometheus/docker-compose.yml`. Como o `prometheus_config.yml` já está na mesma pasta, não precisa preencher "Additional paths".
+
 ### Primeiro deploy
 
-Antes de subir a stack, o Docker Config precisa existir - a stack referencia `prometheus_config` pelo nome e falhará se ele não estiver criado.
-
-Acesse o servidor via SSH, crie o diretório, edite o `prometheus_config.yml` e registre o config:
-
-```bash
-sudo mkdir -p /opt/docker/prometheus
-vim /opt/docker/prometheus/prometheus_config.yml
-docker config create prometheus_config /opt/docker/prometheus/prometheus_config.yml
-```
-
-Em seguida, acesse o Portainer, vá em **Stacks → Add stack**, cole o conteúdo do `docker-compose.yml` e clique em **Deploy the stack**.
+Portainer → **Stacks → Add stack** → Build method **Repository** → cole a URL do repositório → Compose path `Prometheus/docker-compose.yml` → **Deploy the stack**.
 
 O Prometheus estará disponível em: `http://<IP-do-host>:9090`
 
 ### Atualizar a configuração
 
-Docker Configs são imutáveis - para alterar o `prometheus_config.yml` de uma stack já em execução:
-
-```bash
-vim /opt/docker/prometheus/prometheus_config.yml
-docker config rm prometheus_config
-docker config create prometheus_config /opt/docker/prometheus/prometheus_config.yml
-```
-
-Em seguida, faça o redeploy da stack no Portainer para que o serviço monte o config atualizado.
+Edite `prometheus_config.yml` neste repo, dê push pro remoto e, no Portainer, rode **Pull and redeploy** na stack. O Portainer detecta que o arquivo mudou e recria o Docker Config automaticamente — sem SSH, sem `docker config create/rm` manual.
 
 ## Persistência de Dados
 

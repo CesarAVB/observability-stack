@@ -18,7 +18,7 @@ services:
 
 configs:
   tempo_config:
-    external: true
+    file: ./tempo_config.yml
 
 volumes:
   tempo_data:
