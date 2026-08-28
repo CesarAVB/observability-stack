@@ -1,0 +1,1110 @@
+{
+  "annotations": [
+    {
+      "kind": "AnnotationQuery",
+      "spec": {
+        "builtIn": true,
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "query": {
+          "datasource": {
+            "name": "-- Grafana --"
+          },
+          "group": "grafana",
+          "kind": "DataQuery",
+          "spec": {},
+          "version": "v0"
+        }
+      }
+    }
+  ],
+  "cursorSync": "Off",
+  "editable": true,
+  "elements": {
+    "panel-1": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "dfwimkwah7xtse"
+                    },
+                    "group": "victoriametrics-logs-datasource",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "${base_filter:raw} | extract_regexp \"(?P<nat_rule>CGNAT[0-9]+-(?P<proto_from_rule>TCP|UDP)) srcnat: .*src-mac (?P<src_mac>[0-9a-fA-F:]+), proto (?P<proto>TCP|UDP)(?: \\\\([^)]*\\\\))?, (?P<client_ip>(?:[0-9]{1,3}\\\\.){3}[0-9]{1,3}):(?P<client_port>[0-9]+)->(?P<dst_ip>(?:[0-9]{1,3}\\\\.){3}[0-9]{1,3}):(?P<dst_port>[0-9]+)\" | stats count() as eventos",
+                      "queryType": "instant"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "dfwimkwah7xtse"
+                    },
+                    "group": "victoriametrics-logs-datasource",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "${base_filter:raw} | extract_regexp \"(?P<nat_rule>CGNAT[0-9]+-(?P<proto_from_rule>TCP|UDP)) srcnat: .*src-mac (?P<src_mac>[0-9a-fA-F:]+), proto (?P<proto>TCP|UDP)(?: \\\\([^)]*\\\\))?, (?P<client_ip>(?:[0-9]{1,3}\\\\.){3}[0-9]{1,3}):(?P<client_port>[0-9]+)->(?P<dst_ip>(?:[0-9]{1,3}\\\\.){3}[0-9]{1,3}):(?P<dst_port>[0-9]+)\" | stats count_uniq(client_ip) as usuarios",
+                      "queryType": "instant"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "B"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "dfwimkwah7xtse"
+                    },
+                    "group": "victoriametrics-logs-datasource",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "${base_filter:raw} | extract_regexp \"(?P<nat_rule>CGNAT[0-9]+-(?P<proto_from_rule>TCP|UDP)) srcnat: .*src-mac (?P<src_mac>[0-9a-fA-F:]+), proto (?P<proto>TCP|UDP)(?: \\\\([^)]*\\\\))?, (?P<client_ip>(?:[0-9]{1,3}\\\\.){3}[0-9]{1,3}):(?P<client_port>[0-9]+)->(?P<dst_ip>(?:[0-9]{1,3}\\\\.){3}[0-9]{1,3}):(?P<dst_port>[0-9]+)\" | stats count_uniq(src_mac) as macs",
+                      "queryType": "instant"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "C"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "dfwimkwah7xtse"
+                    },
+                    "group": "victoriametrics-logs-datasource",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "${base_filter:raw} | extract_regexp \"(?P<nat_rule>CGNAT[0-9]+-(?P<proto_from_rule>TCP|UDP)) srcnat: .*src-mac (?P<src_mac>[0-9a-fA-F:]+), proto (?P<proto>TCP|UDP)(?: \\\\([^)]*\\\\))?, (?P<client_ip>(?:[0-9]{1,3}\\\\.){3}[0-9]{1,3}):(?P<client_port>[0-9]+)->(?P<dst_ip>(?:[0-9]{1,3}\\\\.){3}[0-9]{1,3}):(?P<dst_port>[0-9]+)\" | stats count_uniq(dst_ip) as destinos",
+                      "queryType": "instant"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "D"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": [
+              {
+                "group": "extractFields",
+                "kind": "Transformation",
+                "spec": {
+                  "options": {
+                    "format": "json",
+                    "keepTime": false,
+                    "replace": false,
+                    "source": "labels"
+                  }
+                }
+              },
+              {
+                "group": "convertFieldType",
+                "kind": "Transformation",
+                "spec": {
+                  "options": {
+                    "conversions": [
+                      {
+                        "destinationType": "number",
+                        "targetField": "eventos"
+                      },
+                      {
+                        "destinationType": "number",
+                        "targetField": "usuarios"
+                      },
+                      {
+                        "destinationType": "number",
+                        "targetField": "macs"
+                      },
+                      {
+                        "destinationType": "number",
+                        "targetField": "destinos"
+                      }
+                    ],
+                    "fields": {}
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "description": "",
+        "id": 1,
+        "links": [],
+        "title": "",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "\n@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Roboto+Mono:wght@600;700;900&display=swap');\n* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }\n#kpi2-container {\n  width: 100%;\n  height: 100%;\n  display: grid;\n  grid-template-columns: repeat(4, minmax(0, 1fr));\n  align-items: stretch;\n  gap: 12px;\n  padding: 12px 10px;\n  background: linear-gradient(135deg, #151a22 0%, #10141b 100%);\n  border: 1px solid rgba(255, 255, 255, 0.06);\n  border-radius: 12px;\n  overflow: visible;\n}\n.kpi2-card {\n  --accent: #8b949e;\n  --accent-soft: rgba(139, 148, 158, 0.12);\n  position: relative;\n  z-index: 1;\n  min-width: 0;\n  display: grid;\n  grid-template-columns: 46px minmax(0, 1fr);\n  align-items: center;\n  gap: 14px;\n  padding: 14px 16px;\n  border-radius: 8px;\n  background:\n    linear-gradient(135deg, var(--accent-soft), rgba(255, 255, 255, 0.015) 42%),\n    #11161d;\n  border: 1px solid rgba(255, 255, 255, 0.09);\n  box-shadow: inset 4px 0 0 var(--accent);\n  overflow: visible;\n}\n.kpi2-card::after {\n  content: '';\n  position: absolute;\n  inset: 0;\n  border-radius: inherit;\n  pointer-events: none;\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);\n}\n.kpi2-icon {\n  width: 44px;\n  height: 44px;\n  display: grid;\n  place-items: center;\n  border-radius: 8px;\n  color: var(--accent);\n  background: var(--accent-soft);\n  border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent);\n  font-size: 18px;\n}\n.kpi2-content {\n  min-width: 0;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  gap: 5px;\n}\n.kpi2-label {\n  font-size: 0.67rem;\n  font-weight: 900;\n  color: var(--accent);\n  text-transform: uppercase;\n  letter-spacing: 0;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.kpi2-value {\n  font-family: 'Roboto Mono', monospace;\n  font-size: clamp(1.25rem, 2.35vw, 1.72rem);\n  font-weight: 900;\n  color: #ffffff;\n  line-height: 1;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.kpi2-sub {\n  font-size: 0.64rem;\n  font-weight: 700;\n  color: #8792a2;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.c-eventos {\n  --accent: #2ecc71;\n  --accent-soft: rgba(46, 204, 113, 0.12);\n}\n.c-ips {\n  --accent: #38bdf8;\n  --accent-soft: rgba(56, 189, 248, 0.12);\n}\n.c-macs {\n  --accent: #f59e0b;\n  --accent-soft: rgba(245, 158, 11, 0.12);\n}\n.c-destinos {\n  --accent: #a855f7;\n  --accent-soft: rgba(168, 85, 247, 0.12);\n}\n@supports not (color: color-mix(in srgb, red 50%, transparent)) {\n  .kpi2-icon { border-color: rgba(255, 255, 255, 0.16); }\n}\n@media (max-width: 1100px) {\n  #kpi2-container {\n    grid-template-columns: repeat(2, minmax(0, 1fr));\n  }\n}\n@media (max-width: 620px) {\n  #kpi2-container {\n    grid-template-columns: 1fr;\n    overflow: auto;\n  }\n  .kpi2-card {\n    min-height: 76px;\n  }\n}\n.svg-icon{display:inline-grid;place-items:center;width:1em;height:1em;line-height:1;vertical-align:-.125em;flex-shrink:0}\n.svg-icon svg{width:1em;height:1em;display:block}\n.kpi2-info-btn{position:absolute;right:14px;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:8px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);color:#d7dde8;display:grid;place-items:center;font-size:14px;cursor:help;z-index:20}\n.kpi2-info-btn:hover,.kpi2-info-btn:focus{background:var(--accent-soft);border-color:var(--accent);color:#fff;outline:none}\n.kpi2-info-btn .svg-icon{font-size:14px}\n.kpi2-tip{position:absolute;right:52px;top:50%;z-index:200;width:min(280px,calc(100vw - 32px));padding:10px 12px;border-radius:8px;background:rgba(15,22,33,.98);border:1px solid var(--accent);box-shadow:0 14px 34px rgba(0,0,0,.48);color:#d7dde8;font-size:11px;font-weight:700;line-height:1.45;opacity:0;transform:translate(8px,-50%);pointer-events:none;transition:opacity .15s ease,transform .15s ease}\n.kpi2-tip strong{display:block;color:#fff;font-size:12px;margin-bottom:4px}\n.kpi2-card:hover{z-index:30}\n.kpi2-info-btn:hover+.kpi2-tip,.kpi2-info-btn:focus+.kpi2-tip{opacity:1;transform:translate(0,-50%)}\n.kpi2-card{padding-right:58px}\n@media (max-width:620px){#kpi2-container{overflow:visible}.kpi2-tip{right:52px;left:auto;width:min(260px,calc(100vw - 88px))}}\n",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div id=\"kpi2-container\">\n  <div class=\"kpi2-card c-eventos\">\n    <div class=\"kpi2-icon\"><span class=\"svg-icon\" aria-hidden=\"true\"><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'><path d='M3 12h4l3 8 4-16 3 8h4'/></svg></span></div>\n    <div class=\"kpi2-content\">\n      <span class=\"kpi2-label\">Eventos</span>\n      <span class=\"kpi2-value\" id=\"v-eventos\">--</span>\n      <span class=\"kpi2-sub\">traducoes no periodo</span>\n    </div><button class=\"kpi2-info-btn\" type=\"button\" aria-label=\"Eventos CGNAT\"><span class=\"svg-icon\" aria-hidden=\"true\"><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><path d='M12 11v5'/><path d='M12 8h.01'/></svg></span></button><div class=\"kpi2-tip\"><strong>Eventos CGNAT</strong>Total de linhas de srcnat casadas pelo filtro no periodo selecionado.</div>\n  </div>\n  <div class=\"kpi2-card c-ips\">\n    <div class=\"kpi2-icon\"><span class=\"svg-icon\" aria-hidden=\"true\"><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='8' r='4'/><path d='M4 21v-1a8 8 0 0 1 16 0v1'/></svg></span></div>\n    <div class=\"kpi2-content\">\n      <span class=\"kpi2-label\">IPs Internos</span>\n      <span class=\"kpi2-value\" id=\"v-ips\">--</span>\n      <span class=\"kpi2-sub\">clientes unicos</span>\n    </div><button class=\"kpi2-info-btn\" type=\"button\" aria-label=\"IPs Internos Unicos\"><span class=\"svg-icon\" aria-hidden=\"true\"><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><path d='M12 11v5'/><path d='M12 8h.01'/></svg></span></button><div class=\"kpi2-tip\"><strong>IPs Internos Unicos</strong>Quantidade de IPs privados distintos que passaram pelo CGNAT no periodo.</div>\n  </div>\n  <div class=\"kpi2-card c-macs\">\n    <div class=\"kpi2-icon\"><span class=\"svg-icon\" aria-hidden=\"true\"><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M20.59 13.41 12 22l-9-9 8.59-8.59A2 2 0 0 1 13 4h6a2 2 0 0 1 2 2v6a2 2 0 0 1-.41 1.41Z'/><circle cx='16.5' cy='7.5' r='1'/></svg></span></div>\n    <div class=\"kpi2-content\">\n      <span class=\"kpi2-label\">MACs</span>\n      <span class=\"kpi2-value\" id=\"v-macs\">--</span>\n      <span class=\"kpi2-sub\">dispositivos unicos</span>\n    </div><button class=\"kpi2-info-btn\" type=\"button\" aria-label=\"MACs Unicos\"><span class=\"svg-icon\" aria-hidden=\"true\"><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><path d='M12 11v5'/><path d='M12 8h.01'/></svg></span></button><div class=\"kpi2-tip\"><strong>MACs Unicos</strong>Quantidade de enderecos MAC distintos observados no periodo.</div>\n  </div>\n  <div class=\"kpi2-card c-destinos\">\n    <div class=\"kpi2-icon\"><span class=\"svg-icon\" aria-hidden=\"true\"><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><path d='M3 12h18'/><path d='M12 3a15 15 0 0 1 0 18'/><path d='M12 3a15 15 0 0 0 0 18'/></svg></span></div>\n    <div class=\"kpi2-content\">\n      <span class=\"kpi2-label\">Destinos</span>\n      <span class=\"kpi2-value\" id=\"v-destinos\">--</span>\n      <span class=\"kpi2-sub\">IPs de destino unicos</span>\n    </div><button class=\"kpi2-info-btn\" type=\"button\" aria-label=\"Destinos Unicos\"><span class=\"svg-icon\" aria-hidden=\"true\"><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><path d='M12 11v5'/><path d='M12 8h.01'/></svg></span></button><div class=\"kpi2-tip\"><strong>Destinos Unicos</strong>Quantidade de IPs de destino distintos acessados pelos clientes no periodo.</div>\n  </div>\n</div>\n",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "(function () {\n  function valuesToArray(values) {\n    if (!values) return [];\n    if (Array.isArray(values)) return values;\n    if (typeof values.toArray === 'function') return values.toArray();\n    var len = values.length || values.size || (values.buffer ? values.buffer.length : 0) || 0;\n    var out = [];\n    for (var i = 0; i < len; i++) out.push(typeof values.get === 'function' ? values.get(i) : values[i]);\n    return out;\n  }\n\n  function fieldByName(frame, name) {\n    var fields = (frame && frame.fields) || [];\n    var lower = name.toLowerCase();\n    for (var i = 0; i < fields.length; i++) {\n      var f = fields[i];\n      var n1 = String(f.name || '').toLowerCase();\n      var n2 = String((f.config && f.config.displayName) || '').toLowerCase();\n      if (n1 === lower || n2 === lower) return f;\n    }\n    return null;\n  }\n\n  function lastFieldValue(frame, name) {\n    var field = fieldByName(frame, name);\n    if (!field) return 0;\n    var arr = valuesToArray(field.values);\n    for (var i = arr.length - 1; i >= 0; i--) {\n      var n = Number(arr[i]);\n      if (Number.isFinite(n)) return n;\n    }\n    return 0;\n  }\n\n  var byRef = {};\n  (data && data.series ? data.series : []).forEach(function (s) { byRef[s.refId] = s; });\n\n  var eventos = Math.round(lastFieldValue(byRef['A'], 'eventos'));\n  var ips = Math.round(lastFieldValue(byRef['B'], 'usuarios'));\n  var macs = Math.round(lastFieldValue(byRef['C'], 'macs'));\n  var destinos = Math.round(lastFieldValue(byRef['D'], 'destinos'));\n\n  var elEventos = htmlNode.querySelector('#v-eventos');\n  var elIps = htmlNode.querySelector('#v-ips');\n  var elMacs = htmlNode.querySelector('#v-macs');\n  var elDestinos = htmlNode.querySelector('#v-destinos');\n  if (elEventos) elEventos.textContent = eventos.toLocaleString('pt-BR');\n  if (elIps) elIps.textContent = ips.toLocaleString('pt-BR');\n  if (elMacs) elMacs.textContent = macs.toLocaleString('pt-BR');\n  if (elDestinos) elDestinos.textContent = destinos.toLocaleString('pt-BR');\n})();\n",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull",
+                  "last",
+                  "firstNotNull",
+                  "first",
+                  "min",
+                  "max",
+                  "mean",
+                  "sum",
+                  "count",
+                  "range",
+                  "delta",
+                  "step",
+                  "diff",
+                  "logmin",
+                  "allIsZero",
+                  "allIsNull",
+                  "diffperc"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-5": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "dfwimkwah7xtse"
+                    },
+                    "group": "victoriametrics-logs-datasource",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "${base_filter:raw} | extract_regexp \"(?P<nat_rule>CGNAT[0-9]+-(?P<proto_from_rule>TCP|UDP)) srcnat: .*src-mac (?P<src_mac>[0-9a-fA-F:]+), proto (?P<proto>TCP|UDP)(?: \\\\([^)]*\\\\))?, (?P<client_ip>(?:[0-9]{1,3}\\\\.){3}[0-9]{1,3}):(?P<client_port>[0-9]+)->(?P<dst_ip>(?:[0-9]{1,3}\\\\.){3}[0-9]{1,3}):(?P<dst_port>[0-9]+)\" | stats by (client_ip, src_mac, nat_rule) count() as eventos, count_uniq(dst_ip) as destinos | sort by (eventos desc) | limit ${limit}",
+                      "queryType": "instant"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": [
+              {
+                "group": "extractFields",
+                "kind": "Transformation",
+                "spec": {
+                  "options": {
+                    "format": "json",
+                    "keepTime": false,
+                    "replace": false,
+                    "source": "labels"
+                  }
+                }
+              },
+              {
+                "group": "convertFieldType",
+                "kind": "Transformation",
+                "spec": {
+                  "options": {
+                    "conversions": [
+                      {
+                        "destinationType": "number",
+                        "targetField": "eventos"
+                      },
+                      {
+                        "destinationType": "number",
+                        "targetField": "destinos"
+                      }
+                    ],
+                    "fields": {}
+                  }
+                }
+              },
+              {
+                "group": "organize",
+                "kind": "Transformation",
+                "spec": {
+                  "options": {
+                    "excludeByName": {
+                      "Line": true,
+                      "Time": true,
+                      "detected_level": true,
+                      "id": true,
+                      "labels": true,
+                      "streamId": true,
+                      "streams": true
+                    },
+                    "indexByName": {
+                      "client_ip": 0,
+                      "destinos": 4,
+                      "eventos": 3,
+                      "nat_rule": 2,
+                      "src_mac": 1
+                    },
+                    "renameByName": {}
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "description": "",
+        "id": 5,
+        "links": [],
+        "title": "",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@500;700&display=swap');:host,:root{--accent:#38bdf8;--accent-soft:rgba(56,189,248,0.12);--color-text-primary:#e0e6f1;--color-text-secondary:#9ca6b7;--color-bg-panel:rgba(14,18,25,0.94);--color-bg-hover:rgba(255,255,255,0.035);--color-border:#30363d;--color-btn-bg:#21262d}*{box-sizing:border-box}button,input{font-family:'Inter',sans-serif}#log-section-root{width:100%;height:100%;box-sizing:border-box;display:flex;flex-direction:column;padding:18px 20px;background:radial-gradient(circle at top left,var(--accent-soft),transparent 32%),linear-gradient(135deg,#161B22 0%,#101419 100%);border:1px solid rgba(255,255,255,0.06);border-radius:14px;overflow:hidden}.log-section-header{display:flex;align-items:center;justify-content:space-between;margin:0 0 16px 0;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0}.log-section-header-left{display:flex;align-items:center;gap:10px;min-width:0}.log-section-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:9px;color:var(--accent);background:var(--accent-soft);border:1px solid rgba(56,189,248,0.30);font-size:1rem;flex-shrink:0}.log-section-title{font-size:1rem;font-weight:700;color:#ffffff;line-height:1.1}.log-section-sub{font-size:0.65rem;font-weight:600;color:#8b949e;text-transform:uppercase;letter-spacing:0.04em;margin-top:2px}.search-input-wrapper{padding:0 10px;border:1px solid var(--color-border);border-radius:6px;background-color:var(--color-btn-bg);display:flex;align-items:center;flex-shrink:0}.search-input-wrapper .svg-icon{color:var(--color-text-secondary);font-size:14px}.search-input{width:190px;padding:8px;border:none;outline:none;background:transparent;color:var(--color-text-primary)}.search-input::placeholder{color:#7d8590}#log-problems-container{flex:1;min-height:0;width:100%;font-family:'Inter',sans-serif;display:flex;flex-direction:column;overflow:hidden}.problems-table-panel{width:100%;flex:1;min-height:0;border:1px solid var(--color-border);border-radius:12px;background-color:var(--color-bg-panel);display:flex;flex-direction:column;overflow:hidden}.table-wrapper{min-height:0;flex:1 1 auto;overflow-y:auto;overflow-x:auto;overscroll-behavior:contain}.table-wrapper::-webkit-scrollbar{width:7px;height:7px}.table-wrapper::-webkit-scrollbar-thumb{border-radius:999px;background:#30363d}.problems-table{width:100%;min-width:520px;border-collapse:collapse;table-layout:fixed}.problems-table th,.problems-table td{padding:11px 14px;border-bottom:1px solid rgba(48,54,61,0.7);color:var(--color-text-primary);font-size:12px;line-height:1.35;text-align:left;vertical-align:middle;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.problems-table thead{position:sticky;top:0;z-index:2;background-color:#21262d}.problems-table th{color:#9ca6b7;font-size:11px;font-weight:700;letter-spacing:.3px;text-transform:uppercase}.problems-table tbody tr:hover{background-color:var(--color-bg-hover)}.cell-host{color:#fff!important;font-weight:700;font-family:'Roboto Mono',monospace}.rank-badge{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:11px;font-weight:800;font-family:'Roboto Mono',monospace}.bar-cell{display:flex;align-items:center;gap:8px}.bar-track{flex:1;min-width:40px;height:6px;border-radius:999px;background:rgba(255,255,255,0.08);overflow:hidden}.bar-fill{height:100%;border-radius:999px;background:var(--accent)}.bar-value{min-width:42px;text-align:right;font-family:'Roboto Mono',monospace;font-weight:700;color:#fff}.proto-badge{min-width:52px;padding:4px 10px;border-radius:999px;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.3px;box-shadow:0 1px 4px rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.25)}.proto-badge.proto-tcp{background:#0ea5e9}.proto-badge.proto-udp{background:#a855f7}.problems-empty-row td{padding:30px!important;color:var(--color-text-secondary)!important;text-align:center!important;white-space:normal!important}.footer-info{padding:8px 16px;border-top:1px solid var(--color-border);color:var(--color-text-secondary);font-size:11px;flex-shrink:0}.svg-icon{display:inline-grid;place-items:center;width:1em;height:1em;line-height:1;vertical-align:-.125em;flex-shrink:0}.svg-icon svg{width:1em;height:1em;display:block}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div id='log-section-root'><div id='log-problems-container'></div></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "(function(){\nfunction escapeHtml(v){return String(v==null?'':v).replace(/[&<>]/g,function(c){return c==='&'?'&amp;':(c==='<'?'&lt;':'&gt;');});}\nfunction normalizeSearchText(v){return String(v||'').toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'');}\nfunction valuesToArray(values){if(!values)return[];if(Array.isArray(values))return values;if(typeof values.toArray==='function')return values.toArray();var len=values.length||values.size||(values.buffer?values.buffer.length:0)||0;var out=[];for(var i=0;i<len;i++){out.push(typeof values.get==='function'?values.get(i):values[i]);}return out;}\nfunction fieldByName(frame,name){var fields=(frame&&frame.fields)||[];var lower=name.toLowerCase();for(var i=0;i<fields.length;i++){var f=fields[i];var n1=String(f.name||'').toLowerCase();var n2=String((f.config&&f.config.displayName)||'').toLowerCase();if(n1===lower||n2===lower)return f;}return null;}\nvar TABLE_ICON=\"<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='4' width='18' height='16' rx='2'/><path d='M3 10h18'/><path d='M9 4v16'/></svg>\";\nvar SEARCH_ICON=\"<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='7'/><path d='m20 20-3.5-3.5'/></svg>\";\nvar USER_ICON=\"<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='8' r='4'/><path d='M4 21v-1a8 8 0 0 1 16 0v1'/></svg>\";\nfunction extractFrame(frame,rows){\nif(!frame)return;\nvar ipField=fieldByName(frame,'client_ip');\nvar macField=fieldByName(frame,'src_mac');\nvar ruleField=fieldByName(frame,'nat_rule');\nvar eventosField=fieldByName(frame,'eventos');\nvar destinosField=fieldByName(frame,'destinos');\nif(!ipField)return;\nvar ips=valuesToArray(ipField.values);\nvar macs=macField?valuesToArray(macField.values):[];\nvar rules=ruleField?valuesToArray(ruleField.values):[];\nvar eventosArr=eventosField?valuesToArray(eventosField.values):[];\nvar destinosArr=destinosField?valuesToArray(destinosField.values):[];\nfor(var i=0;i<ips.length;i++){\nrows.push({\nip:String(ips[i]||'-'),\nmac:String(macs[i]||'-'),\nregra:String(rules[i]||'-'),\neventos:Number(eventosArr[i])||0,\ndestinos:Number(destinosArr[i])||0\n});\n}\n}\nvar rows=[];\nvar frames=(data&&data.series)||[];\nfor(var fi=0;fi<frames.length;fi++){extractFrame(frames[fi],rows);}\nrows.sort(function(a,b){return b.eventos-a.eventos;});\nwindow.__cgnatTopUsersState=window.__cgnatTopUsersState||{searchTerm:''};\nvar state=window.__cgnatTopUsersState;\nvar debounceTimer=null;\nvar rightContainer=htmlNode.querySelector('#log-problems-container');\nfunction renderRightPanel(){\nif(!rightContainer)return;\nvar filtered=rows.filter(function(r){\nif(state.searchTerm){var s=normalizeSearchText(state.searchTerm);var hay=normalizeSearchText(r.ip+' '+r.mac+' '+r.regra);if(hay.indexOf(s)===-1)return false;}\nreturn true;\n});\nvar maxEventos=filtered.reduce(function(m,r){return Math.max(m,r.eventos);},1);\nvar rowsHtml='';\nfiltered.forEach(function(r,idx){\nvar pct=Math.max(4,Math.round((r.eventos/maxEventos)*100));\nrowsHtml+=\"<tr><td><span class='rank-badge'>\"+(idx+1)+\"</span></td><td class='cell-host'>\"+escapeHtml(r.ip)+\"</td><td>\"+escapeHtml(r.mac)+\"</td><td>\"+escapeHtml(r.regra)+\"</td><td><div class='bar-cell'><div class='bar-track'><div class='bar-fill' style='width:\"+pct+\"%'></div></div><span class='bar-value'>\"+r.eventos.toLocaleString('pt-BR')+\"</span></div></td><td>\"+r.destinos.toLocaleString('pt-BR')+\"</td></tr>\";\n});\nif(!rowsHtml){\nrowsHtml=\"<tr class='problems-empty-row'><td colspan='6'>Nenhum usuario encontrado para o filtro selecionado.</td></tr>\";\n}\nrightContainer.innerHTML =\n\"<div class='log-section-header'><div class='log-section-header-left'><span class='log-section-icon'><span class='svg-icon' aria-hidden='true'>\"+USER_ICON+\"</span></span><div><div class='log-section-title'>Top Usuarios do WiFi Publico</div><div class='log-section-sub'>Ordenado por eventos no periodo</div></div></div>\"+\n\"<div class='search-input-wrapper'><span class='svg-icon' aria-hidden='true'>\"+SEARCH_ICON+\"</span><input type='text' id='top-users-search' class='search-input' placeholder='Buscar IP, MAC ou regra...' value='\"+escapeHtml(state.searchTerm)+\"'/></div>\"+\n\"</div>\"+\n\"<div class='problems-table-panel'>\"+\n\"<div class='table-wrapper'><table class='problems-table'><thead><tr><th>#</th><th>IP Interno</th><th>MAC</th><th>Regra</th><th>Eventos</th><th>Destinos</th></tr></thead><tbody>\"+rowsHtml+\"</tbody></table></div>\"+\n\"<div class='footer-info'>\"+filtered.length+\" cliente(s)</div>\"+\n\"</div>\";\nvar searchInput=rightContainer.querySelector('#top-users-search');\nif(searchInput){\nsearchInput.oninput=function(ev){\nvar value=ev.target.value;\nclearTimeout(debounceTimer);\ndebounceTimer=setTimeout(function(){\nstate.searchTerm=value;\nrenderRightPanel();\nvar updated=rightContainer.querySelector('#top-users-search');\nif(updated){updated.focus();updated.setSelectionRange(value.length,value.length);}\n},400);\n};\n}\n}\nrenderRightPanel();\n})();",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull",
+                  "last",
+                  "firstNotNull",
+                  "first",
+                  "min",
+                  "max",
+                  "mean",
+                  "sum",
+                  "count",
+                  "range",
+                  "delta",
+                  "step",
+                  "diff",
+                  "logmin",
+                  "allIsZero",
+                  "allIsNull",
+                  "diffperc"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-6": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "dfwimkwah7xtse"
+                    },
+                    "group": "victoriametrics-logs-datasource",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "${base_filter:raw} | extract_regexp \"(?P<nat_rule>CGNAT[0-9]+-(?P<proto_from_rule>TCP|UDP)) srcnat: .*src-mac (?P<src_mac>[0-9a-fA-F:]+), proto (?P<proto>TCP|UDP)(?: \\\\([^)]*\\\\))?, (?P<client_ip>(?:[0-9]{1,3}\\\\.){3}[0-9]{1,3}):(?P<client_port>[0-9]+)->(?P<dst_ip>(?:[0-9]{1,3}\\\\.){3}[0-9]{1,3}):(?P<dst_port>[0-9]+)\" | stats by (dst_ip, dst_port, proto) count() as eventos, count_uniq(client_ip) as usuarios | sort by (eventos desc) | limit ${limit}",
+                      "queryType": "instant"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": [
+              {
+                "group": "extractFields",
+                "kind": "Transformation",
+                "spec": {
+                  "options": {
+                    "format": "json",
+                    "keepTime": false,
+                    "replace": false,
+                    "source": "labels"
+                  }
+                }
+              },
+              {
+                "group": "convertFieldType",
+                "kind": "Transformation",
+                "spec": {
+                  "options": {
+                    "conversions": [
+                      {
+                        "destinationType": "number",
+                        "targetField": "eventos"
+                      },
+                      {
+                        "destinationType": "number",
+                        "targetField": "usuarios"
+                      },
+                      {
+                        "destinationType": "number",
+                        "targetField": "dst_port"
+                      }
+                    ],
+                    "fields": {}
+                  }
+                }
+              },
+              {
+                "group": "organize",
+                "kind": "Transformation",
+                "spec": {
+                  "options": {
+                    "excludeByName": {
+                      "Line": true,
+                      "Time": true,
+                      "detected_level": true,
+                      "id": true,
+                      "labels": true,
+                      "streamId": true,
+                      "streams": true
+                    },
+                    "indexByName": {
+                      "dst_ip": 0,
+                      "dst_port": 1,
+                      "eventos": 3,
+                      "proto": 2,
+                      "usuarios": 4
+                    },
+                    "renameByName": {}
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "description": "",
+        "id": 6,
+        "links": [],
+        "title": "",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@500;700&display=swap');:host,:root{--accent:#a855f7;--accent-soft:rgba(168,85,247,0.12);--color-text-primary:#e0e6f1;--color-text-secondary:#9ca6b7;--color-bg-panel:rgba(14,18,25,0.94);--color-bg-hover:rgba(255,255,255,0.035);--color-border:#30363d;--color-btn-bg:#21262d}*{box-sizing:border-box}button,input{font-family:'Inter',sans-serif}#log-section-root{width:100%;height:100%;box-sizing:border-box;display:flex;flex-direction:column;padding:18px 20px;background:radial-gradient(circle at top left,var(--accent-soft),transparent 32%),linear-gradient(135deg,#161B22 0%,#101419 100%);border:1px solid rgba(255,255,255,0.06);border-radius:14px;overflow:hidden}.log-section-header{display:flex;align-items:center;justify-content:space-between;margin:0 0 16px 0;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0}.log-section-header-left{display:flex;align-items:center;gap:10px;min-width:0}.log-section-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:9px;color:var(--accent);background:var(--accent-soft);border:1px solid rgba(168,85,247,0.30);font-size:1rem;flex-shrink:0}.log-section-title{font-size:1rem;font-weight:700;color:#ffffff;line-height:1.1}.log-section-sub{font-size:0.65rem;font-weight:600;color:#8b949e;text-transform:uppercase;letter-spacing:0.04em;margin-top:2px}.search-input-wrapper{padding:0 10px;border:1px solid var(--color-border);border-radius:6px;background-color:var(--color-btn-bg);display:flex;align-items:center;flex-shrink:0}.search-input-wrapper .svg-icon{color:var(--color-text-secondary);font-size:14px}.search-input{width:190px;padding:8px;border:none;outline:none;background:transparent;color:var(--color-text-primary)}.search-input::placeholder{color:#7d8590}#log-problems-container{flex:1;min-height:0;width:100%;font-family:'Inter',sans-serif;display:flex;flex-direction:column;overflow:hidden}.problems-table-panel{width:100%;flex:1;min-height:0;border:1px solid var(--color-border);border-radius:12px;background-color:var(--color-bg-panel);display:flex;flex-direction:column;overflow:hidden}.table-wrapper{min-height:0;flex:1 1 auto;overflow-y:auto;overflow-x:auto;overscroll-behavior:contain}.table-wrapper::-webkit-scrollbar{width:7px;height:7px}.table-wrapper::-webkit-scrollbar-thumb{border-radius:999px;background:#30363d}.problems-table{width:100%;min-width:520px;border-collapse:collapse;table-layout:fixed}.problems-table th,.problems-table td{padding:11px 14px;border-bottom:1px solid rgba(48,54,61,0.7);color:var(--color-text-primary);font-size:12px;line-height:1.35;text-align:left;vertical-align:middle;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.problems-table thead{position:sticky;top:0;z-index:2;background-color:#21262d}.problems-table th{color:#9ca6b7;font-size:11px;font-weight:700;letter-spacing:.3px;text-transform:uppercase}.problems-table tbody tr:hover{background-color:var(--color-bg-hover)}.cell-host{color:#fff!important;font-weight:700;font-family:'Roboto Mono',monospace}.rank-badge{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:11px;font-weight:800;font-family:'Roboto Mono',monospace}.bar-cell{display:flex;align-items:center;gap:8px}.bar-track{flex:1;min-width:40px;height:6px;border-radius:999px;background:rgba(255,255,255,0.08);overflow:hidden}.bar-fill{height:100%;border-radius:999px;background:var(--accent)}.bar-value{min-width:42px;text-align:right;font-family:'Roboto Mono',monospace;font-weight:700;color:#fff}.proto-badge{min-width:52px;padding:4px 10px;border-radius:999px;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.3px;box-shadow:0 1px 4px rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.25)}.proto-badge.proto-tcp{background:#0ea5e9}.proto-badge.proto-udp{background:#a855f7}.problems-empty-row td{padding:30px!important;color:var(--color-text-secondary)!important;text-align:center!important;white-space:normal!important}.footer-info{padding:8px 16px;border-top:1px solid var(--color-border);color:var(--color-text-secondary);font-size:11px;flex-shrink:0}.svg-icon{display:inline-grid;place-items:center;width:1em;height:1em;line-height:1;vertical-align:-.125em;flex-shrink:0}.svg-icon svg{width:1em;height:1em;display:block}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div id='log-section-root'><div id='log-problems-container'></div></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "(function(){\nfunction escapeHtml(v){return String(v==null?'':v).replace(/[&<>]/g,function(c){return c==='&'?'&amp;':(c==='<'?'&lt;':'&gt;');});}\nfunction normalizeSearchText(v){return String(v||'').toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'');}\nfunction valuesToArray(values){if(!values)return[];if(Array.isArray(values))return values;if(typeof values.toArray==='function')return values.toArray();var len=values.length||values.size||(values.buffer?values.buffer.length:0)||0;var out=[];for(var i=0;i<len;i++){out.push(typeof values.get==='function'?values.get(i):values[i]);}return out;}\nfunction fieldByName(frame,name){var fields=(frame&&frame.fields)||[];var lower=name.toLowerCase();for(var i=0;i<fields.length;i++){var f=fields[i];var n1=String(f.name||'').toLowerCase();var n2=String((f.config&&f.config.displayName)||'').toLowerCase();if(n1===lower||n2===lower)return f;}return null;}\nvar SEARCH_ICON=\"<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='7'/><path d='m20 20-3.5-3.5'/></svg>\";\nvar GLOBE_ICON=\"<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><path d='M3 12h18'/><path d='M12 3a15 15 0 0 1 0 18'/><path d='M12 3a15 15 0 0 0 0 18'/></svg>\";\nvar PROTO_META={tcp:{label:'TCP',cls:'proto-tcp'},udp:{label:'UDP',cls:'proto-udp'}};\nfunction extractFrame(frame,rows){\nif(!frame)return;\nvar dstIpField=fieldByName(frame,'dst_ip');\nvar dstPortField=fieldByName(frame,'dst_port');\nvar protoField=fieldByName(frame,'proto');\nvar eventosField=fieldByName(frame,'eventos');\nvar usuariosField=fieldByName(frame,'usuarios');\nif(!dstIpField)return;\nvar dstIps=valuesToArray(dstIpField.values);\nvar dstPorts=dstPortField?valuesToArray(dstPortField.values):[];\nvar protos=protoField?valuesToArray(protoField.values):[];\nvar eventosArr=eventosField?valuesToArray(eventosField.values):[];\nvar usuariosArr=usuariosField?valuesToArray(usuariosField.values):[];\nfor(var i=0;i<dstIps.length;i++){\nvar protoRaw=String(protos[i]||'').toLowerCase();\nrows.push({\ndestino:String(dstIps[i]||'-')+':'+String(dstPorts[i]||'-'),\nproto:PROTO_META[protoRaw]?protoRaw:'tcp',\neventos:Number(eventosArr[i])||0,\nusuarios:Number(usuariosArr[i])||0\n});\n}\n}\nvar rows=[];\nvar frames=(data&&data.series)||[];\nfor(var fi=0;fi<frames.length;fi++){extractFrame(frames[fi],rows);}\nrows.sort(function(a,b){return b.eventos-a.eventos;});\nwindow.__cgnatTopDestState=window.__cgnatTopDestState||{searchTerm:''};\nvar state=window.__cgnatTopDestState;\nvar debounceTimer=null;\nvar rightContainer=htmlNode.querySelector('#log-problems-container');\nfunction renderRightPanel(){\nif(!rightContainer)return;\nvar filtered=rows.filter(function(r){\nif(state.searchTerm){var s=normalizeSearchText(state.searchTerm);var hay=normalizeSearchText(r.destino);if(hay.indexOf(s)===-1)return false;}\nreturn true;\n});\nvar maxEventos=filtered.reduce(function(m,r){return Math.max(m,r.eventos);},1);\nvar rowsHtml='';\nfiltered.forEach(function(r,idx){\nvar meta=PROTO_META[r.proto];\nvar pct=Math.max(4,Math.round((r.eventos/maxEventos)*100));\nrowsHtml+=\"<tr><td><span class='rank-badge'>\"+(idx+1)+\"</span></td><td class='cell-host'>\"+escapeHtml(r.destino)+\"</td><td><span class='proto-badge \"+meta.cls+\"'>\"+meta.label+\"</span></td><td><div class='bar-cell'><div class='bar-track'><div class='bar-fill' style='width:\"+pct+\"%'></div></div><span class='bar-value'>\"+r.eventos.toLocaleString('pt-BR')+\"</span></div></td><td>\"+r.usuarios.toLocaleString('pt-BR')+\"</td></tr>\";\n});\nif(!rowsHtml){\nrowsHtml=\"<tr class='problems-empty-row'><td colspan='5'>Nenhum destino encontrado para o filtro selecionado.</td></tr>\";\n}\nrightContainer.innerHTML =\n\"<div class='log-section-header'><div class='log-section-header-left'><span class='log-section-icon'><span class='svg-icon' aria-hidden='true'>\"+GLOBE_ICON+\"</span></span><div><div class='log-section-title'>Top Destinos Acessados</div><div class='log-section-sub'>Ordenado por eventos no periodo</div></div></div>\"+\n\"<div class='search-input-wrapper'><span class='svg-icon' aria-hidden='true'>\"+SEARCH_ICON+\"</span><input type='text' id='top-dest-search' class='search-input' placeholder='Buscar destino...' value='\"+escapeHtml(state.searchTerm)+\"'/></div>\"+\n\"</div>\"+\n\"<div class='problems-table-panel'>\"+\n\"<div class='table-wrapper'><table class='problems-table'><thead><tr><th>#</th><th>Destino</th><th>Proto</th><th>Eventos</th><th>Usuarios</th></tr></thead><tbody>\"+rowsHtml+\"</tbody></table></div>\"+\n\"<div class='footer-info'>\"+filtered.length+\" destino(s)</div>\"+\n\"</div>\";\nvar searchInput=rightContainer.querySelector('#top-dest-search');\nif(searchInput){\nsearchInput.oninput=function(ev){\nvar value=ev.target.value;\nclearTimeout(debounceTimer);\ndebounceTimer=setTimeout(function(){\nstate.searchTerm=value;\nrenderRightPanel();\nvar updated=rightContainer.querySelector('#top-dest-search');\nif(updated){updated.focus();updated.setSelectionRange(value.length,value.length);}\n},400);\n};\n}\n}\nrenderRightPanel();\n})();",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull",
+                  "last",
+                  "firstNotNull",
+                  "first",
+                  "min",
+                  "max",
+                  "mean",
+                  "sum",
+                  "count",
+                  "range",
+                  "delta",
+                  "step",
+                  "diff",
+                  "logmin",
+                  "allIsZero",
+                  "allIsNull",
+                  "diffperc"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-7": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "dfwimkwah7xtse"
+                    },
+                    "group": "victoriametrics-logs-datasource",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "${base_filter:raw} | extract_regexp \"(?P<nat_rule>CGNAT[0-9]+-(?P<proto_from_rule>TCP|UDP)) srcnat: .*src-mac (?P<src_mac>[0-9a-fA-F:]+), proto (?P<proto>TCP|UDP)(?: \\\\([^)]*\\\\))?, (?P<client_ip>(?:[0-9]{1,3}\\\\.){3}[0-9]{1,3}):(?P<client_port>[0-9]+)->(?P<dst_ip>(?:[0-9]{1,3}\\\\.){3}[0-9]{1,3}):(?P<dst_port>[0-9]+)\" | fields _time, nat_rule, proto, client_ip, client_port, src_mac, dst_ip, dst_port, remote_ip, _msg | sort by (_time desc) | limit ${limit}",
+                      "queryType": "instant"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": [
+              {
+                "group": "extractFields",
+                "kind": "Transformation",
+                "spec": {
+                  "options": {
+                    "format": "json",
+                    "keepTime": false,
+                    "replace": false,
+                    "source": "labels"
+                  }
+                }
+              },
+              {
+                "group": "convertFieldType",
+                "kind": "Transformation",
+                "spec": {
+                  "options": {
+                    "conversions": [
+                      {
+                        "destinationType": "number",
+                        "targetField": "client_port"
+                      },
+                      {
+                        "destinationType": "number",
+                        "targetField": "dst_port"
+                      }
+                    ],
+                    "fields": {}
+                  }
+                }
+              },
+              {
+                "group": "organize",
+                "kind": "Transformation",
+                "spec": {
+                  "options": {
+                    "excludeByName": {
+                      "Line": true,
+                      "detected_level": true,
+                      "id": true,
+                      "labels": true,
+                      "streamId": true,
+                      "streams": true
+                    },
+                    "indexByName": {
+                      "_msg": 9,
+                      "_time": 0,
+                      "client_ip": 3,
+                      "client_port": 4,
+                      "dst_ip": 6,
+                      "dst_port": 7,
+                      "nat_rule": 1,
+                      "proto": 2,
+                      "remote_ip": 8,
+                      "src_mac": 5
+                    },
+                    "renameByName": {}
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "description": "",
+        "id": 7,
+        "links": [],
+        "title": "",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@500&display=swap');:host,:root{--color-tcp:#0ea5e9;--color-udp:#a855f7;--color-text-primary:#e0e6f1;--color-text-secondary:#9ca6b7;--color-bg-panel:rgba(14,18,25,0.94);--color-bg-hover:rgba(255,255,255,0.035);--color-border:#30363d;--color-btn-bg:#21262d;--color-btn-active-default:#2563eb}*{box-sizing:border-box}button,input{font-family:'Inter',sans-serif}#log-section-root{width:100%;height:100%;box-sizing:border-box;display:flex;flex-direction:column;padding:18px 20px;background:radial-gradient(circle at top left,rgba(14,165,233,0.06),transparent 32%),linear-gradient(135deg,#161B22 0%,#101419 100%);border:1px solid rgba(255,255,255,0.06);border-radius:14px;overflow:hidden}.log-section-header{display:flex;align-items:center;justify-content:space-between;margin:0 0 16px 0;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0}.log-section-header-left{display:flex;align-items:center;gap:10px}.log-section-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:9px;color:#0ea5e9;background:rgba(14,165,233,0.12);border:1px solid rgba(14,165,233,0.30);font-size:1rem;flex-shrink:0}.log-section-title{font-size:1rem;font-weight:700;color:#ffffff;line-height:1.1}.log-section-sub{font-size:0.65rem;font-weight:600;color:#8b949e;text-transform:uppercase;letter-spacing:0.04em;margin-top:2px}#log-problems-container{flex:1;min-height:0;width:100%;font-family:'Inter',sans-serif;display:flex;flex-direction:column;overflow:hidden}.problems-table-panel{width:100%;flex:1;min-height:0;border:1px solid var(--color-border);border-radius:12px;background-color:var(--color-bg-panel);display:flex;flex-direction:column;overflow:hidden}.filter-bar{padding:10px 16px;border-bottom:1px solid var(--color-border);display:flex;align-items:center;flex-wrap:wrap;gap:16px;flex-shrink:0}.filter-group{display:flex;align-items:center;flex-wrap:wrap;gap:8px}.filter-label{color:var(--color-text-secondary);font-size:.8rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase}.filter-btn{padding:6px 14px;border:1px solid var(--color-border);border-radius:6px;background-color:var(--color-btn-bg);color:var(--color-text-secondary);display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-size:.75rem;font-weight:600;transition:background .2s ease,border-color .2s ease,color .2s ease}.filter-btn:hover{background-color:var(--color-border);color:var(--color-text-primary)}.filter-btn.active{background-color:var(--color-btn-active-default);border-color:var(--color-btn-active-default);color:#fff}.filter-btn.active.btn-tcp{background:var(--color-tcp);border-color:var(--color-tcp)}.filter-btn.active.btn-udp{background:var(--color-udp);border-color:var(--color-udp)}.search-bar-group{margin-left:auto;display:flex;align-items:center;gap:8px}.search-input-wrapper{padding:0 10px;border:1px solid var(--color-border);border-radius:6px;background-color:var(--color-btn-bg);display:flex;align-items:center}.search-input-wrapper .svg-icon{color:var(--color-text-secondary);font-size:14px}.search-input{width:220px;padding:8px;border:none;outline:none;background:transparent;color:var(--color-text-primary)}.search-input::placeholder{color:#7d8590}.export-btn{padding:6px 10px}.table-wrapper{min-height:0;flex:1 1 auto;overflow-y:auto;overflow-x:auto;overscroll-behavior:contain}.table-wrapper::-webkit-scrollbar{width:7px;height:7px}.table-wrapper::-webkit-scrollbar-thumb{border-radius:999px;background:#30363d}.problems-table{width:100%;min-width:900px;border-collapse:collapse;table-layout:fixed}.problems-table th,.problems-table td{padding:12px 16px;border-bottom:1px solid rgba(48,54,61,0.7);color:var(--color-text-primary);font-size:12px;line-height:1.35;text-align:left;vertical-align:middle;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.problems-table thead{position:sticky;top:0;z-index:2;background-color:#21262d}.problems-table th{color:#9ca6b7;font-size:11px;font-weight:700;letter-spacing:.3px;text-transform:uppercase}.problems-table tbody tr:hover{background-color:var(--color-bg-hover)}.cell-host{color:#fff!important;font-weight:700;font-family:'Roboto Mono',monospace}.cell-public{color:#22d3ee!important;font-weight:700;font-family:'Roboto Mono',monospace}.problems-empty-row td{padding:30px!important;color:var(--color-text-secondary)!important;text-align:center!important;white-space:normal!important}.proto-badge{min-width:52px;padding:4px 10px;border-radius:999px;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.3px;box-shadow:0 1px 4px rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.25)}.proto-badge.proto-tcp{background:var(--color-tcp)}.proto-badge.proto-udp{background:var(--color-udp)}.pagination-controls{padding:10px 16px;border-top:1px solid var(--color-border);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-shrink:0}.pagination-info{color:var(--color-text-secondary);font-size:12px}.pagination-buttons{display:flex;gap:8px}.pagination-btn{padding:6px 14px;border:1px solid var(--color-border);border-radius:6px;background:var(--color-btn-bg);color:var(--color-text-primary);cursor:pointer;font-size:12px;font-weight:600;transition:background .18s ease,border-color .18s ease}.pagination-btn:hover:not(:disabled){background:#2d333b;border-color:#4b5563}.pagination-btn:disabled{opacity:.4;cursor:not-allowed}@media (max-width:680px){.filter-bar{align-items:stretch}.filter-group{width:100%}.search-bar-group{width:100%}.search-input-wrapper{flex:1}.search-input{width:100%}.pagination-controls{align-items:stretch;flex-direction:column}.pagination-buttons{width:100%}.pagination-buttons .pagination-btn{flex:1}}.svg-icon{display:inline-grid;place-items:center;width:1em;height:1em;line-height:1;vertical-align:-.125em;flex-shrink:0}.svg-icon svg{width:1em;height:1em;display:block}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div id='log-section-root'><div id='log-problems-container'></div></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "(function(){\nfunction escapeHtml(v){return String(v==null?'':v).replace(/[&<>]/g,function(c){return c==='&'?'&amp;':(c==='<'?'&lt;':'&gt;');});}\nfunction normalizeSearchText(v){return String(v||'').toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'');}\nfunction valuesToArray(values){if(!values)return[];if(Array.isArray(values))return values;if(typeof values.toArray==='function')return values.toArray();var len=values.length||values.size||(values.buffer?values.buffer.length:0)||0;var out=[];for(var i=0;i<len;i++){out.push(typeof values.get==='function'?values.get(i):values[i]);}return out;}\nfunction toMs(v){if(v instanceof Date)return v.getTime();if(typeof v==='number')return v;var p=new Date(v).getTime();return Number.isFinite(p)?p:0;}\nfunction fieldByName(frame,name){var fields=(frame&&frame.fields)||[];var lower=name.toLowerCase();for(var i=0;i<fields.length;i++){var f=fields[i];var n1=String(f.name||'').toLowerCase();var n2=String((f.config&&f.config.displayName)||'').toLowerCase();if(n1===lower||n2===lower)return f;}return null;}\nvar TABLE_ICON=\"<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='4' width='18' height='16' rx='2'/><path d='M3 10h18'/><path d='M9 4v16'/></svg>\";\nvar SEARCH_ICON=\"<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='7'/><path d='m20 20-3.5-3.5'/></svg>\";\nvar CSV_ICON=\"<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.1' stroke-linecap='round' stroke-linejoin='round'><path d='M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7Z'/><path d='M14 2v5h5'/><path d='M8 16h8'/><path d='M8 12h8'/></svg>\";\nvar PUBLIC_IP_BY_RULE={'1':'45.187.224.147','2':'45.187.224.148','3':'45.187.224.149','4':'45.187.224.150','5':'45.187.224.146'};\nfunction publicIpFromRule(natRule){var m=String(natRule||'').match(/CGNAT(\\d+)/);return m?(PUBLIC_IP_BY_RULE[m[1]]||'-'):'-';}\nvar PROTO_META={tcp:{label:'TCP',cls:'proto-tcp'},udp:{label:'UDP',cls:'proto-udp'}};\nfunction extractFrame(frame,rows){\nif(!frame)return;\nvar timeField=fieldByName(frame,'_time')||fieldByName(frame,'Time');\nvar ruleField=fieldByName(frame,'nat_rule');\nvar protoField=fieldByName(frame,'proto');\nvar ipField=fieldByName(frame,'client_ip');\nvar portField=fieldByName(frame,'client_port');\nvar macField=fieldByName(frame,'src_mac');\nvar dstIpField=fieldByName(frame,'dst_ip');\nvar dstPortField=fieldByName(frame,'dst_port');\nvar msgField=fieldByName(frame,'_msg');\nif(!timeField&&!ruleField)return;\nvar times=timeField?valuesToArray(timeField.values):[];\nvar rules=ruleField?valuesToArray(ruleField.values):[];\nvar protos=protoField?valuesToArray(protoField.values):[];\nvar ips=ipField?valuesToArray(ipField.values):[];\nvar ports=portField?valuesToArray(portField.values):[];\nvar macs=macField?valuesToArray(macField.values):[];\nvar dstIps=dstIpField?valuesToArray(dstIpField.values):[];\nvar dstPorts=dstPortField?valuesToArray(dstPortField.values):[];\nvar msgs=msgField?valuesToArray(msgField.values):[];\nvar n=Math.max(times.length,rules.length,ips.length);\nfor(var i=0;i<n;i++){\nvar protoRaw=String(protos[i]||'').toLowerCase();\nrows.push({\ntime:toMs(times[i]),\nregra:String(rules[i]||'-'),\nproto:PROTO_META[protoRaw]?protoRaw:'tcp',\ninterno:String(ips[i]||'-')+':'+String(ports[i]||'-'),\npublico:publicIpFromRule(rules[i]),\nmac:String(macs[i]||'-'),\ndestino:String(dstIps[i]||'-')+':'+String(dstPorts[i]||'-'),\nmensagem:String(msgs[i]||'-')\n});\n}\n}\nvar rows=[];\nvar frames=(data&&data.series)||[];\nfor(var fi=0;fi<frames.length;fi++){extractFrame(frames[fi],rows);}\nwindow.__cgnatPanelState=window.__cgnatPanelState||{activeProto:'all',searchTerm:'',currentPage:1};\nvar state=window.__cgnatPanelState;\nvar itemsPerPage=15;\nvar debounceTimer=null;\nvar rightContainer=htmlNode.querySelector('#log-problems-container');\nfunction formatAge(ms){if(!ms)return '-';var diff=Math.floor((Date.now()-ms)/1000);if(diff<60)return Math.max(0,diff)+'s atras';if(diff<3600)return Math.floor(diff/60)+'m atras';if(diff<86400)return Math.floor(diff/3600)+'h atras';return Math.floor(diff/86400)+'d atras';}\nfunction formatHora(ms){if(!ms)return '-';var d=new Date(ms);return d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})+' '+d.toLocaleTimeString('pt-BR');}\nfunction exportCsv(list){var Q=String.fromCharCode(34);var esc=function(v){v=String(v==null?'':v).split(Q).join(Q+Q);return Q+v+Q;};var header=[esc('Regra'),esc('Proto'),esc('IP Interno'),esc('IP Publico'),esc('MAC'),esc('Destino'),esc('Hora')].join(';');var lines=[header];list.forEach(function(r){lines.push([esc(r.regra),esc(r.proto.toUpperCase()),esc(r.interno),esc(r.publico),esc(r.mac),esc(r.destino),esc(formatHora(r.time))].join(';'));});var csv=String.fromCharCode(65279)+lines.join(String.fromCharCode(13,10));var blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='auditoria-cgnat-'+Date.now()+'.csv';document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(url);},1000);}\nfunction renderRightPanel(){\nif(!rightContainer)return;\nvar filtered=rows.filter(function(r){\nif(state.activeProto!=='all'&&r.proto!==state.activeProto)return false;\nif(state.searchTerm){var s=normalizeSearchText(state.searchTerm);var hay=normalizeSearchText(r.regra+' '+r.interno+' '+r.publico+' '+r.mac+' '+r.destino+' '+r.mensagem);if(hay.indexOf(s)===-1)return false;}\nreturn true;\n});\nfiltered.sort(function(a,b){return b.time-a.time;});\nvar totalPages=Math.max(1,Math.ceil(filtered.length/itemsPerPage));\nif(state.currentPage>totalPages)state.currentPage=totalPages;\nif(state.currentPage<1)state.currentPage=1;\nvar start=(state.currentPage-1)*itemsPerPage;\nvar pageItems=filtered.slice(start,start+itemsPerPage);\nvar rowsHtml='';\npageItems.forEach(function(r){\nvar meta=PROTO_META[r.proto];\nrowsHtml+=\"<tr><td class='cell-host'>\"+escapeHtml(r.regra)+\"</td><td><span class='proto-badge \"+meta.cls+\"'>\"+meta.label+\"</span></td><td>\"+escapeHtml(r.interno)+\"</td><td class='cell-public'>\"+escapeHtml(r.publico)+\"</td><td>\"+escapeHtml(r.mac)+\"</td><td>\"+escapeHtml(r.destino)+\"</td><td>\"+formatAge(r.time)+\"</td><td>\"+formatHora(r.time)+\"</td></tr>\";\n});\nif(!rowsHtml){\nrowsHtml=\"<tr class='problems-empty-row'><td colspan='8'>Nenhum acesso encontrado para os filtros selecionados.</td></tr>\";\n}\nvar filterButtonsHtml=\"<button class='filter-btn filter-btn-proto \"+(state.activeProto==='all'?'active':'')+\"' data-proto='all' type='button'>All</button>\";\nfilterButtonsHtml+=Object.keys(PROTO_META).map(function(p){\nvar meta=PROTO_META[p];\nreturn \"<button class='filter-btn filter-btn-proto btn-\"+p+\" \"+(state.activeProto===p?'active':'')+\"' data-proto='\"+p+\"' type='button'>\"+meta.label+\"</button>\";\n}).join('');\nrightContainer.innerHTML =\n\"<div class='log-section-header'><div class='log-section-header-left'><span class='log-section-icon'><span class='svg-icon' aria-hidden='true'>\"+TABLE_ICON+\"</span></span><div><div class='log-section-title'>Auditoria CGNAT</div><div class='log-section-sub'>Ultimos registros de traducao de endereco</div></div></div></div>\"+\n\"<div class='problems-table-panel'>\"+\n\"<div class='filter-bar'>\"+\n\"<div class='filter-group'><span class='filter-label'>Protocolo:</span>\"+filterButtonsHtml+\"</div>\"+\n\"<div class='search-bar-group'>\"+\n\"<div class='search-input-wrapper'><span class='svg-icon' aria-hidden='true'>\"+SEARCH_ICON+\"</span>\"+\n\"<input type='text' id='problem-search-input' class='search-input' placeholder='Buscar IP, MAC ou regra...' value='\"+escapeHtml(state.searchTerm)+\"'/></div>\"+\n\"<button class='pagination-btn export-btn' id='btn-export' type='button' title='Exportar CSV'><span class='svg-icon' aria-hidden='true'>\"+CSV_ICON+\"</span></button>\"+\n\"</div></div>\"+\n\"<div class='table-wrapper'><table class='problems-table'><thead><tr><th>Regra</th><th>Proto</th><th>IP Interno</th><th>IP Publico</th><th>MAC</th><th>Destino</th><th>Idade</th><th>Hora</th></tr></thead><tbody>\"+rowsHtml+\"</tbody></table></div>\"+\n\"<div class='pagination-controls'><span class='pagination-info'>Pagina \"+state.currentPage+\" de \"+totalPages+\" &middot; \"+filtered.length+\" acesso(s)</span>\"+\n\"<div class='pagination-buttons'>\"+\n\"<button class='pagination-btn' id='btn-prev' type='button' \"+(state.currentPage===1?'disabled':'')+\">Anterior</button>\"+\n\"<button class='pagination-btn' id='btn-next' type='button' \"+(state.currentPage===totalPages?'disabled':'')+\">Proxima</button>\"+\n\"</div></div></div>\";\nvar searchInput=rightContainer.querySelector('#problem-search-input');\nif(searchInput){\nsearchInput.oninput=function(ev){\nvar value=ev.target.value;\nclearTimeout(debounceTimer);\ndebounceTimer=setTimeout(function(){\nstate.searchTerm=value;\nstate.currentPage=1;\nrenderRightPanel();\nvar updated=rightContainer.querySelector('#problem-search-input');\nif(updated){updated.focus();updated.setSelectionRange(value.length,value.length);}\n},400);\n};\n}\nvar protoButtons=rightContainer.querySelectorAll('.filter-btn-proto');\nfor(var i=0;i<protoButtons.length;i++){\n(function(btn){\nbtn.onclick=function(){\nstate.activeProto=btn.getAttribute('data-proto')||'all';\nstate.currentPage=1;\nrenderRightPanel();\n};\n})(protoButtons[i]);\n}\nvar prevBtn=rightContainer.querySelector('#btn-prev');\nif(prevBtn){prevBtn.onclick=function(){if(state.currentPage>1){state.currentPage-=1;renderRightPanel();}};}\nvar nextBtn=rightContainer.querySelector('#btn-next');\nif(nextBtn){nextBtn.onclick=function(){if(state.currentPage<totalPages){state.currentPage+=1;renderRightPanel();}};}\nvar exportBtn=rightContainer.querySelector('#btn-export');\nif(exportBtn){exportBtn.onclick=function(){exportCsv(filtered);};}\n}\nrenderRightPanel();\n})();",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull",
+                  "last",
+                  "firstNotNull",
+                  "first",
+                  "min",
+                  "max",
+                  "mean",
+                  "sum",
+                  "count",
+                  "range",
+                  "delta",
+                  "step",
+                  "diff",
+                  "logmin",
+                  "allIsZero",
+                  "allIsNull",
+                  "diffperc"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-8": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "dfwimkwah7xtse"
+                    },
+                    "group": "victoriametrics-logs-datasource",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "${base_filter:raw} | extract_regexp \"(?P<nat_rule>CGNAT[0-9]+-(?P<proto_from_rule>TCP|UDP)) srcnat: .*src-mac (?P<src_mac>[0-9a-fA-F:]+), proto (?P<proto>TCP|UDP)(?: \\\\([^)]*\\\\))?, (?P<client_ip>(?:[0-9]{1,3}\\\\.){3}[0-9]{1,3}):(?P<client_port>[0-9]+)->(?P<dst_ip>(?:[0-9]{1,3}\\\\.){3}[0-9]{1,3}):(?P<dst_port>[0-9]+)\" | stats by (_time:${__interval}, proto) count() as eventos",
+                      "queryType": "range"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": [
+              {
+                "group": "extractFields",
+                "kind": "Transformation",
+                "spec": {
+                  "options": {
+                    "format": "json",
+                    "keepTime": false,
+                    "replace": false,
+                    "source": "labels"
+                  }
+                }
+              },
+              {
+                "group": "convertFieldType",
+                "kind": "Transformation",
+                "spec": {
+                  "options": {
+                    "conversions": [
+                      {
+                        "destinationType": "number",
+                        "targetField": "eventos"
+                      }
+                    ],
+                    "fields": {}
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "description": "",
+        "id": 8,
+        "links": [],
+        "title": "",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@500;700;900&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}.pbi-board{--panel:rgba(255,255,255,0.045);--border:rgba(255,255,255,0.10);--text:#f4f7fb;--muted:#9aa4b2;--tcp:#0ea5e9;--udp:#a855f7;width:100%;height:100%;box-sizing:border-box;padding:14px;color:var(--text);background:radial-gradient(circle at top left,rgba(14,165,233,0.10),transparent 32%),radial-gradient(circle at bottom right,rgba(168,85,247,0.08),transparent 30%),linear-gradient(135deg,#11161d 0%,#0c1016 100%);border-radius:14px;overflow:visible}.pbi-panel{position:relative;z-index:1;width:100%;height:100%;min-width:0;min-height:0;display:flex;flex-direction:column;padding:12px;border-radius:12px;background:var(--panel);border:1px solid var(--border);overflow:visible}.pbi-panel-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;flex-shrink:0}.pbi-panel-title strong{font-size:14px;font-weight:900;color:#ffffff}.pbi-legend{display:flex;flex-wrap:wrap;gap:8px;font-size:10px;color:var(--muted);font-weight:800}.pbi-legend span{display:inline-flex;align-items:center;gap:5px}.pbi-dot{width:8px;height:8px;border-radius:999px;display:inline-block;flex-shrink:0}.pbi-chart-wrap{position:relative;z-index:1;width:100%;flex:1;min-height:150px;overflow:visible}.pbi-chart{position:relative;z-index:1;width:100%;height:100%;display:block}.pbi-axis,.pbi-axis-y{fill:#9aa4b2;font-size:11px;font-weight:800;font-family:'Roboto Mono',monospace}.pbi-grid-line{stroke:rgba(255,255,255,0.08);stroke-width:1}.pbi-line{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 5px rgba(255,255,255,0.10))}.pbi-crosshair-line{stroke:rgba(255,255,255,0.48);stroke-width:1.3;stroke-dasharray:4 4;pointer-events:none}.pbi-chart-tooltip{position:absolute;display:none;min-width:170px;z-index:99999;padding:10px 12px;border-radius:9px;background:rgba(15,22,33,0.96);border:1px solid rgba(255,255,255,0.16);box-shadow:0 10px 28px rgba(0,0,0,0.55);color:#ffffff;pointer-events:none;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}.pbi-tooltip-time{color:#9aa4b2;font-size:11px;font-weight:900;padding-bottom:7px;margin-bottom:7px;border-bottom:1px solid rgba(255,255,255,0.10)}.pbi-tooltip-row{display:flex;justify-content:space-between;gap:14px;margin-top:6px;font-size:12px;font-weight:800}.pbi-tooltip-row strong{color:#ffffff;font-family:'Roboto Mono',monospace}.pbi-empty{height:100%;min-height:150px;display:grid;place-items:center;text-align:center;color:var(--muted);font-size:13px;font-weight:700;border-radius:12px;border:1px dashed rgba(255,255,255,0.18);background:rgba(255,255,255,0.035)}@media (max-width:1100px){.pbi-board{overflow:auto}.pbi-chart-wrap{height:250px}}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class='pbi-board'></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "(function(){\nvar container=htmlNode.querySelector('.pbi-board');\nif(!container)return;\nvar METRICS=[\n{key:'tcp',label:'TCP',color:'#0ea5e9'},\n{key:'udp',label:'UDP',color:'#a855f7'}\n];\nvar PANEL_TITLE='Volume por Protocolo';\nfunction escapeHTML(v){return String(v==null?'':v).replace(/[&<>]/g,function(c){return c==='&'?'&amp;':(c==='<'?'&lt;':'&gt;');});}\nfunction valuesToArray(values){if(!values)return[];if(Array.isArray(values))return values;if(typeof values.toArray==='function')return values.toArray();var len=values.length||values.size||(values.buffer?values.buffer.length:0)||0;var out=[];for(var i=0;i<len;i++){out.push(typeof values.get==='function'?values.get(i):values[i]);}return out;}\nfunction toNumber(v){if(v===null||v===undefined||v==='')return null;var n=Number(v);return Number.isFinite(n)?n:null;}\nfunction toTimestamp(v){if(v instanceof Date)return v.getTime();if(typeof v==='number')return v;var p=new Date(v).getTime();return Number.isFinite(p)?p:null;}\nfunction formatTime(v){if(!Number.isFinite(v))return '--';var d=new Date(v);var dd=String(d.getDate()).padStart(2,'0');var mm=String(d.getMonth()+1).padStart(2,'0');var hh=String(d.getHours()).padStart(2,'0');var mi=String(d.getMinutes()).padStart(2,'0');return dd+'/'+mm+' '+hh+':'+mi;}\nfunction formatValue(v){if(!Number.isFinite(v))return '--';return Math.round(v).toLocaleString('pt-BR');}\nfunction fieldByName(frame,name){var fields=(frame&&frame.fields)||[];var lower=name.toLowerCase();for(var i=0;i<fields.length;i++){var f=fields[i];var n1=String(f.name||'').toLowerCase();var n2=String((f.config&&f.config.displayName)||'').toLowerCase();if(n1===lower||n2===lower)return f;}return null;}\nfunction parseData(gData){\nvar metrics={};\nMETRICS.forEach(function(m){metrics[m.key]=[];});\nvar series=(gData&&gData.series)||[];\nseries.forEach(function(frame){\nvar fields=frame.fields||[];\nvar timeField=fields.find(function(f){return f.type==='time';})||fieldByName(frame,'_time')||fieldByName(frame,'Time');\nvar protoField=fieldByName(frame,'proto');\nvar eventosField=fieldByName(frame,'eventos');\nif(timeField&&protoField&&eventosField){\nvar times=valuesToArray(timeField.values).map(toTimestamp);\nvar protos=valuesToArray(protoField.values);\nvar eventosVals=valuesToArray(eventosField.values);\nfor(var i=0;i<times.length;i++){\nvar t=times[i];\nvar v=toNumber(eventosVals[i]);\nvar key=String(protos[i]||'').toLowerCase();\nif(!Number.isFinite(t)||!Number.isFinite(v)||!metrics[key])continue;\nmetrics[key].push({time:t,value:v});\n}\nreturn;\n}\nif(!timeField)return;\nvar times2=valuesToArray(timeField.values).map(toTimestamp);\nfields.forEach(function(field){\nif(field===timeField)return;\nvar labelVals=field.labels?Object.keys(field.labels).map(function(k){return field.labels[k];}).join(' '):'';\nvar combined=[field.name,field.config?field.config.displayName:null,field.config?field.config.displayNameFromDS:null,labelVals].filter(Boolean).join(' ').toLowerCase();\nvar metric=METRICS.find(function(m){return combined.indexOf(m.key)!==-1;});\nif(!metric)return;\nvar values=valuesToArray(field.values);\nvalues.forEach(function(raw,idx){\nvar t=times2[idx];\nvar v=toNumber(raw);\nif(!Number.isFinite(t)||!Number.isFinite(v))return;\nmetrics[metric.key].push({time:t,value:v});\n});\n});\n});\nObject.keys(metrics).forEach(function(k){metrics[k].sort(function(a,b){return a.time-b.time;});});\nreturn metrics;\n}\nfunction getAllPoints(metrics){var out=[];Object.keys(metrics).forEach(function(k){metrics[k].forEach(function(p){out.push(p);});});return out;}\nfunction buildChartMarkup(metrics,width,height){\nvar left=48,right=20,top=16,bottom=32;\nvar plotW=width-left-right;\nvar plotH=height-top-bottom;\nvar allPoints=getAllPoints(metrics);\nif(!allPoints.length){return \"<div class='pbi-empty'>Sem dados para montar o grafico.</div>\";}\nvar times=allPoints.map(function(p){return p.time;}).filter(Number.isFinite);\nvar values=allPoints.map(function(p){return p.value;}).filter(Number.isFinite);\nvar minTime=Math.min.apply(null,times);\nvar maxTime=Math.max.apply(null,times);\nvar maxValue=values.length?Math.max.apply(null,values)*1.18:1;\nif(maxValue<=0)maxValue=1;\nfunction xScale(t){if(maxTime===minTime)return left;return left+((t-minTime)/(maxTime-minTime))*plotW;}\nfunction yScale(v){return top+plotH-(v/maxValue)*plotH;}\nvar grid=[];\nfor(var i=0;i<=4;i++){\nvar y=top+(plotH/4)*i;\nvar gv=maxValue-(maxValue/4)*i;\ngrid.push(\"<line class='pbi-grid-line' x1='\"+left+\"' y1='\"+y+\"' x2='\"+(width-right)+\"' y2='\"+y+\"'></line><text class='pbi-axis-y' x='\"+(left-10)+\"' y='\"+(y+4)+\"' text-anchor='end'>\"+Math.round(gv).toLocaleString('pt-BR')+\"</text>\");\n}\nfor(var j=0;j<=5;j++){\nvar x=left+(plotW/5)*j;\nvar t=minTime+((maxTime-minTime)/5)*j;\nvar lbl=(formatTime(t).split(' ')[1])||'--';\ngrid.push(\"<line class='pbi-grid-line' x1='\"+x+\"' y1='\"+top+\"' x2='\"+x+\"' y2='\"+(top+plotH)+\"'></line><text class='pbi-axis' x='\"+(x-18)+\"' y='\"+(height-8)+\"'>\"+lbl+\"</text>\");\n}\nvar paths=METRICS.map(function(metric){\nvar clean=metrics[metric.key].filter(function(p){return Number.isFinite(p.time)&&Number.isFinite(p.value);});\nif(!clean.length)return '';\nvar step=Math.max(1,Math.ceil(clean.length/220));\nvar sampled=clean.filter(function(_,idx){return idx%step===0;});\nvar d=sampled.map(function(p,idx){var px=xScale(p.time);var py=yScale(p.value);return (idx===0?'M':'L')+px.toFixed(1)+' '+py.toFixed(1);}).join(' ');\nreturn \"<path class='pbi-line' style='stroke:\"+metric.color+\"' d='\"+d+\"'></path>\";\n}).join('');\nvar hoverCircles=METRICS.map(function(metric){\nreturn \"<circle id='pbi-hover-point-\"+metric.key+\"' r='4.5' fill='#11161d' stroke='\"+metric.color+\"' stroke-width='2' style='display:none;pointer-events:none;'></circle>\";\n}).join('');\nreturn \"<svg class='pbi-chart' viewBox='0 0 \"+width+\" \"+height+\"' data-min-time='\"+minTime+\"' data-max-time='\"+maxTime+\"' data-max-value='\"+maxValue+\"' data-left='\"+left+\"' data-right='\"+right+\"' data-top='\"+top+\"' data-bottom='\"+bottom+\"' data-width='\"+width+\"' data-height='\"+height+\"' style='overflow:visible;'>\"+grid.join('')+paths+\"<line id='pbi-hover-line' class='pbi-crosshair-line' y1='\"+top+\"' y2='\"+(top+plotH)+\"' style='display:none;'></line>\"+hoverCircles+\"<rect id='pbi-hover-overlay' x='\"+left+\"' y='\"+top+\"' width='\"+plotW+\"' height='\"+plotH+\"' fill='transparent' style='cursor:crosshair;'></rect></svg><div id='pbi-chart-tooltip' class='pbi-chart-tooltip'></div>\";\n}\nfunction renderChart(metrics){\nvar wrap=container.querySelector('.pbi-chart-wrap');\nif(!wrap)return;\nvar rect=wrap.getBoundingClientRect();\nvar width=rect.width>0?rect.width:900,height=rect.height>0?rect.height:220;\nwrap.innerHTML=buildChartMarkup(metrics,width,height);\nsetupTooltip(metrics);\n}\nfunction setupTooltip(metrics){\nvar svgEl=container.querySelector('.pbi-chart');\nvar overlay=container.querySelector('#pbi-hover-overlay');\nvar hoverLine=container.querySelector('#pbi-hover-line');\nvar tooltip=container.querySelector('#pbi-chart-tooltip');\nif(!svgEl||!overlay||!hoverLine||!tooltip)return;\nvar cfg={minTime:Number(svgEl.dataset.minTime),maxTime:Number(svgEl.dataset.maxTime),maxValue:Number(svgEl.dataset.maxValue),left:Number(svgEl.dataset.left),right:Number(svgEl.dataset.right),top:Number(svgEl.dataset.top),bottom:Number(svgEl.dataset.bottom),width:Number(svgEl.dataset.width),height:Number(svgEl.dataset.height)};\nvar plotW=cfg.width-cfg.left-cfg.right;\nvar plotH=cfg.height-cfg.top-cfg.bottom;\nfunction xScale(t){if(cfg.maxTime===cfg.minTime)return cfg.left;return cfg.left+((t-cfg.minTime)/(cfg.maxTime-cfg.minTime))*plotW;}\nfunction yScale(v){return cfg.top+plotH-(v/cfg.maxValue)*plotH;}\nfunction closestPoint(points,targetTime){\nvar clean=points.filter(function(p){return Number.isFinite(p.time)&&Number.isFinite(p.value);});\nif(!clean.length)return null;\nvar closest=clean[0];\nvar minDiff=Math.abs(clean[0].time-targetTime);\nfor(var i=1;i<clean.length;i++){\nvar diff=Math.abs(clean[i].time-targetTime);\nif(diff<minDiff){closest=clean[i];minDiff=diff;}\n}\nreturn closest;\n}\noverlay.addEventListener('mousemove',function(ev){\nvar pt=svgEl.createSVGPoint();\npt.x=ev.clientX;pt.y=ev.clientY;\nvar ctm=svgEl.getScreenCTM();\nif(!ctm)return;\nvar svgP=pt.matrixTransform(ctm.inverse());\nvar hoverTime=cfg.maxTime===cfg.minTime?cfg.minTime:cfg.minTime+((svgP.x-cfg.left)/plotW)*(cfg.maxTime-cfg.minTime);\nvar rows=METRICS.map(function(metric){\nvar point=closestPoint(metrics[metric.key],hoverTime);\nif(!point)return null;\nreturn {metric:metric,point:point};\n}).filter(Boolean);\nif(!rows.length){hoverLine.style.display='none';tooltip.style.display='none';return;}\nrows.sort(function(a,b){return b.point.value-a.point.value;});\nvar basePoint=rows[0].point;\nvar xPos=xScale(basePoint.time);\nhoverLine.setAttribute('x1',xPos);\nhoverLine.setAttribute('x2',xPos);\nhoverLine.style.display='block';\nrows.forEach(function(row){\nvar circle=container.querySelector('#pbi-hover-point-'+row.metric.key);\nif(!circle)return;\ncircle.setAttribute('cx',xScale(row.point.time));\ncircle.setAttribute('cy',yScale(row.point.value));\ncircle.style.display='block';\n});\nvar rowsHtml=rows.map(function(row){\nreturn \"<div class='pbi-tooltip-row'><span style='color:\"+row.metric.color+\"'>\"+row.metric.label+\"</span><strong>\"+formatValue(row.point.value)+\"</strong></div>\";\n}).join('');\ntooltip.innerHTML=\"<div class='pbi-tooltip-time'>\"+formatTime(basePoint.time)+\"</div>\"+rowsHtml;\ntooltip.style.display='block';\nvar wrap=container.querySelector('.pbi-chart-wrap');\nvar wrapRect=wrap.getBoundingClientRect();\nvar tX=ev.clientX-wrapRect.left+14;\nvar tY=ev.clientY-wrapRect.top-36;\nif(tX+tooltip.offsetWidth+16>wrapRect.width){tX=ev.clientX-wrapRect.left-tooltip.offsetWidth-14;}\nif(tY<0){tY=ev.clientY-wrapRect.top+14;}\ntooltip.style.left=Math.max(8,tX)+'px';\ntooltip.style.top=Math.max(8,tY)+'px';\n});\noverlay.addEventListener('mouseleave',function(){\nhoverLine.style.display='none';\ntooltip.style.display='none';\nMETRICS.forEach(function(metric){\nvar circle=container.querySelector('#pbi-hover-point-'+metric.key);\nif(circle)circle.style.display='none';\n});\n});\n}\nfunction renderEmpty(message){\ncontainer.innerHTML=\"<div class='pbi-panel'><div class='pbi-empty'>\"+message+\"</div></div>\";\n}\nif(!data||!data.series||data.series.length===0||data.state!=='Done'){renderEmpty('Aguardando dados...');return;}\nvar metrics=parseData(data);\nvar hasData=METRICS.some(function(m){return metrics[m.key].length>0;});\nif(!hasData){renderEmpty('Nenhum dado foi encontrado para este periodo.');return;}\nvar legendHtml=METRICS.map(function(m){\nreturn \"<span><i class='pbi-dot' style='background:\"+m.color+\"'></i> \"+escapeHTML(m.label)+\"</span>\";\n}).join('');\ncontainer.innerHTML=\"<div class='pbi-panel'><div class='pbi-panel-title'><strong>\"+escapeHTML(PANEL_TITLE)+\"</strong><div class='pbi-legend'>\"+legendHtml+\"</div></div><div class='pbi-chart-wrap'></div></div>\";\nrenderChart(metrics);\nif(typeof ResizeObserver!=='undefined'){\nif(container.__pbiResizeObserver)container.__pbiResizeObserver.disconnect();\nvar resizeTimer=null;\nvar chartWrap=container.querySelector('.pbi-chart-wrap');\ncontainer.__pbiResizeObserver=new ResizeObserver(function(){\nclearTimeout(resizeTimer);\nresizeTimer=setTimeout(function(){renderChart(metrics);},120);\n});\nif(chartWrap)container.__pbiResizeObserver.observe(chartWrap);\n}\n})();",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-9": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "dfwimkwah7xtse"
+                    },
+                    "group": "victoriametrics-logs-datasource",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "${base_filter:raw} | limit 1",
+                      "queryType": "instant"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 9,
+        "links": [],
+        "title": "",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{\n  \"text\": \"Random text\"\n}",
+              "css": "html, body {\n  background-color: #11161d;\n  margin: 0;\n  padding: 0;\n  height: 100%;\n  width: 100%;\n  font-family: 'Segoe UI', sans-serif;\n}\n.dashboard-container {\n  background-color: #11161d;\n  color: #ffffff;\n  padding: 0;\n  box-sizing: border-box;\n  width: 100%;\n  height: 100%;\n  overflow: hidden;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n.dashboard-head {\n  width: 100%;\n  height: 100%;\n  box-sizing: border-box;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 22px;\n  padding: 16px 24px;\n  background:\n    linear-gradient(90deg, rgba(255, 95, 0, 0.12), transparent 24%),\n    linear-gradient(135deg, #151a22 0%, #10141b 100%);\n  border: 1px solid rgba(255, 255, 255, 0.07);\n  border-radius: 12px;\n}\n.hdr-left {\n  display: flex;\n  align-items: center;\n  flex: 1;\n  min-width: 0;\n  gap: 18px;\n}\n.brand-mark {\n  width: 92px;\n  height: 64px;\n  flex: 0 0 92px;\n  display: grid;\n  place-items: center;\n  border-radius: 8px;\n  background: #ff5f00;\n  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.14), 0 10px 28px rgba(255, 95, 0, 0.18);\n}\n.brand-word {\n  color: #ffffff;\n  font-size: 26px;\n  font-weight: 900;\n  line-height: 0.78;\n  letter-spacing: 0;\n  text-transform: uppercase;\n}\n.brand-word span {\n  display: block;\n}\n.title-box {\n  min-width: 0;\n  flex: 1;\n  padding: 2px 0 2px 22px;\n  border-left: 5px solid #ff5f00;\n}\n.title-box h1 {\n  font-size: clamp(1.05rem, 1.8vw, 1.36rem);\n  text-transform: uppercase;\n  margin: 0;\n  color: #ffffff;\n  letter-spacing: 0;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.title-box p {\n  font-size: clamp(0.72rem, 1.15vw, 0.82rem);\n  color: #d7dde8;\n  margin: 8px 0 0;\n  line-height: 1.35;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.hdr-right {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  flex-shrink: 0;\n}\n.pills {\n  display: flex;\n  align-items: center;\n  gap: 7px;\n  flex-wrap: wrap;\n  justify-content: flex-end;\n}\n.pill {\n  font-size: 10.5px;\n  font-weight: 800;\n  padding: 5px 10px;\n  border-radius: 6px;\n  letter-spacing: 0;\n  white-space: nowrap;\n  border: 1px solid transparent;\n}\n.pill-mikrotik {\n  background: rgba(255, 95, 0, 0.12);\n  border-color: rgba(255, 95, 0, 0.32);\n  color: #ff9b5c;\n}\n.pill-syslog {\n  background: rgba(56, 189, 248, 0.12);\n  border-color: rgba(56, 189, 248, 0.32);\n  color: #7dd3fc;\n}\n.pill-victorialogs {\n  background: rgba(167, 139, 250, 0.12);\n  border-color: rgba(167, 139, 250, 0.32);\n  color: #c4b5fd;\n}\n.pill-cgnat {\n  background: rgba(34, 197, 94, 0.10);\n  border-color: rgba(34, 197, 94, 0.28);\n  color: #86efac;\n}\n.live {\n  display: flex;\n  align-items: center;\n  gap: 7px;\n  background: rgba(16, 185, 129, 0.08);\n  border: 1px solid rgba(16, 185, 129, 0.22);\n  padding: 6px 12px;\n  border-radius: 6px;\n  white-space: nowrap;\n}\n.live-dot {\n  width: 7px;\n  height: 7px;\n  background: #10b981;\n  border-radius: 50%;\n  animation: blink 2s ease-in-out infinite;\n  box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);\n  flex-shrink: 0;\n}\n.live-lbl {\n  font-size: 11px;\n  font-weight: 700;\n  color: #10b981;\n}\n@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }\n@media (max-width: 1000px) {\n  .dashboard-head {\n    align-items: flex-start;\n    flex-direction: column;\n    padding: 14px;\n  }\n  .hdr-right {\n    width: 100%;\n    justify-content: space-between;\n  }\n  .pills {\n    justify-content: flex-start;\n  }\n  .title-box h1, .title-box p {\n    white-space: normal;\n  }\n}\n@media (max-width: 620px) {\n  .hdr-left {\n    align-items: flex-start;\n    flex-direction: column;\n  }\n  .brand-mark {\n    width: 82px;\n    height: 56px;\n    flex-basis: 56px;\n  }\n  .brand-word {\n    font-size: 23px;\n  }\n  .title-box {\n    padding-left: 14px;\n  }\n  .hdr-right {\n    align-items: stretch;\n    flex-direction: column;\n  }\n}.svg-icon{display:inline-grid;place-items:center;width:1em;height:1em;line-height:1;vertical-align:-.125em;flex-shrink:0}.svg-icon svg{width:1em;height:1em;display:block}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": false,
+              "dynamicProps": false,
+              "html": "<div class=\"dashboard-head\">\n  <div class=\"hdr-left\">\n    <div class=\"brand-mark\" aria-label=\"LOGNET\">\n      <div class=\"brand-word\"><span>LOG</span><span>NET</span></div>\n    </div>\n    <div class=\"title-box\">\n      <h1>CGNAT · HOTSPOT · BARRA DO PIRAÍ</h1>\n      <p>Monitoramento da tradução de endereço (NAT) do MikroTik via syslog e VictoriaLogs, com filtros por protocolo, IP interno e MAC.</p>\n    </div>\n  </div>\n  <div class=\"hdr-right\">\n    <div class=\"pills\">\n      <span class=\"pill pill-mikrotik\">MikroTik</span>\n      <span class=\"pill pill-syslog\">Syslog UDP</span>\n      <span class=\"pill pill-victorialogs\">VictoriaLogs</span>\n      <span class=\"pill pill-cgnat\">CGNAT</span>\n    </div>\n    <div class=\"live\">\n      <div class=\"live-dot\"></div>\n      <span class=\"live-lbl\">Ao vivo</span>\n    </div>\n  </div>\n</div>\n",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull",
+                  "last",
+                  "firstNotNull",
+                  "first",
+                  "min",
+                  "max",
+                  "mean",
+                  "sum",
+                  "count",
+                  "range",
+                  "delta",
+                  "step",
+                  "diff",
+                  "logmin",
+                  "allIsZero",
+                  "allIsNull",
+                  "diffperc"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    }
+  },
+  "layout": {
+    "kind": "GridLayout",
+    "spec": {
+      "items": [
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-9"
+            },
+            "height": 3,
+            "width": 24,
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-1"
+            },
+            "height": 4,
+            "width": 24,
+            "x": 0,
+            "y": 3
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-5"
+            },
+            "height": 11,
+            "width": 12,
+            "x": 0,
+            "y": 7
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-6"
+            },
+            "height": 11,
+            "width": 12,
+            "x": 12,
+            "y": 7
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-8"
+            },
+            "height": 8,
+            "width": 24,
+            "x": 0,
+            "y": 18
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-7"
+            },
+            "height": 28,
+            "width": 24,
+            "x": 0,
+            "y": 26
+          }
+        }
+      ]
+    }
+  },
+  "links": [],
+  "liveNow": false,
+  "preload": false,
+  "tags": [
+    "victorialogs",
+    "cgnat",
+    "mikrotik",
+    "wifi-publico"
+  ],
+  "timeSettings": {
+    "autoRefresh": "30s",
+    "autoRefreshIntervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "fiscalYearStartMonth": 0,
+    "from": "now-6h",
+    "hideTimepicker": false,
+    "timezone": "browser",
+    "to": "now"
+  },
+  "title": "CGNAT - WiFi Publico",
+  "variables": [
+    {
+      "kind": "TextVariable",
+      "spec": {
+        "current": {
+          "text": "srcnat",
+          "value": "srcnat"
+        },
+        "description": "Filtro base do VictoriaLogs. Use srcnat, CGNAT, IP interno, MAC ou outro termo da mensagem.",
+        "hide": "dontHide",
+        "label": "Filtro",
+        "name": "base_filter",
+        "query": "srcnat",
+        "skipUrlSync": false
+      }
+    },
+    {
+      "kind": "CustomVariable",
+      "spec": {
+        "allowCustomValue": true,
+        "current": {
+          "text": "100",
+          "value": "100"
+        },
+        "hide": "dontHide",
+        "includeAll": false,
+        "label": "Limite",
+        "multi": false,
+        "name": "limit",
+        "options": [],
+        "query": "50,100,500,1000",
+        "skipUrlSync": false,
+        "valuesFormat": "csv"
+      }
+    }
+  ]
+}

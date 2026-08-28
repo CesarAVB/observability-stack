@@ -13,7 +13,9 @@ services:
       - "-syslog.useRemoteIP.udp=true"
       - '-syslog.extraFields.udp={"job":"mikrotik-cgnat","source":"mikrotik"}'
     networks:
-      - network_swarm_public
+      network_swarm_public:
+        aliases:
+          - victorialogs
     ports:
       - target: 5514
         published: 5514

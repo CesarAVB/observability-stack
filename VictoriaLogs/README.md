@@ -154,6 +154,34 @@ job:mikrotik-cgnat AND _msg:"CGNAT"
 remote_ip:"IP_PUBLICO_DO_MIKROTIK"
 ```
 
+## Grafana
+
+O dashboard importavel fica em:
+
+```text
+../Grafana/dashboards/cgnat-victorialogs.json
+```
+
+Ele requer o plugin `victoriametrics-logs-datasource` no Grafana e um datasource
+VictoriaLogs apontando para a URL interna:
+
+```text
+http://victorialogs:9428
+```
+
+Evite usar a URL publica no datasource:
+
+```text
+https://logs.redelognet.com.br
+```
+
+Essa URL passa pelo Traefik e pode retornar `403 Forbidden`, porque o middleware
+de IP allowlist ve a origem da requisicao como o IP interno do container/rede
+Docker, nao como o IP do operador no navegador.
+
+O dashboard extrai da mensagem do MikroTik os campos `client_ip`, `src_mac`,
+`dst_ip`, `dst_port`, `proto`, `client_port` e `nat_rule`.
+
 ## Verificacao
 
 1. No Portainer, confirme que a task do VictoriaLogs esta no servidor que recebe
