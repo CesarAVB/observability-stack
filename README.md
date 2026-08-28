@@ -68,11 +68,11 @@ A stack cobre os três pilares da observabilidade:
 │   └── README.md
 ├── NodeExporter/             # Stack do node-exporter (métricas do host)
 │   ├── docker-compose.yml
-│   ├── docker-compose.248.yml
+│   ├── docker-compose.swarm-asb.yml
 │   └── README.md
 ├── Cadvisor/                 # Stack do cAdvisor (métricas por container)
 │   ├── docker-compose.yml
-│   ├── docker-compose.248.yml
+│   ├── docker-compose.swarm-asb.yml
 │   └── README.md
 ├── Loki/                     # Stack do Grafana Loki (agregação de logs)
 │   ├── docker-compose.yml
@@ -101,8 +101,8 @@ A stack cobre os três pilares da observabilidade:
 │   ├── docker-compose.yml
 │   └── blackbox_config.yml
 ├── Firewall/                  # Scripts de firewall (DOCKER-USER/iptables)
-│   ├── firewall-setup-251.sh              # Servidor principal (45.187.224.251)
-│   ├── firewall-setup-248.sh              # Nó adicional (45.187.224.248)
+│   ├── firewall-setup-lognet.sh              # Servidor principal (45.187.224.251)
+│   ├── firewall-setup-asb.sh              # Nó adicional (45.187.224.248)
 │   └── README.md
 └── README.md                 # Este arquivo
 ```
@@ -130,25 +130,25 @@ A stack cobre os três pilares da observabilidade:
 
 Os scripts vivem em `Firewall/` (ver [Firewall/README.md](Firewall/README.md) para o detalhamento) — cada um automatiza a configuração: detecta a interface de rede, aplica as regras imediatamente e persiste no `/etc/ufw/after.rules` para sobreviver a reboots.
 
-**Servidor principal (`45.187.224.251`)** — `Firewall/firewall-setup-251.sh`:
+**Servidor principal (`45.187.224.251`)** — `Firewall/firewall-setup-lognet.sh`:
 **Portas internas/publicadas restritas** (`9090` Prometheus, `3100` Loki, `3200` / `4317` / `4318` Tempo, `10051` Zabbix Server, `3306` MySQL, `5433` Postgres, `5672`/`15672`/`15674`/`61613` RabbitMQ, `9000`/`9001` MinIO, `5514` VictoriaLogs, `5038` Asterisk AMI) → liberadas para `168.90.16.0/22` e `45.187.224.0/22`.
 **Asterisk SIP/RTP** (`5060` TCP/UDP e `10000:10100` UDP) → liberado para `ALLOWED_NETWORKS_ASTERISK`; adicione ali os IPs do provedor SIP se necessário.
 **Syslog `514` (UDP/TCP)** → liberado também para `10.129.190.0/24` (IP pós-NAT do gateway de gerência dos switches), sem abrir as portas internas para essa faixa.
 
 ```bash
 # no servidor .251 via SSH
-chmod +x Firewall/firewall-setup-251.sh
-sudo Firewall/firewall-setup-251.sh
+chmod +x Firewall/firewall-setup-lognet.sh
+sudo Firewall/firewall-setup-lognet.sh
 ```
 
 Para reaplicar após um reboot sem rodar os scripts novamente, o UFW já carrega as regras do `after.rules` automaticamente ao iniciar.
 
-**Nó adicional (`45.187.224.248`)** — `Firewall/firewall-setup-248.sh` protege as portas publicadas no Swarm separado: MySQL `3306`, node-exporter `9100` e cAdvisor `8080`, liberando acesso somente às redes confiáveis:
+**Nó adicional (`45.187.224.248`)** — `Firewall/firewall-setup-asb.sh` protege as portas publicadas no Swarm separado: MySQL `3306`, node-exporter `9100` e cAdvisor `8080`, liberando acesso somente às redes confiáveis:
 
 ```bash
 # no servidor .248 via SSH
-chmod +x Firewall/firewall-setup-248.sh
-sudo Firewall/firewall-setup-248.sh
+chmod +x Firewall/firewall-setup-asb.sh
+sudo Firewall/firewall-setup-asb.sh
 ```
 
 ---

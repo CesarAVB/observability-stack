@@ -35,7 +35,7 @@ Esta stack sobe apenas o **node-exporter**. Ele expõe métricas que o **Prometh
 ```
 .
 ├── docker-compose.yml            # Stack Swarm (mesmo cluster do Prometheus)
-├── docker-compose.248.yml        # Stack Swarm no .248, com porta publicada
+├── docker-compose.swarm-asb.yml        # Stack Swarm no ASB/.248, com porta publicada
 └── README.md
 ```
 
@@ -59,12 +59,12 @@ docker service ls | grep node-exporter   # deve ficar 1/1 (ou N/N por nó, em mo
 
 O `.248` está em outro Swarm/Portainer. Por isso o Prometheus do `.251` não enxerga o DNS interno desse Swarm e precisa coletar via IP público.
 
-Portainer do `.248` → **Stacks → Add stack** → Build method **Repository** → Compose path `NodeExporter/docker-compose.248.yml` → **Deploy the stack**.
+Portainer do ASB/`.248` → **Stacks → Add stack** → Build method **Repository** → Compose path `NodeExporter/docker-compose.swarm-asb.yml` → **Deploy the stack**.
 
 Esse compose publica `9100:9100` em `mode: host`. Depois rode o firewall do `.248`:
 
 ```bash
-sudo chmod +x ../Firewall/firewall-setup-248.sh && sudo ../Firewall/firewall-setup-248.sh
+sudo chmod +x ../Firewall/firewall-setup-asb.sh && sudo ../Firewall/firewall-setup-asb.sh
 ```
 
 ## Testar o DNS a partir do Prometheus (cluster Swarm)
