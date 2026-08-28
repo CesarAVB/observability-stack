@@ -1,0 +1,48 @@
+services:
+  # Coletor dedicado para logs de CGNAT enviados por MikroTik via syslog.
+  victorialogs:
+    image: docker.io/victoriametrics/victoria-logs:v1.52.0
+    hostname: victorialogs
+    command:
+      - "-storageDataPath=/victoria-logs-data"
+      - "-retentionPeriod=13M"
+      - "-syslog.listenAddr.udp=:5514"
+      - "-syslog.useLocalTimestamp.udp=true"
+      - "-syslog.useRemoteIP.udp=true"
+      - '-syslog.extraFields.udp={"job":"mikrotik-cgnat","source":"mikrotik"}'
+    networks:
+      - network_swarm_public
+    ports:
+      - target: 5514
+        published: 5514
+        protocol: udp
+        mode: host
+    volumes:
+      - victorialogs_data:/victoria-logs-data
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      resources:
+        limits:
+          cpus: "1"
+          memory: 1024M
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.victorialogs.rule=Host(`logs.redelognet.com.br`)
+        - traefik.http.routers.victorialogs.entrypoints=websecure
+        - traefik.http.routers.victorialogs.tls.certresolver=letsencryptresolver
+        - traefik.http.routers.victorialogs.service=victorialogs
+        - traefik.http.services.victorialogs.loadbalancer.server.port=9428
+        - traefik.http.services.victorialogs.loadbalancer.passHostHeader=true
+        - traefik.http.routers.victorialogs.middlewares=victorialogs-ipallowlist
+        - traefik.http.middlewares.victorialogs-ipallowlist.ipallowlist.sourcerange=45.187.224.0/22,45.170.176.0/22,168.90.19.0/24
+
+volumes:
+  victorialogs_data:
+
+networks:
+  network_swarm_public:
+    external: true
