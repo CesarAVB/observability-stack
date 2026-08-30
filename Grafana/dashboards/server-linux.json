@@ -1347,6 +1347,7 @@
     "to": "now"
   },
   "title": "Server - Linux",
+  "uid": "server-linux",
   "variables": [
     {
       "kind": "QueryVariable",

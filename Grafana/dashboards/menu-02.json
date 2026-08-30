@@ -1,0 +1,148 @@
+{
+  "annotations": [
+    {
+      "kind": "AnnotationQuery",
+      "spec": {
+        "builtIn": true,
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "query": {
+          "datasource": {
+            "name": "-- Grafana --"
+          },
+          "group": "grafana",
+          "kind": "DataQuery",
+          "spec": {},
+          "version": "v0"
+        }
+      }
+    }
+  ],
+  "cursorSync": "Off",
+  "description": "MENU 02 - central de navegacao em cards para os dashboards disponiveis da LOGNET.",
+  "editable": true,
+  "elements": {
+    "panel-1": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "group": "",
+                    "kind": "DataQuery",
+                    "spec": {},
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 1,
+        "links": [],
+        "title": "",
+        "transparent": true,
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {},
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": ":host{display:block;width:100%;height:100%;overflow:hidden}.nav-root{width:100%;height:100%;min-height:620px;background:#1a1d24;color:#f4f7fb;font-family:Inter,Arial,sans-serif;padding:24px 28px;box-sizing:border-box}.hdr{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-bottom:22px;border-bottom:1px solid rgba(255,255,255,.09)}.brand{display:flex;align-items:center;gap:16px;min-width:0}.logo{height:46px;max-width:154px;object-fit:contain;filter:drop-shadow(0 0 6px rgba(255,255,255,.25))}.title{min-width:0;border-left:6px solid #f97316;padding-left:16px}.title h1{margin:0;color:#fff;font-size:18px;font-weight:900;text-transform:uppercase;letter-spacing:0}.title p{margin:4px 0 0;color:#9aa4b2;font-size:12px;font-weight:700}.live{display:flex;align-items:center;gap:7px;border:1px solid rgba(34,197,94,.28);border-radius:999px;background:rgba(34,197,94,.08);padding:7px 12px;color:#86efac;font-size:11px;font-weight:800;white-space:nowrap}.live-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;box-shadow:0 0 8px rgba(34,197,94,.65);animation:blink 2s ease-in-out infinite}@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}.section{margin-top:26px}.section-title{margin:0 0 12px;color:#8b949e;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}.grid{display:grid;grid-template-columns:repeat(2,minmax(250px,1fr));gap:14px}.card{display:flex;align-items:center;gap:14px;min-height:82px;padding:16px;border-radius:8px;background:#12151c;border:1px solid rgba(255,255,255,.08);text-decoration:none;color:#fff;transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease}.card:hover{transform:translateY(-2px);border-color:var(--c);box-shadow:0 10px 24px rgba(0,0,0,.34)}.icon{width:42px;height:42px;flex:0 0 42px;display:grid;place-items:center;border-radius:8px;color:var(--c);background:var(--bg);border:1px solid var(--bd)}.icon svg{width:22px;height:22px;display:block}.txt{min-width:0}.txt strong{display:block;font-size:15px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.txt span{display:block;margin-top:4px;color:#9aa4b2;font-size:12px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}@media(max-width:760px){.nav-root{padding:18px;min-height:720px}.hdr{align-items:flex-start;flex-direction:column}.grid{grid-template-columns:1fr}.logo{height:38px}.title h1{font-size:16px}}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": false,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class=\"nav-root\"><header class=\"hdr\"><div class=\"brand\"><img class=\"logo\" src=\"https://storage.googleapis.com/flowbix-img/LOGNETLOGNN.png\" alt=\"LOGNET\" onerror=\"this.hidden=true\"><div class=\"title\"><h1>Painel de Navega\u00e7\u00e3o</h1><p>Central de Dashboards - LOGNET</p></div></div><div class=\"live\"><span class=\"live-dot\"></span><span>Ao vivo</span></div></header><section class=\"section\"><h2 class=\"section-title\">Dashboards dispon\u00edveis</h2><div class=\"grid\"><a class=\"card\" href=\"/d/aplicacao-spring-boot/aplicacao-spring-boot\" style=\"--c:#f97316;--bg:rgba(249,115,22,.12);--bd:rgba(249,115,22,.30)\"><div class=\"icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"4\" width=\"18\" height=\"16\" rx=\"2\"/><path d=\"M7 8h10M7 12h6M7 16h8\"/></svg></div><div class=\"txt\"><strong>Aplica\u00e7\u00e3o - Spring Boot</strong><span>JVM, HTTP, logs e sa\u00fade do servi\u00e7o</span></div></a><a class=\"card\" href=\"/d/cgnat-wifi-publico/cgnat-wifi-publico\" style=\"--c:#38bdf8;--bg:rgba(56,189,248,.12);--bd:rgba(56,189,248,.30)\"><div class=\"icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 12h16\"/><path d=\"M4 6h16\"/><path d=\"M4 18h16\"/><circle cx=\"8\" cy=\"6\" r=\"1\"/><circle cx=\"16\" cy=\"12\" r=\"1\"/><circle cx=\"10\" cy=\"18\" r=\"1\"/></svg></div><div class=\"txt\"><strong>CGNAT - WiFi Publico</strong><span>Consulta e an\u00e1lise de logs CGNAT</span></div></a><a class=\"card\" href=\"/d/docker-containers/docker-containers\" style=\"--c:#22c55e;--bg:rgba(34,197,94,.12);--bd:rgba(34,197,94,.30)\"><div class=\"icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"8\" width=\"18\" height=\"11\" rx=\"2\"/><path d=\"M7 8V5h3v3M10 8V5h3v3M13 8V5h3v3\"/></svg></div><div class=\"txt\"><strong>Docker - Containers</strong><span>CPU, mem\u00f3ria, rede e I/O por container</span></div></a><a class=\"card\" href=\"/d/syslog-switches-lognet/syslog-switches-lognet\" style=\"--c:#a78bfa;--bg:rgba(167,139,250,.12);--bd:rgba(167,139,250,.30)\"><div class=\"icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"2\"/><path d=\"M8 9h8M8 13h5M8 17h8\"/></svg></div><div class=\"txt\"><strong>Syslog Switches LOGNET</strong><span>Logs Huawei via Loki</span></div></a></div></section></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": "",
+              "useGrafanaScrollbar": false
+            },
+            "pluginVersion": "2.2.3"
+          }
+        }
+      }
+    }
+  },
+  "layout": {
+    "kind": "GridLayout",
+    "spec": {
+      "items": [
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-1"
+            },
+            "height": 20,
+            "width": 24,
+            "x": 0,
+            "y": 0
+          }
+        }
+      ]
+    }
+  },
+  "links": [],
+  "liveNow": false,
+  "preload": false,
+  "tags": [],
+  "timeSettings": {
+    "autoRefresh": "",
+    "autoRefreshIntervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "fiscalYearStartMonth": 0,
+    "from": "now-6h",
+    "hideTimepicker": true,
+    "timezone": "browser",
+    "to": "now"
+  },
+  "title": "MENU 02",
+  "uid": "menu-02",
+  "variables": []
+}

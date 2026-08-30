@@ -4,10 +4,13 @@ Dashboards prontos para importar, cobrindo aplicação, host, containers e logs 
 
 | Arquivo | Fonte de dados | O que mostra |
 |---|---|---|
-| `spring-application-dashboard.json` | Prometheus + Loki | Aplicação Spring Boot: JVM, HTTP, latência, erros, logs, conexões de DB |
-| `host-linux-dashboard.json` | Prometheus (node-exporter) | Host Linux: CPU, memória, disco, rede, load |
-| `docker-containers-dashboard.json` | Prometheus (cAdvisor) | Por container Docker: CPU, memória, rede, I/O |
-| `syslog-switches.json` | Loki (syslog-ng) | Syslog dos switches Huawei: logs filtrados por switch, severidade e tempo |
+| `aplicacao-spring-boot.json` | Prometheus + Loki | Aplicação Spring Boot: JVM, HTTP, latência, erros, logs, conexões de DB |
+| `server-linux.json` | Prometheus (node-exporter) | Host Linux: CPU, memória, disco, rede, load |
+| `docker-containers.json` | Prometheus (cAdvisor) | Por container Docker: CPU, memória, rede, I/O |
+| `cgnat-wifi-publico.json` | VictoriaLogs | Consulta e análise de logs CGNAT |
+| `syslog-switches-lognet.json` | Loki (syslog-ng) | Syslog dos switches Huawei: logs filtrados por switch, severidade e tempo |
+| `menu-01.json` | Estático (HTML Graphics) | MENU 01: menu visual com imagem de fundo e botões de acesso às dashboards principais |
+| `menu-02.json` | Estático (HTML Graphics) | MENU 02: central de navegação em cards para dashboards de observabilidade |
 
 ---
 
@@ -115,8 +118,8 @@ var color = pct >= 2 ? '#EF4444' : pct >= 0.5 ? '#F59E0B' : '#10B981';
 
 ## Dashboards de Host e Containers
 
-- **`host-linux-dashboard.json`** — métricas do node-exporter. O seletor **Host** no topo lista a instância automaticamente.
-- **`docker-containers-dashboard.json`** — métricas do cAdvisor, agrupadas por container.
+- **`server-linux.json`** — métricas do node-exporter. O seletor **Host** no topo lista a instância automaticamente.
+- **`docker-containers.json`** — métricas do cAdvisor, agrupadas por container.
 
 Ambos dependem das stacks `../../NodeExporter/` e `../../Cadvisor/` e dos jobs `node-exporter` / `cadvisor` no `prometheus_config.yml`. Ver `NodeExporter/README.md` e `Cadvisor/README.md` para o deploy dos exporters.
 
@@ -124,7 +127,7 @@ Ambos dependem das stacks `../../NodeExporter/` e `../../Cadvisor/` e dos jobs `
 
 ## Dashboard de Syslog (Switches Huawei)
 
-- **`syslog-switches.json`** — logs de syslog dos switches Huawei, coletados pelo
+- **`syslog-switches-lognet.json`** — logs de syslog dos switches Huawei, coletados pelo
   syslog-ng e enviados ao Loki (ver `../../Syslog/README.md`). Header banner
   (Business Text) no padrão LOGNET, cartões de stat, Time Series, Bar Gauge e Logs.
 

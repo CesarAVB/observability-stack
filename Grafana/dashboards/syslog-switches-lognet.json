@@ -1620,6 +1620,7 @@
     "to": "now"
   },
   "title": "Syslog Switches LOGNET",
+  "uid": "syslog-switches-lognet",
   "variables": [
     {
       "kind": "DatasourceVariable",

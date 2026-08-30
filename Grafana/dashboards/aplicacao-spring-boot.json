@@ -1754,6 +1754,7 @@
     "to": "now"
   },
   "title": "Aplicação - Spring Boot",
+  "uid": "aplicacao-spring-boot",
   "variables": [
     {
       "kind": "QueryVariable",

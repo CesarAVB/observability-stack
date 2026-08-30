@@ -1015,6 +1015,7 @@
     "to": "now"
   },
   "title": "CGNAT - WiFi Publico",
+  "uid": "cgnat-wifi-publico",
   "variables": [
     {
       "kind": "TextVariable",

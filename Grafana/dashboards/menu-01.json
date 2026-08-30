@@ -1,0 +1,148 @@
+{
+  "annotations": [
+    {
+      "kind": "AnnotationQuery",
+      "spec": {
+        "builtIn": true,
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "query": {
+          "datasource": {
+            "name": "-- Grafana --"
+          },
+          "group": "grafana",
+          "kind": "DataQuery",
+          "spec": {},
+          "version": "v0"
+        }
+      }
+    }
+  ],
+  "cursorSync": "Off",
+  "description": "MENU 01 - menu visual com fundo LOGNET e botoes para os dashboards disponiveis.",
+  "editable": true,
+  "elements": {
+    "panel-1": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "group": "",
+                    "kind": "DataQuery",
+                    "spec": {},
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 1,
+        "links": [],
+        "title": "",
+        "transparent": true,
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {},
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": ":host{display:block;width:100%;height:100%;overflow:hidden}.menu-root{position:relative;width:100%;height:100%;min-height:460px;overflow:hidden;background:#050505 url('https://storage.googleapis.com/flowbix-img/TimeGrafana/menuultra.jpg') center center/cover no-repeat;font-family:Inter,Arial,sans-serif}.menu-root::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.22));pointer-events:none}.button-container{position:absolute;left:50%;bottom:36px;z-index:2;display:grid;grid-template-columns:repeat(2,minmax(230px,1fr));gap:22px 28px;transform:translateX(-50%);width:min(620px,calc(100% - 32px))}.button{display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 28px;border:1px solid rgba(255,255,255,.58);border-radius:999px;background:#e1e1e1;color:#000;text-decoration:none;text-align:center;font-size:16px;font-weight:800;line-height:1;box-shadow:0 10px 24px rgba(0,0,0,.34);transition:transform .18s ease,background .18s ease,box-shadow .18s ease}.button:hover{transform:translateY(-2px) scale(1.03);background:#fff;box-shadow:0 14px 30px rgba(0,0,0,.44)}.button:focus-visible{outline:3px solid #f97316;outline-offset:3px}@media (max-width:680px){.menu-root{min-height:560px;background-position:center top}.button-container{grid-template-columns:1fr;bottom:22px;gap:14px;width:min(300px,calc(100% - 24px))}.button{height:44px;font-size:14px}}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": false,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class=\"menu-root\"><nav class=\"button-container\" aria-label=\"Dashboards LOGNET\"><a href=\"/d/aplicacao-spring-boot/aplicacao-spring-boot\" class=\"button\">APLICA\u00c7\u00c3O</a><a href=\"/d/cgnat-wifi-publico/cgnat-wifi-publico\" class=\"button\">CGNAT</a><a href=\"/d/docker-containers/docker-containers\" class=\"button\">DOCKER</a><a href=\"/d/syslog-switches-lognet/syslog-switches-lognet\" class=\"button\">SYSLOG</a></nav></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": "",
+              "useGrafanaScrollbar": false
+            },
+            "pluginVersion": "2.2.3"
+          }
+        }
+      }
+    }
+  },
+  "layout": {
+    "kind": "GridLayout",
+    "spec": {
+      "items": [
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-1"
+            },
+            "height": 18,
+            "width": 24,
+            "x": 0,
+            "y": 0
+          }
+        }
+      ]
+    }
+  },
+  "links": [],
+  "liveNow": false,
+  "preload": false,
+  "tags": [],
+  "timeSettings": {
+    "autoRefresh": "",
+    "autoRefreshIntervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "fiscalYearStartMonth": 0,
+    "from": "now-6h",
+    "hideTimepicker": true,
+    "timezone": "browser",
+    "to": "now"
+  },
+  "title": "MENU 01",
+  "uid": "menu-01",
+  "variables": []
+}
