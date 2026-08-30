@@ -176,7 +176,53 @@
                   "query": {
                     "group": "",
                     "kind": "DataQuery",
-                    "spec": {},
+                    "spec": {
+                      "application": {
+                        "filter": ""
+                      },
+                      "countTriggersBy": "",
+                      "evaltype": "0",
+                      "functions": [],
+                      "group": {
+                        "filter": ""
+                      },
+                      "host": {
+                        "filter": ""
+                      },
+                      "item": {
+                        "filter": ""
+                      },
+                      "itemTag": {
+                        "filter": ""
+                      },
+                      "macro": {
+                        "filter": ""
+                      },
+                      "options": {
+                        "count": false,
+                        "disableDataAlignment": false,
+                        "showDisabledItems": false,
+                        "skipEmptyValues": false,
+                        "useTrends": "default",
+                        "useZabbixValueMapping": false
+                      },
+                      "proxy": {
+                        "filter": ""
+                      },
+                      "queryType": "0",
+                      "resultFormat": "time_series",
+                      "schema": 12,
+                      "table": {
+                        "skipEmptyValues": false
+                      },
+                      "tags": {
+                        "filter": ""
+                      },
+                      "textFilter": "",
+                      "trigger": {
+                        "filter": ""
+                      }
+                    },
                     "version": "v0"
                   },
                   "refId": "A"
@@ -191,7 +237,6 @@
         "id": 17,
         "links": [],
         "title": "",
-        "transparent": true,
         "vizConfig": {
           "group": "gapit-htmlgraphics-panel",
           "kind": "VizConfig",
@@ -232,7 +277,7 @@
               "html": "<div class='dashboard-head'><div class='hdr-left'><div class='brand-mark' aria-label='LOGNET'><div class='brand-word'><span>LOG</span><span>NET</span></div></div><div class='title-box'><h1>Docker - Containers</h1><p>Painel de Observabilidade - Monitoramento de Containers Docker (cAdvisor)</p></div></div><div class='hdr-right'><a class='back-btn' href='/dashboards?query=MENU%2001&kiosk' data-dashboard-query='MENU 01' data-dashboard-title='MENU 01' title='Voltar ao menu'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='m12 19-7-7 7-7'/><path d='M19 12H5'/></svg>Voltar</a><div class='pills'><span class='pill pill-prom'><svg viewBox='0 0 24 24' fill='currentColor'><path d='M12 2c-1 3-4 5-4 9a4 4 0 0 0 8 0c0-1-.3-2-.8-2.8.3 1 0 2.3-1 3-.2-1.8-1-3-2.2-4.2C13 5 13.5 3.5 12 2z'/></svg>Prometheus</span><span class='pill pill-tempo'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'><path d='M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z'/><path d='m3.3 7 8.7 5 8.7-5'/><path d='M12 22V12'/></svg>cAdvisor</span><span class='pill pill-env'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'><path d='M12 2 4 5v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V5z'/></svg>Produ&ccedil;&atilde;o</span></div><div class='live'><div class='live-dot'></div><span class='live-lbl'>Ao vivo</span></div></div></div>",
               "onInit": "",
               "onInitOnResize": false,
-              "onRender": "(function(){\nfunction withKiosk(url){if(!url){return url;}return /[?&]kiosk(?:[=&]|$)/.test(url)?url:url+(url.indexOf('?')>=0?'&':'?')+'kiosk';}function forceKiosk(){if(!/[?&]kiosk(?:[=&]|$)/.test(window.location.search)){window.location.replace(withKiosk(window.location.href));return true;}return false;}if(forceKiosk()){return;}function fallbackUrl(query){return withKiosk('/dashboards?query='+encodeURIComponent(query||''));}\nfunction goByQuery(query,title){\n  var fallback=fallbackUrl(query||title);\n  if(!query&&!title){window.location.assign('/dashboards?kiosk');return;}\n  fetch('/api/search?type=dash-db&query='+encodeURIComponent(query||title),{credentials:'same-origin'})\n    .then(function(r){return r.ok?r.json():[];})\n    .then(function(items){\n      var exact=title?(items||[]).find(function(item){return item.title===title;}):null;\n      var found=exact||(items||[])[0];\n      window.location.assign(found&&found.url?withKiosk(found.url):fallback);\n    })\n    .catch(function(){window.location.assign(fallback);});\n}\nhtmlNode.querySelectorAll('[data-dashboard-query]').forEach(function(el){\n  el.addEventListener('click',function(ev){\n    ev.preventDefault();\n    ev.stopPropagation();\n    goByQuery(el.getAttribute('data-dashboard-query'),el.getAttribute('data-dashboard-title'));\n  });\n});\n})();",
+              "onRender": "(function(){\nfunction withKiosk(url){if(!url){return url;}return /[?&]kiosk(?:[=&]|$)/.test(url)?url:url+(url.indexOf('?')>=0?'&':'?')+'kiosk';}function fallbackUrl(query){return withKiosk('/dashboards?query='+encodeURIComponent(query||''));}\nfunction goByQuery(query,title){\n  var fallback=fallbackUrl(query||title);\n  if(!query&&!title){window.location.assign('/dashboards?kiosk');return;}\n  fetch('/api/search?type=dash-db&query='+encodeURIComponent(query||title),{credentials:'same-origin'})\n    .then(function(r){return r.ok?r.json():[];})\n    .then(function(items){\n      var exact=title?(items||[]).find(function(item){return item.title===title;}):null;\n      var found=exact||(items||[])[0];\n      window.location.assign(found&&found.url?withKiosk(found.url):fallback);\n    })\n    .catch(function(){window.location.assign(fallback);});\n}\nhtmlNode.querySelectorAll('[data-dashboard-query]').forEach(function(el){\n  el.addEventListener('click',function(ev){\n    ev.preventDefault();\n    ev.stopPropagation();\n    goByQuery(el.getAttribute('data-dashboard-query'),el.getAttribute('data-dashboard-title'));\n  });\n});\n})();",
               "overflow": "visible",
               "panelupdateOnMount": true,
               "reduceOptions": {
@@ -1765,7 +1810,6 @@
     "to": "now"
   },
   "title": "Docker - Containers",
-  "uid": "docker-containers",
   "variables": [
     {
       "kind": "QueryVariable",

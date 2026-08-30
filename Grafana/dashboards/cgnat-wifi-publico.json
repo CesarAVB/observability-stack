@@ -834,7 +834,6 @@
         "id": 9,
         "links": [],
         "title": "",
-        "transparent": true,
         "vizConfig": {
           "group": "gapit-htmlgraphics-panel",
           "kind": "VizConfig",
@@ -871,7 +870,7 @@
               "html": "<div class=\"dashboard-head\">\n  <div class=\"hdr-left\">\n    <div class=\"brand-mark\" aria-label=\"LOGNET\">\n      <div class=\"brand-word\"><span>LOG</span><span>NET</span></div>\n    </div>\n    <div class=\"title-box\">\n      <h1>CGNAT · HOTSPOT · BARRA DO PIRAÍ</h1>\n      <p>Monitoramento da tradução de endereço (NAT) do MikroTik via syslog e VictoriaLogs, com filtros por protocolo, IP interno e MAC.</p>\n    </div>\n  </div>\n  <div class=\"hdr-right\">\n    <a class=\"back-btn\" href=\"/dashboards?query=MENU%2001&kiosk\" data-dashboard-query=\"MENU 01\" data-dashboard-title=\"MENU 01\" title=\"Voltar ao menu\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m12 19-7-7 7-7\"/><path d=\"M19 12H5\"/></svg>Voltar</a>\n    <div class=\"pills\">\n      <span class=\"pill pill-mikrotik\">MikroTik</span>\n      <span class=\"pill pill-syslog\">Syslog UDP</span>\n      <span class=\"pill pill-victorialogs\">VictoriaLogs</span>\n      <span class=\"pill pill-cgnat\">CGNAT</span>\n    </div>\n    <div class=\"live\">\n      <div class=\"live-dot\"></div>\n      <span class=\"live-lbl\">Ao vivo</span>\n    </div>\n  </div>\n</div>\n",
               "onInit": "",
               "onInitOnResize": false,
-              "onRender": "(function(){\nfunction withKiosk(url){if(!url){return url;}return /[?&]kiosk(?:[=&]|$)/.test(url)?url:url+(url.indexOf('?')>=0?'&':'?')+'kiosk';}function forceKiosk(){if(!/[?&]kiosk(?:[=&]|$)/.test(window.location.search)){window.location.replace(withKiosk(window.location.href));return true;}return false;}if(forceKiosk()){return;}function fallbackUrl(query){return withKiosk('/dashboards?query='+encodeURIComponent(query||''));}\nfunction goByQuery(query,title){\n  var fallback=fallbackUrl(query||title);\n  if(!query&&!title){window.location.assign('/dashboards?kiosk');return;}\n  fetch('/api/search?type=dash-db&query='+encodeURIComponent(query||title),{credentials:'same-origin'})\n    .then(function(r){return r.ok?r.json():[];})\n    .then(function(items){\n      var exact=title?(items||[]).find(function(item){return item.title===title;}):null;\n      var found=exact||(items||[])[0];\n      window.location.assign(found&&found.url?withKiosk(found.url):fallback);\n    })\n    .catch(function(){window.location.assign(fallback);});\n}\nhtmlNode.querySelectorAll('[data-dashboard-query]').forEach(function(el){\n  el.addEventListener('click',function(ev){\n    ev.preventDefault();\n    ev.stopPropagation();\n    goByQuery(el.getAttribute('data-dashboard-query'),el.getAttribute('data-dashboard-title'));\n  });\n});\n})();",
+              "onRender": "(function(){\nfunction withKiosk(url){if(!url){return url;}return /[?&]kiosk(?:[=&]|$)/.test(url)?url:url+(url.indexOf('?')>=0?'&':'?')+'kiosk';}function fallbackUrl(query){return withKiosk('/dashboards?query='+encodeURIComponent(query||''));}\nfunction goByQuery(query,title){\n  var fallback=fallbackUrl(query||title);\n  if(!query&&!title){window.location.assign('/dashboards?kiosk');return;}\n  fetch('/api/search?type=dash-db&query='+encodeURIComponent(query||title),{credentials:'same-origin'})\n    .then(function(r){return r.ok?r.json():[];})\n    .then(function(items){\n      var exact=title?(items||[]).find(function(item){return item.title===title;}):null;\n      var found=exact||(items||[])[0];\n      window.location.assign(found&&found.url?withKiosk(found.url):fallback);\n    })\n    .catch(function(){window.location.assign(fallback);});\n}\nhtmlNode.querySelectorAll('[data-dashboard-query]').forEach(function(el){\n  el.addEventListener('click',function(ev){\n    ev.preventDefault();\n    ev.stopPropagation();\n    goByQuery(el.getAttribute('data-dashboard-query'),el.getAttribute('data-dashboard-title'));\n  });\n});\n})();",
               "overflow": "visible",
               "panelupdateOnMount": true,
               "reduceOptions": {
@@ -1015,7 +1014,6 @@
     "to": "now"
   },
   "title": "CGNAT - WiFi Publico",
-  "uid": "cgnat-wifi-publico",
   "variables": [
     {
       "kind": "TextVariable",

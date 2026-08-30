@@ -42,6 +42,8 @@
                     "group": "loki",
                     "kind": "DataQuery",
                     "spec": {
+                      "direction": "backward",
+                      "editorMode": "code",
                       "expr": "sum(count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=~\"info|notice\"}[$__interval]))",
                       "legendFormat": "Normal",
                       "queryType": "range"
@@ -62,6 +64,8 @@
                     "group": "loki",
                     "kind": "DataQuery",
                     "spec": {
+                      "direction": "backward",
+                      "editorMode": "code",
                       "expr": "sum(count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=\"warning\"}[$__interval]))",
                       "legendFormat": "Atencao",
                       "queryType": "range"
@@ -82,6 +86,8 @@
                     "group": "loki",
                     "kind": "DataQuery",
                     "spec": {
+                      "direction": "backward",
+                      "editorMode": "code",
                       "expr": "sum(count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=~\"emerg|alert|crit|err\"}[$__interval]))",
                       "legendFormat": "Critico",
                       "queryType": "range"
@@ -102,6 +108,8 @@
                     "group": "loki",
                     "kind": "DataQuery",
                     "spec": {
+                      "direction": "backward",
+                      "editorMode": "code",
                       "expr": "sum(count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=~\"info|notice\"}[$__range]))",
                       "queryType": "instant"
                     },
@@ -121,6 +129,8 @@
                     "group": "loki",
                     "kind": "DataQuery",
                     "spec": {
+                      "direction": "backward",
+                      "editorMode": "code",
                       "expr": "sum(count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=\"warning\"}[$__range]))",
                       "queryType": "instant"
                     },
@@ -140,6 +150,8 @@
                     "group": "loki",
                     "kind": "DataQuery",
                     "spec": {
+                      "direction": "backward",
+                      "editorMode": "code",
                       "expr": "sum(count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=~\"emerg|alert|crit|err\"}[$__range]))",
                       "queryType": "instant"
                     },
@@ -159,6 +171,8 @@
                     "group": "loki",
                     "kind": "DataQuery",
                     "spec": {
+                      "direction": "backward",
+                      "editorMode": "code",
                       "expr": "sum(count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=~\"$severity\"}[$__range]))",
                       "queryType": "instant"
                     },
@@ -178,6 +192,7 @@
         "id": 1,
         "links": [],
         "title": "",
+        "transparent": true,
         "vizConfig": {
           "group": "gapit-htmlgraphics-panel",
           "kind": "VizConfig",
@@ -368,7 +383,7 @@
               "html": "<div class=\"dashboard-head\">\n  <div class=\"hdr-left\">\n    <div class=\"brand-mark\" aria-label=\"LOGNET\">\n      <div class=\"brand-word\"><span>LOG</span><span>NET</span></div>\n    </div>\n    <div class=\"title-box\">\n      <h1>Syslog · Switches Huawei</h1>\n      <p>Monitoramento de logs de rede dos switches Huawei via syslog-ng e Loki, com filtros por switch, severidade e intervalo.</p>\n    </div>\n  </div>\n  <div class=\"hdr-right\">\n    <a class=\"back-btn\" href=\"/dashboards?query=MENU%2001&kiosk\" data-dashboard-query=\"MENU 01\" data-dashboard-title=\"MENU 01\" title=\"Voltar ao menu\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m12 19-7-7 7-7\"/><path d=\"M19 12H5\"/></svg>Voltar</a>\n    <div class=\"pills\">\n      <span class=\"pill pill-huawei\">Huawei VRP</span>\n      <span class=\"pill pill-syslog\">syslog-ng</span>\n      <span class=\"pill pill-loki\">Loki</span>\n      <span class=\"pill pill-otlp\">RFC3164</span>\n    </div>\n    <div class=\"live\">\n      <div class=\"live-dot\"></div>\n      <span class=\"live-lbl\">Ao vivo</span>\n    </div>\n  </div>\n</div>\n",
               "onInit": "",
               "onInitOnResize": false,
-              "onRender": "(function(){\nfunction withKiosk(url){if(!url){return url;}return /[?&]kiosk(?:[=&]|$)/.test(url)?url:url+(url.indexOf('?')>=0?'&':'?')+'kiosk';}function forceKiosk(){if(!/[?&]kiosk(?:[=&]|$)/.test(window.location.search)){window.location.replace(withKiosk(window.location.href));return true;}return false;}if(forceKiosk()){return;}function fallbackUrl(query){return withKiosk('/dashboards?query='+encodeURIComponent(query||''));}\nfunction goByQuery(query,title){\n  var fallback=fallbackUrl(query||title);\n  if(!query&&!title){window.location.assign('/dashboards?kiosk');return;}\n  fetch('/api/search?type=dash-db&query='+encodeURIComponent(query||title),{credentials:'same-origin'})\n    .then(function(r){return r.ok?r.json():[];})\n    .then(function(items){\n      var exact=title?(items||[]).find(function(item){return item.title===title;}):null;\n      var found=exact||(items||[])[0];\n      window.location.assign(found&&found.url?withKiosk(found.url):fallback);\n    })\n    .catch(function(){window.location.assign(fallback);});\n}\nhtmlNode.querySelectorAll('[data-dashboard-query]').forEach(function(el){\n  el.addEventListener('click',function(ev){\n    ev.preventDefault();\n    ev.stopPropagation();\n    goByQuery(el.getAttribute('data-dashboard-query'),el.getAttribute('data-dashboard-title'));\n  });\n});\n})();",
+              "onRender": "(function(){\nfunction withKiosk(url){if(!url){return url;}return /[?&]kiosk(?:[=&]|$)/.test(url)?url:url+(url.indexOf('?')>=0?'&':'?')+'kiosk';}function fallbackUrl(query){return withKiosk('/dashboards?query='+encodeURIComponent(query||''));}\nfunction goByQuery(query,title){\n  var fallback=fallbackUrl(query||title);\n  if(!query&&!title){window.location.assign('/dashboards?kiosk');return;}\n  fetch('/api/search?type=dash-db&query='+encodeURIComponent(query||title),{credentials:'same-origin'})\n    .then(function(r){return r.ok?r.json():[];})\n    .then(function(items){\n      var exact=title?(items||[]).find(function(item){return item.title===title;}):null;\n      var found=exact||(items||[])[0];\n      window.location.assign(found&&found.url?withKiosk(found.url):fallback);\n    })\n    .catch(function(){window.location.assign(fallback);});\n}\nhtmlNode.querySelectorAll('[data-dashboard-query]').forEach(function(el){\n  el.addEventListener('click',function(ev){\n    ev.preventDefault();\n    ev.stopPropagation();\n    goByQuery(el.getAttribute('data-dashboard-query'),el.getAttribute('data-dashboard-title'));\n  });\n});\n})();",
               "overflow": "visible",
               "panelupdateOnMount": true,
               "reduceOptions": {
@@ -501,6 +516,7 @@
         "id": 11,
         "links": [],
         "title": "",
+        "transparent": true,
         "vizConfig": {
           "group": "gapit-htmlgraphics-panel",
           "kind": "VizConfig",
@@ -747,6 +763,8 @@
                     "group": "loki",
                     "kind": "DataQuery",
                     "spec": {
+                      "direction": "backward",
+                      "editorMode": "code",
                       "expr": "{job=\"huawei-switches\", host=~\"$switch\", severity=~\"emerg|alert|crit|err\"} | regexp `^\\S+ (?P<switchname>\\S+) (?:%%\\d+)?(?P<modulo>[A-Z0-9]+)/(?P<sevn>\\d)/(?P<evento>[A-Z0-9_]+)(?:\\([^)]*\\))?(?:\\[\\d+\\])?:?\\s*(?P<descricao>.*)`",
                       "maxLines": 100,
                       "queryType": "range"
@@ -814,6 +832,7 @@
         "id": 13,
         "links": [],
         "title": "",
+        "transparent": true,
         "vizConfig": {
           "group": "gapit-htmlgraphics-panel",
           "kind": "VizConfig",
@@ -905,6 +924,8 @@
                     "group": "loki",
                     "kind": "DataQuery",
                     "spec": {
+                      "direction": "backward",
+                      "editorMode": "code",
                       "expr": "{job=\"huawei-switches\", host=~\"$switch\", severity=~\"$severity\"} | regexp `^\\S+ (?P<switchname>\\S+) (?:%%\\d+)?(?P<modulo>[A-Z0-9]+)/(?P<sevn>\\d)/(?P<evento>[A-Z0-9_]+)(?:\\([^)]*\\))?(?:\\[\\d+\\])?:?\\s*(?P<descricao>.*)`",
                       "maxLines": 2000,
                       "queryType": "range"
@@ -972,6 +993,7 @@
         "id": 14,
         "links": [],
         "title": "",
+        "transparent": true,
         "vizConfig": {
           "group": "gapit-htmlgraphics-panel",
           "kind": "VizConfig",
@@ -1063,6 +1085,8 @@
                     "group": "loki",
                     "kind": "DataQuery",
                     "spec": {
+                      "direction": "backward",
+                      "editorMode": "code",
                       "expr": "{job=\"huawei-switches\", host=~\"$switch\", severity=~\"$severity\"} | regexp `^\\S+ (?P<switchname>\\S+) (?:%%\\d+)?(?P<modulo>[A-Z0-9]+)/(?P<sevn>\\d)/(?P<evento>[A-Z0-9_]+)(?:\\([^)]*\\))?(?:\\[\\d+\\])?:?\\s*(?P<descricao>.*)`",
                       "maxLines": 2000,
                       "queryType": "range"
@@ -1130,6 +1154,7 @@
         "id": 15,
         "links": [],
         "title": "",
+        "transparent": true,
         "vizConfig": {
           "group": "gapit-htmlgraphics-panel",
           "kind": "VizConfig",
@@ -1221,6 +1246,8 @@
                     "group": "loki",
                     "kind": "DataQuery",
                     "spec": {
+                      "direction": "backward",
+                      "editorMode": "code",
                       "expr": "sum by (severity) (count_over_time({job=\"huawei-switches\", host=~\"$switch\", severity=~\"$severity\"}[$__range]))",
                       "legendFormat": "{{severity}}",
                       "queryType": "instant"
@@ -1239,6 +1266,7 @@
         "id": 2,
         "links": [],
         "title": "",
+        "transparent": true,
         "vizConfig": {
           "group": "gapit-htmlgraphics-panel",
           "kind": "VizConfig",
@@ -1330,6 +1358,8 @@
                     "group": "loki",
                     "kind": "DataQuery",
                     "spec": {
+                      "direction": "backward",
+                      "editorMode": "code",
                       "expr": "{job=\"huawei-switches\", host=~\"$switch\", severity=~\"$severity\"} | regexp `^\\S+ (?P<switchname>\\S+) (?:%%\\d+)?(?P<modulo>[A-Z0-9]+)/(?P<sevn>\\d)/(?P<evento>[A-Z0-9_]+)(?:\\([^)]*\\))?(?:\\[\\d+\\])?:?\\s*(?P<descricao>.*)`",
                       "maxLines": 500,
                       "queryType": "range"
@@ -1397,6 +1427,7 @@
         "id": 5,
         "links": [],
         "title": "",
+        "transparent": true,
         "vizConfig": {
           "group": "gapit-htmlgraphics-panel",
           "kind": "VizConfig",
@@ -1620,7 +1651,6 @@
     "to": "now"
   },
   "title": "Syslog Switches LOGNET",
-  "uid": "syslog-switches-lognet",
   "variables": [
     {
       "kind": "DatasourceVariable",
@@ -1649,10 +1679,10 @@
         "allowCustomValue": true,
         "current": {
           "text": [
-            "SW04-POP-MAG-RJ"
+            "All"
           ],
           "value": [
-            "SW04-POP-MAG-RJ"
+            "$__all"
           ]
         },
         "hide": "hideVariable",
