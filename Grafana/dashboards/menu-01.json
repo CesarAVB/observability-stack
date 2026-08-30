@@ -30,21 +30,7 @@
         "data": {
           "kind": "QueryGroup",
           "spec": {
-            "queries": [
-              {
-                "kind": "PanelQuery",
-                "spec": {
-                  "hidden": false,
-                  "query": {
-                    "group": "",
-                    "kind": "DataQuery",
-                    "spec": {},
-                    "version": "v0"
-                  },
-                  "refId": "A"
-                }
-              }
-            ],
+            "queries": [],
             "queryOptions": {},
             "transformations": []
           }
@@ -77,10 +63,10 @@
                 "dynamicProps": false
               },
               "dynamicProps": false,
-              "html": "<div class=\"menu-root\"><nav class=\"button-container\" aria-label=\"Dashboards LOGNET\"><a href=\"/d/aplicacao-spring-boot/aplicacao-spring-boot\" class=\"button\">APLICA\u00c7\u00c3O</a><a href=\"/d/cgnat-wifi-publico/cgnat-wifi-publico\" class=\"button\">CGNAT</a><a href=\"/d/docker-containers/docker-containers\" class=\"button\">DOCKER</a><a href=\"/d/syslog-switches-lognet/syslog-switches-lognet\" class=\"button\">SYSLOG</a></nav></div>",
+              "html": "<div class=\"menu-root\"><nav class=\"button-container\" aria-label=\"Dashboards LOGNET\"><a href=\"/dashboards?query=Spring%20Boot&kiosk\" data-dashboard-query=\"Spring Boot\" class=\"button\">APLICACAO</a><a href=\"/dashboards?query=CGNAT&kiosk\" data-dashboard-query=\"CGNAT\" class=\"button\">CGNAT</a><a href=\"/dashboards?query=Docker&kiosk\" data-dashboard-query=\"Docker\" class=\"button\">DOCKER</a><a href=\"/dashboards?query=Syslog&kiosk\" data-dashboard-query=\"Syslog\" class=\"button\">SYSLOG</a></nav></div>",
               "onInit": "",
               "onInitOnResize": false,
-              "onRender": "",
+              "onRender": "(function(){function withKiosk(url){if(!url){return url;}return /[?&]kiosk(?:[=&]|$)/.test(url)?url:url+(url.indexOf('?')>=0?'&':'?')+'kiosk';}function fallbackUrl(query){return withKiosk('/dashboards?query='+encodeURIComponent(query||''));}function goByQuery(query){var fallback=fallbackUrl(query);if(!query){window.location.assign('/dashboards?kiosk');return;}fetch('/api/search?type=dash-db&query='+encodeURIComponent(query),{credentials:'same-origin'}).then(function(r){return r.ok?r.json():[];}).then(function(items){var found=(items||[])[0];window.location.assign(found&&found.url?withKiosk(found.url):fallback);}).catch(function(){window.location.assign(fallback);});}htmlNode.querySelectorAll('[data-dashboard-query]').forEach(function(el){el.addEventListener('click',function(ev){ev.preventDefault();ev.stopPropagation();goByQuery(el.getAttribute('data-dashboard-query'));});});})();",
               "overflow": "visible",
               "panelupdateOnMount": true,
               "reduceOptions": {
@@ -91,9 +77,9 @@
               "renderOnMount": true,
               "rootCSS": "",
               "useGrafanaScrollbar": false
-            },
-            "pluginVersion": "2.2.3"
-          }
+            }
+          },
+          "version": "2.2.3"
         }
       }
     }

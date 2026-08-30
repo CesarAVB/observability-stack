@@ -30,21 +30,7 @@
         "data": {
           "kind": "QueryGroup",
           "spec": {
-            "queries": [
-              {
-                "kind": "PanelQuery",
-                "spec": {
-                  "hidden": false,
-                  "query": {
-                    "group": "",
-                    "kind": "DataQuery",
-                    "spec": {},
-                    "version": "v0"
-                  },
-                  "refId": "A"
-                }
-              }
-            ],
+            "queries": [],
             "queryOptions": {},
             "transformations": []
           }
@@ -77,10 +63,10 @@
                 "dynamicProps": false
               },
               "dynamicProps": false,
-              "html": "<div class=\"nav-root\"><header class=\"hdr\"><div class=\"brand\"><img class=\"logo\" src=\"https://storage.googleapis.com/flowbix-img/LOGNETLOGNN.png\" alt=\"LOGNET\" onerror=\"this.hidden=true\"><div class=\"title\"><h1>Painel de Navega\u00e7\u00e3o</h1><p>Central de Dashboards - LOGNET</p></div></div><div class=\"live\"><span class=\"live-dot\"></span><span>Ao vivo</span></div></header><section class=\"section\"><h2 class=\"section-title\">Dashboards dispon\u00edveis</h2><div class=\"grid\"><a class=\"card\" href=\"/d/aplicacao-spring-boot/aplicacao-spring-boot\" style=\"--c:#f97316;--bg:rgba(249,115,22,.12);--bd:rgba(249,115,22,.30)\"><div class=\"icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"4\" width=\"18\" height=\"16\" rx=\"2\"/><path d=\"M7 8h10M7 12h6M7 16h8\"/></svg></div><div class=\"txt\"><strong>Aplica\u00e7\u00e3o - Spring Boot</strong><span>JVM, HTTP, logs e sa\u00fade do servi\u00e7o</span></div></a><a class=\"card\" href=\"/d/cgnat-wifi-publico/cgnat-wifi-publico\" style=\"--c:#38bdf8;--bg:rgba(56,189,248,.12);--bd:rgba(56,189,248,.30)\"><div class=\"icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 12h16\"/><path d=\"M4 6h16\"/><path d=\"M4 18h16\"/><circle cx=\"8\" cy=\"6\" r=\"1\"/><circle cx=\"16\" cy=\"12\" r=\"1\"/><circle cx=\"10\" cy=\"18\" r=\"1\"/></svg></div><div class=\"txt\"><strong>CGNAT - WiFi Publico</strong><span>Consulta e an\u00e1lise de logs CGNAT</span></div></a><a class=\"card\" href=\"/d/docker-containers/docker-containers\" style=\"--c:#22c55e;--bg:rgba(34,197,94,.12);--bd:rgba(34,197,94,.30)\"><div class=\"icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"8\" width=\"18\" height=\"11\" rx=\"2\"/><path d=\"M7 8V5h3v3M10 8V5h3v3M13 8V5h3v3\"/></svg></div><div class=\"txt\"><strong>Docker - Containers</strong><span>CPU, mem\u00f3ria, rede e I/O por container</span></div></a><a class=\"card\" href=\"/d/syslog-switches-lognet/syslog-switches-lognet\" style=\"--c:#a78bfa;--bg:rgba(167,139,250,.12);--bd:rgba(167,139,250,.30)\"><div class=\"icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"2\"/><path d=\"M8 9h8M8 13h5M8 17h8\"/></svg></div><div class=\"txt\"><strong>Syslog Switches LOGNET</strong><span>Logs Huawei via Loki</span></div></a></div></section></div>",
+              "html": "<div class=\"nav-root\"><header class=\"hdr\"><div class=\"brand\"><img class=\"logo\" src=\"https://storage.googleapis.com/flowbix-img/LOGNETLOGNN.png\" alt=\"LOGNET\" onerror=\"this.hidden=true\"><div class=\"title\"><h1>Painel de Navegacao</h1><p>Central de Dashboards - LOGNET</p></div></div><div class=\"live\"><span class=\"live-dot\"></span><span>Ao vivo</span></div></header><section class=\"section\"><h2 class=\"section-title\">Dashboards disponiveis</h2><div class=\"grid\"><a class=\"card\" href=\"/dashboards?query=Spring%20Boot&kiosk\" data-dashboard-query=\"Spring Boot\" style=\"--c:#f97316;--bg:rgba(249,115,22,.12);--bd:rgba(249,115,22,.30)\"><div class=\"icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"4\" width=\"18\" height=\"16\" rx=\"2\"/><path d=\"M7 8h10M7 12h6M7 16h8\"/></svg></div><div class=\"txt\"><strong>Aplicacao - Spring Boot</strong><span>JVM, HTTP, logs e saude do servico</span></div></a><a class=\"card\" href=\"/dashboards?query=CGNAT&kiosk\" data-dashboard-query=\"CGNAT\" style=\"--c:#38bdf8;--bg:rgba(56,189,248,.12);--bd:rgba(56,189,248,.30)\"><div class=\"icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 12h16\"/><path d=\"M4 6h16\"/><path d=\"M4 18h16\"/><circle cx=\"8\" cy=\"6\" r=\"1\"/><circle cx=\"16\" cy=\"12\" r=\"1\"/><circle cx=\"10\" cy=\"18\" r=\"1\"/></svg></div><div class=\"txt\"><strong>CGNAT - WiFi Publico</strong><span>Consulta e analise de logs CGNAT</span></div></a><a class=\"card\" href=\"/dashboards?query=Docker&kiosk\" data-dashboard-query=\"Docker\" style=\"--c:#22c55e;--bg:rgba(34,197,94,.12);--bd:rgba(34,197,94,.30)\"><div class=\"icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"8\" width=\"18\" height=\"11\" rx=\"2\"/><path d=\"M7 8V5h3v3M10 8V5h3v3M13 8V5h3v3\"/></svg></div><div class=\"txt\"><strong>Docker - Containers</strong><span>CPU, memoria, rede e I/O por container</span></div></a><a class=\"card\" href=\"/dashboards?query=Syslog&kiosk\" data-dashboard-query=\"Syslog\" style=\"--c:#a78bfa;--bg:rgba(167,139,250,.12);--bd:rgba(167,139,250,.30)\"><div class=\"icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"2\"/><path d=\"M8 9h8M8 13h5M8 17h8\"/></svg></div><div class=\"txt\"><strong>Syslog Switches LOGNET</strong><span>Logs Huawei via Loki</span></div></a></div></section></div>",
               "onInit": "",
               "onInitOnResize": false,
-              "onRender": "",
+              "onRender": "(function(){function withKiosk(url){if(!url){return url;}return /[?&]kiosk(?:[=&]|$)/.test(url)?url:url+(url.indexOf('?')>=0?'&':'?')+'kiosk';}function fallbackUrl(query){return withKiosk('/dashboards?query='+encodeURIComponent(query||''));}function goByQuery(query){var fallback=fallbackUrl(query);if(!query){window.location.assign('/dashboards?kiosk');return;}fetch('/api/search?type=dash-db&query='+encodeURIComponent(query),{credentials:'same-origin'}).then(function(r){return r.ok?r.json():[];}).then(function(items){var found=(items||[])[0];window.location.assign(found&&found.url?withKiosk(found.url):fallback);}).catch(function(){window.location.assign(fallback);});}htmlNode.querySelectorAll('[data-dashboard-query]').forEach(function(el){el.addEventListener('click',function(ev){ev.preventDefault();ev.stopPropagation();goByQuery(el.getAttribute('data-dashboard-query'));});});})();",
               "overflow": "visible",
               "panelupdateOnMount": true,
               "reduceOptions": {
@@ -91,9 +77,9 @@
               "renderOnMount": true,
               "rootCSS": "",
               "useGrafanaScrollbar": false
-            },
-            "pluginVersion": "2.2.3"
-          }
+            }
+          },
+          "version": "2.2.3"
         }
       }
     }
