@@ -729,6 +729,480 @@
         }
       }
     },
+    "panel-13": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "$datasource"
+                    },
+                    "group": "loki",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "{job=\"huawei-switches\", host=~\"$switch\", severity=~\"emerg|alert|crit|err\"} | regexp `^\\S+ (?P<switchname>\\S+) (?:%%\\d+)?(?P<modulo>[A-Z0-9]+)/(?P<sevn>\\d)/(?P<evento>[A-Z0-9_]+)(?:\\([^)]*\\))?(?:\\[\\d+\\])?:?\\s*(?P<descricao>.*)`",
+                      "maxLines": 100,
+                      "queryType": "range"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": [
+              {
+                "group": "extractFields",
+                "kind": "Transformation",
+                "spec": {
+                  "options": {
+                    "format": "json",
+                    "keepTime": false,
+                    "replace": false,
+                    "source": "labels"
+                  }
+                }
+              },
+              {
+                "group": "organize",
+                "kind": "Transformation",
+                "spec": {
+                  "options": {
+                    "excludeByName": {
+                      "Line": true,
+                      "TraceID": true,
+                      "facility": true,
+                      "host": true,
+                      "id": true,
+                      "job": true,
+                      "labelTypes": true,
+                      "labels": true,
+                      "modulo": true,
+                      "sevn": true,
+                      "source_ip": true,
+                      "tsNs": true
+                    },
+                    "indexByName": {
+                      "Time": 0,
+                      "descricao": 4,
+                      "evento": 3,
+                      "severity": 2,
+                      "switchname": 1
+                    },
+                    "renameByName": {
+                      "Time": "Hora",
+                      "descricao": "Mensagem",
+                      "evento": "Evento",
+                      "severity": "Sev",
+                      "switchname": "Switch"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "description": "evento mais recente de alta prioridade",
+        "id": 13,
+        "links": [],
+        "title": "",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "\n@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Roboto+Mono:wght@600;700;900&display=swap');\n*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}\n.ops-panel{--accent:#38bdf8;--accent-soft:rgba(56,189,248,.12);width:100%;height:100%;padding:14px 16px;color:#e7edf6;background:radial-gradient(circle at top left,var(--accent-soft),transparent 34%),linear-gradient(135deg,#161b22 0%,#101419 100%);border:1px solid rgba(255,255,255,.07);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;gap:10px}\n.ops-header{display:flex;align-items:center;gap:10px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}\n.ops-icon{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;color:var(--accent);background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);flex-shrink:0}\n.ops-title strong{display:block;font-size:14px;font-weight:900;color:#fff;line-height:1.1}\n.ops-title span{display:block;margin-top:3px;font-size:10px;font-weight:800;color:#9aa4b2;text-transform:uppercase;letter-spacing:0}\n.ops-body{min-height:0;flex:1;display:flex;flex-direction:column;gap:7px;overflow-y:auto;overflow-x:hidden;padding-right:4px}.ops-body::-webkit-scrollbar{width:6px}.ops-body::-webkit-scrollbar-thumb{background:#30363d;border-radius:999px}\n.ops-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;padding:7px 10px;border:1px solid rgba(255,255,255,.09);border-left:3px solid var(--accent);border-radius:8px;background:rgba(255,255,255,.035);min-height:34px;flex-shrink:0}\n.ops-main{min-width:0}\n.ops-name{display:block;font-size:12px;font-weight:900;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.ops-sub{display:block;margin-top:2px;font-size:10px;font-weight:700;color:#9aa4b2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.ops-value{font-family:'Roboto Mono',monospace;font-size:15px;font-weight:900;color:#fff;white-space:nowrap}\n.ops-empty{height:100%;display:grid;place-items:center;text-align:center;color:#9aa4b2;font-size:12px;font-weight:800;border:1px dashed rgba(255,255,255,.16);border-radius:10px;background:rgba(255,255,255,.025);padding:12px}\n.ops-critical{--accent:#ef4444;--accent-soft:rgba(239,68,68,.12)}\n.ops-warning{--accent:#facc15;--accent-soft:rgba(250,204,21,.12)}\n.ops-blue{--accent:#38bdf8;--accent-soft:rgba(56,189,248,.12)}\n.ops-badge{display:inline-flex;align-items:center;width:fit-content;margin-top:6px;padding:4px 8px;border-radius:999px;font-size:10px;font-weight:900;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}\n.ops-message{font-size:12px;font-weight:700;color:#dbe4ef;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}\n.svg-icon{display:inline-grid;place-items:center;width:1em;height:1em;line-height:1;vertical-align:-.125em;flex-shrink:0}.svg-icon svg{width:1em;height:1em;display:block}\n@supports not (color:color-mix(in srgb,red 50%,transparent)){.ops-icon,.ops-badge{border-color:rgba(255,255,255,.16)}}\n.ops-latest-grid{display:grid;grid-template-columns:minmax(220px,.34fr) minmax(0,1fr);gap:16px;align-items:stretch;min-height:0;flex:1}.ops-latest-main{min-width:0;display:flex;flex-direction:column;justify-content:center;gap:8px}.ops-latest-name-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.ops-latest-name-row .ops-badge{margin-top:0}.ops-latest-time{display:block;font-size:10px;font-weight:700;color:#9aa4b2}.ops-latest-time strong{color:#dbe4ef;font-weight:900}.ops-latest-message{min-width:0;min-height:0;display:flex;border:1px solid rgba(255,255,255,.09);border-left:3px solid var(--accent);border-radius:8px;background:rgba(255,255,255,.035);overflow:hidden}.ops-latest-message .ops-message{flex:1;min-height:0;margin:0;padding:12px 14px;font-size:13px;line-height:1.6;color:#dbe4ef;font-weight:700;display:block;overflow-y:auto;white-space:normal;word-break:break-word;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent}.ops-latest-message .ops-message::-webkit-scrollbar{width:6px}.ops-latest-message .ops-message::-webkit-scrollbar-track{background:transparent}.ops-latest-message .ops-message::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2);border-radius:999px}.ops-latest-message .ops-message::-webkit-scrollbar-button{width:0;height:0;display:none}#ops-latest-critical .ops-body{overflow:hidden}@media(max-width:900px){.ops-latest-grid{grid-template-columns:1fr}}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div id=\"ops-latest-critical\" class=\"ops-panel ops-critical\"><div class=\"ops-header\"><span class=\"ops-icon\"><span class=\"svg-icon\" aria-hidden=\"true\"><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M8.5 14.5A4.5 4.5 0 0 0 17 12c0-4-4-6-4-9-3 2-6 5-6 10a5 5 0 0 0 10 0'/></svg></span></span><div class=\"ops-title\"><strong>Ultimo critico</strong><span>evento mais recente de alta prioridade</span></div></div><div class=\"ops-body\"></div></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "(function(){\nfunction valuesToArray(values){if(!values)return[];if(Array.isArray(values))return values;if(typeof values.toArray==='function')return values.toArray();var len=values.length||values.size||(values.buffer?values.buffer.length:0)||0;var out=[];for(var i=0;i<len;i++){out.push(typeof values.get==='function'?values.get(i):values[i]);}return out;}\nfunction esc(v){return String(v==null?'':v).replace(/[&<>]/g,function(c){return c==='&'?'&amp;':(c==='<'?'&lt;':'&gt;');});}\nfunction lastNumber(field){var vals=valuesToArray(field&&field.values);for(var i=vals.length-1;i>=0;i--){var n=Number(vals[i]);if(Number.isFinite(n))return n;}return 0;}\nfunction labelFrom(field,frame,names){var labels=(field&&field.labels)||(frame&&frame.labels)||{};for(var i=0;i<names.length;i++){if(labels[names[i]])return labels[names[i]];}var candidates=[field&&field.name,field&&field.config&&field.config.displayName,frame&&frame.name];for(var j=0;j<candidates.length;j++){var text=String(candidates[j]||'');for(var k=0;k<names.length;k++){var re=new RegExp(names[k]+'=\"?([^,}\" ]+)\"?','i');var m=text.match(re);if(m)return m[1];}}return null;}\nfunction metricRows(data,labelNames){var rows=[];(data&&data.series||[]).forEach(function(frame){(frame.fields||[]).forEach(function(field){if(field.type==='time'||/^time$/i.test(field.name||''))return;var value=lastNumber(field);var name=labelFrom(field,frame,labelNames)||field.name||frame.name||'N/A';if(Number.isFinite(value)&&value>0)rows.push({name:String(name),value:value});});});rows.sort(function(a,b){return b.value-a.value;});return rows;}\n\nfunction fieldByName(frame,name){var fields=(frame&&frame.fields)||[];var lower=name.toLowerCase();for(var i=0;i<fields.length;i++){var f=fields[i];var n1=String(f.name||'').toLowerCase();var n2=String((f.config&&f.config.displayName)||'').toLowerCase();if(n1===lower||n2===lower)return f;}return null;}\nfunction toMs(v){if(v instanceof Date)return v.getTime();if(typeof v==='number')return v;var p=new Date(v).getTime();return Number.isFinite(p)?p:0;}\nfunction fmt(ms){if(!ms)return '--';var d=new Date(ms);return d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})+' '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});}\nfunction ago(ms){if(!ms)return '--';var diff=Math.floor((Date.now()-ms)/1000);if(diff<60)return Math.max(0,diff)+'s atras';if(diff<3600)return Math.floor(diff/60)+'m atras';if(diff<86400)return Math.floor(diff/3600)+'h atras';return Math.floor(diff/86400)+'d atras';}\nvar root=htmlNode.querySelector('#ops-latest-critical');if(!root)return;var body=root.querySelector('.ops-body');if(!body)return;var rows=[];(data&&data.series||[]).forEach(function(frame){var timeF=fieldByName(frame,'Hora')||fieldByName(frame,'Time');var hostF=fieldByName(frame,'Switch')||fieldByName(frame,'host');var sevF=fieldByName(frame,'Sev')||fieldByName(frame,'severity');var evtF=fieldByName(frame,'Evento')||fieldByName(frame,'evento');var msgF=fieldByName(frame,'Mensagem')||fieldByName(frame,'descricao')||fieldByName(frame,'line');var times=valuesToArray(timeF&&timeF.values);var hosts=valuesToArray(hostF&&hostF.values);var sevs=valuesToArray(sevF&&sevF.values);var evts=valuesToArray(evtF&&evtF.values);var msgs=valuesToArray(msgF&&msgF.values);var n=Math.max(times.length,hosts.length,sevs.length,evts.length,msgs.length);for(var i=0;i<n;i++){rows.push({time:toMs(times[i]),host:hosts[i]||'N/A',severity:sevs[i]||'critico',event:evts[i]||'-',message:msgs[i]||'-'});}});rows=rows.filter(function(r){return r.time>0;}).sort(function(a,b){return b.time-a.time;});if(!rows.length){body.innerHTML=\"<div class='ops-empty'>Nenhum evento critico no periodo.</div>\";return;}var r=rows[0];body.innerHTML=\"<div class='ops-latest-grid'><div class='ops-latest-main'><div class='ops-latest-name-row'><span class='ops-name'>\"+esc(r.host)+\"</span><span class='ops-badge'>\"+esc(r.severity)+\"</span></div><span class='ops-sub'>\"+esc(r.event)+\"</span><span class='ops-latest-time'>\"+fmt(r.time)+\" &middot; <strong>\"+ago(r.time)+\"</strong></span></div><div class='ops-latest-message'><div class='ops-message'>\"+esc(r.message)+\"</div></div></div>\";})();",
+              "overflow": "hidden",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull",
+                  "last",
+                  "firstNotNull",
+                  "first",
+                  "min",
+                  "max",
+                  "mean",
+                  "sum",
+                  "count",
+                  "range",
+                  "delta",
+                  "step",
+                  "diff",
+                  "logmin",
+                  "allIsZero",
+                  "allIsNull",
+                  "diffperc"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-14": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "$datasource"
+                    },
+                    "group": "loki",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "{job=\"huawei-switches\", host=~\"$switch\", severity=~\"$severity\"} | regexp `^\\S+ (?P<switchname>\\S+) (?:%%\\d+)?(?P<modulo>[A-Z0-9]+)/(?P<sevn>\\d)/(?P<evento>[A-Z0-9_]+)(?:\\([^)]*\\))?(?:\\[\\d+\\])?:?\\s*(?P<descricao>.*)`",
+                      "maxLines": 2000,
+                      "queryType": "range"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": [
+              {
+                "group": "extractFields",
+                "kind": "Transformation",
+                "spec": {
+                  "options": {
+                    "format": "json",
+                    "keepTime": false,
+                    "replace": false,
+                    "source": "labels"
+                  }
+                }
+              },
+              {
+                "group": "organize",
+                "kind": "Transformation",
+                "spec": {
+                  "options": {
+                    "excludeByName": {
+                      "Line": true,
+                      "TraceID": true,
+                      "facility": true,
+                      "host": true,
+                      "id": true,
+                      "job": true,
+                      "labelTypes": true,
+                      "labels": true,
+                      "modulo": true,
+                      "sevn": true,
+                      "source_ip": true,
+                      "tsNs": true
+                    },
+                    "indexByName": {
+                      "Time": 0,
+                      "descricao": 4,
+                      "evento": 3,
+                      "severity": 2,
+                      "switchname": 1
+                    },
+                    "renameByName": {
+                      "Time": "Hora",
+                      "descricao": "Mensagem",
+                      "evento": "Evento",
+                      "severity": "Sev",
+                      "switchname": "Switch"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "description": "eventos mais frequentes no periodo",
+        "id": 14,
+        "links": [],
+        "title": "",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "\n@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Roboto+Mono:wght@600;700;900&display=swap');\n*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}\n.ops-panel{--accent:#38bdf8;--accent-soft:rgba(56,189,248,.12);width:100%;height:100%;padding:14px 16px;color:#e7edf6;background:radial-gradient(circle at top left,var(--accent-soft),transparent 34%),linear-gradient(135deg,#161b22 0%,#101419 100%);border:1px solid rgba(255,255,255,.07);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;gap:10px}\n.ops-header{display:flex;align-items:center;gap:10px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}\n.ops-icon{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;color:var(--accent);background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);flex-shrink:0}\n.ops-title strong{display:block;font-size:14px;font-weight:900;color:#fff;line-height:1.1}\n.ops-title span{display:block;margin-top:3px;font-size:10px;font-weight:800;color:#9aa4b2;text-transform:uppercase;letter-spacing:0}\n.ops-body{min-height:0;flex:1;display:flex;flex-direction:column;gap:7px;overflow-y:auto;overflow-x:hidden;padding-right:4px}.ops-body::-webkit-scrollbar{width:6px}.ops-body::-webkit-scrollbar-thumb{background:#30363d;border-radius:999px}\n.ops-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;padding:7px 10px;border:1px solid rgba(255,255,255,.09);border-left:3px solid var(--accent);border-radius:8px;background:rgba(255,255,255,.035);min-height:34px;flex-shrink:0}\n.ops-main{min-width:0}\n.ops-name{display:block;font-size:12px;font-weight:900;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.ops-sub{display:block;margin-top:2px;font-size:10px;font-weight:700;color:#9aa4b2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.ops-value{font-family:'Roboto Mono',monospace;font-size:15px;font-weight:900;color:#fff;white-space:nowrap}\n.ops-empty{height:100%;display:grid;place-items:center;text-align:center;color:#9aa4b2;font-size:12px;font-weight:800;border:1px dashed rgba(255,255,255,.16);border-radius:10px;background:rgba(255,255,255,.025);padding:12px}\n.ops-critical{--accent:#ef4444;--accent-soft:rgba(239,68,68,.12)}\n.ops-warning{--accent:#facc15;--accent-soft:rgba(250,204,21,.12)}\n.ops-blue{--accent:#38bdf8;--accent-soft:rgba(56,189,248,.12)}\n.ops-badge{display:inline-flex;align-items:center;width:fit-content;margin-top:6px;padding:4px 8px;border-radius:999px;font-size:10px;font-weight:900;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}\n.ops-message{font-size:12px;font-weight:700;color:#dbe4ef;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}\n.svg-icon{display:inline-grid;place-items:center;width:1em;height:1em;line-height:1;vertical-align:-.125em;flex-shrink:0}.svg-icon svg{width:1em;height:1em;display:block}\n@supports not (color:color-mix(in srgb,red 50%,transparent)){.ops-icon,.ops-badge{border-color:rgba(255,255,255,.16)}}\n.ops-latest-grid{display:grid;grid-template-columns:minmax(220px,.34fr) minmax(0,1fr);gap:14px;align-items:start;min-height:0}.ops-latest-main{min-width:0}.ops-latest-message{min-width:0;padding:10px 12px;border:1px solid rgba(255,255,255,.09);border-left:3px solid var(--accent);border-radius:8px;background:rgba(255,255,255,.035)}@media(max-width:900px){.ops-latest-grid{grid-template-columns:1fr}.ops-message{-webkit-line-clamp:2}}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div id=\"ops-top-events\" class=\"ops-panel ops-warning\"><div class=\"ops-header\"><span class=\"ops-icon\"><span class=\"svg-icon\" aria-hidden=\"true\"><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><line x1='8' y1='6' x2='21' y2='6'/><line x1='8' y1='12' x2='21' y2='12'/><line x1='8' y1='18' x2='21' y2='18'/><circle cx='4' cy='6' r='1'/><circle cx='4' cy='12' r='1'/><circle cx='4' cy='18' r='1'/></svg></span></span><div class=\"ops-title\"><strong>Top eventos</strong><span>eventos mais frequentes no periodo</span></div></div><div class=\"ops-body\"></div></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "(function(){\nfunction valuesToArray(values){if(!values)return[];if(Array.isArray(values))return values;if(typeof values.toArray==='function')return values.toArray();var len=values.length||values.size||(values.buffer?values.buffer.length:0)||0;var out=[];for(var i=0;i<len;i++){out.push(typeof values.get==='function'?values.get(i):values[i]);}return out;}\nfunction esc(v){return String(v==null?'':v).replace(/[&<>]/g,function(c){return c==='&'?'&amp;':(c==='<'?'&lt;':'&gt;');});}\nfunction fieldByName(frame,names){var fields=(frame&&frame.fields)||[];var lowered=names.map(function(n){return String(n).toLowerCase();});for(var i=0;i<fields.length;i++){var f=fields[i];var n1=String(f.name||'').toLowerCase();var n2=String((f.config&&f.config.displayName)||'').toLowerCase();if(lowered.indexOf(n1)!==-1||lowered.indexOf(n2)!==-1)return f;}return null;}\nvar root=htmlNode.querySelector('#ops-top-events');if(!root)return;var body=root.querySelector('.ops-body');if(!body)return;\nvar counts={};\n(data&&data.series||[]).forEach(function(frame){\n  var field=fieldByName(frame,[\"Evento\",\"evento\"]);\n  if(!field)return;\n  valuesToArray(field.values).forEach(function(raw){\n    var name=String(raw||'').trim();\n    if(!name||name==='-'||name==='N/A')return;\n    counts[name]=(counts[name]||0)+1;\n  });\n});\nvar rows=Object.keys(counts).map(function(name){return{name:name,value:counts[name]};}).sort(function(a,b){return b.value-a.value||a.name.localeCompare(b.name);}).slice(0,5);\nif(!rows.length){body.innerHTML=\"<div class='ops-empty'>Sem eventos no periodo.</div>\";return;}\nbody.innerHTML=rows.map(function(r,idx){return \"<div class='ops-row'><div class='ops-main'><span class='ops-name'>\"+esc(r.name)+\"</span><span class='ops-sub'>\"+(idx+1)+\" - ocorrencias por evento</span></div><span class='ops-value'>\"+Math.round(r.value).toLocaleString('pt-BR')+\"</span></div>\";}).join('');\n})();",
+              "overflow": "hidden",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull",
+                  "last",
+                  "firstNotNull",
+                  "first",
+                  "min",
+                  "max",
+                  "mean",
+                  "sum",
+                  "count",
+                  "range",
+                  "delta",
+                  "step",
+                  "diff",
+                  "logmin",
+                  "allIsZero",
+                  "allIsNull",
+                  "diffperc"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-15": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "$datasource"
+                    },
+                    "group": "loki",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "{job=\"huawei-switches\", host=~\"$switch\", severity=~\"$severity\"} | regexp `^\\S+ (?P<switchname>\\S+) (?:%%\\d+)?(?P<modulo>[A-Z0-9]+)/(?P<sevn>\\d)/(?P<evento>[A-Z0-9_]+)(?:\\([^)]*\\))?(?:\\[\\d+\\])?:?\\s*(?P<descricao>.*)`",
+                      "maxLines": 2000,
+                      "queryType": "range"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": [
+              {
+                "group": "extractFields",
+                "kind": "Transformation",
+                "spec": {
+                  "options": {
+                    "format": "json",
+                    "keepTime": false,
+                    "replace": false,
+                    "source": "labels"
+                  }
+                }
+              },
+              {
+                "group": "organize",
+                "kind": "Transformation",
+                "spec": {
+                  "options": {
+                    "excludeByName": {
+                      "Line": true,
+                      "TraceID": true,
+                      "facility": true,
+                      "host": true,
+                      "id": true,
+                      "job": true,
+                      "labelTypes": true,
+                      "labels": true,
+                      "modulo": true,
+                      "sevn": true,
+                      "source_ip": true,
+                      "tsNs": true
+                    },
+                    "indexByName": {
+                      "Time": 0,
+                      "descricao": 4,
+                      "evento": 3,
+                      "severity": 2,
+                      "switchname": 1
+                    },
+                    "renameByName": {
+                      "Time": "Hora",
+                      "descricao": "Mensagem",
+                      "evento": "Evento",
+                      "severity": "Sev",
+                      "switchname": "Switch"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "description": "origens com mais logs no periodo",
+        "id": 15,
+        "links": [],
+        "title": "",
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "\n@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Roboto+Mono:wght@600;700;900&display=swap');\n*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}\n.ops-panel{--accent:#38bdf8;--accent-soft:rgba(56,189,248,.12);width:100%;height:100%;padding:14px 16px;color:#e7edf6;background:radial-gradient(circle at top left,var(--accent-soft),transparent 34%),linear-gradient(135deg,#161b22 0%,#101419 100%);border:1px solid rgba(255,255,255,.07);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;gap:10px}\n.ops-header{display:flex;align-items:center;gap:10px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}\n.ops-icon{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;color:var(--accent);background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);flex-shrink:0}\n.ops-title strong{display:block;font-size:14px;font-weight:900;color:#fff;line-height:1.1}\n.ops-title span{display:block;margin-top:3px;font-size:10px;font-weight:800;color:#9aa4b2;text-transform:uppercase;letter-spacing:0}\n.ops-body{min-height:0;flex:1;display:flex;flex-direction:column;gap:7px;overflow-y:auto;overflow-x:hidden;padding-right:4px}.ops-body::-webkit-scrollbar{width:6px}.ops-body::-webkit-scrollbar-thumb{background:#30363d;border-radius:999px}\n.ops-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;padding:7px 10px;border:1px solid rgba(255,255,255,.09);border-left:3px solid var(--accent);border-radius:8px;background:rgba(255,255,255,.035);min-height:34px;flex-shrink:0}\n.ops-main{min-width:0}\n.ops-name{display:block;font-size:12px;font-weight:900;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.ops-sub{display:block;margin-top:2px;font-size:10px;font-weight:700;color:#9aa4b2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.ops-value{font-family:'Roboto Mono',monospace;font-size:15px;font-weight:900;color:#fff;white-space:nowrap}\n.ops-empty{height:100%;display:grid;place-items:center;text-align:center;color:#9aa4b2;font-size:12px;font-weight:800;border:1px dashed rgba(255,255,255,.16);border-radius:10px;background:rgba(255,255,255,.025);padding:12px}\n.ops-critical{--accent:#ef4444;--accent-soft:rgba(239,68,68,.12)}\n.ops-warning{--accent:#facc15;--accent-soft:rgba(250,204,21,.12)}\n.ops-blue{--accent:#38bdf8;--accent-soft:rgba(56,189,248,.12)}\n.ops-badge{display:inline-flex;align-items:center;width:fit-content;margin-top:6px;padding:4px 8px;border-radius:999px;font-size:10px;font-weight:900;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}\n.ops-message{font-size:12px;font-weight:700;color:#dbe4ef;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}\n.svg-icon{display:inline-grid;place-items:center;width:1em;height:1em;line-height:1;vertical-align:-.125em;flex-shrink:0}.svg-icon svg{width:1em;height:1em;display:block}\n@supports not (color:color-mix(in srgb,red 50%,transparent)){.ops-icon,.ops-badge{border-color:rgba(255,255,255,.16)}}\n.ops-latest-grid{display:grid;grid-template-columns:minmax(220px,.34fr) minmax(0,1fr);gap:14px;align-items:start;min-height:0}.ops-latest-main{min-width:0}.ops-latest-message{min-width:0;padding:10px 12px;border:1px solid rgba(255,255,255,.09);border-left:3px solid var(--accent);border-radius:8px;background:rgba(255,255,255,.035)}@media(max-width:900px){.ops-latest-grid{grid-template-columns:1fr}.ops-message{-webkit-line-clamp:2}}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div id=\"ops-top-switches\" class=\"ops-panel ops-blue\"><div class=\"ops-header\"><span class=\"ops-icon\"><span class=\"svg-icon\" aria-hidden=\"true\"><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='4' width='18' height='6' rx='2'/><rect x='3' y='14' width='18' height='6' rx='2'/><path d='M7 7h.01'/><path d='M7 17h.01'/></svg></span></span><div class=\"ops-title\"><strong>Top switches</strong><span>origens com mais logs no periodo</span></div></div><div class=\"ops-body\"></div></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "(function(){\nfunction valuesToArray(values){if(!values)return[];if(Array.isArray(values))return values;if(typeof values.toArray==='function')return values.toArray();var len=values.length||values.size||(values.buffer?values.buffer.length:0)||0;var out=[];for(var i=0;i<len;i++){out.push(typeof values.get==='function'?values.get(i):values[i]);}return out;}\nfunction esc(v){return String(v==null?'':v).replace(/[&<>]/g,function(c){return c==='&'?'&amp;':(c==='<'?'&lt;':'&gt;');});}\nfunction fieldByName(frame,names){var fields=(frame&&frame.fields)||[];var lowered=names.map(function(n){return String(n).toLowerCase();});for(var i=0;i<fields.length;i++){var f=fields[i];var n1=String(f.name||'').toLowerCase();var n2=String((f.config&&f.config.displayName)||'').toLowerCase();if(lowered.indexOf(n1)!==-1||lowered.indexOf(n2)!==-1)return f;}return null;}\nvar root=htmlNode.querySelector('#ops-top-switches');if(!root)return;var body=root.querySelector('.ops-body');if(!body)return;\nvar counts={};\n(data&&data.series||[]).forEach(function(frame){\n  var field=fieldByName(frame,[\"Switch\",\"switchname\",\"host\"]);\n  if(!field)return;\n  valuesToArray(field.values).forEach(function(raw){\n    var name=String(raw||'').trim();\n    if(!name||name==='-'||name==='N/A')return;\n    counts[name]=(counts[name]||0)+1;\n  });\n});\nvar rows=Object.keys(counts).map(function(name){return{name:name,value:counts[name]};}).sort(function(a,b){return b.value-a.value||a.name.localeCompare(b.name);}).slice(0,5);\nif(!rows.length){body.innerHTML=\"<div class='ops-empty'>Sem switches no periodo.</div>\";return;}\nbody.innerHTML=rows.map(function(r,idx){return \"<div class='ops-row'><div class='ops-main'><span class='ops-name'>\"+esc(r.name)+\"</span><span class='ops-sub'>\"+(idx+1)+\" - logs por switch</span></div><span class='ops-value'>\"+Math.round(r.value).toLocaleString('pt-BR')+\"</span></div>\";}).join('');\n})();",
+              "overflow": "hidden",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull",
+                  "last",
+                  "firstNotNull",
+                  "first",
+                  "min",
+                  "max",
+                  "mean",
+                  "sum",
+                  "count",
+                  "range",
+                  "delta",
+                  "step",
+                  "diff",
+                  "logmin",
+                  "allIsZero",
+                  "allIsNull",
+                  "diffperc"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
     "panel-2": {
       "kind": "Panel",
       "spec": {
@@ -995,480 +1469,6 @@
           "version": "2.2.3"
         }
       }
-    },
-    "panel-13": {
-      "kind": "Panel",
-      "spec": {
-        "data": {
-          "kind": "QueryGroup",
-          "spec": {
-            "queries": [
-              {
-                "kind": "PanelQuery",
-                "spec": {
-                  "hidden": false,
-                  "query": {
-                    "datasource": {
-                      "name": "$datasource"
-                    },
-                    "group": "loki",
-                    "kind": "DataQuery",
-                    "spec": {
-                      "expr": "{job=\"huawei-switches\", host=~\"$switch\", severity=~\"emerg|alert|crit|err\"} | regexp `^\\S+ (?P<switchname>\\S+) (?:%%\\d+)?(?P<modulo>[A-Z0-9]+)/(?P<sevn>\\d)/(?P<evento>[A-Z0-9_]+)(?:\\([^)]*\\))?(?:\\[\\d+\\])?:?\\s*(?P<descricao>.*)`",
-                      "queryType": "range",
-                      "maxLines": 100
-                    },
-                    "version": "v0"
-                  },
-                  "refId": "A"
-                }
-              }
-            ],
-            "queryOptions": {},
-            "transformations": [
-              {
-                "group": "extractFields",
-                "kind": "Transformation",
-                "spec": {
-                  "options": {
-                    "format": "json",
-                    "keepTime": false,
-                    "replace": false,
-                    "source": "labels"
-                  }
-                }
-              },
-              {
-                "group": "organize",
-                "kind": "Transformation",
-                "spec": {
-                  "options": {
-                    "excludeByName": {
-                      "Line": true,
-                      "TraceID": true,
-                      "facility": true,
-                      "host": true,
-                      "id": true,
-                      "job": true,
-                      "labelTypes": true,
-                      "labels": true,
-                      "modulo": true,
-                      "sevn": true,
-                      "source_ip": true,
-                      "tsNs": true
-                    },
-                    "indexByName": {
-                      "Time": 0,
-                      "descricao": 4,
-                      "evento": 3,
-                      "severity": 2,
-                      "switchname": 1
-                    },
-                    "renameByName": {
-                      "Time": "Hora",
-                      "descricao": "Mensagem",
-                      "evento": "Evento",
-                      "severity": "Sev",
-                      "switchname": "Switch"
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "description": "evento mais recente de alta prioridade",
-        "id": 13,
-        "links": [],
-        "title": "",
-        "vizConfig": {
-          "group": "gapit-htmlgraphics-panel",
-          "kind": "VizConfig",
-          "spec": {
-            "fieldConfig": {
-              "defaults": {
-                "thresholds": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": 0
-                    },
-                    {
-                      "color": "red",
-                      "value": 80
-                    }
-                  ]
-                }
-              },
-              "overrides": []
-            },
-            "options": {
-              "SVGBaseFix": true,
-              "add100Percentage": true,
-              "calcsMutation": "standard",
-              "centerAlignContent": true,
-              "codeData": "{}",
-              "css": "\n@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Roboto+Mono:wght@600;700;900&display=swap');\n*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}\n.ops-panel{--accent:#38bdf8;--accent-soft:rgba(56,189,248,.12);width:100%;height:100%;padding:14px 16px;color:#e7edf6;background:radial-gradient(circle at top left,var(--accent-soft),transparent 34%),linear-gradient(135deg,#161b22 0%,#101419 100%);border:1px solid rgba(255,255,255,.07);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;gap:10px}\n.ops-header{display:flex;align-items:center;gap:10px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}\n.ops-icon{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;color:var(--accent);background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);flex-shrink:0}\n.ops-title strong{display:block;font-size:14px;font-weight:900;color:#fff;line-height:1.1}\n.ops-title span{display:block;margin-top:3px;font-size:10px;font-weight:800;color:#9aa4b2;text-transform:uppercase;letter-spacing:0}\n.ops-body{min-height:0;flex:1;display:flex;flex-direction:column;gap:7px;overflow-y:auto;overflow-x:hidden;padding-right:4px}.ops-body::-webkit-scrollbar{width:6px}.ops-body::-webkit-scrollbar-thumb{background:#30363d;border-radius:999px}\n.ops-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;padding:7px 10px;border:1px solid rgba(255,255,255,.09);border-left:3px solid var(--accent);border-radius:8px;background:rgba(255,255,255,.035);min-height:34px;flex-shrink:0}\n.ops-main{min-width:0}\n.ops-name{display:block;font-size:12px;font-weight:900;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.ops-sub{display:block;margin-top:2px;font-size:10px;font-weight:700;color:#9aa4b2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.ops-value{font-family:'Roboto Mono',monospace;font-size:15px;font-weight:900;color:#fff;white-space:nowrap}\n.ops-empty{height:100%;display:grid;place-items:center;text-align:center;color:#9aa4b2;font-size:12px;font-weight:800;border:1px dashed rgba(255,255,255,.16);border-radius:10px;background:rgba(255,255,255,.025);padding:12px}\n.ops-critical{--accent:#ef4444;--accent-soft:rgba(239,68,68,.12)}\n.ops-warning{--accent:#facc15;--accent-soft:rgba(250,204,21,.12)}\n.ops-blue{--accent:#38bdf8;--accent-soft:rgba(56,189,248,.12)}\n.ops-badge{display:inline-flex;align-items:center;width:fit-content;margin-top:6px;padding:4px 8px;border-radius:999px;font-size:10px;font-weight:900;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}\n.ops-message{font-size:12px;font-weight:700;color:#dbe4ef;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}\n.svg-icon{display:inline-grid;place-items:center;width:1em;height:1em;line-height:1;vertical-align:-.125em;flex-shrink:0}.svg-icon svg{width:1em;height:1em;display:block}\n@supports not (color:color-mix(in srgb,red 50%,transparent)){.ops-icon,.ops-badge{border-color:rgba(255,255,255,.16)}}\n.ops-latest-grid{display:grid;grid-template-columns:minmax(220px,.34fr) minmax(0,1fr);gap:16px;align-items:stretch;min-height:0;flex:1}.ops-latest-main{min-width:0;display:flex;flex-direction:column;justify-content:center;gap:8px}.ops-latest-name-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.ops-latest-name-row .ops-badge{margin-top:0}.ops-latest-time{display:block;font-size:10px;font-weight:700;color:#9aa4b2}.ops-latest-time strong{color:#dbe4ef;font-weight:900}.ops-latest-message{min-width:0;min-height:0;display:flex;border:1px solid rgba(255,255,255,.09);border-left:3px solid var(--accent);border-radius:8px;background:rgba(255,255,255,.035);overflow:hidden}.ops-latest-message .ops-message{flex:1;min-height:0;margin:0;padding:12px 14px;font-size:13px;line-height:1.6;color:#dbe4ef;font-weight:700;display:block;overflow-y:auto;white-space:normal;word-break:break-word;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent}.ops-latest-message .ops-message::-webkit-scrollbar{width:6px}.ops-latest-message .ops-message::-webkit-scrollbar-track{background:transparent}.ops-latest-message .ops-message::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2);border-radius:999px}.ops-latest-message .ops-message::-webkit-scrollbar-button{width:0;height:0;display:none}#ops-latest-critical .ops-body{overflow:hidden}@media(max-width:900px){.ops-latest-grid{grid-template-columns:1fr}}",
-              "dynamicData": false,
-              "dynamicFieldDisplayValues": false,
-              "dynamicHtmlGraphics": {
-                "dynamicData": true,
-                "dynamicFieldDisplayValues": false,
-                "dynamicProps": false
-              },
-              "dynamicProps": false,
-              "html": "<div id=\"ops-latest-critical\" class=\"ops-panel ops-critical\"><div class=\"ops-header\"><span class=\"ops-icon\"><span class=\"svg-icon\" aria-hidden=\"true\"><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M8.5 14.5A4.5 4.5 0 0 0 17 12c0-4-4-6-4-9-3 2-6 5-6 10a5 5 0 0 0 10 0'/></svg></span></span><div class=\"ops-title\"><strong>Ultimo critico</strong><span>evento mais recente de alta prioridade</span></div></div><div class=\"ops-body\"></div></div>",
-              "onInit": "",
-              "onInitOnResize": false,
-              "onRender": "(function(){\nfunction valuesToArray(values){if(!values)return[];if(Array.isArray(values))return values;if(typeof values.toArray==='function')return values.toArray();var len=values.length||values.size||(values.buffer?values.buffer.length:0)||0;var out=[];for(var i=0;i<len;i++){out.push(typeof values.get==='function'?values.get(i):values[i]);}return out;}\nfunction esc(v){return String(v==null?'':v).replace(/[&<>]/g,function(c){return c==='&'?'&amp;':(c==='<'?'&lt;':'&gt;');});}\nfunction lastNumber(field){var vals=valuesToArray(field&&field.values);for(var i=vals.length-1;i>=0;i--){var n=Number(vals[i]);if(Number.isFinite(n))return n;}return 0;}\nfunction labelFrom(field,frame,names){var labels=(field&&field.labels)||(frame&&frame.labels)||{};for(var i=0;i<names.length;i++){if(labels[names[i]])return labels[names[i]];}var candidates=[field&&field.name,field&&field.config&&field.config.displayName,frame&&frame.name];for(var j=0;j<candidates.length;j++){var text=String(candidates[j]||'');for(var k=0;k<names.length;k++){var re=new RegExp(names[k]+'=\"?([^,}\" ]+)\"?','i');var m=text.match(re);if(m)return m[1];}}return null;}\nfunction metricRows(data,labelNames){var rows=[];(data&&data.series||[]).forEach(function(frame){(frame.fields||[]).forEach(function(field){if(field.type==='time'||/^time$/i.test(field.name||''))return;var value=lastNumber(field);var name=labelFrom(field,frame,labelNames)||field.name||frame.name||'N/A';if(Number.isFinite(value)&&value>0)rows.push({name:String(name),value:value});});});rows.sort(function(a,b){return b.value-a.value;});return rows;}\n\nfunction fieldByName(frame,name){var fields=(frame&&frame.fields)||[];var lower=name.toLowerCase();for(var i=0;i<fields.length;i++){var f=fields[i];var n1=String(f.name||'').toLowerCase();var n2=String((f.config&&f.config.displayName)||'').toLowerCase();if(n1===lower||n2===lower)return f;}return null;}\nfunction toMs(v){if(v instanceof Date)return v.getTime();if(typeof v==='number')return v;var p=new Date(v).getTime();return Number.isFinite(p)?p:0;}\nfunction fmt(ms){if(!ms)return '--';var d=new Date(ms);return d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})+' '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});}\nfunction ago(ms){if(!ms)return '--';var diff=Math.floor((Date.now()-ms)/1000);if(diff<60)return Math.max(0,diff)+'s atras';if(diff<3600)return Math.floor(diff/60)+'m atras';if(diff<86400)return Math.floor(diff/3600)+'h atras';return Math.floor(diff/86400)+'d atras';}\nvar root=htmlNode.querySelector('#ops-latest-critical');if(!root)return;var body=root.querySelector('.ops-body');if(!body)return;var rows=[];(data&&data.series||[]).forEach(function(frame){var timeF=fieldByName(frame,'Hora')||fieldByName(frame,'Time');var hostF=fieldByName(frame,'Switch')||fieldByName(frame,'host');var sevF=fieldByName(frame,'Sev')||fieldByName(frame,'severity');var evtF=fieldByName(frame,'Evento')||fieldByName(frame,'evento');var msgF=fieldByName(frame,'Mensagem')||fieldByName(frame,'descricao')||fieldByName(frame,'line');var times=valuesToArray(timeF&&timeF.values);var hosts=valuesToArray(hostF&&hostF.values);var sevs=valuesToArray(sevF&&sevF.values);var evts=valuesToArray(evtF&&evtF.values);var msgs=valuesToArray(msgF&&msgF.values);var n=Math.max(times.length,hosts.length,sevs.length,evts.length,msgs.length);for(var i=0;i<n;i++){rows.push({time:toMs(times[i]),host:hosts[i]||'N/A',severity:sevs[i]||'critico',event:evts[i]||'-',message:msgs[i]||'-'});}});rows=rows.filter(function(r){return r.time>0;}).sort(function(a,b){return b.time-a.time;});if(!rows.length){body.innerHTML=\"<div class='ops-empty'>Nenhum evento critico no periodo.</div>\";return;}var r=rows[0];body.innerHTML=\"<div class='ops-latest-grid'><div class='ops-latest-main'><div class='ops-latest-name-row'><span class='ops-name'>\"+esc(r.host)+\"</span><span class='ops-badge'>\"+esc(r.severity)+\"</span></div><span class='ops-sub'>\"+esc(r.event)+\"</span><span class='ops-latest-time'>\"+fmt(r.time)+\" &middot; <strong>\"+ago(r.time)+\"</strong></span></div><div class='ops-latest-message'><div class='ops-message'>\"+esc(r.message)+\"</div></div></div>\";})();",
-              "overflow": "hidden",
-              "panelupdateOnMount": true,
-              "reduceOptions": {
-                "calcs": [
-                  "lastNotNull",
-                  "last",
-                  "firstNotNull",
-                  "first",
-                  "min",
-                  "max",
-                  "mean",
-                  "sum",
-                  "count",
-                  "range",
-                  "delta",
-                  "step",
-                  "diff",
-                  "logmin",
-                  "allIsZero",
-                  "allIsNull",
-                  "diffperc"
-                ]
-              },
-              "renderOnMount": true,
-              "rootCSS": ":host{overflow:hidden;display:block;}",
-              "useGrafanaScrollbar": false
-            }
-          },
-          "version": "2.2.3"
-        }
-      }
-    },
-    "panel-14": {
-      "kind": "Panel",
-      "spec": {
-        "data": {
-          "kind": "QueryGroup",
-          "spec": {
-            "queries": [
-              {
-                "kind": "PanelQuery",
-                "spec": {
-                  "hidden": false,
-                  "query": {
-                    "datasource": {
-                      "name": "$datasource"
-                    },
-                    "group": "loki",
-                    "kind": "DataQuery",
-                    "spec": {
-                      "expr": "{job=\"huawei-switches\", host=~\"$switch\", severity=~\"$severity\"} | regexp `^\\S+ (?P<switchname>\\S+) (?:%%\\d+)?(?P<modulo>[A-Z0-9]+)/(?P<sevn>\\d)/(?P<evento>[A-Z0-9_]+)(?:\\([^)]*\\))?(?:\\[\\d+\\])?:?\\s*(?P<descricao>.*)`",
-                      "queryType": "range",
-                      "maxLines": 2000
-                    },
-                    "version": "v0"
-                  },
-                  "refId": "A"
-                }
-              }
-            ],
-            "queryOptions": {},
-            "transformations": [
-              {
-                "group": "extractFields",
-                "kind": "Transformation",
-                "spec": {
-                  "options": {
-                    "format": "json",
-                    "keepTime": false,
-                    "replace": false,
-                    "source": "labels"
-                  }
-                }
-              },
-              {
-                "group": "organize",
-                "kind": "Transformation",
-                "spec": {
-                  "options": {
-                    "excludeByName": {
-                      "Line": true,
-                      "TraceID": true,
-                      "facility": true,
-                      "host": true,
-                      "id": true,
-                      "job": true,
-                      "labelTypes": true,
-                      "labels": true,
-                      "modulo": true,
-                      "sevn": true,
-                      "source_ip": true,
-                      "tsNs": true
-                    },
-                    "indexByName": {
-                      "Time": 0,
-                      "descricao": 4,
-                      "evento": 3,
-                      "severity": 2,
-                      "switchname": 1
-                    },
-                    "renameByName": {
-                      "Time": "Hora",
-                      "descricao": "Mensagem",
-                      "evento": "Evento",
-                      "severity": "Sev",
-                      "switchname": "Switch"
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "description": "eventos mais frequentes no periodo",
-        "id": 14,
-        "links": [],
-        "title": "",
-        "vizConfig": {
-          "group": "gapit-htmlgraphics-panel",
-          "kind": "VizConfig",
-          "spec": {
-            "fieldConfig": {
-              "defaults": {
-                "thresholds": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": 0
-                    },
-                    {
-                      "color": "red",
-                      "value": 80
-                    }
-                  ]
-                }
-              },
-              "overrides": []
-            },
-            "options": {
-              "SVGBaseFix": true,
-              "add100Percentage": true,
-              "calcsMutation": "standard",
-              "centerAlignContent": true,
-              "codeData": "{}",
-              "css": "\n@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Roboto+Mono:wght@600;700;900&display=swap');\n*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}\n.ops-panel{--accent:#38bdf8;--accent-soft:rgba(56,189,248,.12);width:100%;height:100%;padding:14px 16px;color:#e7edf6;background:radial-gradient(circle at top left,var(--accent-soft),transparent 34%),linear-gradient(135deg,#161b22 0%,#101419 100%);border:1px solid rgba(255,255,255,.07);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;gap:10px}\n.ops-header{display:flex;align-items:center;gap:10px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}\n.ops-icon{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;color:var(--accent);background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);flex-shrink:0}\n.ops-title strong{display:block;font-size:14px;font-weight:900;color:#fff;line-height:1.1}\n.ops-title span{display:block;margin-top:3px;font-size:10px;font-weight:800;color:#9aa4b2;text-transform:uppercase;letter-spacing:0}\n.ops-body{min-height:0;flex:1;display:flex;flex-direction:column;gap:7px;overflow-y:auto;overflow-x:hidden;padding-right:4px}.ops-body::-webkit-scrollbar{width:6px}.ops-body::-webkit-scrollbar-thumb{background:#30363d;border-radius:999px}\n.ops-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;padding:7px 10px;border:1px solid rgba(255,255,255,.09);border-left:3px solid var(--accent);border-radius:8px;background:rgba(255,255,255,.035);min-height:34px;flex-shrink:0}\n.ops-main{min-width:0}\n.ops-name{display:block;font-size:12px;font-weight:900;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.ops-sub{display:block;margin-top:2px;font-size:10px;font-weight:700;color:#9aa4b2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.ops-value{font-family:'Roboto Mono',monospace;font-size:15px;font-weight:900;color:#fff;white-space:nowrap}\n.ops-empty{height:100%;display:grid;place-items:center;text-align:center;color:#9aa4b2;font-size:12px;font-weight:800;border:1px dashed rgba(255,255,255,.16);border-radius:10px;background:rgba(255,255,255,.025);padding:12px}\n.ops-critical{--accent:#ef4444;--accent-soft:rgba(239,68,68,.12)}\n.ops-warning{--accent:#facc15;--accent-soft:rgba(250,204,21,.12)}\n.ops-blue{--accent:#38bdf8;--accent-soft:rgba(56,189,248,.12)}\n.ops-badge{display:inline-flex;align-items:center;width:fit-content;margin-top:6px;padding:4px 8px;border-radius:999px;font-size:10px;font-weight:900;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}\n.ops-message{font-size:12px;font-weight:700;color:#dbe4ef;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}\n.svg-icon{display:inline-grid;place-items:center;width:1em;height:1em;line-height:1;vertical-align:-.125em;flex-shrink:0}.svg-icon svg{width:1em;height:1em;display:block}\n@supports not (color:color-mix(in srgb,red 50%,transparent)){.ops-icon,.ops-badge{border-color:rgba(255,255,255,.16)}}\n.ops-latest-grid{display:grid;grid-template-columns:minmax(220px,.34fr) minmax(0,1fr);gap:14px;align-items:start;min-height:0}.ops-latest-main{min-width:0}.ops-latest-message{min-width:0;padding:10px 12px;border:1px solid rgba(255,255,255,.09);border-left:3px solid var(--accent);border-radius:8px;background:rgba(255,255,255,.035)}@media(max-width:900px){.ops-latest-grid{grid-template-columns:1fr}.ops-message{-webkit-line-clamp:2}}",
-              "dynamicData": false,
-              "dynamicFieldDisplayValues": false,
-              "dynamicHtmlGraphics": {
-                "dynamicData": true,
-                "dynamicFieldDisplayValues": false,
-                "dynamicProps": false
-              },
-              "dynamicProps": false,
-              "html": "<div id=\"ops-top-events\" class=\"ops-panel ops-warning\"><div class=\"ops-header\"><span class=\"ops-icon\"><span class=\"svg-icon\" aria-hidden=\"true\"><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><line x1='8' y1='6' x2='21' y2='6'/><line x1='8' y1='12' x2='21' y2='12'/><line x1='8' y1='18' x2='21' y2='18'/><circle cx='4' cy='6' r='1'/><circle cx='4' cy='12' r='1'/><circle cx='4' cy='18' r='1'/></svg></span></span><div class=\"ops-title\"><strong>Top eventos</strong><span>eventos mais frequentes no periodo</span></div></div><div class=\"ops-body\"></div></div>",
-              "onInit": "",
-              "onInitOnResize": false,
-              "onRender": "(function(){\nfunction valuesToArray(values){if(!values)return[];if(Array.isArray(values))return values;if(typeof values.toArray==='function')return values.toArray();var len=values.length||values.size||(values.buffer?values.buffer.length:0)||0;var out=[];for(var i=0;i<len;i++){out.push(typeof values.get==='function'?values.get(i):values[i]);}return out;}\nfunction esc(v){return String(v==null?'':v).replace(/[&<>]/g,function(c){return c==='&'?'&amp;':(c==='<'?'&lt;':'&gt;');});}\nfunction fieldByName(frame,names){var fields=(frame&&frame.fields)||[];var lowered=names.map(function(n){return String(n).toLowerCase();});for(var i=0;i<fields.length;i++){var f=fields[i];var n1=String(f.name||'').toLowerCase();var n2=String((f.config&&f.config.displayName)||'').toLowerCase();if(lowered.indexOf(n1)!==-1||lowered.indexOf(n2)!==-1)return f;}return null;}\nvar root=htmlNode.querySelector('#ops-top-events');if(!root)return;var body=root.querySelector('.ops-body');if(!body)return;\nvar counts={};\n(data&&data.series||[]).forEach(function(frame){\n  var field=fieldByName(frame,[\"Evento\",\"evento\"]);\n  if(!field)return;\n  valuesToArray(field.values).forEach(function(raw){\n    var name=String(raw||'').trim();\n    if(!name||name==='-'||name==='N/A')return;\n    counts[name]=(counts[name]||0)+1;\n  });\n});\nvar rows=Object.keys(counts).map(function(name){return{name:name,value:counts[name]};}).sort(function(a,b){return b.value-a.value||a.name.localeCompare(b.name);}).slice(0,5);\nif(!rows.length){body.innerHTML=\"<div class='ops-empty'>Sem eventos no periodo.</div>\";return;}\nbody.innerHTML=rows.map(function(r,idx){return \"<div class='ops-row'><div class='ops-main'><span class='ops-name'>\"+esc(r.name)+\"</span><span class='ops-sub'>\"+(idx+1)+\" - ocorrencias por evento</span></div><span class='ops-value'>\"+Math.round(r.value).toLocaleString('pt-BR')+\"</span></div>\";}).join('');\n})();",
-              "overflow": "hidden",
-              "panelupdateOnMount": true,
-              "reduceOptions": {
-                "calcs": [
-                  "lastNotNull",
-                  "last",
-                  "firstNotNull",
-                  "first",
-                  "min",
-                  "max",
-                  "mean",
-                  "sum",
-                  "count",
-                  "range",
-                  "delta",
-                  "step",
-                  "diff",
-                  "logmin",
-                  "allIsZero",
-                  "allIsNull",
-                  "diffperc"
-                ]
-              },
-              "renderOnMount": true,
-              "rootCSS": ":host{overflow:hidden;display:block;}",
-              "useGrafanaScrollbar": false
-            }
-          },
-          "version": "2.2.3"
-        }
-      }
-    },
-    "panel-15": {
-      "kind": "Panel",
-      "spec": {
-        "data": {
-          "kind": "QueryGroup",
-          "spec": {
-            "queries": [
-              {
-                "kind": "PanelQuery",
-                "spec": {
-                  "hidden": false,
-                  "query": {
-                    "datasource": {
-                      "name": "$datasource"
-                    },
-                    "group": "loki",
-                    "kind": "DataQuery",
-                    "spec": {
-                      "expr": "{job=\"huawei-switches\", host=~\"$switch\", severity=~\"$severity\"} | regexp `^\\S+ (?P<switchname>\\S+) (?:%%\\d+)?(?P<modulo>[A-Z0-9]+)/(?P<sevn>\\d)/(?P<evento>[A-Z0-9_]+)(?:\\([^)]*\\))?(?:\\[\\d+\\])?:?\\s*(?P<descricao>.*)`",
-                      "queryType": "range",
-                      "maxLines": 2000
-                    },
-                    "version": "v0"
-                  },
-                  "refId": "A"
-                }
-              }
-            ],
-            "queryOptions": {},
-            "transformations": [
-              {
-                "group": "extractFields",
-                "kind": "Transformation",
-                "spec": {
-                  "options": {
-                    "format": "json",
-                    "keepTime": false,
-                    "replace": false,
-                    "source": "labels"
-                  }
-                }
-              },
-              {
-                "group": "organize",
-                "kind": "Transformation",
-                "spec": {
-                  "options": {
-                    "excludeByName": {
-                      "Line": true,
-                      "TraceID": true,
-                      "facility": true,
-                      "host": true,
-                      "id": true,
-                      "job": true,
-                      "labelTypes": true,
-                      "labels": true,
-                      "modulo": true,
-                      "sevn": true,
-                      "source_ip": true,
-                      "tsNs": true
-                    },
-                    "indexByName": {
-                      "Time": 0,
-                      "descricao": 4,
-                      "evento": 3,
-                      "severity": 2,
-                      "switchname": 1
-                    },
-                    "renameByName": {
-                      "Time": "Hora",
-                      "descricao": "Mensagem",
-                      "evento": "Evento",
-                      "severity": "Sev",
-                      "switchname": "Switch"
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "description": "origens com mais logs no periodo",
-        "id": 15,
-        "links": [],
-        "title": "",
-        "vizConfig": {
-          "group": "gapit-htmlgraphics-panel",
-          "kind": "VizConfig",
-          "spec": {
-            "fieldConfig": {
-              "defaults": {
-                "thresholds": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": 0
-                    },
-                    {
-                      "color": "red",
-                      "value": 80
-                    }
-                  ]
-                }
-              },
-              "overrides": []
-            },
-            "options": {
-              "SVGBaseFix": true,
-              "add100Percentage": true,
-              "calcsMutation": "standard",
-              "centerAlignContent": true,
-              "codeData": "{}",
-              "css": "\n@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Roboto+Mono:wght@600;700;900&display=swap');\n*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}\n.ops-panel{--accent:#38bdf8;--accent-soft:rgba(56,189,248,.12);width:100%;height:100%;padding:14px 16px;color:#e7edf6;background:radial-gradient(circle at top left,var(--accent-soft),transparent 34%),linear-gradient(135deg,#161b22 0%,#101419 100%);border:1px solid rgba(255,255,255,.07);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;gap:10px}\n.ops-header{display:flex;align-items:center;gap:10px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}\n.ops-icon{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;color:var(--accent);background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);flex-shrink:0}\n.ops-title strong{display:block;font-size:14px;font-weight:900;color:#fff;line-height:1.1}\n.ops-title span{display:block;margin-top:3px;font-size:10px;font-weight:800;color:#9aa4b2;text-transform:uppercase;letter-spacing:0}\n.ops-body{min-height:0;flex:1;display:flex;flex-direction:column;gap:7px;overflow-y:auto;overflow-x:hidden;padding-right:4px}.ops-body::-webkit-scrollbar{width:6px}.ops-body::-webkit-scrollbar-thumb{background:#30363d;border-radius:999px}\n.ops-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;padding:7px 10px;border:1px solid rgba(255,255,255,.09);border-left:3px solid var(--accent);border-radius:8px;background:rgba(255,255,255,.035);min-height:34px;flex-shrink:0}\n.ops-main{min-width:0}\n.ops-name{display:block;font-size:12px;font-weight:900;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.ops-sub{display:block;margin-top:2px;font-size:10px;font-weight:700;color:#9aa4b2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.ops-value{font-family:'Roboto Mono',monospace;font-size:15px;font-weight:900;color:#fff;white-space:nowrap}\n.ops-empty{height:100%;display:grid;place-items:center;text-align:center;color:#9aa4b2;font-size:12px;font-weight:800;border:1px dashed rgba(255,255,255,.16);border-radius:10px;background:rgba(255,255,255,.025);padding:12px}\n.ops-critical{--accent:#ef4444;--accent-soft:rgba(239,68,68,.12)}\n.ops-warning{--accent:#facc15;--accent-soft:rgba(250,204,21,.12)}\n.ops-blue{--accent:#38bdf8;--accent-soft:rgba(56,189,248,.12)}\n.ops-badge{display:inline-flex;align-items:center;width:fit-content;margin-top:6px;padding:4px 8px;border-radius:999px;font-size:10px;font-weight:900;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}\n.ops-message{font-size:12px;font-weight:700;color:#dbe4ef;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}\n.svg-icon{display:inline-grid;place-items:center;width:1em;height:1em;line-height:1;vertical-align:-.125em;flex-shrink:0}.svg-icon svg{width:1em;height:1em;display:block}\n@supports not (color:color-mix(in srgb,red 50%,transparent)){.ops-icon,.ops-badge{border-color:rgba(255,255,255,.16)}}\n.ops-latest-grid{display:grid;grid-template-columns:minmax(220px,.34fr) minmax(0,1fr);gap:14px;align-items:start;min-height:0}.ops-latest-main{min-width:0}.ops-latest-message{min-width:0;padding:10px 12px;border:1px solid rgba(255,255,255,.09);border-left:3px solid var(--accent);border-radius:8px;background:rgba(255,255,255,.035)}@media(max-width:900px){.ops-latest-grid{grid-template-columns:1fr}.ops-message{-webkit-line-clamp:2}}",
-              "dynamicData": false,
-              "dynamicFieldDisplayValues": false,
-              "dynamicHtmlGraphics": {
-                "dynamicData": true,
-                "dynamicFieldDisplayValues": false,
-                "dynamicProps": false
-              },
-              "dynamicProps": false,
-              "html": "<div id=\"ops-top-switches\" class=\"ops-panel ops-blue\"><div class=\"ops-header\"><span class=\"ops-icon\"><span class=\"svg-icon\" aria-hidden=\"true\"><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='4' width='18' height='6' rx='2'/><rect x='3' y='14' width='18' height='6' rx='2'/><path d='M7 7h.01'/><path d='M7 17h.01'/></svg></span></span><div class=\"ops-title\"><strong>Top switches</strong><span>origens com mais logs no periodo</span></div></div><div class=\"ops-body\"></div></div>",
-              "onInit": "",
-              "onInitOnResize": false,
-              "onRender": "(function(){\nfunction valuesToArray(values){if(!values)return[];if(Array.isArray(values))return values;if(typeof values.toArray==='function')return values.toArray();var len=values.length||values.size||(values.buffer?values.buffer.length:0)||0;var out=[];for(var i=0;i<len;i++){out.push(typeof values.get==='function'?values.get(i):values[i]);}return out;}\nfunction esc(v){return String(v==null?'':v).replace(/[&<>]/g,function(c){return c==='&'?'&amp;':(c==='<'?'&lt;':'&gt;');});}\nfunction fieldByName(frame,names){var fields=(frame&&frame.fields)||[];var lowered=names.map(function(n){return String(n).toLowerCase();});for(var i=0;i<fields.length;i++){var f=fields[i];var n1=String(f.name||'').toLowerCase();var n2=String((f.config&&f.config.displayName)||'').toLowerCase();if(lowered.indexOf(n1)!==-1||lowered.indexOf(n2)!==-1)return f;}return null;}\nvar root=htmlNode.querySelector('#ops-top-switches');if(!root)return;var body=root.querySelector('.ops-body');if(!body)return;\nvar counts={};\n(data&&data.series||[]).forEach(function(frame){\n  var field=fieldByName(frame,[\"Switch\",\"switchname\",\"host\"]);\n  if(!field)return;\n  valuesToArray(field.values).forEach(function(raw){\n    var name=String(raw||'').trim();\n    if(!name||name==='-'||name==='N/A')return;\n    counts[name]=(counts[name]||0)+1;\n  });\n});\nvar rows=Object.keys(counts).map(function(name){return{name:name,value:counts[name]};}).sort(function(a,b){return b.value-a.value||a.name.localeCompare(b.name);}).slice(0,5);\nif(!rows.length){body.innerHTML=\"<div class='ops-empty'>Sem switches no periodo.</div>\";return;}\nbody.innerHTML=rows.map(function(r,idx){return \"<div class='ops-row'><div class='ops-main'><span class='ops-name'>\"+esc(r.name)+\"</span><span class='ops-sub'>\"+(idx+1)+\" - logs por switch</span></div><span class='ops-value'>\"+Math.round(r.value).toLocaleString('pt-BR')+\"</span></div>\";}).join('');\n})();",
-              "overflow": "hidden",
-              "panelupdateOnMount": true,
-              "reduceOptions": {
-                "calcs": [
-                  "lastNotNull",
-                  "last",
-                  "firstNotNull",
-                  "first",
-                  "min",
-                  "max",
-                  "mean",
-                  "sum",
-                  "count",
-                  "range",
-                  "delta",
-                  "step",
-                  "diff",
-                  "logmin",
-                  "allIsZero",
-                  "allIsNull",
-                  "diffperc"
-                ]
-              },
-              "renderOnMount": true,
-              "rootCSS": ":host{overflow:hidden;display:block;}",
-              "useGrafanaScrollbar": false
-            }
-          },
-          "version": "2.2.3"
-        }
-      }
     }
   },
   "layout": {
@@ -1598,12 +1598,7 @@
   "links": [],
   "liveNow": false,
   "preload": false,
-  "tags": [
-    "syslog",
-    "switches",
-    "lognet",
-    "loki"
-  ],
+  "tags": [],
   "timeSettings": {
     "autoRefresh": "30s",
     "autoRefreshIntervals": [
@@ -1652,9 +1647,11 @@
         "allValue": ".*",
         "allowCustomValue": true,
         "current": {
-          "text": "All",
+          "text": [
+            "SW04-POP-MAG-RJ"
+          ],
           "value": [
-            "$__all"
+            "SW04-POP-MAG-RJ"
           ]
         },
         "hide": "hideVariable",
@@ -1678,7 +1675,7 @@
           "version": "v0"
         },
         "refresh": "onTimeRangeChanged",
-        "regex": "/^SW\\d+-POP-/",
+        "regex": "",
         "regexApplyTo": "value",
         "skipUrlSync": false,
         "sort": "alphabeticalAsc"

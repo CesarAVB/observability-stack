@@ -993,12 +993,7 @@
   "links": [],
   "liveNow": false,
   "preload": false,
-  "tags": [
-    "victorialogs",
-    "cgnat",
-    "mikrotik",
-    "wifi-publico"
-  ],
+  "tags": [],
   "timeSettings": {
     "autoRefresh": "30s",
     "autoRefreshIntervals": [
