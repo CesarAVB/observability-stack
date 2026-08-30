@@ -1619,10 +1619,10 @@
       "1d"
     ],
     "fiscalYearStartMonth": 0,
-    "from": "2026-08-27T11:09:00.548Z",
+    "from": "now-12h",
     "hideTimepicker": false,
     "timezone": "America/Sao_Paulo",
-    "to": "2026-08-27T23:09:00.548Z"
+    "to": "now"
   },
   "title": "Syslog Switches LOGNET",
   "variables": [
@@ -1678,7 +1678,7 @@
           "version": "v0"
         },
         "refresh": "onTimeRangeChanged",
-        "regex": "",
+        "regex": "/^SW\\d+-POP-/",
         "regexApplyTo": "value",
         "skipUrlSync": false,
         "sort": "alphabeticalAsc"
