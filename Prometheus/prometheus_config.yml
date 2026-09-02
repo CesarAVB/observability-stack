@@ -65,7 +65,7 @@ scrape_configs:
     tls_config:
       insecure_skip_verify: false
     static_configs:
-      - targets: ['api-pbx.asbtelecom.com.br']
+      - targets: ['api-pbx.asbtelecom.com.br/actuator/prometheus']
         labels:
           app: 'asb-pbx-manager'
           env: 'production'
