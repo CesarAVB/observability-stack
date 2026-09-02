@@ -52,7 +52,7 @@ scrape_configs:
     tls_config:
       insecure_skip_verify: false
     static_configs:
-      - targets: ['chattalk.asbtelecom.com.br']
+      - targets: ['api-chattalk.asbtelecom.com.br']
         labels:
           app: 'asb-chattalk'
           env: 'production'
@@ -65,7 +65,7 @@ scrape_configs:
     tls_config:
       insecure_skip_verify: false
     static_configs:
-      - targets: ['pbx.asbtelecom.com.br']
+      - targets: ['api-pbx.asbtelecom.com.br']
         labels:
           app: 'asb-pbx-manager'
           env: 'production'
