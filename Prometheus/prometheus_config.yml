@@ -61,11 +61,11 @@ scrape_configs:
   # sobre HTTPS no endpoint público da API.
   - job_name: 'asb-pbx-manager'
     scheme: https
-    metrics_path: '/api/v1/actuator/prometheus'
+    metrics_path: '/actuator/prometheus'
     tls_config:
       insecure_skip_verify: false
     static_configs:
-      - targets: ['api-pbx.asbtelecom.com.br/actuator/prometheus']
+      - targets: ['api-pbx.asbtelecom.com.br']
         labels:
           app: 'asb-pbx-manager'
           env: 'production'
