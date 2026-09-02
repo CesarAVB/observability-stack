@@ -44,6 +44,32 @@ scrape_configs:
           app: 'lognet-crm'
           env: 'production'
 
+  # App Spring Boot do ChatTalk ASB — coleta métricas via Actuator/Micrometer
+  # sobre HTTPS no endpoint público da API.
+  - job_name: 'asb-chattalk'
+    scheme: https
+    metrics_path: '/api/v1/actuator/prometheus'
+    tls_config:
+      insecure_skip_verify: false
+    static_configs:
+      - targets: ['chattalk.asbtelecom.com.br']
+        labels:
+          app: 'asb-chattalk'
+          env: 'production'
+
+  # App Spring Boot do PBX Manager ASB — coleta métricas via Actuator/Micrometer
+  # sobre HTTPS no endpoint público da API.
+  - job_name: 'asb-pbx-manager'
+    scheme: https
+    metrics_path: '/api/v1/actuator/prometheus'
+    tls_config:
+      insecure_skip_verify: false
+    static_configs:
+      - targets: ['pbx.asbtelecom.com.br']
+        labels:
+          app: 'asb-pbx-manager'
+          env: 'production'
+
   # node-exporter — métricas de hardware/SO do host Linux.
   #   - srv-251: mesmo Swarm do Prometheus, scrape via DNS interno.
   #   - srv-248: outro Swarm/Portainer, scrape via IP público e porta publicada.
