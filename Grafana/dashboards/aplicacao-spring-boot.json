@@ -1792,7 +1792,7 @@
           "version": "v0"
         },
         "refresh": "onTimeRangeChanged",
-        "regex": "lognet.*",
+        "regex": ".*",
         "regexApplyTo": "value",
         "skipUrlSync": false,
         "sort": "disabled"

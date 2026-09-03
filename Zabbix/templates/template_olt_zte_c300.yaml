@@ -1,0 +1,248 @@
+zabbix_export:
+  version: '7.0'
+  template_groups:
+    -
+      uuid: 0e55488e98e44ecbb7bd7fd4fcc22925
+      name: 'Templates/Network devices'
+  templates:
+    -
+      uuid: 1221fdea6c324bd397f0d5cd32074aed
+      template: 'OLT ZTE C300'
+      name: 'OLT ZTE C300'
+      vendor:
+        name: 'César Augusto'
+        version: '7.0.16'
+      description: |
+        Template para OLT ZTE ZXA10 C300.
+        Autor: César Augusto.
+        Versão do template: 7.0.16.
+        Data de atualização: 03/09/2026.
+
+        Descobre as 16 PONs pela tabela ZTE zxGponPon e coleta:
+        - código de estado operacional da PON (OID ZTE .7);
+        - potência TX do laser da PON (ZTE-AN-INTERFACE-MIB, índice ifIndex);
+        - quantidade de ONUs registradas por PON, contando as entradas da tabela
+          zxGponOnu em .1.3.6.1.4.1.3902.1012.3.28.
+
+        A potência TX usa unidade de 0,001 dBm. O valor 2147483647 indica
+        potência indisponível e é descartado pelo preprocessing.
+      groups:
+        -
+          name: 'Templates/Network devices'
+      items:
+        -
+          uuid: bded2b70e7904c50b1fca68501ea5b8c
+          name: 'SNMP agent availability'
+          type: INTERNAL
+          key: 'zabbix[host,snmp,available]'
+          delay: 1m
+          history: 7d
+          trends: 30d
+          valuemap:
+            name: 'SNMP availability'
+          tags:
+            -
+              tag: component
+              value: system
+      discovery_rules:
+        -
+          uuid: d16e635e23de4431ad5fba42a50098cd
+          name: 'PON interfaces'
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#PONNAME},1.3.6.1.4.1.3902.1012.3.13.1.1.1]'
+          key: 'zte.pon.discovery'
+          delay: 1h
+          lifetime: 7d
+          filter:
+            evaltype: AND
+            conditions:
+              -
+                macro: '{#PONNAME}'
+                value: '^OLT-[0-9]+$'
+                operator: MATCHES_REGEX
+          item_prototypes:
+            -
+              uuid: cb2861cd90804c80944b02d279eb2fcb
+              name: 'PON {#PONNAME}: operational status code'
+              type: SNMP_AGENT
+              snmp_oid: '1.3.6.1.4.1.3902.1012.3.13.1.1.7.{#SNMPINDEX}'
+              key: 'zte.pon.status[{#SNMPINDEX}]'
+              delay: 1m
+              history: 30d
+              trends: 90d
+              description: |
+                Estado operacional da PON na tabela ZTE.
+                OID: .1.3.6.1.4.1.3902.1012.3.13.1.1.7.<ifIndex>
+                O valor retornado pela OLT deve ser mapeado após confirmar
+                na CLI se o código 1 ou 2 representa UP/DOWN neste firmware.
+              tags:
+                -
+                  tag: component
+                  value: pon
+                -
+                  tag: metric
+                  value: status
+            -
+              uuid: f23301470efb46a0889db219710c6d98
+              name: 'PON {#PONNAME}: registered ONUs'
+              type: SNMP_AGENT
+              snmp_oid: 'walk[1.3.6.1.4.1.3902.1012.3.28.1.1.1.{#SNMPINDEX}]'
+              key: 'zte.pon.onus_registered[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              trends: 90d
+              value_type: UNSIGNED
+              units: ONUs
+              preprocessing:
+                -
+                  type: JAVASCRIPT
+                  parameters:
+                    - |
+                      var lines = value.split('\n');
+                      var count = 0;
+                      for (var i = 0; i < lines.length; i++) {
+                        if (lines[i].match(/=\s*(STRING|INTEGER|Counter32|Gauge32|Unsigned32|Hex-STRING):?/)) {
+                          count++;
+                        }
+                      }
+                      return count;
+              description: |
+                Quantidade de ONUs registradas na PON.
+                A OLT disponibiliza as ONUs na tabela
+                .1.3.6.1.4.1.3902.1012.3.28.1.1.1.<índice-da-PON>.<índice-da-ONU>.
+                O item executa um SNMP walk somente para a PON descoberta e conta
+                as entradas retornadas. Exemplo confirmado: a PON 268566784 possui
+                seis ONUs ZTE-F600.
+              tags:
+                -
+                  tag: component
+                  value: pon
+                -
+                  tag: metric
+                  value: onu-count
+            -
+              uuid: 24632ba068b34b6a83fb85f8a69045ef
+              name: 'PON {#PONNAME}: administrative status'
+              type: SNMP_AGENT
+              snmp_oid: '1.3.6.1.4.1.3902.1012.3.13.1.1.4.{#SNMPINDEX}'
+              key: 'zte.pon.admin_status[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              trends: 90d
+              description: 'Estado administrativo da PON: OID ZTE .4; valor confirmado como 1 nesta OLT.'
+              tags:
+                -
+                  tag: component
+                  value: pon
+                -
+                  tag: metric
+                  value: admin-status
+            -
+              uuid: bd43b64ba56b411dbe341889cfeede0b
+              name: 'PON {#PONNAME}: maximum ONU capacity'
+              type: SNMP_AGENT
+              snmp_oid: '1.3.6.1.4.1.3902.1012.3.13.1.1.12.{#SNMPINDEX}'
+              key: 'zte.pon.onu_capacity[{#SNMPINDEX}]'
+              delay: 1h
+              history: 30d
+              trends: 90d
+              value_type: UNSIGNED
+              units: ONUs
+              description: 'Capacidade máxima de ONUs da PON; valor confirmado como 128 nesta OLT.'
+              tags:
+                -
+                  tag: component
+                  value: pon
+                -
+                  tag: metric
+                  value: onu-capacity
+            -
+              uuid: b51223ec3fe642e49272224b78561ee1
+              name: 'PON {#PONNAME}: unregistered ONUs'
+              type: SNMP_AGENT
+              snmp_oid: '1.3.6.1.4.1.3902.1012.3.13.1.1.14.{#SNMPINDEX}'
+              key: 'zte.pon.onus_unregistered[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              trends: 90d
+              value_type: UNSIGNED
+              units: ONUs
+              description: 'Contador de ONUs não registradas/ilegais na PON, conforme a tabela ZTE.'
+              tags:
+                -
+                  tag: component
+                  value: pon
+                -
+                  tag: metric
+                  value: onu-unregistered
+        -
+          uuid: 626a158684d94c419c797ab3421d6422
+          name: 'PON optical modules'
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#PONPOWER},1.3.6.1.4.1.3902.1015.3.1.13.1.4]'
+          key: 'zte.pon.optical.discovery'
+          delay: 1h
+          lifetime: 7d
+          filter:
+            evaltype: AND
+            conditions:
+              -
+                macro: '{#PONPOWER}'
+                value: '^(?!2147483647$).+'
+                operator: MATCHES_REGEX
+          item_prototypes:
+            -
+              uuid: 93b9ff1b2a3e4e7784b1dc18e3a72a68
+              name: 'PON index {#SNMPINDEX}: TX optical power'
+              type: SNMP_AGENT
+              snmp_oid: '1.3.6.1.4.1.3902.1015.3.1.13.1.4.{#SNMPINDEX}'
+              key: 'zte.pon.tx_power[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              trends: 90d
+              value_type: FLOAT
+              units: dBm
+              preprocessing:
+                -
+                  type: MULTIPLIER
+                  parameters:
+                    - '0.001'
+              tags:
+                -
+                  tag: component
+                  value: pon
+                -
+                  tag: metric
+                  value: optical-power-tx
+      macros:
+        -
+          macro: '{$ZTE_PON_DISCOVERY_REGEX}'
+          value: '^OLT-[0-9]+$'
+          description: 'Regex dos nomes retornados pela tabela ZTE de PONs.'
+      valuemaps:
+        -
+          uuid: 22983a9194674e86a8a001ea12ac235a
+          name: 'Interface operational status'
+          mappings:
+            -
+              value: '1'
+              newvalue: UP
+            -
+              value: '2'
+              newvalue: DOWN
+            -
+              value: '3'
+              newvalue: UNKNOWN
+        -
+          uuid: bdeaeb642e724c4292636bf2ba6c659e
+          name: 'SNMP availability'
+          mappings:
+            -
+              value: '0'
+              newvalue: 'NOT_AVAILABLE'
+            -
+              value: '1'
+              newvalue: AVAILABLE
+            -
+              value: '2'
+              newvalue: UNAVAILABLE

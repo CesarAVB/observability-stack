@@ -1,0 +1,1062 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 16,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "__expr__",
+        "uid": "__expr__"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 19,
+      "options": {
+        "SVGBaseFix": true,
+        "add100Percentage": true,
+        "calcsMutation": "standard",
+        "centerAlignContent": true,
+        "codeData": "{}",
+        "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Roboto+Mono:wght@600;700;900&display=swap');*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}#lc-header{width:100%;height:100%;min-height:0;padding:14px 16px;color:#f4f7fb;background:radial-gradient(circle at top left,rgba(56,189,248,0.13),transparent 32%),radial-gradient(circle at bottom right,rgba(34,197,94,0.10),transparent 30%),linear-gradient(135deg,#11161d 0%,#0c1016 100%);border:1px solid rgba(255,255,255,0.08);border-radius:14px;overflow:hidden}.lc-header-root{width:100%;height:100%;display:flex;align-items:center;justify-content:space-between;gap:18px}.lc-title{display:flex;align-items:center;gap:13px;min-width:0}.lc-title-icon{width:96px;height:96px;border-radius:18px;display:grid;place-items:center;color:#38bdf8;background:rgba(56,189,248,0.12);border:3px solid #ffffff;box-shadow:inset 0 1px 0 rgba(255,255,255,0.06);overflow:hidden}.lc-title-icon svg{width:25px;height:25px}.lc-title-icon img{width:100%;height:100%;object-fit:contain;display:block}.lc-title-copy{min-width:0}.lc-title-copy strong{display:block;color:#ffffff;font-size:22px;font-weight:900;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.lc-title-copy span{display:block;margin-top:5px;color:#9aa4b2;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.lc-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}.lc-pill{display:inline-flex;align-items:center;gap:8px;min-height:34px;padding:8px 11px;border-radius:999px;background:rgba(255,255,255,0.045);border:1px solid rgba(255,255,255,0.10);color:#cbd5e1;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.03em}.lc-pill strong{color:#ffffff;font-family:'Roboto Mono',monospace;font-size:12px}.lc-dot{width:8px;height:8px;border-radius:999px;background:#22c55e;box-shadow:0 0 0 4px rgba(34,197,94,0.12)}.svg-icon{display:inline-grid;place-items:center;width:1em;height:1em;line-height:1;vertical-align:-.125em;flex-shrink:0}.svg-icon svg{width:1em;height:1em;display:block}@media (max-width:780px){#lc-header{padding:12px}.lc-header-root{align-items:flex-start;flex-direction:column;gap:12px}.lc-title-icon{width:72px;height:72px}.lc-title-copy strong{font-size:18px}.lc-actions{justify-content:flex-start}.lc-pill{min-height:30px;padding:7px 9px;font-size:10px}}",
+        "dynamicData": false,
+        "dynamicFieldDisplayValues": false,
+        "dynamicHtmlGraphics": false,
+        "dynamicProps": false,
+        "html": "<div id=\"lc-header\"><div class=\"lc-header-root\"><div class=\"lc-title\"><span class=\"lc-title-icon\" aria-hidden=\"true\"><img src=\"https://s3.redelognet.com.br/public/logo-lc-provedor.png\" alt=\"LC Provedor\"/></span><div class=\"lc-title-copy\"><strong>LC Provedor</strong><span>BGP, clientes PPPoE e consumo das filiais</span></div></div><div class=\"lc-actions\"><span class=\"lc-pill\"><span class=\"lc-dot\"></span>Atualizacao <strong>5s</strong></span><span class=\"lc-pill\">Janela <strong>5m</strong></span><span class=\"lc-pill\">Origem <strong>Zabbix</strong></span></div></div></div>",
+        "onInit": "",
+        "onInitOnResize": false,
+        "onRender": "",
+        "overflow": "visible",
+        "panelupdateOnMount": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull",
+            "last",
+            "firstNotNull",
+            "first",
+            "min",
+            "max",
+            "mean",
+            "sum",
+            "count",
+            "range",
+            "delta",
+            "step",
+            "diff",
+            "logmin",
+            "allIsZero",
+            "allIsNull",
+            "diffperc"
+          ]
+        },
+        "renderOnMount": true,
+        "rootCSS": "",
+        "useGrafanaScrollbar": true
+      },
+      "pluginVersion": "2.2.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "__expr__",
+            "uid": "__expr__"
+          },
+          "expression": "1",
+          "refId": "A",
+          "type": "math"
+        }
+      ],
+      "title": "",
+      "transparent": true,
+      "type": "gapit-htmlgraphics-panel"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
+      "id": 20,
+      "panels": [],
+      "title": "OLT ZTE C300",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "alexanderzobnin-zabbix-datasource",
+        "uid": "eeqnvh9iqkvswd"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "orange",
+                "value": 100
+              },
+              {
+                "color": "red",
+                "value": 120
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 6
+      },
+      "id": 21,
+      "options": {
+        "SVGBaseFix": true,
+        "add100Percentage": true,
+        "calcsMutation": "standard",
+        "centerAlignContent": true,
+        "codeData": "{}",
+        "css": ".onu-panel{box-sizing:border-box;width:100%;height:100%;padding:16px 18px;color:#e6edf3;background:radial-gradient(circle at top left,rgba(56,189,248,.12),transparent 34%),linear-gradient(135deg,#161b22 0%,#101419 100%);border:1px solid rgba(255,255,255,.07);border-radius:14px;font-family:Inter,Arial,sans-serif;overflow:hidden}.onu-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:12px;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,.08)}.onu-header strong{display:block;color:#fff;font-size:16px;font-weight:800}.onu-header span{display:block;margin-top:4px;color:#9aa4b2;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em}.onu-header div:last-child{color:#38bdf8;font-family:monospace;font-size:15px;font-weight:900}.onu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:9px;height:calc(100% - 58px);overflow:auto}.onu-card{display:flex;flex-direction:column;justify-content:center;min-height:82px;padding:11px 12px;border-radius:10px;background:rgba(255,255,255,.045);border:1px solid rgba(34,197,94,.3);box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}.onu-card.warning{border-color:rgba(250,204,21,.55)}.onu-card.critical{border-color:rgba(239,68,68,.65)}.onu-card span{color:#9aa4b2;font-size:11px;font-weight:800;text-transform:uppercase}.onu-card strong{margin:5px 0 2px;color:#fff;font-family:monospace;font-size:25px;line-height:1}.onu-card small{color:#7d8998;font-size:9px;font-weight:700}.onu-empty{display:grid;place-items:center;height:100%;color:#9aa4b2;font-size:12px;font-weight:700}@media(max-width:600px){.onu-panel{padding:12px}.onu-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.onu-header strong{font-size:14px}}",
+        "dynamicData": true,
+        "dynamicFieldDisplayValues": true,
+        "dynamicHtmlGraphics": true,
+        "dynamicProps": true,
+        "html": "<div class=\"onu-panel\">\r\n  <div class=\"onu-header\">\r\n    <div>\r\n      <strong>ONUs registradas por PON</strong>\r\n      <span>ZTE-C300-MESQUITA</span>\r\n    </div>\r\n    <div id=\"onu-total\">--</div>\r\n  </div>\r\n\r\n  <div id=\"onu-grid\" class=\"onu-grid\">\r\n    <div class=\"onu-empty\">Aguardando dados...</div>\r\n  </div>\r\n</div>",
+        "onInit": "",
+        "onInitOnResize": false,
+        "onRender": "(function(){\n  var grid = htmlNode.querySelector('#onu-grid');\n  var totalNode = htmlNode.querySelector('#onu-total');\n  var series = (typeof data !== 'undefined' && data && Array.isArray(data.series)) ? data.series : [];\n  grid._ponValues = grid._ponValues || {};\n  series.forEach(function(serie, serieIndex) {\n    var fields = (serie && serie.fields) || [];\n    fields.forEach(function(field) {\n      if (String(field.type || '').toLowerCase() === 'time') return;\n      var values = field.values;\n      var length = values ? (values.length || values.size || 0) : 0;\n      if (!length) return;\n      var raw = String((field.config && field.config.displayName) || field.name || serie.name || '');\n      var value = NaN;\n      for (var i = length - 1; i >= 0; i--) {\n        var candidate = Number(values && typeof values.get === 'function' ? values.get(i) : values[i]);\n        if (Number.isFinite(candidate)) { value = candidate; break; }\n      }\n      if (!Number.isFinite(value)) return;\n      var match = raw.match(/OLT-\\d+/i) || String(serie.name || '').match(/OLT-\\d+/i);\n      var pon = match ? match[0].toUpperCase() : ('OLT-' + (serieIndex + 1));\n      grid._ponValues[pon] = value;\n    });\n  });\n  var pons = Object.keys(grid._ponValues);\n  if (!pons.length) {\n    grid.innerHTML = '<div class=\"onu-empty\">Aguardando dados do Zabbix...</div>';\n    totalNode.textContent = '--';\n    return;\n  }\n  pons.sort(function(a, b) {\n    return (parseInt(a.replace(/\\D+/g, ''), 10) || 0) - (parseInt(b.replace(/\\D+/g, ''), 10) || 0);\n  });\n  var total = 0;\n  var cards = pons.map(function(pon) {\n    var value = grid._ponValues[pon];\n    total += value;\n    return '<div class=\"onu-card ok\"><span>' + pon + '</span><strong>' + value + '</strong><small>ONUs registradas</small></div>';\n  });\n  grid.innerHTML = cards.join('');\n  totalNode.textContent = total + ' ONUs';\n})();",
+        "overflow": "visible",
+        "panelupdateOnMount": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull",
+            "last",
+            "firstNotNull",
+            "first",
+            "min",
+            "max",
+            "mean",
+            "sum",
+            "count",
+            "range",
+            "delta",
+            "step",
+            "diff",
+            "logmin",
+            "allIsZero",
+            "allIsNull",
+            "diffperc"
+          ]
+        },
+        "renderOnMount": true,
+        "rootCSS": "",
+        "showSuggestions": false,
+        "useGrafanaScrollbar": false
+      },
+      "pluginVersion": "2.2.3",
+      "targets": [
+        {
+          "application": {
+            "filter": ""
+          },
+          "countTriggersBy": "",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "eeqnvh9iqkvswd"
+          },
+          "evaltype": "0",
+          "functions": [],
+          "group": {
+            "filter": "Clientes"
+          },
+          "host": {
+            "filter": "ZTE-C300-MESQUITA"
+          },
+          "item": {
+            "filter": "PON OLT-1: registered ONUs"
+          },
+          "itemTag": {
+            "filter": ""
+          },
+          "macro": {
+            "filter": ""
+          },
+          "options": {
+            "count": false,
+            "disableDataAlignment": false,
+            "showDisabledItems": false,
+            "skipEmptyValues": false,
+            "useTrends": "default",
+            "useZabbixValueMapping": false
+          },
+          "proxy": {
+            "filter": ""
+          },
+          "queryType": "0",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "schema": 12,
+          "table": {
+            "skipEmptyValues": false
+          },
+          "tags": {
+            "filter": ""
+          },
+          "textFilter": "",
+          "trigger": {
+            "filter": ""
+          }
+        },
+        {
+          "application": {
+            "filter": ""
+          },
+          "countTriggersBy": "",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "eeqnvh9iqkvswd"
+          },
+          "evaltype": "0",
+          "functions": [],
+          "group": {
+            "filter": "Clientes"
+          },
+          "host": {
+            "filter": "ZTE-C300-MESQUITA"
+          },
+          "item": {
+            "filter": "PON OLT-2: registered ONUs"
+          },
+          "itemTag": {
+            "filter": ""
+          },
+          "macro": {
+            "filter": ""
+          },
+          "options": {
+            "count": false,
+            "disableDataAlignment": false,
+            "showDisabledItems": false,
+            "skipEmptyValues": false,
+            "useTrends": "default",
+            "useZabbixValueMapping": false
+          },
+          "proxy": {
+            "filter": ""
+          },
+          "queryType": "0",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "schema": 12,
+          "table": {
+            "skipEmptyValues": false
+          },
+          "tags": {
+            "filter": ""
+          },
+          "textFilter": "",
+          "trigger": {
+            "filter": ""
+          }
+        },
+        {
+          "application": {
+            "filter": ""
+          },
+          "countTriggersBy": "",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "eeqnvh9iqkvswd"
+          },
+          "evaltype": "0",
+          "functions": [],
+          "group": {
+            "filter": "Clientes"
+          },
+          "host": {
+            "filter": "ZTE-C300-MESQUITA"
+          },
+          "item": {
+            "filter": "PON OLT-3: registered ONUs"
+          },
+          "itemTag": {
+            "filter": ""
+          },
+          "macro": {
+            "filter": ""
+          },
+          "options": {
+            "count": false,
+            "disableDataAlignment": false,
+            "showDisabledItems": false,
+            "skipEmptyValues": false,
+            "useTrends": "default",
+            "useZabbixValueMapping": false
+          },
+          "proxy": {
+            "filter": ""
+          },
+          "queryType": "0",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "schema": 12,
+          "table": {
+            "skipEmptyValues": false
+          },
+          "tags": {
+            "filter": ""
+          },
+          "textFilter": "",
+          "trigger": {
+            "filter": ""
+          }
+        },
+        {
+          "application": {
+            "filter": ""
+          },
+          "countTriggersBy": "",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "eeqnvh9iqkvswd"
+          },
+          "evaltype": "0",
+          "functions": [],
+          "group": {
+            "filter": "Clientes"
+          },
+          "host": {
+            "filter": "ZTE-C300-MESQUITA"
+          },
+          "item": {
+            "filter": "PON OLT-4: registered ONUs"
+          },
+          "itemTag": {
+            "filter": ""
+          },
+          "macro": {
+            "filter": ""
+          },
+          "options": {
+            "count": false,
+            "disableDataAlignment": false,
+            "showDisabledItems": false,
+            "skipEmptyValues": false,
+            "useTrends": "default",
+            "useZabbixValueMapping": false
+          },
+          "proxy": {
+            "filter": ""
+          },
+          "queryType": "0",
+          "refId": "D",
+          "resultFormat": "time_series",
+          "schema": 12,
+          "table": {
+            "skipEmptyValues": false
+          },
+          "tags": {
+            "filter": ""
+          },
+          "textFilter": "",
+          "trigger": {
+            "filter": ""
+          }
+        },
+        {
+          "application": {
+            "filter": ""
+          },
+          "countTriggersBy": "",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "eeqnvh9iqkvswd"
+          },
+          "evaltype": "0",
+          "functions": [],
+          "group": {
+            "filter": "Clientes"
+          },
+          "host": {
+            "filter": "ZTE-C300-MESQUITA"
+          },
+          "item": {
+            "filter": "PON OLT-5: registered ONUs"
+          },
+          "itemTag": {
+            "filter": ""
+          },
+          "macro": {
+            "filter": ""
+          },
+          "options": {
+            "count": false,
+            "disableDataAlignment": false,
+            "showDisabledItems": false,
+            "skipEmptyValues": false,
+            "useTrends": "default",
+            "useZabbixValueMapping": false
+          },
+          "proxy": {
+            "filter": ""
+          },
+          "queryType": "0",
+          "refId": "E",
+          "resultFormat": "time_series",
+          "schema": 12,
+          "table": {
+            "skipEmptyValues": false
+          },
+          "tags": {
+            "filter": ""
+          },
+          "textFilter": "",
+          "trigger": {
+            "filter": ""
+          }
+        },
+        {
+          "application": {
+            "filter": ""
+          },
+          "countTriggersBy": "",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "eeqnvh9iqkvswd"
+          },
+          "evaltype": "0",
+          "functions": [],
+          "group": {
+            "filter": "Clientes"
+          },
+          "host": {
+            "filter": "ZTE-C300-MESQUITA"
+          },
+          "item": {
+            "filter": "PON OLT-6: registered ONUs"
+          },
+          "itemTag": {
+            "filter": ""
+          },
+          "macro": {
+            "filter": ""
+          },
+          "options": {
+            "count": false,
+            "disableDataAlignment": false,
+            "showDisabledItems": false,
+            "skipEmptyValues": false,
+            "useTrends": "default",
+            "useZabbixValueMapping": false
+          },
+          "proxy": {
+            "filter": ""
+          },
+          "queryType": "0",
+          "refId": "F",
+          "resultFormat": "time_series",
+          "schema": 12,
+          "table": {
+            "skipEmptyValues": false
+          },
+          "tags": {
+            "filter": ""
+          },
+          "textFilter": "",
+          "trigger": {
+            "filter": ""
+          }
+        },
+        {
+          "application": {
+            "filter": ""
+          },
+          "countTriggersBy": "",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "eeqnvh9iqkvswd"
+          },
+          "evaltype": "0",
+          "functions": [],
+          "group": {
+            "filter": "Clientes"
+          },
+          "host": {
+            "filter": "ZTE-C300-MESQUITA"
+          },
+          "item": {
+            "filter": "PON OLT-7: registered ONUs"
+          },
+          "itemTag": {
+            "filter": ""
+          },
+          "macro": {
+            "filter": ""
+          },
+          "options": {
+            "count": false,
+            "disableDataAlignment": false,
+            "showDisabledItems": false,
+            "skipEmptyValues": false,
+            "useTrends": "default",
+            "useZabbixValueMapping": false
+          },
+          "proxy": {
+            "filter": ""
+          },
+          "queryType": "0",
+          "refId": "G",
+          "resultFormat": "time_series",
+          "schema": 12,
+          "table": {
+            "skipEmptyValues": false
+          },
+          "tags": {
+            "filter": ""
+          },
+          "textFilter": "",
+          "trigger": {
+            "filter": ""
+          }
+        },
+        {
+          "application": {
+            "filter": ""
+          },
+          "countTriggersBy": "",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "eeqnvh9iqkvswd"
+          },
+          "evaltype": "0",
+          "functions": [],
+          "group": {
+            "filter": "Clientes"
+          },
+          "host": {
+            "filter": "ZTE-C300-MESQUITA"
+          },
+          "item": {
+            "filter": "PON OLT-8: registered ONUs"
+          },
+          "itemTag": {
+            "filter": ""
+          },
+          "macro": {
+            "filter": ""
+          },
+          "options": {
+            "count": false,
+            "disableDataAlignment": false,
+            "showDisabledItems": false,
+            "skipEmptyValues": false,
+            "useTrends": "default",
+            "useZabbixValueMapping": false
+          },
+          "proxy": {
+            "filter": ""
+          },
+          "queryType": "0",
+          "refId": "H",
+          "resultFormat": "time_series",
+          "schema": 12,
+          "table": {
+            "skipEmptyValues": false
+          },
+          "tags": {
+            "filter": ""
+          },
+          "textFilter": "",
+          "trigger": {
+            "filter": ""
+          }
+        },
+        {
+          "application": {
+            "filter": ""
+          },
+          "countTriggersBy": "",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "eeqnvh9iqkvswd"
+          },
+          "evaltype": "0",
+          "functions": [],
+          "group": {
+            "filter": "Clientes"
+          },
+          "host": {
+            "filter": "ZTE-C300-MESQUITA"
+          },
+          "item": {
+            "filter": "PON OLT-9: registered ONUs"
+          },
+          "itemTag": {
+            "filter": ""
+          },
+          "macro": {
+            "filter": ""
+          },
+          "options": {
+            "count": false,
+            "disableDataAlignment": false,
+            "showDisabledItems": false,
+            "skipEmptyValues": false,
+            "useTrends": "default",
+            "useZabbixValueMapping": false
+          },
+          "proxy": {
+            "filter": ""
+          },
+          "queryType": "0",
+          "refId": "I",
+          "resultFormat": "time_series",
+          "schema": 12,
+          "table": {
+            "skipEmptyValues": false
+          },
+          "tags": {
+            "filter": ""
+          },
+          "textFilter": "",
+          "trigger": {
+            "filter": ""
+          }
+        },
+        {
+          "application": {
+            "filter": ""
+          },
+          "countTriggersBy": "",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "eeqnvh9iqkvswd"
+          },
+          "evaltype": "0",
+          "functions": [],
+          "group": {
+            "filter": "Clientes"
+          },
+          "host": {
+            "filter": "ZTE-C300-MESQUITA"
+          },
+          "item": {
+            "filter": "PON OLT-10: registered ONUs"
+          },
+          "itemTag": {
+            "filter": ""
+          },
+          "macro": {
+            "filter": ""
+          },
+          "options": {
+            "count": false,
+            "disableDataAlignment": false,
+            "showDisabledItems": false,
+            "skipEmptyValues": false,
+            "useTrends": "default",
+            "useZabbixValueMapping": false
+          },
+          "proxy": {
+            "filter": ""
+          },
+          "queryType": "0",
+          "refId": "J",
+          "resultFormat": "time_series",
+          "schema": 12,
+          "table": {
+            "skipEmptyValues": false
+          },
+          "tags": {
+            "filter": ""
+          },
+          "textFilter": "",
+          "trigger": {
+            "filter": ""
+          }
+        },
+        {
+          "application": {
+            "filter": ""
+          },
+          "countTriggersBy": "",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "eeqnvh9iqkvswd"
+          },
+          "evaltype": "0",
+          "functions": [],
+          "group": {
+            "filter": "Clientes"
+          },
+          "host": {
+            "filter": "ZTE-C300-MESQUITA"
+          },
+          "item": {
+            "filter": "PON OLT-11: registered ONUs"
+          },
+          "itemTag": {
+            "filter": ""
+          },
+          "macro": {
+            "filter": ""
+          },
+          "options": {
+            "count": false,
+            "disableDataAlignment": false,
+            "showDisabledItems": false,
+            "skipEmptyValues": false,
+            "useTrends": "default",
+            "useZabbixValueMapping": false
+          },
+          "proxy": {
+            "filter": ""
+          },
+          "queryType": "0",
+          "refId": "K",
+          "resultFormat": "time_series",
+          "schema": 12,
+          "table": {
+            "skipEmptyValues": false
+          },
+          "tags": {
+            "filter": ""
+          },
+          "textFilter": "",
+          "trigger": {
+            "filter": ""
+          }
+        },
+        {
+          "application": {
+            "filter": ""
+          },
+          "countTriggersBy": "",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "eeqnvh9iqkvswd"
+          },
+          "evaltype": "0",
+          "functions": [],
+          "group": {
+            "filter": "Clientes"
+          },
+          "host": {
+            "filter": "ZTE-C300-MESQUITA"
+          },
+          "item": {
+            "filter": "PON OLT-12: registered ONUs"
+          },
+          "itemTag": {
+            "filter": ""
+          },
+          "macro": {
+            "filter": ""
+          },
+          "options": {
+            "count": false,
+            "disableDataAlignment": false,
+            "showDisabledItems": false,
+            "skipEmptyValues": false,
+            "useTrends": "default",
+            "useZabbixValueMapping": false
+          },
+          "proxy": {
+            "filter": ""
+          },
+          "queryType": "0",
+          "refId": "L",
+          "resultFormat": "time_series",
+          "schema": 12,
+          "table": {
+            "skipEmptyValues": false
+          },
+          "tags": {
+            "filter": ""
+          },
+          "textFilter": "",
+          "trigger": {
+            "filter": ""
+          }
+        },
+        {
+          "application": {
+            "filter": ""
+          },
+          "countTriggersBy": "",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "eeqnvh9iqkvswd"
+          },
+          "evaltype": "0",
+          "functions": [],
+          "group": {
+            "filter": "Clientes"
+          },
+          "host": {
+            "filter": "ZTE-C300-MESQUITA"
+          },
+          "item": {
+            "filter": "PON OLT-13: registered ONUs"
+          },
+          "itemTag": {
+            "filter": ""
+          },
+          "macro": {
+            "filter": ""
+          },
+          "options": {
+            "count": false,
+            "disableDataAlignment": false,
+            "showDisabledItems": false,
+            "skipEmptyValues": false,
+            "useTrends": "default",
+            "useZabbixValueMapping": false
+          },
+          "proxy": {
+            "filter": ""
+          },
+          "queryType": "0",
+          "refId": "M",
+          "resultFormat": "time_series",
+          "schema": 12,
+          "table": {
+            "skipEmptyValues": false
+          },
+          "tags": {
+            "filter": ""
+          },
+          "textFilter": "",
+          "trigger": {
+            "filter": ""
+          }
+        },
+        {
+          "application": {
+            "filter": ""
+          },
+          "countTriggersBy": "",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "eeqnvh9iqkvswd"
+          },
+          "evaltype": "0",
+          "functions": [],
+          "group": {
+            "filter": "Clientes"
+          },
+          "host": {
+            "filter": "ZTE-C300-MESQUITA"
+          },
+          "item": {
+            "filter": "PON OLT-14: registered ONUs"
+          },
+          "itemTag": {
+            "filter": ""
+          },
+          "macro": {
+            "filter": ""
+          },
+          "options": {
+            "count": false,
+            "disableDataAlignment": false,
+            "showDisabledItems": false,
+            "skipEmptyValues": false,
+            "useTrends": "default",
+            "useZabbixValueMapping": false
+          },
+          "proxy": {
+            "filter": ""
+          },
+          "queryType": "0",
+          "refId": "N",
+          "resultFormat": "time_series",
+          "schema": 12,
+          "table": {
+            "skipEmptyValues": false
+          },
+          "tags": {
+            "filter": ""
+          },
+          "textFilter": "",
+          "trigger": {
+            "filter": ""
+          }
+        },
+        {
+          "application": {
+            "filter": ""
+          },
+          "countTriggersBy": "",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "eeqnvh9iqkvswd"
+          },
+          "evaltype": "0",
+          "functions": [],
+          "group": {
+            "filter": "Clientes"
+          },
+          "host": {
+            "filter": "ZTE-C300-MESQUITA"
+          },
+          "item": {
+            "filter": "PON OLT-15: registered ONUs"
+          },
+          "itemTag": {
+            "filter": ""
+          },
+          "macro": {
+            "filter": ""
+          },
+          "options": {
+            "count": false,
+            "disableDataAlignment": false,
+            "showDisabledItems": false,
+            "skipEmptyValues": false,
+            "useTrends": "default",
+            "useZabbixValueMapping": false
+          },
+          "proxy": {
+            "filter": ""
+          },
+          "queryType": "0",
+          "refId": "O",
+          "resultFormat": "time_series",
+          "schema": 12,
+          "table": {
+            "skipEmptyValues": false
+          },
+          "tags": {
+            "filter": ""
+          },
+          "textFilter": "",
+          "trigger": {
+            "filter": ""
+          }
+        },
+        {
+          "application": {
+            "filter": ""
+          },
+          "countTriggersBy": "",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "eeqnvh9iqkvswd"
+          },
+          "evaltype": "0",
+          "functions": [],
+          "group": {
+            "filter": "Clientes"
+          },
+          "host": {
+            "filter": "ZTE-C300-MESQUITA"
+          },
+          "item": {
+            "filter": "PON OLT-16: registered ONUs"
+          },
+          "itemTag": {
+            "filter": ""
+          },
+          "macro": {
+            "filter": ""
+          },
+          "options": {
+            "count": false,
+            "disableDataAlignment": false,
+            "showDisabledItems": false,
+            "skipEmptyValues": false,
+            "useTrends": "default",
+            "useZabbixValueMapping": false
+          },
+          "proxy": {
+            "filter": ""
+          },
+          "queryType": "0",
+          "refId": "P",
+          "resultFormat": "time_series",
+          "schema": 12,
+          "table": {
+            "skipEmptyValues": false
+          },
+          "tags": {
+            "filter": ""
+          },
+          "textFilter": "",
+          "trigger": {
+            "filter": ""
+          }
+        }
+      ],
+      "title": "",
+      "transparent": true,
+      "type": "gapit-htmlgraphics-panel"
+    }
+  ],
+  "preload": false,
+  "refresh": "30s",
+  "schemaVersion": 41,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "LC Provedor",
+  "uid": "453eebbc-0e59-4fe4-a641-c9fcc1324d01",
+  "version": 2
+}
