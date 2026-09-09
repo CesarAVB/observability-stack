@@ -142,17 +142,20 @@ groups:
   # pelo Spring (ver PADRAO-OBSERVABILIDADE-BACKEND.md, item B).
   - name: outbound-integrations
     rules:
+      # `outcome` do RestClient/WebClient: SUCCESS | CLIENT_ERROR (4xx) |
+      # SERVER_ERROR (5xx) | UNKNOWN (sem resposta: timeout, conn recusada).
+      # Alertamos em SERVER_ERROR e UNKNOWN — 4xx de integração costuma ser normal.
       - alert: OutboundIntegrationErrors
         expr: |
           sum by (application, client_name) (
-            rate(http_client_requests_seconds_count{application!="",status=~"5..|CLIENT_ERROR|IO_ERROR"}[5m])
+            rate(http_client_requests_seconds_count{application!="",outcome=~"SERVER_ERROR|UNKNOWN"}[5m])
           ) > 0.1
         for: 5m
         labels:
           severity: warning
         annotations:
           summary: "{{ $labels.application }}: integração {{ $labels.client_name }} com erros"
-          description: "Chamadas de saída para {{ $labels.client_name }} falhando nos últimos 5 minutos."
+          description: "Chamadas de saída para {{ $labels.client_name }} retornando 5xx ou sem resposta nos últimos 5 minutos."
 
       - alert: OutboundIntegrationSlow
         expr: |
