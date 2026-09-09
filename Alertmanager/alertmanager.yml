@@ -1,0 +1,58 @@
+# Configuração do Alertmanager.
+# Recebe os alertas "firing" do Prometheus (bloco `alerting:` em
+# prometheus_config.yml) e os transforma em mensagens no Telegram.
+#
+# Editar: alterar aqui, push, e no Portainer "Pull and redeploy" da stack
+# Alertmanager. O container recria e recarrega a config.
+
+global:
+  resolve_timeout: 5m
+
+# Árvore de roteamento: todo alerta entra pela raiz e desce até a rota mais
+# específica que casar. `continue: false` (padrão) para a busca no primeiro match.
+route:
+  receiver: telegram
+  # Agrupa alertas do mesmo tipo/serviço numa única mensagem.
+  group_by: ['alertname', 'application', 'job']
+  # Espera 30s juntando alertas novos do mesmo grupo antes do 1º envio.
+  group_wait: 30s
+  # Depois do 1º envio, espera 5min antes de mandar novidades do mesmo grupo.
+  group_interval: 5m
+  # Realerta um grupo ainda ativo a cada 4h (lembrete de que não foi resolvido).
+  repeat_interval: 4h
+
+  routes:
+    # Críticos: realerta de hora em hora enquanto estiver de pé.
+    - matchers:
+        - severity="critical"
+      receiver: telegram
+      group_wait: 10s
+      repeat_interval: 1h
+
+# Suprime ruído: se o alvo está DOWN, não faz sentido também gritar sobre
+# latência/heap/pool do mesmo alvo.
+inhibit_rules:
+  - source_matchers:
+      - alertname="TargetDown"
+    target_matchers:
+      - severity=~"warning|critical"
+    equal: ['job', 'instance']
+
+receivers:
+  - name: telegram
+    telegram_configs:
+      - send_resolved: true
+        # Token lido do Docker secret montado pelo compose.
+        bot_token_file: /run/secrets/telegram_bot_token
+        # ID do chat/grupo/canal de destino. Grupo = número negativo.
+        # Descobrir: adicione o bot ao grupo e chame
+        #   https://api.telegram.org/bot<TOKEN>/getUpdates
+        chat_id: 0   # <<< AJUSTAR antes do deploy
+        parse_mode: HTML
+        message: |
+          {{ if eq .Status "firing" }}🔴 <b>FIRING</b>{{ else }}✅ <b>RESOLVED</b>{{ end }} — {{ .CommonLabels.alertname }}
+          {{ range .Alerts }}
+          <b>{{ .Annotations.summary }}</b>
+          {{ .Annotations.description }}
+          {{ if .Labels.application }}app: <code>{{ .Labels.application }}</code>{{ end }}{{ if .Labels.instance }}  instance: <code>{{ .Labels.instance }}</code>{{ end }}
+          {{ end }}

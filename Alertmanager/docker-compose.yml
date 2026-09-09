@@ -1,0 +1,38 @@
+services:
+  alertmanager:
+    image: prom/alertmanager:latest
+    ports:
+      # UI web (silences, alertas ativos). Sem autenticação própria — deixar
+      # atrás do edge ou restrita no firewall (grupo "portas internas").
+      - "9093:9093"
+    volumes:
+      - alertmanager_data:/alertmanager
+    configs:
+      - source: alertmanager_config
+        target: /etc/alertmanager/alertmanager.yml
+    secrets:
+      # Token do bot do Telegram. Criar uma vez no servidor (não vai pro git):
+      #   printf '123456:ABC-DEF...' | docker secret create telegram_bot_token -
+      - telegram_bot_token
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+      - '--storage.path=/alertmanager'
+      # URL pública da UI, usada nos links das notificações.
+      - '--web.external-url=http://45.187.224.251:9093'
+    networks:
+      - network_swarm_public
+
+configs:
+  alertmanager_config:
+    file: ./alertmanager.yml
+
+secrets:
+  telegram_bot_token:
+    external: true
+
+volumes:
+  alertmanager_data:
+
+networks:
+  network_swarm_public:
+    external: true

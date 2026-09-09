@@ -2,7 +2,23 @@ global:
   scrape_interval: 15s
   evaluation_interval: 15s
 
+# Regras de alerta (montadas como Docker Config em /etc/prometheus/rules/).
+rule_files:
+  - /etc/prometheus/rules/alerts.yml
+
+# Para onde mandar os alertas "firing". `alertmanager` resolve via alias do
+# Swarm na rede network_swarm_public (stack Alertmanager/).
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ['alertmanager:9093']
+
 scrape_configs:
+  # O próprio Alertmanager expõe métricas Prometheus na porta 9093.
+  - job_name: 'alertmanager'
+    static_configs:
+      - targets: ['alertmanager:9093']
+
   # Prometheus se auto-monitorando (scrape do próprio processo).
   - job_name: 'prometheus'
     static_configs:

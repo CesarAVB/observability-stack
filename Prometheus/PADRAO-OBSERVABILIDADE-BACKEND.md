@@ -84,7 +84,63 @@ management.endpoint.health.show-details=${MANAGEMENT_HEALTH_SHOW_DETAILS:when_au
 management.metrics.tags.application=${spring.application.name}
 management.metrics.tags.environment=${SPRING_PROFILES_ACTIVE:production}
 management.metrics.distribution.percentiles-histogram.http.server.requests=true
+# opcional, deixa o histogram_quantile preciso e habilita painel "% dentro do SLO"
+management.metrics.distribution.slo.http.server.requests=50ms,100ms,200ms,500ms,1s,2s
+# expõe pool de threads do Tomcat (tomcat_threads_busy_threads etc.)
+server.tomcat.mbeanregistry.enabled=true
 ```
+
+---
+
+## 3b. Métricas de aplicação obrigatórias
+
+Além das que o Micrometer coleta sozinho (JVM, HikariCP, `http_server_requests`),
+toda app **deve** expor:
+
+### `http_client_requests_seconds` — chamadas de saída (integrações)
+
+O ponto cego mais comum. Só é instrumentado se os clients HTTP forem criados a
+partir dos **builders gerenciados pelo Spring**:
+
+- `RestClient` → injetar `RestClient.Builder` (não `RestClient.create()`)
+- `WebClient` → injetar `WebClient.Builder`
+- `RestTemplate` → construir via `RestTemplateBuilder`
+
+Dar um nome estável a cada cliente para virar a tag `client_name`:
+```java
+this.chatwootClient = restClientBuilder
+        .baseUrl(props.getBaseUrl())
+        .requestInterceptor(...)
+        .build();
+// e registrar um ObservationRegistry / usar .observationRegistry(...) se necessário
+```
+Resultado: `http_client_requests_seconds_count{client_name="chatwoot",status="200",...}`.
+As regras `OutboundIntegrationErrors` / `OutboundIntegrationSlow` já consomem isso.
+
+### `app_scheduled_seconds_*` — tarefas `@Scheduled`
+
+O Micrometer **não** instrumenta `@Scheduled` automaticamente. Padronizar assim:
+
+1. Registrar o aspecto uma vez:
+   ```java
+   @Bean
+   TimedAspect timedAspect(MeterRegistry registry) { return new TimedAspect(registry); }
+   ```
+2. Anotar cada método `@Scheduled`:
+   ```java
+   @Timed(value = "app.scheduled", extraTags = {"job", "limpeza-sessoes"})
+   @Scheduled(fixedDelayString = "...")
+   void limpezaSessoes() { ... }
+   ```
+
+Gera `app_scheduled_seconds_count{job="limpeza-sessoes",exception="none|<classe>"}`.
+A regra `ScheduledTaskFailing` alerta quando `exception != "none"`.
+
+### `logback_events_total`
+
+Vem de graça com Micrometer + Logback (autoconfig `LogbackMetricsAutoConfiguration`).
+Só garantir que **não** foi desabilitada (`management.metrics.enable.logback=false`
+ou exclusão do bean). A regra `HighLogErrorRate` usa `logback_events_total{level="error"}`.
 
 ---
 
@@ -208,6 +264,22 @@ ainda — primeiro me mostre o levantamento.
   `${TEMPO_OTLP_ENDPOINT:http://45.187.224.251:4318/v1/traces}`.
 - `management.tracing.sampling.probability` definido (via env, default `1.0` em
   homologação / valor menor em produção conforme volume).
+
+### 5b. Métricas de aplicação (obrigatórias)
+- **`http_client_requests_seconds`** (chamadas de saída / integrações): liste
+  cada cliente HTTP do projeto (Chatwoot, LLM, Hubsoft, Evolution, dialer, etc.)
+  e diga se é criado a partir de builder gerenciado pelo Spring
+  (`RestClient.Builder` / `WebClient.Builder` / `RestTemplateBuilder`). Se algum
+  usa `HttpClient` cru / `RestClient.create()` / `new RestTemplate()`, proponha
+  a migração para o builder e um `client_name` estável por cliente. Confirme no
+  `/actuator/prometheus` em produção se `http_client_requests_seconds_count`
+  aparece hoje.
+- **`@Scheduled`**: liste todos os métodos `@Scheduled` do projeto. Proponha
+  registrar `@Bean TimedAspect` e anotar cada um com
+  `@Timed(value="app.scheduled", extraTags={"job","<nome-curto>"})`. Confirme se
+  `app_scheduled_seconds_count` aparece no `/actuator/prometheus`.
+- **`logback_events_total`**: confirme que aparece no `/actuator/prometheus` e
+  que não há `management.metrics.enable.logback=false`.
 
 ### 6. Envs de deploy (Coolify)
 Liste quais destas estão definidas no ambiente de produção e quais faltam:
