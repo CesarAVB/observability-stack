@@ -1,0 +1,187 @@
+# Regras de alerta avaliadas pelo Prometheus (evaluation_interval: 15s).
+# Alertas "firing" são enviados ao Alertmanager (ver bloco `alerting:` em
+# prometheus_config.yml e a stack Alertmanager/).
+#
+# Convenção de severidade:
+#   critical -> algo está quebrado agora, alguém precisa agir (rota rápida no Alertmanager)
+#   warning  -> degradação / risco, pode esperar horário comercial
+#
+# Este arquivo é montado como Docker Config em /etc/prometheus/rules/alerts.yml.
+# Para editar: alterar aqui, push, e no Portainer "Pull and redeploy" da stack
+# Prometheus (o container recria e recarrega as regras).
+
+groups:
+  # ---------------------------------------------------------------------------
+  - name: targets
+    rules:
+      - alert: TargetDown
+        expr: up == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Scrape de {{ $labels.job }} ({{ $labels.instance }}) está DOWN"
+          description: >
+            O Prometheus não coleta {{ $labels.job }} há mais de 2 minutos.
+            App caída, deploy travado, ou o edge bloqueou o /actuator.
+
+      - alert: BlackboxProbeFailed
+        expr: probe_success == 0
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Probe HTTP externo falhando: {{ $labels.instance }}"
+          description: "O blackbox_exporter não consegue um 2xx em {{ $labels.instance }} há 5 minutos."
+
+      - alert: SslCertExpiringSoon
+        expr: (probe_ssl_earliest_cert_expiry - time()) / 86400 < 14
+        for: 1h
+        labels:
+          severity: warning
+        annotations:
+          summary: "Certificado TLS de {{ $labels.instance }} expira em {{ $value | printf \"%.0f\" }} dias"
+          description: "Renovar o certificado antes do vencimento."
+
+  # ---------------------------------------------------------------------------
+  - name: spring-apps
+    rules:
+      - alert: HighHttp5xxRate
+        expr: |
+          sum by (application) (rate(http_server_requests_seconds_count{status=~"5..",application!=""}[5m]))
+          /
+          sum by (application) (rate(http_server_requests_seconds_count{application!=""}[5m]))
+          > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "{{ $labels.application }}: {{ $value | humanizePercentage }} de respostas 5xx"
+          description: "Taxa de erro HTTP 5xx acima de 5% nos últimos 5 minutos."
+
+      - alert: HighHttp4xxRate
+        expr: |
+          sum by (application) (rate(http_server_requests_seconds_count{status=~"4..",application!=""}[5m]))
+          /
+          sum by (application) (rate(http_server_requests_seconds_count{application!=""}[5m]))
+          > 0.30
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "{{ $labels.application }}: {{ $value | humanizePercentage }} de respostas 4xx"
+          description: >
+            Proporção alta de 4xx por 10 minutos — quebra de contrato com o
+            frontend, auth falhando, ou rota removida.
+
+      - alert: HighApiLatencyP95
+        expr: |
+          histogram_quantile(
+            0.95,
+            sum by (application, le) (rate(http_server_requests_seconds_bucket{application!="",uri!~"/actuator.*"}[5m]))
+          ) > 2
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "{{ $labels.application }}: p95 de latência em {{ $value | printf \"%.2f\" }}s"
+          description: "95º percentil acima de 2s por 10 minutos."
+
+      - alert: JvmHeapHigh
+        expr: |
+          sum by (application) (jvm_memory_used_bytes{area="heap",application!=""})
+          /
+          sum by (application) (jvm_memory_max_bytes{area="heap",application!=""})
+          > 0.90
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "{{ $labels.application }}: heap em {{ $value | humanizePercentage }}"
+          description: "Uso de heap acima de 90% por 10 minutos — risco de OOM ou GC thrashing."
+
+      - alert: HikariPoolExhausted
+        expr: hikaricp_connections_pending{application!=""} > 0
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "{{ $labels.application }}: {{ $value }} thread(s) esperando conexão de banco"
+          description: "Pool HikariCP sem conexões livres há 5 minutos — banco lento ou pool subdimensionado."
+
+      - alert: HikariConnectionTimeouts
+        expr: increase(hikaricp_connections_timeout_total{application!=""}[10m]) > 0
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: "{{ $labels.application }}: {{ $value | printf \"%.0f\" }} timeout(s) de conexão de banco em 10 min"
+          description: "Requisições estão falhando ao obter conexão do pool."
+
+      - alert: HighLogErrorRate
+        expr: sum by (application) (rate(logback_events_total{level="error",application!=""}[5m])) > 0.2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "{{ $labels.application }}: {{ $value | printf \"%.2f\" }} logs ERROR/s"
+          description: "Taxa de log de erro elevada nos últimos 5 minutos — investigar no Loki."
+
+      - alert: AppRestarted
+        expr: (time() - process_start_time_seconds{application!=""}) < 300
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: "{{ $labels.application }} reiniciou (uptime {{ $value | humanizeDuration }})"
+          description: "Uptime abaixo de 5 minutos — deploy planejado ou crash com restart."
+
+  # ---------------------------------------------------------------------------
+  # Integrações de saída (http_client_requests_seconds). Só dispara depois que
+  # a app for instrumentada com RestClient/WebClient/RestTemplate gerenciados
+  # pelo Spring (ver PADRAO-OBSERVABILIDADE-BACKEND.md, item B).
+  - name: outbound-integrations
+    rules:
+      # `outcome` do RestClient/WebClient: SUCCESS | CLIENT_ERROR (4xx) |
+      # SERVER_ERROR (5xx) | UNKNOWN (sem resposta: timeout, conn recusada).
+      # Alertamos em SERVER_ERROR e UNKNOWN — 4xx de integração costuma ser normal.
+      - alert: OutboundIntegrationErrors
+        expr: |
+          sum by (application, client_name) (
+            rate(http_client_requests_seconds_count{application!="",outcome=~"SERVER_ERROR|UNKNOWN"}[5m])
+          ) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "{{ $labels.application }}: integração {{ $labels.client_name }} com erros"
+          description: "Chamadas de saída para {{ $labels.client_name }} retornando 5xx ou sem resposta nos últimos 5 minutos."
+
+      - alert: OutboundIntegrationSlow
+        expr: |
+          histogram_quantile(
+            0.95,
+            sum by (application, client_name, le) (rate(http_client_requests_seconds_bucket{application!=""}[5m]))
+          ) > 5
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "{{ $labels.application }}: {{ $labels.client_name }} lenta (p95 {{ $value | printf \"%.1f\" }}s)"
+          description: "95º percentil da latência de saída acima de 5s."
+
+  # ---------------------------------------------------------------------------
+  # Tarefas @Scheduled. Contrato: a app anota cada método @Scheduled com
+  # @Timed(value = "app.scheduled", extraTags = {"job", "<nome-curto>"}) e
+  # registra um bean TimedAspect. Isso gera app_scheduled_seconds_count com a
+  # tag `exception` ("none" quando OK). Ver PADRAO-OBSERVABILIDADE-BACKEND.md.
+  - name: scheduled-tasks
+    rules:
+      - alert: ScheduledTaskFailing
+        expr: increase(app_scheduled_seconds_count{application!="",exception!="none"}[15m]) > 0
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: "{{ $labels.application }}: job agendado '{{ $labels.job }}' falhou"
+          description: "Pelo menos uma execução terminou com {{ $labels.exception }} nos últimos 15 minutos."

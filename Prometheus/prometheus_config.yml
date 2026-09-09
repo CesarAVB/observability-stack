@@ -2,7 +2,23 @@ global:
   scrape_interval: 15s
   evaluation_interval: 15s
 
+# Regras de alerta (montadas como Docker Config em /etc/prometheus/rules/).
+rule_files:
+  - /etc/prometheus/rules/alerts.yml
+
+# Para onde mandar os alertas "firing". `alertmanager` resolve via alias do
+# Swarm na rede network_swarm_public (stack Alertmanager/).
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ['alertmanager:9093']
+
 scrape_configs:
+  # O próprio Alertmanager expõe métricas Prometheus na porta 9093.
+  - job_name: 'alertmanager'
+    static_configs:
+      - targets: ['alertmanager:9093']
+
   # Prometheus se auto-monitorando (scrape do próprio processo).
   - job_name: 'prometheus'
     static_configs:
@@ -42,24 +58,31 @@ scrape_configs:
       - targets: ['crm-api.redelognet.com.br']
         labels:
           app: 'lognet-crm'
-          env: 'production'
+          environment: 'production'
 
-  # App Spring Boot do ChatTalk ASB — coleta métricas via Actuator/Micrometer
-  # sobre HTTPS no endpoint público da API.
-  - job_name: 'asb-chattalk'
+  # App Spring Boot do TalkChat ASB — coleta métricas via Actuator/Micrometer
+  # sobre HTTPS no endpoint público da API. Diferente do CRM Lognet, o
+  # "/api/v1" está só nos @RequestMapping dos controllers (não é context-path),
+  # então o Actuator fica na raiz: metrics_path '/actuator/prometheus'.
+  # job_name == spring.application.name == label application do Micrometer: o
+  # seletor $app_name do dashboard usa label_values(..., application), não o job,
+  # e o painel "App UP" usa up{job="..."} (o up só carrega labels do scrape).
+  - job_name: 'talkchat-backend'
     scheme: https
     metrics_path: '/actuator/prometheus'
     tls_config:
       insecure_skip_verify: false
     static_configs:
-      - targets: ['api-chattalk.asbtelecom.com.br']
+      - targets: ['api-talkchat.asbtelecom.com.br']
         labels:
-          app: 'asb-chattalk'
-          env: 'production'
+          app: 'talkchat-backend'
+          environment: 'production'
 
-  # App Spring Boot do PBX Manager ASB — coleta métricas via Actuator/Micrometer
-  # sobre HTTPS no endpoint público da API.
-  - job_name: 'asb-pbx-manager'
+  # App Spring Boot do VoIP Manager ASB (host api-pbx) — coleta métricas via
+  # Actuator/Micrometer sobre HTTPS no endpoint público da API.
+  # job_name == spring.application.name (voipmanager-backend) pelo mesmo motivo
+  # do talkchat-backend acima. O host api-pbx serve o VoIP Manager.
+  - job_name: 'voipmanager-backend'
     scheme: https
     metrics_path: '/actuator/prometheus'
     tls_config:
@@ -67,8 +90,8 @@ scrape_configs:
     static_configs:
       - targets: ['api-pbx.asbtelecom.com.br']
         labels:
-          app: 'asb-pbx-manager'
-          env: 'production'
+          app: 'voipmanager-backend'
+          environment: 'production'
 
   # node-exporter — métricas de hardware/SO do host Linux.
   #   - srv-251: mesmo Swarm do Prometheus, scrape via DNS interno.
@@ -78,13 +101,13 @@ scrape_configs:
       - targets: ['node-exporter:9100']
         labels:
           app: 'host-linux'
-          env: 'production'
+          environment: 'production'
           server: '224.251 - VPS LOGNET'
           instance: '45.187.224.251'
       - targets: ['45.187.224.248:9100']
         labels:
           app: 'host-linux'
-          env: 'production'
+          environment: 'production'
           server: '224.248 - VPS ASB'
           instance: '45.187.224.248'
 
@@ -96,12 +119,12 @@ scrape_configs:
       - targets: ['cadvisor:8080']
         labels:
           app: 'containers'
-          env: 'production'
+          environment: 'production'
           server: '224.251 - VPS LOGNET'
           instance: '45.187.224.251'
       - targets: ['45.187.224.248:8080']
         labels:
           app: 'containers'
-          env: 'production'
+          environment: 'production'
           server: '224.248 - VPS ASB'
           instance: '45.187.224.248'

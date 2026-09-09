@@ -8,6 +8,8 @@ services:
     configs:
       - source: prometheus_config
         target: /etc/prometheus/prometheus.yml
+      - source: prometheus_rules
+        target: /etc/prometheus/rules/alerts.yml
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.retention.time=30d'
@@ -19,6 +21,8 @@ services:
 configs:
   prometheus_config:
     file: ./prometheus_config.yml
+  prometheus_rules:
+    file: ./rules/alerts.yml
 
 volumes:
   prometheus_data:
