@@ -47,7 +47,9 @@ receivers:
         # ID do chat/grupo/canal de destino. Grupo = número negativo.
         # Descobrir: adicione o bot ao grupo e chame
         #   https://api.telegram.org/bot<TOKEN>/getUpdates
-        chat_id: 0   # <<< AJUSTAR antes do deploy
+        # Grupo "Lognet - Observabilidade". Se virar supergrupo, o id muda para
+        # o formato -100xxxxxxxxxx — rodar getUpdates de novo.
+        chat_id: -5439281417
         parse_mode: HTML
         message: |
           {{ if eq .Status "firing" }}🔴 <b>FIRING</b>{{ else }}✅ <b>RESOLVED</b>{{ end }} — {{ .CommonLabels.alertname }}
