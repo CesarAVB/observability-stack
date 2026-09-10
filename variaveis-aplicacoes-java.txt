@@ -1,0 +1,5 @@
+SPRING_PROFILES_ACTIVE=production
+LOKI_URL=http://45.187.224.251:3100
+TEMPO_OTLP_ENDPOINT=http://45.187.224.251:4318/v1/traces
+MANAGEMENT_ENDPOINTS_EXPOSURE=health,info,metrics,prometheus,loggers,scheduledtasks,threaddump
+TRACING_SAMPLING_PROBABILITY=1.0
