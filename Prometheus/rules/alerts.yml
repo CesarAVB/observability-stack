@@ -177,11 +177,13 @@ groups:
   # tag `exception` ("none" quando OK). Ver PADRAO-OBSERVABILIDADE-BACKEND.md.
   - name: scheduled-tasks
     rules:
+      # A tag `job` do @Timed colide com o `job` do scrape, então o Prometheus a
+      # renomeia para `exported_job` — é ela que traz o nome da tarefa.
       - alert: ScheduledTaskFailing
         expr: increase(app_scheduled_seconds_count{application!="",exception!="none"}[15m]) > 0
         for: 0m
         labels:
           severity: warning
         annotations:
-          summary: "{{ $labels.application }}: job agendado '{{ $labels.job }}' falhou"
+          summary: "{{ $labels.application }}: tarefa agendada '{{ $labels.exported_job }}' falhou"
           description: "Pelo menos uma execução terminou com {{ $labels.exception }} nos últimos 15 minutos."

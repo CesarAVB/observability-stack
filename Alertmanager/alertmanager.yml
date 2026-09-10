@@ -51,10 +51,24 @@ receivers:
         # o formato -100xxxxxxxxxx — rodar getUpdates de novo.
         chat_id: -5439281417
         parse_mode: HTML
-        message: |
-          {{ if eq .Status "firing" }}🔴 <b>FIRING</b>{{ else }}✅ <b>RESOLVED</b>{{ end }} — {{ .CommonLabels.alertname }}
+        # Uma linha de título + um bloco por alerta do grupo. `exported_job` é o
+        # nome da tarefa @Scheduled (o Prometheus renomeia a tag `job` da métrica
+        # por colidir com o `job` do scrape).
+        message: |-
+          {{ if eq .Status "firing" }}🔴{{ else }}🟢{{ end }} <b>{{ .CommonLabels.alertname }}</b>
+          {{- with .CommonLabels.severity }} · {{ if eq . "critical" }}🚨 crítico{{ else }}⚠️ atenção{{ end }}{{ end }}
+          {{- if eq $.Status "resolved" }} · resolvido{{ end }}
+          {{- if gt (len .Alerts) 1 }} · {{ len .Alerts }}×{{ end }}
           {{ range .Alerts }}
           <b>{{ .Annotations.summary }}</b>
-          {{ .Annotations.description }}
-          {{ if .Labels.application }}app: <code>{{ .Labels.application }}</code>{{ end }}{{ if .Labels.instance }}  instance: <code>{{ .Labels.instance }}</code>{{ end }}
-          {{ end }}
+          {{- with .Annotations.description }}
+          <i>{{ . }}</i>
+          {{- end }}
+          {{ if .Labels.application }}🎯 <code>{{ .Labels.application }}</code>{{ else if .Labels.job }}🎯 <code>{{ .Labels.job }}</code>{{ end }}
+          {{- with .Labels.exported_job }}   ⏱ <code>{{ . }}</code>{{ end }}
+          {{- with .Labels.client_name }}   🔌 <code>{{ . }}</code>{{ end }}
+          {{- with .Labels.instance }}   🖥 <code>{{ . }}</code>{{ end }}
+          {{ if eq $.Status "firing" }}🕐 desde {{ .StartsAt.Local.Format "15:04" }}{{ else }}🕐 {{ .StartsAt.Local.Format "15:04" }} → {{ .EndsAt.Local.Format "15:04" }}{{ end }}
+          {{- end }}
+          {{ with .ExternalURL }}
+          <a href="{{ . }}">abrir Alertmanager</a>{{ end }}

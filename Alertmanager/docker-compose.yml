@@ -5,6 +5,9 @@ services:
       # UI web (silences, alertas ativos). Sem autenticação própria — deixar
       # atrás do edge ou restrita no firewall (grupo "portas internas").
       - "9093:9093"
+    environment:
+      # Faz .StartsAt.Local nos templates render em horário de Brasília.
+      - TZ=America/Sao_Paulo
     volumes:
       - alertmanager_data:/alertmanager
     configs:
