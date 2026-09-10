@@ -55,7 +55,7 @@ receivers:
         # nome da tarefa @Scheduled (o Prometheus renomeia a tag `job` da métrica
         # por colidir com o `job` do scrape).
         message: |-
-          {{ if eq .Status "firing" }}🔴{{ else }}🟢{{ end }} <b>{{ .CommonLabels.alertname }}</b>
+          {{ if eq .Status "firing" }}🔴{{ else }}🟢{{ end }} <b>{{ with (index .Alerts 0).Annotations.titulo }}{{ . }}{{ else }}{{ $.CommonLabels.alertname }}{{ end }}</b>
           {{- with .CommonLabels.severity }} · {{ if eq . "critical" }}🚨 crítico{{ else }}⚠️ atenção{{ end }}{{ end }}
           {{- if eq $.Status "resolved" }} · resolvido{{ end }}
           {{- if gt (len .Alerts) 1 }} · {{ len .Alerts }}×{{ end }}
