@@ -29,9 +29,9 @@ scrape_configs:
     static_configs:
       - targets: ['loki:3100']
 
-  # blackbox_exporter — probe HTTP externo no endpoint público do CRM.
-  # Usado para monitorar a saúde do Reverse Proxy/edge, que roda fora
-  # desta infra (não temos acesso direto a ele nem exporter interno).
+  # blackbox_exporter — probes HTTP externos dos endpoints públicos das apps.
+  # O label `app` liga cada probe ao seletor $app_name das dashboards. Sem esse
+  # label o painel de edge precisaria fixar uma URL e só funcionaria para uma app.
   - job_name: 'blackbox-http'
     metrics_path: /probe
     params:
@@ -39,6 +39,19 @@ scrape_configs:
     static_configs:
       - targets:
           - https://crm-api.redelognet.com.br/api/v1/actuator/health
+        labels:
+          app: 'lognet-crm'
+          environment: 'production'
+      - targets:
+          - https://api-talkchat.asbtelecom.com.br/actuator/health
+        labels:
+          app: 'talkchat-backend'
+          environment: 'production'
+      - targets:
+          - https://api-pbx.asbtelecom.com.br/actuator/health
+        labels:
+          app: 'voipmanager-backend'
+          environment: 'production'
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target

@@ -5,6 +5,7 @@ Dashboards prontos para importar, cobrindo aplicação, host, containers e logs 
 | Arquivo | Fonte de dados | O que mostra |
 |---|---|---|
 | `aplicacao-spring-boot.json` | Prometheus + Loki | Aplicação Spring Boot: JVM, HTTP, latência, erros, logs, conexões de DB |
+| `aplicacao-spring-boot-operations.json` | Prometheus + Loki | Novo cockpit operacional: HTTP 4xx/5xx, integrações, jobs agendados, GC, threads, file descriptors, HikariCP e logs |
 | `server-linux.json` | Prometheus (node-exporter) | Host Linux: CPU, memória, disco, rede, load |
 | `docker-containers.json` | Prometheus (cAdvisor) | Por container Docker: CPU, memória, rede, I/O |
 | `cgnat-wifi-publico.json` | VictoriaLogs | Consulta e análise de logs CGNAT |
@@ -48,7 +49,57 @@ Os dashboards de host e containers usam apenas painéis nativos (Time Series, Ba
 
 ## Dashboard de Aplicação (Spring Boot)
 
-### Estrutura
+### Novo visual operacional
+
+`aplicacao-spring-boot-operations.json` é a evolução da dashboard original. O
+arquivo antigo foi preservado para permitir comparação e rollback. O novo
+dashboard usa exclusivamente o plugin **HTML Graphics**, inclusive para os
+gráficos SVG, rankings, KPIs, seletor de aplicação e tabela de logs. A
+investigação é organizada em blocos: visão geral, tráfego HTTP, integrações de
+saída, jobs agendados, JVM, banco de dados e logs.
+
+O seletor HTML no cabeçalho é preenchido automaticamente pela consulta
+`up{app!="",job!~"node-exporter|cadvisor"}`. Para uma nova aplicação aparecer,
+basta o respectivo target do Prometheus possuir o label `app`; não há lista de
+aplicações fixa dentro da dashboard.
+
+O status externo usa `probe_success{job="blackbox-http",app="$app_name"}`. Por
+isso, cada target do job `blackbox-http` em `Prometheus/prometheus_config.yml`
+precisa carregar o mesmo label `app` usado pela aplicação.
+
+O cartão **Última execução (aprox.)** detecta mudanças no contador
+`app_scheduled_seconds_count` em janelas de um minuto. Para registrar o instante
+exato, a aplicação deverá expor no futuro uma gauge dedicada, por exemplo
+`app_scheduled_last_success_timestamp_seconds{exported_job="..."}`.
+
+Os percentis p95 de integrações e jobs dependem das séries `_bucket`. Se elas
+não aparecerem, habilite histogramas Micrometer para `http.client.requests` e
+`app.scheduled`. O painel de jobs usa a média como fallback; contagem e falhas
+continuam disponíveis sem histogramas. As propriedades esperadas são:
+
+```properties
+management.metrics.distribution.percentiles-histogram.http.client.requests=true
+management.metrics.distribution.percentiles-histogram.app.scheduled=true
+```
+
+#### Melhorias futuras identificadas
+
+1. **Instrumentar os clients HTTP de saída.** No estado atual, nenhuma das três
+   aplicações publica `http_client_requests_seconds_*`; por isso a seção de
+   integrações ficará vazia até os clients serem criados pelos builders do
+   Spring e associados a um `client_name` estável.
+2. **Publicar o timestamp real dos jobs.** Adicionar gauges de última execução
+   com sucesso e última falha elimina a aproximação feita a partir do contador.
+3. **Completar a visão Blackbox.** Acrescentar duração do probe, status HTTP e
+   validade do certificado TLS, além do `probe_success` já exibido.
+4. **Criar SLOs por aplicação.** Gravar disponibilidade, erro e latência em
+   regras de recording e mostrar burn rate de orçamento de erro em 1h/6h/24h.
+5. **Ligar métricas a traces e deploys.** Habilitar exemplars para abrir traces
+   do Tempo a partir dos gráficos de latência e anotar deploys/restarts.
+6. **Controlar cardinalidade.** Manter `uri`, `client_name` e `exported_job`
+   estáveis e sem IDs de usuário, telefone, UUID ou outros valores dinâmicos.
+
+### Estrutura da dashboard original
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -96,9 +147,9 @@ Os dashboards de host e containers usam apenas painéis nativos (Time Series, Ba
 
 ### Variável de Template
 
-O dashboard expõe a variável `$app_name`, populada via `label_values(http_server_requests_seconds_count, application)` e filtrada pelo regex `lognet.*`. Use o seletor **Aplicação** no topo para escolher o serviço — os painéis Prometheus **e** o painel de logs Loki (`{app="$app_name"}`) acompanham a seleção.
+O dashboard expõe a variável `$app_name`, populada via `label_values(http_server_requests_seconds_count, application)` e aceita todas as aplicações encontradas. Use o seletor **Aplicação** no topo para escolher o serviço — os painéis Prometheus **e** o painel de logs Loki (`{app="$app_name"}`) acompanham a seleção.
 
-> Isso pressupõe que o label `app` no Loki use o mesmo valor que o label `application` no Prometheus (convenção do `logback-spring.xml`). Para listar outras aplicações no seletor, ajuste o regex da variável `app_name` (atualmente `lognet.*`).
+> Isso pressupõe que o label `app` no Loki use o mesmo valor que o label `application` no Prometheus (convenção do `logback-spring.xml`). Se precisar limitar a lista, ajuste o regex da variável `app_name`.
 
 ### Personalização
 
