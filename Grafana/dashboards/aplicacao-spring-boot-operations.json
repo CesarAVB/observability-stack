@@ -1,0 +1,1602 @@
+{
+  "annotations": [
+    {
+      "kind": "AnnotationQuery",
+      "spec": {
+        "builtIn": true,
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "query": {
+          "datasource": {
+            "name": "-- Grafana --"
+          },
+          "group": "grafana",
+          "kind": "DataQuery",
+          "spec": {},
+          "version": "v0"
+        }
+      }
+    }
+  ],
+  "cursorSync": "Crosshair",
+  "description": "Cockpit HTML Graphics para aplicações Spring Boot: disponibilidade, HTTP, integrações, jobs, JVM, HikariCP e logs.",
+  "editable": true,
+  "elements": {
+    "panel-1": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "max by (app) (up{app!=\"\",job!~\"node-exporter|cadvisor\"})",
+                      "instant": true,
+                      "legendFormat": "{{app}}",
+                      "range": false
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 1,
+        "links": [],
+        "title": "",
+        "transparent": true,
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": false,
+              "codeData": "{}",
+              "css": "\n:host,:root{--bg:#0b1119;--panel:#111a26;--panel2:#0e1621;--line:#223247;--text:#f7fafc;--muted:#8fa1b7;--orange:#f97316;--cyan:#38bdf8;--green:#22c55e;--yellow:#f59e0b;--red:#ef4444;--purple:#a78bfa;font-family:Inter,\"Segoe UI\",system-ui,sans-serif}html,body{margin:0;width:100%;height:100%;background:transparent}\n*{box-sizing:border-box}.shell{width:100%;height:100%;overflow:hidden;border-radius:14px;background:radial-gradient(circle at 0 0,rgba(56,189,248,.06),transparent 28%),linear-gradient(145deg,#101925,#0b1119);border:1px solid rgba(148,163,184,.14);color:var(--text)}\n.section{height:100%;display:flex;flex-direction:column;padding:18px 20px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:15px;flex:0 0 auto}.section-kicker{font-size:10px;font-weight:800;letter-spacing:.15em;color:var(--orange);text-transform:uppercase}.section-title{font-size:18px;font-weight:750;letter-spacing:-.02em;margin-top:3px}.section-sub{font-size:11px;color:var(--muted);text-align:right}.grid{display:grid;gap:12px;min-height:0;flex:1}.card{position:relative;min-width:0;min-height:0;border-radius:11px;background:linear-gradient(145deg,rgba(22,33,48,.96),rgba(13,21,32,.96));border:1px solid rgba(148,163,184,.12);overflow:hidden}.card:before{content:\"\";position:absolute;inset:0 auto 0 0;width:2px;background:var(--accent,var(--cyan));opacity:.9}.card-inner{height:100%;padding:14px 15px}.label{font-size:10px;font-weight:750;letter-spacing:.09em;color:var(--muted);text-transform:uppercase}.value{font-size:26px;font-weight:780;letter-spacing:-.04em;margin-top:8px}.meta{font-size:10px;color:var(--muted);margin-top:5px}.status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;background:currentColor;box-shadow:0 0 10px currentColor}.ok{color:var(--green)}.warn{color:var(--yellow)}.bad{color:var(--red)}.neutral{color:var(--cyan)}.empty{height:100%;display:grid;place-items:center;text-align:center;padding:22px;color:#708197;font-size:11px}.empty b{display:block;color:#aab8c9;font-size:12px;margin-bottom:4px}.chart-card{display:flex;flex-direction:column}.chart-title{font-size:12px;font-weight:700;color:#dce6f3;margin-bottom:8px}.chart-canvas{flex:1;min-height:0}.chart-canvas svg{width:100%;height:100%;display:block}.legend{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:7px;max-height:34px;overflow:hidden}.legend-item{display:flex;align-items:center;gap:5px;font-size:9px;color:var(--muted);min-width:0}.legend-dot{width:7px;height:7px;border-radius:50%;flex:0 0 auto}.legend-name{max-width:170px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rank{display:flex;flex-direction:column;gap:7px;height:100%;overflow:auto;padding-right:3px}.rank-row{display:grid;grid-template-columns:minmax(90px,1fr) minmax(70px,2fr) auto;align-items:center;gap:9px;font-size:10px}.rank-name{color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rank-track{height:6px;border-radius:9px;background:#1b2a3c;overflow:hidden}.rank-fill{height:100%;border-radius:9px;background:linear-gradient(90deg,var(--accent,var(--cyan)),color-mix(in srgb,var(--accent,var(--cyan)) 55%,white));min-width:2px}.rank-val{font-variant-numeric:tabular-nums;color:#e7eef8;font-weight:700}.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:999px;background:rgba(56,189,248,.09);border:1px solid rgba(56,189,248,.2);font-size:9px;color:#9bdcff;font-weight:700}.scroll{scrollbar-width:thin;scrollbar-color:#2b3b50 transparent}@media(max-width:900px){.section{padding:14px}.section-sub{display:none}.grid{gap:8px}.value{font-size:21px}}\n\nhtml,body{margin:0;width:100%;height:100%;background:transparent}.header-shell{height:100%;display:flex;align-items:center;justify-content:space-between;gap:22px;padding:18px 24px;border-radius:14px;background:radial-gradient(circle at 78% -40%,rgba(56,189,248,.22),transparent 40%),linear-gradient(115deg,#101a28,#0b1119 65%);border:1px solid rgba(148,163,184,.16);box-shadow:inset 4px 0 0 var(--orange);color:var(--text)}.brand{display:flex;align-items:center;gap:17px;min-width:0}.brand-mark{width:68px;height:52px;display:grid;place-content:center;border-radius:11px;background:linear-gradient(145deg,#fb923c,#ea580c);box-shadow:0 10px 28px rgba(249,115,22,.2);font-weight:900;font-size:17px;line-height:.78;color:#fff}.brand-mark span{display:block}.eyebrow{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#7dd3fc;font-weight:800}h1{font-size:22px;line-height:1.1;margin:5px 0 0;letter-spacing:-.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}p{font-size:11px;color:var(--muted);margin:5px 0 0}.header-side{display:flex;align-items:flex-end;flex-direction:column;gap:10px}.app-switch{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.app-btn{border:1px solid #26384e;background:#111b28;color:#91a4bb;border-radius:8px;padding:6px 10px;font-size:9px;font-weight:750;cursor:pointer}.app-btn:hover{color:#fff;border-color:#3b526d}.app-btn.active{background:rgba(249,115,22,.13);border-color:rgba(249,115,22,.55);color:#fdba74}.fresh{display:flex;align-items:center;gap:7px;font-size:9px;color:#7f91a7}.fresh i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 9px var(--green);animation:pulse 2s infinite}@keyframes pulse{50%{opacity:.35}}@media(max-width:850px){.header-shell{padding:14px}.brand-mark{display:none}p{display:none}.header-side{align-items:flex-end}.app-btn{padding:5px 7px}}\n.app-picker{display:grid;grid-template-columns:auto minmax(190px,260px);align-items:center;gap:9px;padding:6px 8px 6px 11px;border-radius:10px;background:rgba(7,14,24,.6);border:1px solid #26384e}.app-picker>span{font-size:8px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:#7f91a7}.app-picker select{width:100%;height:30px;padding:0 30px 0 10px;border:1px solid rgba(249,115,22,.45);border-radius:7px;background:#111b28;color:#fdba74;font:700 10px Inter,\"Segoe UI\",sans-serif;outline:none;cursor:pointer}.app-picker select:hover,.app-picker select:focus{border-color:#f97316;box-shadow:0 0 0 2px rgba(249,115,22,.12)}@media(max-width:760px){.app-picker{grid-template-columns:1fr}.app-picker>span{display:none}.app-picker select{min-width:160px}}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class=\"header-shell\"><div class=\"brand\"><div class=\"brand-mark\"><span>LOG</span><span>NET</span></div><div><div class=\"eyebrow\">Observabilidade · aplicações</div><h1 id=\"header-app\">Spring Boot Operations</h1><p>Disponibilidade, desempenho e dependências em uma única visão operacional.</p></div></div><div class=\"header-side\"><label class=\"app-picker\"><span>Aplicação monitorada</span><select id=\"app-select\" aria-label=\"Selecionar aplicação\"><option>Carregando aplicações...</option></select></label><div class=\"fresh\"><i></i><span id=\"fresh-time\">Atualizando</span></div></div></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "(function(){\ntry{\n  function valuesToArray(values){\n    if(!values)return[];\n    if(Array.isArray(values))return values;\n    if(typeof values.toArray==='function')return values.toArray();\n    var out=[];\n    for(var i=0;i<(values.length||0);i++)out.push(typeof values.get==='function'?values.get(i):values[i]);\n    return out;\n  }\n  function clean(value){return String(value==null?'':value).replace(/[&<>\"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',\"'\":'&#39;'}[c]});}\n  var current=typeof getTemplateSrv==='function'?getTemplateSrv().replace('$app_name'):'';\n  var names=[];\n  ((data&&data.series)||[]).forEach(function(frame){\n    if(frame.refId!=='A')return;\n    var fields=frame.fields||[];\n    for(var i=0;i<fields.length;i++){\n      var labels=fields[i].labels||{};\n      if(labels.app)names.push(String(labels.app));\n    }\n  });\n  if(typeof getTemplateSrv==='function'){\n    var variable=(getTemplateSrv().getVariables()||[]).find(function(item){return item.name==='app_name'});\n    ((variable&&variable.options)||[]).forEach(function(option){\n      if(option&&option.value&&option.value!=='$__all')names.push(String(option.value));\n    });\n  }\n  if(current&&current.indexOf('$')!==0)names.push(current);\n  names=names.filter(Boolean).filter(function(name,index,list){return list.indexOf(name)===index}).sort();\n  var title=htmlNode.querySelector('#header-app');\n  if(title)title.textContent=current||'Spring Boot Operations';\n  var select=htmlNode.querySelector('#app-select');\n  if(select){\n    if(names.length){\n      select.innerHTML=names.map(function(name){return'<option value=\"'+clean(name)+'\" '+(name===current?'selected':'')+'>'+clean(name)+'</option>'}).join('');\n      select.onchange=function(){\n        var url=new URL(window.location.href);\n        url.searchParams.set('var-app_name',select.value);\n        window.location.assign(url.toString());\n      };\n    }else{\n      select.innerHTML='<option value=\"\">Nenhuma aplicação encontrada</option>';\n      select.disabled=true;\n    }\n  }\n  var fresh=htmlNode.querySelector('#fresh-time'),now=new Date();\n  if(fresh)fresh.textContent='Atualizado '+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');\n}catch(error){}\n})();",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-2": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "min(up{job=\"$app_name\"})",
+                      "instant": true,
+                      "legendFormat": "",
+                      "range": false
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "max(probe_success{job=\"blackbox-http\",app=\"$app_name\"})",
+                      "instant": true,
+                      "legendFormat": "",
+                      "range": false
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "B"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "sum(rate(http_server_requests_seconds_count{application=\"$app_name\",uri!~\"/actuator.*\"}[5m]))",
+                      "instant": false,
+                      "legendFormat": "",
+                      "range": true
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "C"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "100 * (sum(rate(http_server_requests_seconds_count{application=\"$app_name\",status=~\"4..\",uri!~\"/actuator.*\"}[5m])) or vector(0)) / clamp_min(sum(rate(http_server_requests_seconds_count{application=\"$app_name\",uri!~\"/actuator.*\"}[5m])), 1e-9)",
+                      "instant": false,
+                      "legendFormat": "",
+                      "range": true
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "D"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "100 * (sum(rate(http_server_requests_seconds_count{application=\"$app_name\",status=~\"5..\",uri!~\"/actuator.*\"}[5m])) or vector(0)) / clamp_min(sum(rate(http_server_requests_seconds_count{application=\"$app_name\",uri!~\"/actuator.*\"}[5m])), 1e-9)",
+                      "instant": false,
+                      "legendFormat": "",
+                      "range": true
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "E"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "histogram_quantile(0.95, sum by (le) (rate(http_server_requests_seconds_bucket{application=\"$app_name\",uri!~\"/actuator.*\"}[5m]))) * 1000",
+                      "instant": false,
+                      "legendFormat": "",
+                      "range": true
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "F"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "sum(rate(logback_events_total{application=\"$app_name\",level=\"error\"}[5m]))",
+                      "instant": false,
+                      "legendFormat": "",
+                      "range": true
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "G"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "max(process_uptime_seconds{application=\"$app_name\"})",
+                      "instant": true,
+                      "legendFormat": "",
+                      "range": false
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "H"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 2,
+        "links": [],
+        "title": "",
+        "transparent": true,
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": false,
+              "codeData": "{}",
+              "css": "\n:host,:root{--bg:#0b1119;--panel:#111a26;--panel2:#0e1621;--line:#223247;--text:#f7fafc;--muted:#8fa1b7;--orange:#f97316;--cyan:#38bdf8;--green:#22c55e;--yellow:#f59e0b;--red:#ef4444;--purple:#a78bfa;font-family:Inter,\"Segoe UI\",system-ui,sans-serif}html,body{margin:0;width:100%;height:100%;background:transparent}\n*{box-sizing:border-box}.shell{width:100%;height:100%;overflow:hidden;border-radius:14px;background:radial-gradient(circle at 0 0,rgba(56,189,248,.06),transparent 28%),linear-gradient(145deg,#101925,#0b1119);border:1px solid rgba(148,163,184,.14);color:var(--text)}\n.section{height:100%;display:flex;flex-direction:column;padding:18px 20px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:15px;flex:0 0 auto}.section-kicker{font-size:10px;font-weight:800;letter-spacing:.15em;color:var(--orange);text-transform:uppercase}.section-title{font-size:18px;font-weight:750;letter-spacing:-.02em;margin-top:3px}.section-sub{font-size:11px;color:var(--muted);text-align:right}.grid{display:grid;gap:12px;min-height:0;flex:1}.card{position:relative;min-width:0;min-height:0;border-radius:11px;background:linear-gradient(145deg,rgba(22,33,48,.96),rgba(13,21,32,.96));border:1px solid rgba(148,163,184,.12);overflow:hidden}.card:before{content:\"\";position:absolute;inset:0 auto 0 0;width:2px;background:var(--accent,var(--cyan));opacity:.9}.card-inner{height:100%;padding:14px 15px}.label{font-size:10px;font-weight:750;letter-spacing:.09em;color:var(--muted);text-transform:uppercase}.value{font-size:26px;font-weight:780;letter-spacing:-.04em;margin-top:8px}.meta{font-size:10px;color:var(--muted);margin-top:5px}.status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;background:currentColor;box-shadow:0 0 10px currentColor}.ok{color:var(--green)}.warn{color:var(--yellow)}.bad{color:var(--red)}.neutral{color:var(--cyan)}.empty{height:100%;display:grid;place-items:center;text-align:center;padding:22px;color:#708197;font-size:11px}.empty b{display:block;color:#aab8c9;font-size:12px;margin-bottom:4px}.chart-card{display:flex;flex-direction:column}.chart-title{font-size:12px;font-weight:700;color:#dce6f3;margin-bottom:8px}.chart-canvas{flex:1;min-height:0}.chart-canvas svg{width:100%;height:100%;display:block}.legend{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:7px;max-height:34px;overflow:hidden}.legend-item{display:flex;align-items:center;gap:5px;font-size:9px;color:var(--muted);min-width:0}.legend-dot{width:7px;height:7px;border-radius:50%;flex:0 0 auto}.legend-name{max-width:170px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rank{display:flex;flex-direction:column;gap:7px;height:100%;overflow:auto;padding-right:3px}.rank-row{display:grid;grid-template-columns:minmax(90px,1fr) minmax(70px,2fr) auto;align-items:center;gap:9px;font-size:10px}.rank-name{color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rank-track{height:6px;border-radius:9px;background:#1b2a3c;overflow:hidden}.rank-fill{height:100%;border-radius:9px;background:linear-gradient(90deg,var(--accent,var(--cyan)),color-mix(in srgb,var(--accent,var(--cyan)) 55%,white));min-width:2px}.rank-val{font-variant-numeric:tabular-nums;color:#e7eef8;font-weight:700}.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:999px;background:rgba(56,189,248,.09);border:1px solid rgba(56,189,248,.2);font-size:9px;color:#9bdcff;font-weight:700}.scroll{scrollbar-width:thin;scrollbar-color:#2b3b50 transparent}@media(max-width:900px){.section{padding:14px}.section-sub{display:none}.grid{gap:8px}.value{font-size:21px}}\n.kpi-grid{grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,1fr)}.kpi-grid .card{--accent:#38bdf8}.kpi-grid .value{font-size:23px}@media(max-width:900px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}\n.info-btn{display:inline-grid;place-items:center;width:13px;height:13px;margin-left:6px;padding:0;border:1px solid currentColor;border-radius:50%;background:transparent;color:inherit;opacity:.45;font:700 8px/1 Inter,sans-serif;text-transform:none;letter-spacing:0;cursor:help;vertical-align:middle;flex:0 0 auto}.info-btn:hover{opacity:1}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class=\"shell\"><section class=\"section\"><header class=\"section-head\"><div><div class=\"section-kicker\">01 · Visão geral</div><div class=\"section-title\">Pulso da aplicação</div></div><div class=\"section-sub\">Janela móvel de 5 minutos · atualização automática</div></header><div class=\"grid kpi-grid\"><article class=\"card\" id=\"k-app\"><div class=\"card-inner\"><div class=\"label\">Aplicação<span class=\"info-btn\" title=\"Resultado do scrape do Prometheus em /actuator/prometheus. ONLINE = a aplicação respondeu na última coleta (a cada 15s).\">i</span></div><div class=\"value\" id=\"v-app\">--</div><div class=\"meta\">Scrape Prometheus</div></div></article><article class=\"card\" id=\"k-edge\"><div class=\"card-inner\"><div class=\"label\">Edge HTTP<span class=\"info-btn\" title=\"Sonda HTTP externa (blackbox_exporter) no endpoint público da API — verifica se o proxy/edge responde 2xx. Mostra SEM DADO enquanto não houver alvo blackbox com label app para esta aplicação.\">i</span></div><div class=\"value\" id=\"v-edge\">--</div><div class=\"meta\">Blackbox externo</div></div></article><article class=\"card\" style=\"--accent:#38bdf8\"><div class=\"card-inner\"><div class=\"label\">Tráfego<span class=\"info-btn\" title=\"Requisições HTTP por segundo recebidas pela aplicação (média móvel de 5 min), excluindo os endpoints /actuator.\">i</span></div><div class=\"value neutral\" id=\"v-rate\">--</div><div class=\"meta\">requisições por segundo</div></div></article><article class=\"card\" id=\"k-4xx\"><div class=\"card-inner\"><div class=\"label\">HTTP 4xx<span class=\"info-btn\" title=\"Percentual de respostas com status 4xx nos últimos 5 min. Erro do cliente: validação, autenticação ou rota inexistente.\">i</span></div><div class=\"value\" id=\"v-4xx\">--</div><div class=\"meta\">percentual de respostas</div></div></article><article class=\"card\" id=\"k-5xx\"><div class=\"card-inner\"><div class=\"label\">HTTP 5xx<span class=\"info-btn\" title=\"Percentual de respostas com status 5xx nos últimos 5 min. Erro do servidor: exceção não tratada ou dependência indisponível.\">i</span></div><div class=\"value\" id=\"v-5xx\">--</div><div class=\"meta\">percentual de respostas</div></div></article><article class=\"card\" id=\"k-p95\"><div class=\"card-inner\"><div class=\"label\">Latência p95<span class=\"info-btn\" title=\"Percentil 95 do tempo de resposta HTTP nos últimos 5 min — 95% das requisições foram mais rápidas que esse valor.\">i</span></div><div class=\"value\" id=\"v-p95\">--</div><div class=\"meta\">requisições HTTP</div></div></article><article class=\"card\" id=\"k-logs\"><div class=\"card-inner\"><div class=\"label\">Logs ERROR<span class=\"info-btn\" title=\"Eventos de log no nível ERROR por segundo (logback_events_total), média de 5 min. Veja o conteúdo no painel de logs abaixo.\">i</span></div><div class=\"value\" id=\"v-logs\">--</div><div class=\"meta\">eventos por segundo</div></div></article><article class=\"card\" style=\"--accent:#a78bfa\"><div class=\"card-inner\"><div class=\"label\">Uptime<span class=\"info-btn\" title=\"Tempo desde o último start do processo (process_uptime_seconds). Valor baixo indica deploy ou reinício recente.\">i</span></div><div class=\"value\" style=\"color:#c4b5fd\" id=\"v-uptime\">--</div><div class=\"meta\">desde o último restart</div></div></article></div></section></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "\nfunction arr(values){if(!values)return[];if(Array.isArray(values))return values;if(typeof values.toArray==='function')return values.toArray();var out=[];for(var i=0;i<(values.length||0);i++)out.push(typeof values.get==='function'?values.get(i):values[i]);return out}\nfunction numField(frame){var fs=(frame&&frame.fields)||[];for(var i=0;i<fs.length;i++){if(fs[i].type==='number'||fs[i].name==='Value'||fs[i].name==='value')return fs[i]}return fs.length>1?fs[1]:fs[0]}\nfunction timeField(frame){var fs=(frame&&frame.fields)||[];for(var i=0;i<fs.length;i++){if(fs[i].type==='time'||fs[i].name==='Time'||fs[i].name==='time')return fs[i]}return fs[0]}\nfunction frames(ref){return((data&&data.series)||[]).filter(function(f){return f.refId===ref})}\nfunction last(ref){var fs=frames(ref);for(var i=0;i<fs.length;i++){var f=numField(fs[i]),vs=arr(f&&f.values);for(var j=vs.length-1;j>=0;j--){var n=Number(vs[j]);if(Number.isFinite(n))return n}}return null}\nfunction labelOf(frame,key,fallback){var f=numField(frame),ls=(f&&f.labels)||{};if(key&&ls[key]!=null)return String(ls[key]);if(frame&&frame.name)return String(frame.name);if(f&&f.config&&f.config.displayNameFromDS)return String(f.config.displayNameFromDS);return fallback||'série'}\nfunction esc(s){return String(s==null?'':s).replace(/[&<>\"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',\"'\":'&#39;'}[c]})}\nfunction fmt(n,d){if(!Number.isFinite(n))return'--';return n.toLocaleString('pt-BR',{maximumFractionDigits:d==null?2:d})}\nfunction pct(n){return Number.isFinite(n)?fmt(n,2)+'%':'--'}\nfunction ms(n){return Number.isFinite(n)?fmt(n,n>=100?0:1)+' ms':'--'}\nfunction rate(n){return Number.isFinite(n)?fmt(n,2)+'/s':'--'}\nfunction dur(n){if(!Number.isFinite(n))return'--';n=Math.max(0,n);if(n<60)return Math.round(n)+'s';if(n<3600)return Math.floor(n/60)+'m '+Math.round(n%60)+'s';if(n<86400)return Math.floor(n/3600)+'h '+Math.round((n%3600)/60)+'m';return Math.floor(n/86400)+'d '+Math.round((n%86400)/3600)+'h'}\nvar palette=['#38bdf8','#f97316','#22c55e','#a78bfa','#f59e0b','#ef4444','#2dd4bf','#fb7185','#60a5fa','#c084fc'];\nfunction emptyHtml(title,sub){return'<div class=\"empty\"><div><b>'+esc(title)+'</b>'+esc(sub||'')+'</div></div>'}\nfunction drawLines(id,ref,key,unitFn){var host=htmlNode.querySelector('#'+id);if(!host)return;var fs=frames(ref),series=[];fs.forEach(function(frame,idx){var vf=numField(frame),tf=timeField(frame),ys=arr(vf&&vf.values).map(Number),xs=arr(tf&&tf.values).map(Number);var pts=[];for(var i=0;i<ys.length;i++){if(Number.isFinite(ys[i]))pts.push({x:Number.isFinite(xs[i])?xs[i]:i,y:ys[i]})}if(pts.length)series.push({name:labelOf(frame,key,'Série '+(idx+1)),pts:pts,color:palette[idx%palette.length]})});if(!series.length){host.innerHTML=emptyHtml('Sem dados','A métrica ainda não foi publicada para esta aplicação.');return}var all=[];series.forEach(function(s){all=all.concat(s.pts)});var xmin=Math.min.apply(null,all.map(function(p){return p.x})),xmax=Math.max.apply(null,all.map(function(p){return p.x})),ymax=Math.max.apply(null,all.map(function(p){return p.y}));if(xmax===xmin)xmax=xmin+1;if(!Number.isFinite(ymax)||ymax<=0)ymax=1;var W=760,H=190,L=34,R=10,T=10,B=23;var sx=function(x){return L+(x-xmin)/(xmax-xmin)*(W-L-R)},sy=function(y){return T+(1-y/ymax)*(H-T-B)};var grid='';for(var g=0;g<4;g++){var gy=T+g*(H-T-B)/3;grid+='<line x1=\"'+L+'\" y1=\"'+gy+'\" x2=\"'+(W-R)+'\" y2=\"'+gy+'\" stroke=\"#203044\" stroke-width=\"1\"/><text x=\"'+(L-5)+'\" y=\"'+(gy+3)+'\" text-anchor=\"end\" fill=\"#62748a\" font-size=\"8\">'+esc(unitFn?unitFn(ymax*(1-g/3)):fmt(ymax*(1-g/3),1))+'</text>'}var paths='';series.forEach(function(s){var d=s.pts.map(function(p,i){return(i?'L':'M')+sx(p.x).toFixed(1)+' '+sy(p.y).toFixed(1)}).join(' ');paths+='<path d=\"'+d+'\" fill=\"none\" stroke=\"'+s.color+'\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\"/>'});var legend='<div class=\"legend\">'+series.slice(0,10).map(function(s){var v=s.pts[s.pts.length-1].y;return'<div class=\"legend-item\"><i class=\"legend-dot\" style=\"background:'+s.color+'\"></i><span class=\"legend-name\">'+esc(s.name)+'</span><b>'+esc(unitFn?unitFn(v):fmt(v,2))+'</b></div>'}).join('')+'</div>';host.innerHTML='<svg viewBox=\"0 0 '+W+' '+H+'\" preserveAspectRatio=\"none\" aria-label=\"gráfico\"><defs><linearGradient id=\"fade-'+id+'\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#38bdf8\" stop-opacity=\".16\"/><stop offset=\"1\" stop-color=\"#38bdf8\" stop-opacity=\"0\"/></linearGradient></defs>'+grid+paths+'</svg>'+legend}\nfunction drawRank(id,ref,key,unitFn,accent){var host=htmlNode.querySelector('#'+id);if(!host)return;var rows=[];frames(ref).forEach(function(frame,idx){var f=numField(frame),vs=arr(f&&f.values),n=null;for(var i=vs.length-1;i>=0;i--){var v=Number(vs[i]);if(Number.isFinite(v)){n=v;break}}if(n!=null)rows.push({name:labelOf(frame,key,'Item '+(idx+1)),value:n})});rows.sort(function(a,b){return b.value-a.value});if(!rows.length){host.innerHTML=emptyHtml('Sem dados','Nenhuma série encontrada no período.');return}var max=Math.max.apply(null,rows.map(function(r){return Math.abs(r.value)}))||1;host.innerHTML='<div class=\"rank scroll\">'+rows.slice(0,14).map(function(r){var w=Math.max(1,Math.abs(r.value)/max*100);return'<div class=\"rank-row\" title=\"'+esc(r.name)+'\"><span class=\"rank-name\">'+esc(r.name)+'</span><span class=\"rank-track\"><i class=\"rank-fill\" style=\"width:'+w+'%;--accent:'+(accent||'#38bdf8')+'\"></i></span><span class=\"rank-val\">'+esc(unitFn?unitFn(r.value):fmt(r.value,2))+'</span></div>'}).join('')+'</div>'}\n(function(){try{function put(id,text,cls){var e=htmlNode.querySelector('#'+id);if(e){e.textContent=text;e.className='value '+(cls||'')}}function state(cardId,value,okText,badText){var c=htmlNode.querySelector('#'+cardId);var good=value===1;if(c)c.style.setProperty('--accent',good?'#22c55e':'#ef4444');return'<span class=\"status-dot\"></span>'+(good?okText:badText)}var a=last('A'),b=last('B'),c=last('C'),d=last('D'),e=last('E'),f=last('F'),g=last('G'),h=last('H');put('v-app',a===1?'● ONLINE':a===0?'● OFFLINE':'SEM DADO',a===1?'ok':a===0?'bad':'warn');put('v-edge',b===1?'● OK':b===0?'● FALHA':'SEM DADO',b===1?'ok':b===0?'bad':'warn');put('v-rate',rate(c),'neutral');put('v-4xx',pct(d),d>=15?'bad':d>=5?'warn':'ok');put('v-5xx',pct(e),e>=2?'bad':e>=.5?'warn':'ok');put('v-p95',ms(f),f>=1000?'bad':f>=500?'warn':'ok');put('v-logs',rate(g),g>=.2?'bad':g>=.05?'warn':'ok');put('v-uptime',dur(h),'')}catch(e){}})();",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-3": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "sum by (status) (rate(http_server_requests_seconds_count{application=\"$app_name\",uri!~\"/actuator.*\"}[$__rate_interval]))",
+                      "instant": false,
+                      "legendFormat": "",
+                      "range": true
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "topk(10, histogram_quantile(0.95, sum by (le, uri) (rate(http_server_requests_seconds_bucket{application=\"$app_name\",uri!~\"/actuator.*\",uri!=\"UNKNOWN\"}[$__rate_interval]))) * 1000)",
+                      "instant": false,
+                      "legendFormat": "",
+                      "range": true
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "B"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "topk(12, sum by (uri) (increase(http_server_requests_seconds_count{application=\"$app_name\",uri!~\"/actuator.*\",uri!=\"UNKNOWN\"}[$__range])))",
+                      "instant": true,
+                      "legendFormat": "",
+                      "range": false
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "C"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 3,
+        "links": [],
+        "title": "",
+        "transparent": true,
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": false,
+              "codeData": "{}",
+              "css": "\n:host,:root{--bg:#0b1119;--panel:#111a26;--panel2:#0e1621;--line:#223247;--text:#f7fafc;--muted:#8fa1b7;--orange:#f97316;--cyan:#38bdf8;--green:#22c55e;--yellow:#f59e0b;--red:#ef4444;--purple:#a78bfa;font-family:Inter,\"Segoe UI\",system-ui,sans-serif}html,body{margin:0;width:100%;height:100%;background:transparent}\n*{box-sizing:border-box}.shell{width:100%;height:100%;overflow:hidden;border-radius:14px;background:radial-gradient(circle at 0 0,rgba(56,189,248,.06),transparent 28%),linear-gradient(145deg,#101925,#0b1119);border:1px solid rgba(148,163,184,.14);color:var(--text)}\n.section{height:100%;display:flex;flex-direction:column;padding:18px 20px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:15px;flex:0 0 auto}.section-kicker{font-size:10px;font-weight:800;letter-spacing:.15em;color:var(--orange);text-transform:uppercase}.section-title{font-size:18px;font-weight:750;letter-spacing:-.02em;margin-top:3px}.section-sub{font-size:11px;color:var(--muted);text-align:right}.grid{display:grid;gap:12px;min-height:0;flex:1}.card{position:relative;min-width:0;min-height:0;border-radius:11px;background:linear-gradient(145deg,rgba(22,33,48,.96),rgba(13,21,32,.96));border:1px solid rgba(148,163,184,.12);overflow:hidden}.card:before{content:\"\";position:absolute;inset:0 auto 0 0;width:2px;background:var(--accent,var(--cyan));opacity:.9}.card-inner{height:100%;padding:14px 15px}.label{font-size:10px;font-weight:750;letter-spacing:.09em;color:var(--muted);text-transform:uppercase}.value{font-size:26px;font-weight:780;letter-spacing:-.04em;margin-top:8px}.meta{font-size:10px;color:var(--muted);margin-top:5px}.status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;background:currentColor;box-shadow:0 0 10px currentColor}.ok{color:var(--green)}.warn{color:var(--yellow)}.bad{color:var(--red)}.neutral{color:var(--cyan)}.empty{height:100%;display:grid;place-items:center;text-align:center;padding:22px;color:#708197;font-size:11px}.empty b{display:block;color:#aab8c9;font-size:12px;margin-bottom:4px}.chart-card{display:flex;flex-direction:column}.chart-title{font-size:12px;font-weight:700;color:#dce6f3;margin-bottom:8px}.chart-canvas{flex:1;min-height:0}.chart-canvas svg{width:100%;height:100%;display:block}.legend{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:7px;max-height:34px;overflow:hidden}.legend-item{display:flex;align-items:center;gap:5px;font-size:9px;color:var(--muted);min-width:0}.legend-dot{width:7px;height:7px;border-radius:50%;flex:0 0 auto}.legend-name{max-width:170px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rank{display:flex;flex-direction:column;gap:7px;height:100%;overflow:auto;padding-right:3px}.rank-row{display:grid;grid-template-columns:minmax(90px,1fr) minmax(70px,2fr) auto;align-items:center;gap:9px;font-size:10px}.rank-name{color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rank-track{height:6px;border-radius:9px;background:#1b2a3c;overflow:hidden}.rank-fill{height:100%;border-radius:9px;background:linear-gradient(90deg,var(--accent,var(--cyan)),color-mix(in srgb,var(--accent,var(--cyan)) 55%,white));min-width:2px}.rank-val{font-variant-numeric:tabular-nums;color:#e7eef8;font-weight:700}.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:999px;background:rgba(56,189,248,.09);border:1px solid rgba(56,189,248,.2);font-size:9px;color:#9bdcff;font-weight:700}.scroll{scrollbar-width:thin;scrollbar-color:#2b3b50 transparent}@media(max-width:900px){.section{padding:14px}.section-sub{display:none}.grid{gap:8px}.value{font-size:21px}}\n.http-grid{grid-template-columns:1fr 1fr;grid-template-rows:minmax(0,1fr) minmax(120px,.55fr)}.http-grid article:nth-child(3){grid-column:1/3}.http-grid .card{--accent:#38bdf8}\n.info-btn{display:inline-grid;place-items:center;width:13px;height:13px;margin-left:6px;padding:0;border:1px solid currentColor;border-radius:50%;background:transparent;color:inherit;opacity:.45;font:700 8px/1 Inter,sans-serif;text-transform:none;letter-spacing:0;cursor:help;vertical-align:middle;flex:0 0 auto}.info-btn:hover{opacity:1}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class=\"shell\"><section class=\"section\"><header class=\"section-head\"><div><div class=\"section-kicker\">02 · Tráfego HTTP</div><div class=\"section-title\">Volume, latência e endpoints</div></div><div class=\"section-sub\"><span class=\"pill\">RED metrics</span></div></header><div class=\"grid http-grid\"><article class=\"card chart-card\"><div class=\"card-inner chart-card\"><div class=\"chart-title\">Requisições por status<span class=\"info-btn\" title=\"Taxa de requisições por segundo agrupada pela classe de status HTTP (2xx, 3xx, 4xx, 5xx), excluindo /actuator.\">i</span></div><div class=\"chart-canvas\" id=\"http-status\"></div></div></article><article class=\"card chart-card\"><div class=\"card-inner chart-card\"><div class=\"chart-title\">Latência p95 por endpoint<span class=\"info-btn\" title=\"Percentil 95 da latência por rota (label uri), top 10. Mostra quais endpoints estão mais lentos.\">i</span></div><div class=\"chart-canvas\" id=\"http-latency\"></div></div></article><article class=\"card\"><div class=\"card-inner chart-card\"><div class=\"chart-title\">Endpoints com maior volume<span class=\"info-btn\" title=\"Rotas com mais requisições no período selecionado — ajuda a entender onde está a carga.\">i</span></div><div class=\"chart-canvas\" id=\"http-rank\"></div></div></article></div></section></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "\nfunction arr(values){if(!values)return[];if(Array.isArray(values))return values;if(typeof values.toArray==='function')return values.toArray();var out=[];for(var i=0;i<(values.length||0);i++)out.push(typeof values.get==='function'?values.get(i):values[i]);return out}\nfunction numField(frame){var fs=(frame&&frame.fields)||[];for(var i=0;i<fs.length;i++){if(fs[i].type==='number'||fs[i].name==='Value'||fs[i].name==='value')return fs[i]}return fs.length>1?fs[1]:fs[0]}\nfunction timeField(frame){var fs=(frame&&frame.fields)||[];for(var i=0;i<fs.length;i++){if(fs[i].type==='time'||fs[i].name==='Time'||fs[i].name==='time')return fs[i]}return fs[0]}\nfunction frames(ref){return((data&&data.series)||[]).filter(function(f){return f.refId===ref})}\nfunction last(ref){var fs=frames(ref);for(var i=0;i<fs.length;i++){var f=numField(fs[i]),vs=arr(f&&f.values);for(var j=vs.length-1;j>=0;j--){var n=Number(vs[j]);if(Number.isFinite(n))return n}}return null}\nfunction labelOf(frame,key,fallback){var f=numField(frame),ls=(f&&f.labels)||{};if(key&&ls[key]!=null)return String(ls[key]);if(frame&&frame.name)return String(frame.name);if(f&&f.config&&f.config.displayNameFromDS)return String(f.config.displayNameFromDS);return fallback||'série'}\nfunction esc(s){return String(s==null?'':s).replace(/[&<>\"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',\"'\":'&#39;'}[c]})}\nfunction fmt(n,d){if(!Number.isFinite(n))return'--';return n.toLocaleString('pt-BR',{maximumFractionDigits:d==null?2:d})}\nfunction pct(n){return Number.isFinite(n)?fmt(n,2)+'%':'--'}\nfunction ms(n){return Number.isFinite(n)?fmt(n,n>=100?0:1)+' ms':'--'}\nfunction rate(n){return Number.isFinite(n)?fmt(n,2)+'/s':'--'}\nfunction dur(n){if(!Number.isFinite(n))return'--';n=Math.max(0,n);if(n<60)return Math.round(n)+'s';if(n<3600)return Math.floor(n/60)+'m '+Math.round(n%60)+'s';if(n<86400)return Math.floor(n/3600)+'h '+Math.round((n%3600)/60)+'m';return Math.floor(n/86400)+'d '+Math.round((n%86400)/3600)+'h'}\nvar palette=['#38bdf8','#f97316','#22c55e','#a78bfa','#f59e0b','#ef4444','#2dd4bf','#fb7185','#60a5fa','#c084fc'];\nfunction emptyHtml(title,sub){return'<div class=\"empty\"><div><b>'+esc(title)+'</b>'+esc(sub||'')+'</div></div>'}\nfunction drawLines(id,ref,key,unitFn){var host=htmlNode.querySelector('#'+id);if(!host)return;var fs=frames(ref),series=[];fs.forEach(function(frame,idx){var vf=numField(frame),tf=timeField(frame),ys=arr(vf&&vf.values).map(Number),xs=arr(tf&&tf.values).map(Number);var pts=[];for(var i=0;i<ys.length;i++){if(Number.isFinite(ys[i]))pts.push({x:Number.isFinite(xs[i])?xs[i]:i,y:ys[i]})}if(pts.length)series.push({name:labelOf(frame,key,'Série '+(idx+1)),pts:pts,color:palette[idx%palette.length]})});if(!series.length){host.innerHTML=emptyHtml('Sem dados','A métrica ainda não foi publicada para esta aplicação.');return}var all=[];series.forEach(function(s){all=all.concat(s.pts)});var xmin=Math.min.apply(null,all.map(function(p){return p.x})),xmax=Math.max.apply(null,all.map(function(p){return p.x})),ymax=Math.max.apply(null,all.map(function(p){return p.y}));if(xmax===xmin)xmax=xmin+1;if(!Number.isFinite(ymax)||ymax<=0)ymax=1;var W=760,H=190,L=34,R=10,T=10,B=23;var sx=function(x){return L+(x-xmin)/(xmax-xmin)*(W-L-R)},sy=function(y){return T+(1-y/ymax)*(H-T-B)};var grid='';for(var g=0;g<4;g++){var gy=T+g*(H-T-B)/3;grid+='<line x1=\"'+L+'\" y1=\"'+gy+'\" x2=\"'+(W-R)+'\" y2=\"'+gy+'\" stroke=\"#203044\" stroke-width=\"1\"/><text x=\"'+(L-5)+'\" y=\"'+(gy+3)+'\" text-anchor=\"end\" fill=\"#62748a\" font-size=\"8\">'+esc(unitFn?unitFn(ymax*(1-g/3)):fmt(ymax*(1-g/3),1))+'</text>'}var paths='';series.forEach(function(s){var d=s.pts.map(function(p,i){return(i?'L':'M')+sx(p.x).toFixed(1)+' '+sy(p.y).toFixed(1)}).join(' ');paths+='<path d=\"'+d+'\" fill=\"none\" stroke=\"'+s.color+'\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\"/>'});var legend='<div class=\"legend\">'+series.slice(0,10).map(function(s){var v=s.pts[s.pts.length-1].y;return'<div class=\"legend-item\"><i class=\"legend-dot\" style=\"background:'+s.color+'\"></i><span class=\"legend-name\">'+esc(s.name)+'</span><b>'+esc(unitFn?unitFn(v):fmt(v,2))+'</b></div>'}).join('')+'</div>';host.innerHTML='<svg viewBox=\"0 0 '+W+' '+H+'\" preserveAspectRatio=\"none\" aria-label=\"gráfico\"><defs><linearGradient id=\"fade-'+id+'\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#38bdf8\" stop-opacity=\".16\"/><stop offset=\"1\" stop-color=\"#38bdf8\" stop-opacity=\"0\"/></linearGradient></defs>'+grid+paths+'</svg>'+legend}\nfunction drawRank(id,ref,key,unitFn,accent){var host=htmlNode.querySelector('#'+id);if(!host)return;var rows=[];frames(ref).forEach(function(frame,idx){var f=numField(frame),vs=arr(f&&f.values),n=null;for(var i=vs.length-1;i>=0;i--){var v=Number(vs[i]);if(Number.isFinite(v)){n=v;break}}if(n!=null)rows.push({name:labelOf(frame,key,'Item '+(idx+1)),value:n})});rows.sort(function(a,b){return b.value-a.value});if(!rows.length){host.innerHTML=emptyHtml('Sem dados','Nenhuma série encontrada no período.');return}var max=Math.max.apply(null,rows.map(function(r){return Math.abs(r.value)}))||1;host.innerHTML='<div class=\"rank scroll\">'+rows.slice(0,14).map(function(r){var w=Math.max(1,Math.abs(r.value)/max*100);return'<div class=\"rank-row\" title=\"'+esc(r.name)+'\"><span class=\"rank-name\">'+esc(r.name)+'</span><span class=\"rank-track\"><i class=\"rank-fill\" style=\"width:'+w+'%;--accent:'+(accent||'#38bdf8')+'\"></i></span><span class=\"rank-val\">'+esc(unitFn?unitFn(r.value):fmt(r.value,2))+'</span></div>'}).join('')+'</div>'}\n(function(){try{drawLines('http-status','A','status',function(v){return fmt(v,2)+'/s'});drawLines('http-latency','B','uri',function(v){return ms(v)});drawRank('http-rank','C','uri',function(v){return fmt(v,0)+' req'},'#f97316')}catch(e){}})();",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-4": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "sum by (client_name) (rate(http_client_requests_seconds_count{application=\"$app_name\",client_name!=\"\"}[$__rate_interval]))",
+                      "instant": false,
+                      "legendFormat": "",
+                      "range": true
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "(100 * sum by (client_name) (rate(http_client_requests_seconds_count{application=\"$app_name\",client_name!=\"\",outcome=~\"CLIENT_ERROR|SERVER_ERROR|UNKNOWN\"}[$__rate_interval])) / clamp_min(sum by (client_name) (rate(http_client_requests_seconds_count{application=\"$app_name\",client_name!=\"\"}[$__rate_interval])), 1e-9)) or (0 * sum by (client_name) (rate(http_client_requests_seconds_count{application=\"$app_name\",client_name!=\"\"}[$__rate_interval])))",
+                      "instant": false,
+                      "legendFormat": "",
+                      "range": true
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "B"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "(histogram_quantile(0.95, sum by (client_name, le) (rate(http_client_requests_seconds_bucket{application=\"$app_name\",client_name!=\"\"}[$__rate_interval]))) * 1000) or (1000 * sum by (client_name) (rate(http_client_requests_seconds_sum{application=\"$app_name\",client_name!=\"\"}[$__rate_interval])) / clamp_min(sum by (client_name) (rate(http_client_requests_seconds_count{application=\"$app_name\",client_name!=\"\"}[$__rate_interval])), 1e-9))",
+                      "instant": false,
+                      "legendFormat": "",
+                      "range": true
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "C"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 4,
+        "links": [],
+        "title": "",
+        "transparent": true,
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": false,
+              "codeData": "{}",
+              "css": "\n:host,:root{--bg:#0b1119;--panel:#111a26;--panel2:#0e1621;--line:#223247;--text:#f7fafc;--muted:#8fa1b7;--orange:#f97316;--cyan:#38bdf8;--green:#22c55e;--yellow:#f59e0b;--red:#ef4444;--purple:#a78bfa;font-family:Inter,\"Segoe UI\",system-ui,sans-serif}html,body{margin:0;width:100%;height:100%;background:transparent}\n*{box-sizing:border-box}.shell{width:100%;height:100%;overflow:hidden;border-radius:14px;background:radial-gradient(circle at 0 0,rgba(56,189,248,.06),transparent 28%),linear-gradient(145deg,#101925,#0b1119);border:1px solid rgba(148,163,184,.14);color:var(--text)}\n.section{height:100%;display:flex;flex-direction:column;padding:18px 20px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:15px;flex:0 0 auto}.section-kicker{font-size:10px;font-weight:800;letter-spacing:.15em;color:var(--orange);text-transform:uppercase}.section-title{font-size:18px;font-weight:750;letter-spacing:-.02em;margin-top:3px}.section-sub{font-size:11px;color:var(--muted);text-align:right}.grid{display:grid;gap:12px;min-height:0;flex:1}.card{position:relative;min-width:0;min-height:0;border-radius:11px;background:linear-gradient(145deg,rgba(22,33,48,.96),rgba(13,21,32,.96));border:1px solid rgba(148,163,184,.12);overflow:hidden}.card:before{content:\"\";position:absolute;inset:0 auto 0 0;width:2px;background:var(--accent,var(--cyan));opacity:.9}.card-inner{height:100%;padding:14px 15px}.label{font-size:10px;font-weight:750;letter-spacing:.09em;color:var(--muted);text-transform:uppercase}.value{font-size:26px;font-weight:780;letter-spacing:-.04em;margin-top:8px}.meta{font-size:10px;color:var(--muted);margin-top:5px}.status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;background:currentColor;box-shadow:0 0 10px currentColor}.ok{color:var(--green)}.warn{color:var(--yellow)}.bad{color:var(--red)}.neutral{color:var(--cyan)}.empty{height:100%;display:grid;place-items:center;text-align:center;padding:22px;color:#708197;font-size:11px}.empty b{display:block;color:#aab8c9;font-size:12px;margin-bottom:4px}.chart-card{display:flex;flex-direction:column}.chart-title{font-size:12px;font-weight:700;color:#dce6f3;margin-bottom:8px}.chart-canvas{flex:1;min-height:0}.chart-canvas svg{width:100%;height:100%;display:block}.legend{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:7px;max-height:34px;overflow:hidden}.legend-item{display:flex;align-items:center;gap:5px;font-size:9px;color:var(--muted);min-width:0}.legend-dot{width:7px;height:7px;border-radius:50%;flex:0 0 auto}.legend-name{max-width:170px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rank{display:flex;flex-direction:column;gap:7px;height:100%;overflow:auto;padding-right:3px}.rank-row{display:grid;grid-template-columns:minmax(90px,1fr) minmax(70px,2fr) auto;align-items:center;gap:9px;font-size:10px}.rank-name{color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rank-track{height:6px;border-radius:9px;background:#1b2a3c;overflow:hidden}.rank-fill{height:100%;border-radius:9px;background:linear-gradient(90deg,var(--accent,var(--cyan)),color-mix(in srgb,var(--accent,var(--cyan)) 55%,white));min-width:2px}.rank-val{font-variant-numeric:tabular-nums;color:#e7eef8;font-weight:700}.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:999px;background:rgba(56,189,248,.09);border:1px solid rgba(56,189,248,.2);font-size:9px;color:#9bdcff;font-weight:700}.scroll{scrollbar-width:thin;scrollbar-color:#2b3b50 transparent}@media(max-width:900px){.section{padding:14px}.section-sub{display:none}.grid{gap:8px}.value{font-size:21px}}\n.thirds{grid-template-columns:repeat(3,1fr)}.thirds .card:nth-child(1){--accent:#38bdf8}.thirds .card:nth-child(2){--accent:#ef4444}.thirds .card:nth-child(3){--accent:#a78bfa}@media(max-width:900px){.thirds{grid-template-columns:1fr}}\n.info-btn{display:inline-grid;place-items:center;width:13px;height:13px;margin-left:6px;padding:0;border:1px solid currentColor;border-radius:50%;background:transparent;color:inherit;opacity:.45;font:700 8px/1 Inter,sans-serif;text-transform:none;letter-spacing:0;cursor:help;vertical-align:middle;flex:0 0 auto}.info-btn:hover{opacity:1}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class=\"shell\"><section class=\"section\"><header class=\"section-head\"><div><div class=\"section-kicker\">03 · Integrações</div><div class=\"section-title\">Chamadas de saída por client_name</div></div><div class=\"section-sub\">RestClient · WebClient · RestTemplate</div></header><div class=\"grid thirds\"><article class=\"card\"><div class=\"card-inner chart-card\"><div class=\"chart-title\">Taxa de chamadas<span class=\"info-btn\" title=\"Chamadas HTTP de saída por segundo para cada integração externa (http_client_requests_seconds), agrupadas por client_name. Vazio até as apps subirem instrumentadas.\">i</span></div><div class=\"chart-canvas\" id=\"int-rate\"></div></div></article><article class=\"card\"><div class=\"card-inner chart-card\"><div class=\"chart-title\">Erro por integração<span class=\"info-btn\" title=\"Percentual de chamadas de saída que falharam (status 4xx/5xx ou sem resposta) por integração, nos últimos 5 min.\">i</span></div><div class=\"chart-canvas\" id=\"int-error\"></div></div></article><article class=\"card\"><div class=\"card-inner chart-card\"><div class=\"chart-title\">Latência p95 / média fallback<span class=\"info-btn\" title=\"Percentil 95 do tempo das chamadas de saída por integração. Quando não há histograma, usa a média (soma dividida pela contagem).\">i</span></div><div class=\"chart-canvas\" id=\"int-latency\"></div></div></article></div></section></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "\nfunction arr(values){if(!values)return[];if(Array.isArray(values))return values;if(typeof values.toArray==='function')return values.toArray();var out=[];for(var i=0;i<(values.length||0);i++)out.push(typeof values.get==='function'?values.get(i):values[i]);return out}\nfunction numField(frame){var fs=(frame&&frame.fields)||[];for(var i=0;i<fs.length;i++){if(fs[i].type==='number'||fs[i].name==='Value'||fs[i].name==='value')return fs[i]}return fs.length>1?fs[1]:fs[0]}\nfunction timeField(frame){var fs=(frame&&frame.fields)||[];for(var i=0;i<fs.length;i++){if(fs[i].type==='time'||fs[i].name==='Time'||fs[i].name==='time')return fs[i]}return fs[0]}\nfunction frames(ref){return((data&&data.series)||[]).filter(function(f){return f.refId===ref})}\nfunction last(ref){var fs=frames(ref);for(var i=0;i<fs.length;i++){var f=numField(fs[i]),vs=arr(f&&f.values);for(var j=vs.length-1;j>=0;j--){var n=Number(vs[j]);if(Number.isFinite(n))return n}}return null}\nfunction labelOf(frame,key,fallback){var f=numField(frame),ls=(f&&f.labels)||{};if(key&&ls[key]!=null)return String(ls[key]);if(frame&&frame.name)return String(frame.name);if(f&&f.config&&f.config.displayNameFromDS)return String(f.config.displayNameFromDS);return fallback||'série'}\nfunction esc(s){return String(s==null?'':s).replace(/[&<>\"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',\"'\":'&#39;'}[c]})}\nfunction fmt(n,d){if(!Number.isFinite(n))return'--';return n.toLocaleString('pt-BR',{maximumFractionDigits:d==null?2:d})}\nfunction pct(n){return Number.isFinite(n)?fmt(n,2)+'%':'--'}\nfunction ms(n){return Number.isFinite(n)?fmt(n,n>=100?0:1)+' ms':'--'}\nfunction rate(n){return Number.isFinite(n)?fmt(n,2)+'/s':'--'}\nfunction dur(n){if(!Number.isFinite(n))return'--';n=Math.max(0,n);if(n<60)return Math.round(n)+'s';if(n<3600)return Math.floor(n/60)+'m '+Math.round(n%60)+'s';if(n<86400)return Math.floor(n/3600)+'h '+Math.round((n%3600)/60)+'m';return Math.floor(n/86400)+'d '+Math.round((n%86400)/3600)+'h'}\nvar palette=['#38bdf8','#f97316','#22c55e','#a78bfa','#f59e0b','#ef4444','#2dd4bf','#fb7185','#60a5fa','#c084fc'];\nfunction emptyHtml(title,sub){return'<div class=\"empty\"><div><b>'+esc(title)+'</b>'+esc(sub||'')+'</div></div>'}\nfunction drawLines(id,ref,key,unitFn){var host=htmlNode.querySelector('#'+id);if(!host)return;var fs=frames(ref),series=[];fs.forEach(function(frame,idx){var vf=numField(frame),tf=timeField(frame),ys=arr(vf&&vf.values).map(Number),xs=arr(tf&&tf.values).map(Number);var pts=[];for(var i=0;i<ys.length;i++){if(Number.isFinite(ys[i]))pts.push({x:Number.isFinite(xs[i])?xs[i]:i,y:ys[i]})}if(pts.length)series.push({name:labelOf(frame,key,'Série '+(idx+1)),pts:pts,color:palette[idx%palette.length]})});if(!series.length){host.innerHTML=emptyHtml('Sem dados','A métrica ainda não foi publicada para esta aplicação.');return}var all=[];series.forEach(function(s){all=all.concat(s.pts)});var xmin=Math.min.apply(null,all.map(function(p){return p.x})),xmax=Math.max.apply(null,all.map(function(p){return p.x})),ymax=Math.max.apply(null,all.map(function(p){return p.y}));if(xmax===xmin)xmax=xmin+1;if(!Number.isFinite(ymax)||ymax<=0)ymax=1;var W=760,H=190,L=34,R=10,T=10,B=23;var sx=function(x){return L+(x-xmin)/(xmax-xmin)*(W-L-R)},sy=function(y){return T+(1-y/ymax)*(H-T-B)};var grid='';for(var g=0;g<4;g++){var gy=T+g*(H-T-B)/3;grid+='<line x1=\"'+L+'\" y1=\"'+gy+'\" x2=\"'+(W-R)+'\" y2=\"'+gy+'\" stroke=\"#203044\" stroke-width=\"1\"/><text x=\"'+(L-5)+'\" y=\"'+(gy+3)+'\" text-anchor=\"end\" fill=\"#62748a\" font-size=\"8\">'+esc(unitFn?unitFn(ymax*(1-g/3)):fmt(ymax*(1-g/3),1))+'</text>'}var paths='';series.forEach(function(s){var d=s.pts.map(function(p,i){return(i?'L':'M')+sx(p.x).toFixed(1)+' '+sy(p.y).toFixed(1)}).join(' ');paths+='<path d=\"'+d+'\" fill=\"none\" stroke=\"'+s.color+'\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\"/>'});var legend='<div class=\"legend\">'+series.slice(0,10).map(function(s){var v=s.pts[s.pts.length-1].y;return'<div class=\"legend-item\"><i class=\"legend-dot\" style=\"background:'+s.color+'\"></i><span class=\"legend-name\">'+esc(s.name)+'</span><b>'+esc(unitFn?unitFn(v):fmt(v,2))+'</b></div>'}).join('')+'</div>';host.innerHTML='<svg viewBox=\"0 0 '+W+' '+H+'\" preserveAspectRatio=\"none\" aria-label=\"gráfico\"><defs><linearGradient id=\"fade-'+id+'\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#38bdf8\" stop-opacity=\".16\"/><stop offset=\"1\" stop-color=\"#38bdf8\" stop-opacity=\"0\"/></linearGradient></defs>'+grid+paths+'</svg>'+legend}\nfunction drawRank(id,ref,key,unitFn,accent){var host=htmlNode.querySelector('#'+id);if(!host)return;var rows=[];frames(ref).forEach(function(frame,idx){var f=numField(frame),vs=arr(f&&f.values),n=null;for(var i=vs.length-1;i>=0;i--){var v=Number(vs[i]);if(Number.isFinite(v)){n=v;break}}if(n!=null)rows.push({name:labelOf(frame,key,'Item '+(idx+1)),value:n})});rows.sort(function(a,b){return b.value-a.value});if(!rows.length){host.innerHTML=emptyHtml('Sem dados','Nenhuma série encontrada no período.');return}var max=Math.max.apply(null,rows.map(function(r){return Math.abs(r.value)}))||1;host.innerHTML='<div class=\"rank scroll\">'+rows.slice(0,14).map(function(r){var w=Math.max(1,Math.abs(r.value)/max*100);return'<div class=\"rank-row\" title=\"'+esc(r.name)+'\"><span class=\"rank-name\">'+esc(r.name)+'</span><span class=\"rank-track\"><i class=\"rank-fill\" style=\"width:'+w+'%;--accent:'+(accent||'#38bdf8')+'\"></i></span><span class=\"rank-val\">'+esc(unitFn?unitFn(r.value):fmt(r.value,2))+'</span></div>'}).join('')+'</div>'}\n(function(){try{drawLines('int-rate','A','client_name',function(v){return rate(v)});drawRank('int-error','B','client_name',function(v){return pct(v)},'#ef4444');drawRank('int-latency','C','client_name',function(v){return ms(v)},'#a78bfa')}catch(e){}})();",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-5": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "time() - max_over_time(timestamp((sum by (exported_job) (app_scheduled_seconds_count{application=\"$app_name\"}) - sum by (exported_job) (app_scheduled_seconds_count{application=\"$app_name\"} offset 1m) > 0))[$__range:1m])",
+                      "instant": true,
+                      "legendFormat": "",
+                      "range": false
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "(histogram_quantile(0.95, sum by (exported_job, le) (rate(app_scheduled_seconds_bucket{application=\"$app_name\"}[$__rate_interval]))) * 1000) or (1000 * sum by (exported_job) (rate(app_scheduled_seconds_sum{application=\"$app_name\"}[$__rate_interval])) / clamp_min(sum by (exported_job) (rate(app_scheduled_seconds_count{application=\"$app_name\"}[$__rate_interval])), 1e-9))",
+                      "instant": false,
+                      "legendFormat": "",
+                      "range": true
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "B"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "sum by (exported_job) (increase(app_scheduled_seconds_count{application=\"$app_name\",exception!=\"none\"}[$__range])) or (0 * sum by (exported_job) (app_scheduled_seconds_count{application=\"$app_name\"}))",
+                      "instant": true,
+                      "legendFormat": "",
+                      "range": false
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "C"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 5,
+        "links": [],
+        "title": "",
+        "transparent": true,
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": false,
+              "codeData": "{}",
+              "css": "\n:host,:root{--bg:#0b1119;--panel:#111a26;--panel2:#0e1621;--line:#223247;--text:#f7fafc;--muted:#8fa1b7;--orange:#f97316;--cyan:#38bdf8;--green:#22c55e;--yellow:#f59e0b;--red:#ef4444;--purple:#a78bfa;font-family:Inter,\"Segoe UI\",system-ui,sans-serif}html,body{margin:0;width:100%;height:100%;background:transparent}\n*{box-sizing:border-box}.shell{width:100%;height:100%;overflow:hidden;border-radius:14px;background:radial-gradient(circle at 0 0,rgba(56,189,248,.06),transparent 28%),linear-gradient(145deg,#101925,#0b1119);border:1px solid rgba(148,163,184,.14);color:var(--text)}\n.section{height:100%;display:flex;flex-direction:column;padding:18px 20px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:15px;flex:0 0 auto}.section-kicker{font-size:10px;font-weight:800;letter-spacing:.15em;color:var(--orange);text-transform:uppercase}.section-title{font-size:18px;font-weight:750;letter-spacing:-.02em;margin-top:3px}.section-sub{font-size:11px;color:var(--muted);text-align:right}.grid{display:grid;gap:12px;min-height:0;flex:1}.card{position:relative;min-width:0;min-height:0;border-radius:11px;background:linear-gradient(145deg,rgba(22,33,48,.96),rgba(13,21,32,.96));border:1px solid rgba(148,163,184,.12);overflow:hidden}.card:before{content:\"\";position:absolute;inset:0 auto 0 0;width:2px;background:var(--accent,var(--cyan));opacity:.9}.card-inner{height:100%;padding:14px 15px}.label{font-size:10px;font-weight:750;letter-spacing:.09em;color:var(--muted);text-transform:uppercase}.value{font-size:26px;font-weight:780;letter-spacing:-.04em;margin-top:8px}.meta{font-size:10px;color:var(--muted);margin-top:5px}.status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;background:currentColor;box-shadow:0 0 10px currentColor}.ok{color:var(--green)}.warn{color:var(--yellow)}.bad{color:var(--red)}.neutral{color:var(--cyan)}.empty{height:100%;display:grid;place-items:center;text-align:center;padding:22px;color:#708197;font-size:11px}.empty b{display:block;color:#aab8c9;font-size:12px;margin-bottom:4px}.chart-card{display:flex;flex-direction:column}.chart-title{font-size:12px;font-weight:700;color:#dce6f3;margin-bottom:8px}.chart-canvas{flex:1;min-height:0}.chart-canvas svg{width:100%;height:100%;display:block}.legend{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:7px;max-height:34px;overflow:hidden}.legend-item{display:flex;align-items:center;gap:5px;font-size:9px;color:var(--muted);min-width:0}.legend-dot{width:7px;height:7px;border-radius:50%;flex:0 0 auto}.legend-name{max-width:170px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rank{display:flex;flex-direction:column;gap:7px;height:100%;overflow:auto;padding-right:3px}.rank-row{display:grid;grid-template-columns:minmax(90px,1fr) minmax(70px,2fr) auto;align-items:center;gap:9px;font-size:10px}.rank-name{color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rank-track{height:6px;border-radius:9px;background:#1b2a3c;overflow:hidden}.rank-fill{height:100%;border-radius:9px;background:linear-gradient(90deg,var(--accent,var(--cyan)),color-mix(in srgb,var(--accent,var(--cyan)) 55%,white));min-width:2px}.rank-val{font-variant-numeric:tabular-nums;color:#e7eef8;font-weight:700}.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:999px;background:rgba(56,189,248,.09);border:1px solid rgba(56,189,248,.2);font-size:9px;color:#9bdcff;font-weight:700}.scroll{scrollbar-width:thin;scrollbar-color:#2b3b50 transparent}@media(max-width:900px){.section{padding:14px}.section-sub{display:none}.grid{gap:8px}.value{font-size:21px}}\n.thirds{grid-template-columns:repeat(3,1fr)}.thirds .card:nth-child(1){--accent:#38bdf8}.thirds .card:nth-child(2){--accent:#ef4444}.thirds .card:nth-child(3){--accent:#a78bfa}@media(max-width:900px){.thirds{grid-template-columns:1fr}}\n.info-btn{display:inline-grid;place-items:center;width:13px;height:13px;margin-left:6px;padding:0;border:1px solid currentColor;border-radius:50%;background:transparent;color:inherit;opacity:.45;font:700 8px/1 Inter,sans-serif;text-transform:none;letter-spacing:0;cursor:help;vertical-align:middle;flex:0 0 auto}.info-btn:hover{opacity:1}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class=\"shell\"><section class=\"section\"><header class=\"section-head\"><div><div class=\"section-kicker\">04 · Jobs agendados</div><div class=\"section-title\">Execuções, duração e falhas</div></div><div class=\"section-sub\">Última atividade estimada com resolução de 1 minuto</div></header><div class=\"grid thirds\"><article class=\"card\"><div class=\"card-inner chart-card\"><div class=\"chart-title\">Tempo desde a última execução<span class=\"info-btn\" title=\"Estimativa de quando cada tarefa @Scheduled rodou pela última vez, com resolução de 1 min. Valor muito alto pode indicar tarefa travada ou desligada.\">i</span></div><div class=\"chart-canvas\" id=\"job-last\"></div></div></article><article class=\"card\"><div class=\"card-inner chart-card\"><div class=\"chart-title\">Duração p95 / média fallback<span class=\"info-btn\" title=\"Percentil 95 da duração de cada execução de tarefa @Scheduled (app_scheduled_seconds). Usa a média quando não há histograma.\">i</span></div><div class=\"chart-canvas\" id=\"job-duration\"></div></div></article><article class=\"card\"><div class=\"card-inner chart-card\"><div class=\"chart-title\">Falhas no período<span class=\"info-btn\" title=\"Número de execuções de @Scheduled que terminaram com exceção (tag exception diferente de none) no período selecionado.\">i</span></div><div class=\"chart-canvas\" id=\"job-errors\"></div></div></article></div></section></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "\nfunction arr(values){if(!values)return[];if(Array.isArray(values))return values;if(typeof values.toArray==='function')return values.toArray();var out=[];for(var i=0;i<(values.length||0);i++)out.push(typeof values.get==='function'?values.get(i):values[i]);return out}\nfunction numField(frame){var fs=(frame&&frame.fields)||[];for(var i=0;i<fs.length;i++){if(fs[i].type==='number'||fs[i].name==='Value'||fs[i].name==='value')return fs[i]}return fs.length>1?fs[1]:fs[0]}\nfunction timeField(frame){var fs=(frame&&frame.fields)||[];for(var i=0;i<fs.length;i++){if(fs[i].type==='time'||fs[i].name==='Time'||fs[i].name==='time')return fs[i]}return fs[0]}\nfunction frames(ref){return((data&&data.series)||[]).filter(function(f){return f.refId===ref})}\nfunction last(ref){var fs=frames(ref);for(var i=0;i<fs.length;i++){var f=numField(fs[i]),vs=arr(f&&f.values);for(var j=vs.length-1;j>=0;j--){var n=Number(vs[j]);if(Number.isFinite(n))return n}}return null}\nfunction labelOf(frame,key,fallback){var f=numField(frame),ls=(f&&f.labels)||{};if(key&&ls[key]!=null)return String(ls[key]);if(frame&&frame.name)return String(frame.name);if(f&&f.config&&f.config.displayNameFromDS)return String(f.config.displayNameFromDS);return fallback||'série'}\nfunction esc(s){return String(s==null?'':s).replace(/[&<>\"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',\"'\":'&#39;'}[c]})}\nfunction fmt(n,d){if(!Number.isFinite(n))return'--';return n.toLocaleString('pt-BR',{maximumFractionDigits:d==null?2:d})}\nfunction pct(n){return Number.isFinite(n)?fmt(n,2)+'%':'--'}\nfunction ms(n){return Number.isFinite(n)?fmt(n,n>=100?0:1)+' ms':'--'}\nfunction rate(n){return Number.isFinite(n)?fmt(n,2)+'/s':'--'}\nfunction dur(n){if(!Number.isFinite(n))return'--';n=Math.max(0,n);if(n<60)return Math.round(n)+'s';if(n<3600)return Math.floor(n/60)+'m '+Math.round(n%60)+'s';if(n<86400)return Math.floor(n/3600)+'h '+Math.round((n%3600)/60)+'m';return Math.floor(n/86400)+'d '+Math.round((n%86400)/3600)+'h'}\nvar palette=['#38bdf8','#f97316','#22c55e','#a78bfa','#f59e0b','#ef4444','#2dd4bf','#fb7185','#60a5fa','#c084fc'];\nfunction emptyHtml(title,sub){return'<div class=\"empty\"><div><b>'+esc(title)+'</b>'+esc(sub||'')+'</div></div>'}\nfunction drawLines(id,ref,key,unitFn){var host=htmlNode.querySelector('#'+id);if(!host)return;var fs=frames(ref),series=[];fs.forEach(function(frame,idx){var vf=numField(frame),tf=timeField(frame),ys=arr(vf&&vf.values).map(Number),xs=arr(tf&&tf.values).map(Number);var pts=[];for(var i=0;i<ys.length;i++){if(Number.isFinite(ys[i]))pts.push({x:Number.isFinite(xs[i])?xs[i]:i,y:ys[i]})}if(pts.length)series.push({name:labelOf(frame,key,'Série '+(idx+1)),pts:pts,color:palette[idx%palette.length]})});if(!series.length){host.innerHTML=emptyHtml('Sem dados','A métrica ainda não foi publicada para esta aplicação.');return}var all=[];series.forEach(function(s){all=all.concat(s.pts)});var xmin=Math.min.apply(null,all.map(function(p){return p.x})),xmax=Math.max.apply(null,all.map(function(p){return p.x})),ymax=Math.max.apply(null,all.map(function(p){return p.y}));if(xmax===xmin)xmax=xmin+1;if(!Number.isFinite(ymax)||ymax<=0)ymax=1;var W=760,H=190,L=34,R=10,T=10,B=23;var sx=function(x){return L+(x-xmin)/(xmax-xmin)*(W-L-R)},sy=function(y){return T+(1-y/ymax)*(H-T-B)};var grid='';for(var g=0;g<4;g++){var gy=T+g*(H-T-B)/3;grid+='<line x1=\"'+L+'\" y1=\"'+gy+'\" x2=\"'+(W-R)+'\" y2=\"'+gy+'\" stroke=\"#203044\" stroke-width=\"1\"/><text x=\"'+(L-5)+'\" y=\"'+(gy+3)+'\" text-anchor=\"end\" fill=\"#62748a\" font-size=\"8\">'+esc(unitFn?unitFn(ymax*(1-g/3)):fmt(ymax*(1-g/3),1))+'</text>'}var paths='';series.forEach(function(s){var d=s.pts.map(function(p,i){return(i?'L':'M')+sx(p.x).toFixed(1)+' '+sy(p.y).toFixed(1)}).join(' ');paths+='<path d=\"'+d+'\" fill=\"none\" stroke=\"'+s.color+'\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\"/>'});var legend='<div class=\"legend\">'+series.slice(0,10).map(function(s){var v=s.pts[s.pts.length-1].y;return'<div class=\"legend-item\"><i class=\"legend-dot\" style=\"background:'+s.color+'\"></i><span class=\"legend-name\">'+esc(s.name)+'</span><b>'+esc(unitFn?unitFn(v):fmt(v,2))+'</b></div>'}).join('')+'</div>';host.innerHTML='<svg viewBox=\"0 0 '+W+' '+H+'\" preserveAspectRatio=\"none\" aria-label=\"gráfico\"><defs><linearGradient id=\"fade-'+id+'\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#38bdf8\" stop-opacity=\".16\"/><stop offset=\"1\" stop-color=\"#38bdf8\" stop-opacity=\"0\"/></linearGradient></defs>'+grid+paths+'</svg>'+legend}\nfunction drawRank(id,ref,key,unitFn,accent){var host=htmlNode.querySelector('#'+id);if(!host)return;var rows=[];frames(ref).forEach(function(frame,idx){var f=numField(frame),vs=arr(f&&f.values),n=null;for(var i=vs.length-1;i>=0;i--){var v=Number(vs[i]);if(Number.isFinite(v)){n=v;break}}if(n!=null)rows.push({name:labelOf(frame,key,'Item '+(idx+1)),value:n})});rows.sort(function(a,b){return b.value-a.value});if(!rows.length){host.innerHTML=emptyHtml('Sem dados','Nenhuma série encontrada no período.');return}var max=Math.max.apply(null,rows.map(function(r){return Math.abs(r.value)}))||1;host.innerHTML='<div class=\"rank scroll\">'+rows.slice(0,14).map(function(r){var w=Math.max(1,Math.abs(r.value)/max*100);return'<div class=\"rank-row\" title=\"'+esc(r.name)+'\"><span class=\"rank-name\">'+esc(r.name)+'</span><span class=\"rank-track\"><i class=\"rank-fill\" style=\"width:'+w+'%;--accent:'+(accent||'#38bdf8')+'\"></i></span><span class=\"rank-val\">'+esc(unitFn?unitFn(r.value):fmt(r.value,2))+'</span></div>'}).join('')+'</div>'}\n(function(){try{drawRank('job-last','A','exported_job',function(v){return dur(v)},'#38bdf8');drawLines('job-duration','B','exported_job',function(v){return ms(v)});drawRank('job-errors','C','exported_job',function(v){return fmt(v,0)},'#ef4444')}catch(e){}})();",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-6": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "sum(rate(jvm_gc_pause_seconds_sum{application=\"$app_name\"}[$__rate_interval]))",
+                      "instant": false,
+                      "legendFormat": "",
+                      "range": true
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "sum(rate(jvm_gc_pause_seconds_count{application=\"$app_name\"}[$__rate_interval]))",
+                      "instant": false,
+                      "legendFormat": "",
+                      "range": true
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "B"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "sum(jvm_threads_live_threads{application=\"$app_name\"})",
+                      "instant": false,
+                      "legendFormat": "JVM vivas",
+                      "range": true
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "C"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "sum(tomcat_threads_busy_threads{application=\"$app_name\"})",
+                      "instant": false,
+                      "legendFormat": "Tomcat ocupadas",
+                      "range": true
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "D"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "sum(tomcat_threads_config_max_threads{application=\"$app_name\"})",
+                      "instant": false,
+                      "legendFormat": "Tomcat máximo",
+                      "range": true
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "E"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "100 * sum(jvm_memory_used_bytes{application=\"$app_name\",area=\"heap\"}) / clamp_min(sum(jvm_memory_max_bytes{application=\"$app_name\",area=\"heap\"}), 1)",
+                      "instant": false,
+                      "legendFormat": "",
+                      "range": true
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "F"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "100 * sum(process_files_open_files{application=\"$app_name\"}) / clamp_min(sum(process_files_max_files{application=\"$app_name\"}), 1)",
+                      "instant": false,
+                      "legendFormat": "",
+                      "range": true
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "G"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "100 * max(process_cpu_usage{application=\"$app_name\"})",
+                      "instant": false,
+                      "legendFormat": "",
+                      "range": true
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "H"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "1000 * max(max_over_time(jvm_gc_pause_seconds_max{application=\"$app_name\"}[$__range]))",
+                      "instant": true,
+                      "legendFormat": "",
+                      "range": false
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "I"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 6,
+        "links": [],
+        "title": "",
+        "transparent": true,
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": false,
+              "codeData": "{}",
+              "css": "\n:host,:root{--bg:#0b1119;--panel:#111a26;--panel2:#0e1621;--line:#223247;--text:#f7fafc;--muted:#8fa1b7;--orange:#f97316;--cyan:#38bdf8;--green:#22c55e;--yellow:#f59e0b;--red:#ef4444;--purple:#a78bfa;font-family:Inter,\"Segoe UI\",system-ui,sans-serif}html,body{margin:0;width:100%;height:100%;background:transparent}\n*{box-sizing:border-box}.shell{width:100%;height:100%;overflow:hidden;border-radius:14px;background:radial-gradient(circle at 0 0,rgba(56,189,248,.06),transparent 28%),linear-gradient(145deg,#101925,#0b1119);border:1px solid rgba(148,163,184,.14);color:var(--text)}\n.section{height:100%;display:flex;flex-direction:column;padding:18px 20px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:15px;flex:0 0 auto}.section-kicker{font-size:10px;font-weight:800;letter-spacing:.15em;color:var(--orange);text-transform:uppercase}.section-title{font-size:18px;font-weight:750;letter-spacing:-.02em;margin-top:3px}.section-sub{font-size:11px;color:var(--muted);text-align:right}.grid{display:grid;gap:12px;min-height:0;flex:1}.card{position:relative;min-width:0;min-height:0;border-radius:11px;background:linear-gradient(145deg,rgba(22,33,48,.96),rgba(13,21,32,.96));border:1px solid rgba(148,163,184,.12);overflow:hidden}.card:before{content:\"\";position:absolute;inset:0 auto 0 0;width:2px;background:var(--accent,var(--cyan));opacity:.9}.card-inner{height:100%;padding:14px 15px}.label{font-size:10px;font-weight:750;letter-spacing:.09em;color:var(--muted);text-transform:uppercase}.value{font-size:26px;font-weight:780;letter-spacing:-.04em;margin-top:8px}.meta{font-size:10px;color:var(--muted);margin-top:5px}.status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;background:currentColor;box-shadow:0 0 10px currentColor}.ok{color:var(--green)}.warn{color:var(--yellow)}.bad{color:var(--red)}.neutral{color:var(--cyan)}.empty{height:100%;display:grid;place-items:center;text-align:center;padding:22px;color:#708197;font-size:11px}.empty b{display:block;color:#aab8c9;font-size:12px;margin-bottom:4px}.chart-card{display:flex;flex-direction:column}.chart-title{font-size:12px;font-weight:700;color:#dce6f3;margin-bottom:8px}.chart-canvas{flex:1;min-height:0}.chart-canvas svg{width:100%;height:100%;display:block}.legend{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:7px;max-height:34px;overflow:hidden}.legend-item{display:flex;align-items:center;gap:5px;font-size:9px;color:var(--muted);min-width:0}.legend-dot{width:7px;height:7px;border-radius:50%;flex:0 0 auto}.legend-name{max-width:170px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rank{display:flex;flex-direction:column;gap:7px;height:100%;overflow:auto;padding-right:3px}.rank-row{display:grid;grid-template-columns:minmax(90px,1fr) minmax(70px,2fr) auto;align-items:center;gap:9px;font-size:10px}.rank-name{color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rank-track{height:6px;border-radius:9px;background:#1b2a3c;overflow:hidden}.rank-fill{height:100%;border-radius:9px;background:linear-gradient(90deg,var(--accent,var(--cyan)),color-mix(in srgb,var(--accent,var(--cyan)) 55%,white));min-width:2px}.rank-val{font-variant-numeric:tabular-nums;color:#e7eef8;font-weight:700}.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:999px;background:rgba(56,189,248,.09);border:1px solid rgba(56,189,248,.2);font-size:9px;color:#9bdcff;font-weight:700}.scroll{scrollbar-width:thin;scrollbar-color:#2b3b50 transparent}@media(max-width:900px){.section{padding:14px}.section-sub{display:none}.grid{gap:8px}.value{font-size:21px}}\n.jvm-grid{grid-template-columns:.8fr 1.1fr 1.1fr}.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;min-height:0}.mini-grid .value{font-size:22px}.mini-grid .card{--accent:#38bdf8}.jvm-grid>article:nth-child(2){--accent:#f97316}.jvm-grid>article:nth-child(3){--accent:#a78bfa}@media(max-width:950px){.jvm-grid{grid-template-columns:1fr 1fr}.mini-grid{grid-column:1/3}}\n.info-btn{display:inline-grid;place-items:center;width:13px;height:13px;margin-left:6px;padding:0;border:1px solid currentColor;border-radius:50%;background:transparent;color:inherit;opacity:.45;font:700 8px/1 Inter,sans-serif;text-transform:none;letter-spacing:0;cursor:help;vertical-align:middle;flex:0 0 auto}.info-btn:hover{opacity:1}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class=\"shell\"><section class=\"section\"><header class=\"section-head\"><div><div class=\"section-kicker\">05 · JVM interna</div><div class=\"section-title\">Runtime, GC e capacidade</div></div><div class=\"section-sub\">Pressão de recursos do processo Java</div></header><div class=\"grid jvm-grid\"><div class=\"mini-grid\"><article class=\"card\" id=\"j-heap\"><div class=\"card-inner\"><div class=\"label\">Heap utilizado<span class=\"info-btn\" title=\"Percentual da heap da JVM em uso em relação ao máximo (Xmx). Acima de 85% de forma sustentada indica risco de OutOfMemory.\">i</span></div><div class=\"value\" id=\"v-heap\">--</div><div class=\"meta\">memória máxima JVM</div></div></article><article class=\"card\" id=\"j-fd\"><div class=\"card-inner\"><div class=\"label\">File descriptors<span class=\"info-btn\" title=\"Percentual de file descriptors abertos pelo processo em relação ao limite do SO. Crescimento contínuo indica vazamento de conexões ou arquivos.\">i</span></div><div class=\"value\" id=\"v-fd\">--</div><div class=\"meta\">limite do processo</div></div></article><article class=\"card\" id=\"j-cpu\"><div class=\"card-inner\"><div class=\"label\">CPU do processo<span class=\"info-btn\" title=\"Uso de CPU do processo Java (process_cpu_usage), de 0 a 100% do total disponível ao container.\">i</span></div><div class=\"value\" id=\"v-cpu\">--</div><div class=\"meta\">utilização instantânea</div></div></article><article class=\"card\" id=\"j-gcmax\"><div class=\"card-inner\"><div class=\"label\">Maior pausa GC<span class=\"info-btn\" title=\"Maior pausa individual de garbage collection registrada no intervalo selecionado (jvm_gc_pause_seconds_max).\">i</span></div><div class=\"value\" id=\"v-gcmax\">--</div><div class=\"meta\">intervalo selecionado</div></div></article></div><article class=\"card\"><div class=\"card-inner chart-card\"><div class=\"chart-title\">Pausa acumulada do GC<span class=\"info-btn\" title=\"Segundos de pausa de GC por segundo de execução (rate de jvm_gc_pause_seconds_sum). O selo mostra a frequência de coletas por segundo.\">i</span> <span class=\"pill\" id=\"gc-frequency\">--</span></div><div class=\"chart-canvas\" id=\"gc-chart\"></div></div></article><article class=\"card\"><div class=\"card-inner chart-card\"><div class=\"chart-title\">Threads JVM e pool Tomcat<span class=\"info-btn\" title=\"Threads vivas na JVM, threads ocupadas do pool HTTP do Tomcat e o teto configurado (server.tomcat.threads.max). Ocupadas encostando no teto = saturação.\">i</span></div><div class=\"chart-canvas\" id=\"thread-chart\"></div></div></article></div></section></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "\nfunction arr(values){if(!values)return[];if(Array.isArray(values))return values;if(typeof values.toArray==='function')return values.toArray();var out=[];for(var i=0;i<(values.length||0);i++)out.push(typeof values.get==='function'?values.get(i):values[i]);return out}\nfunction numField(frame){var fs=(frame&&frame.fields)||[];for(var i=0;i<fs.length;i++){if(fs[i].type==='number'||fs[i].name==='Value'||fs[i].name==='value')return fs[i]}return fs.length>1?fs[1]:fs[0]}\nfunction timeField(frame){var fs=(frame&&frame.fields)||[];for(var i=0;i<fs.length;i++){if(fs[i].type==='time'||fs[i].name==='Time'||fs[i].name==='time')return fs[i]}return fs[0]}\nfunction frames(ref){return((data&&data.series)||[]).filter(function(f){return f.refId===ref})}\nfunction last(ref){var fs=frames(ref);for(var i=0;i<fs.length;i++){var f=numField(fs[i]),vs=arr(f&&f.values);for(var j=vs.length-1;j>=0;j--){var n=Number(vs[j]);if(Number.isFinite(n))return n}}return null}\nfunction labelOf(frame,key,fallback){var f=numField(frame),ls=(f&&f.labels)||{};if(key&&ls[key]!=null)return String(ls[key]);if(frame&&frame.name)return String(frame.name);if(f&&f.config&&f.config.displayNameFromDS)return String(f.config.displayNameFromDS);return fallback||'série'}\nfunction esc(s){return String(s==null?'':s).replace(/[&<>\"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',\"'\":'&#39;'}[c]})}\nfunction fmt(n,d){if(!Number.isFinite(n))return'--';return n.toLocaleString('pt-BR',{maximumFractionDigits:d==null?2:d})}\nfunction pct(n){return Number.isFinite(n)?fmt(n,2)+'%':'--'}\nfunction ms(n){return Number.isFinite(n)?fmt(n,n>=100?0:1)+' ms':'--'}\nfunction rate(n){return Number.isFinite(n)?fmt(n,2)+'/s':'--'}\nfunction dur(n){if(!Number.isFinite(n))return'--';n=Math.max(0,n);if(n<60)return Math.round(n)+'s';if(n<3600)return Math.floor(n/60)+'m '+Math.round(n%60)+'s';if(n<86400)return Math.floor(n/3600)+'h '+Math.round((n%3600)/60)+'m';return Math.floor(n/86400)+'d '+Math.round((n%86400)/3600)+'h'}\nvar palette=['#38bdf8','#f97316','#22c55e','#a78bfa','#f59e0b','#ef4444','#2dd4bf','#fb7185','#60a5fa','#c084fc'];\nfunction emptyHtml(title,sub){return'<div class=\"empty\"><div><b>'+esc(title)+'</b>'+esc(sub||'')+'</div></div>'}\nfunction drawLines(id,ref,key,unitFn){var host=htmlNode.querySelector('#'+id);if(!host)return;var fs=frames(ref),series=[];fs.forEach(function(frame,idx){var vf=numField(frame),tf=timeField(frame),ys=arr(vf&&vf.values).map(Number),xs=arr(tf&&tf.values).map(Number);var pts=[];for(var i=0;i<ys.length;i++){if(Number.isFinite(ys[i]))pts.push({x:Number.isFinite(xs[i])?xs[i]:i,y:ys[i]})}if(pts.length)series.push({name:labelOf(frame,key,'Série '+(idx+1)),pts:pts,color:palette[idx%palette.length]})});if(!series.length){host.innerHTML=emptyHtml('Sem dados','A métrica ainda não foi publicada para esta aplicação.');return}var all=[];series.forEach(function(s){all=all.concat(s.pts)});var xmin=Math.min.apply(null,all.map(function(p){return p.x})),xmax=Math.max.apply(null,all.map(function(p){return p.x})),ymax=Math.max.apply(null,all.map(function(p){return p.y}));if(xmax===xmin)xmax=xmin+1;if(!Number.isFinite(ymax)||ymax<=0)ymax=1;var W=760,H=190,L=34,R=10,T=10,B=23;var sx=function(x){return L+(x-xmin)/(xmax-xmin)*(W-L-R)},sy=function(y){return T+(1-y/ymax)*(H-T-B)};var grid='';for(var g=0;g<4;g++){var gy=T+g*(H-T-B)/3;grid+='<line x1=\"'+L+'\" y1=\"'+gy+'\" x2=\"'+(W-R)+'\" y2=\"'+gy+'\" stroke=\"#203044\" stroke-width=\"1\"/><text x=\"'+(L-5)+'\" y=\"'+(gy+3)+'\" text-anchor=\"end\" fill=\"#62748a\" font-size=\"8\">'+esc(unitFn?unitFn(ymax*(1-g/3)):fmt(ymax*(1-g/3),1))+'</text>'}var paths='';series.forEach(function(s){var d=s.pts.map(function(p,i){return(i?'L':'M')+sx(p.x).toFixed(1)+' '+sy(p.y).toFixed(1)}).join(' ');paths+='<path d=\"'+d+'\" fill=\"none\" stroke=\"'+s.color+'\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\"/>'});var legend='<div class=\"legend\">'+series.slice(0,10).map(function(s){var v=s.pts[s.pts.length-1].y;return'<div class=\"legend-item\"><i class=\"legend-dot\" style=\"background:'+s.color+'\"></i><span class=\"legend-name\">'+esc(s.name)+'</span><b>'+esc(unitFn?unitFn(v):fmt(v,2))+'</b></div>'}).join('')+'</div>';host.innerHTML='<svg viewBox=\"0 0 '+W+' '+H+'\" preserveAspectRatio=\"none\" aria-label=\"gráfico\"><defs><linearGradient id=\"fade-'+id+'\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#38bdf8\" stop-opacity=\".16\"/><stop offset=\"1\" stop-color=\"#38bdf8\" stop-opacity=\"0\"/></linearGradient></defs>'+grid+paths+'</svg>'+legend}\nfunction drawRank(id,ref,key,unitFn,accent){var host=htmlNode.querySelector('#'+id);if(!host)return;var rows=[];frames(ref).forEach(function(frame,idx){var f=numField(frame),vs=arr(f&&f.values),n=null;for(var i=vs.length-1;i>=0;i--){var v=Number(vs[i]);if(Number.isFinite(v)){n=v;break}}if(n!=null)rows.push({name:labelOf(frame,key,'Item '+(idx+1)),value:n})});rows.sort(function(a,b){return b.value-a.value});if(!rows.length){host.innerHTML=emptyHtml('Sem dados','Nenhuma série encontrada no período.');return}var max=Math.max.apply(null,rows.map(function(r){return Math.abs(r.value)}))||1;host.innerHTML='<div class=\"rank scroll\">'+rows.slice(0,14).map(function(r){var w=Math.max(1,Math.abs(r.value)/max*100);return'<div class=\"rank-row\" title=\"'+esc(r.name)+'\"><span class=\"rank-name\">'+esc(r.name)+'</span><span class=\"rank-track\"><i class=\"rank-fill\" style=\"width:'+w+'%;--accent:'+(accent||'#38bdf8')+'\"></i></span><span class=\"rank-val\">'+esc(unitFn?unitFn(r.value):fmt(r.value,2))+'</span></div>'}).join('')+'</div>'}\n(function(){try{function put(id,v,kind,warn,bad){var e=htmlNode.querySelector('#'+id);if(!e)return;e.textContent=kind==='pct'?pct(v):ms(v);e.className='value '+(!Number.isFinite(v)?'warn':v>=bad?'bad':v>=warn?'warn':'ok')}put('v-heap',last('F'),'pct',70,85);put('v-fd',last('G'),'pct',70,85);put('v-cpu',last('H'),'pct',70,90);put('v-gcmax',last('I'),'ms',250,1000);var gf=htmlNode.querySelector('#gc-frequency');if(gf)gf.textContent=rate(last('B'))+' GC';drawLines('gc-chart','A',null,function(v){return fmt(v,3)+'s/s'});var original=(data.series||[]),threadFrames=original.filter(function(f){return f.refId==='C'||f.refId==='D'||f.refId==='E'}).map(function(f){var copy=Object.assign({},f);copy.refId='THREADS';return copy});data.series=threadFrames;drawLines('thread-chart','THREADS',null,function(v){return fmt(v,0)});data.series=original}catch(e){}})();",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-7": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "sum(hikaricp_connections_active{application=\"$app_name\"})",
+                      "instant": false,
+                      "legendFormat": "Ativas",
+                      "range": true
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "sum(hikaricp_connections_idle{application=\"$app_name\"})",
+                      "instant": false,
+                      "legendFormat": "Ociosas",
+                      "range": true
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "B"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "sum(hikaricp_connections_pending{application=\"$app_name\"})",
+                      "instant": false,
+                      "legendFormat": "Pendentes",
+                      "range": true
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "C"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "sum(hikaricp_connections_max{application=\"$app_name\"})",
+                      "instant": false,
+                      "legendFormat": "Máximo",
+                      "range": true
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "D"
+                }
+              },
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "bfnr96wiwms5cd"
+                    },
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "editorMode": "code",
+                      "expr": "sum(increase(hikaricp_connections_timeout_total{application=\"$app_name\"}[$__range]))",
+                      "instant": true,
+                      "legendFormat": "",
+                      "range": false
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "E"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 7,
+        "links": [],
+        "title": "",
+        "transparent": true,
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": false,
+              "codeData": "{}",
+              "css": "\n:host,:root{--bg:#0b1119;--panel:#111a26;--panel2:#0e1621;--line:#223247;--text:#f7fafc;--muted:#8fa1b7;--orange:#f97316;--cyan:#38bdf8;--green:#22c55e;--yellow:#f59e0b;--red:#ef4444;--purple:#a78bfa;font-family:Inter,\"Segoe UI\",system-ui,sans-serif}html,body{margin:0;width:100%;height:100%;background:transparent}\n*{box-sizing:border-box}.shell{width:100%;height:100%;overflow:hidden;border-radius:14px;background:radial-gradient(circle at 0 0,rgba(56,189,248,.06),transparent 28%),linear-gradient(145deg,#101925,#0b1119);border:1px solid rgba(148,163,184,.14);color:var(--text)}\n.section{height:100%;display:flex;flex-direction:column;padding:18px 20px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:15px;flex:0 0 auto}.section-kicker{font-size:10px;font-weight:800;letter-spacing:.15em;color:var(--orange);text-transform:uppercase}.section-title{font-size:18px;font-weight:750;letter-spacing:-.02em;margin-top:3px}.section-sub{font-size:11px;color:var(--muted);text-align:right}.grid{display:grid;gap:12px;min-height:0;flex:1}.card{position:relative;min-width:0;min-height:0;border-radius:11px;background:linear-gradient(145deg,rgba(22,33,48,.96),rgba(13,21,32,.96));border:1px solid rgba(148,163,184,.12);overflow:hidden}.card:before{content:\"\";position:absolute;inset:0 auto 0 0;width:2px;background:var(--accent,var(--cyan));opacity:.9}.card-inner{height:100%;padding:14px 15px}.label{font-size:10px;font-weight:750;letter-spacing:.09em;color:var(--muted);text-transform:uppercase}.value{font-size:26px;font-weight:780;letter-spacing:-.04em;margin-top:8px}.meta{font-size:10px;color:var(--muted);margin-top:5px}.status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;background:currentColor;box-shadow:0 0 10px currentColor}.ok{color:var(--green)}.warn{color:var(--yellow)}.bad{color:var(--red)}.neutral{color:var(--cyan)}.empty{height:100%;display:grid;place-items:center;text-align:center;padding:22px;color:#708197;font-size:11px}.empty b{display:block;color:#aab8c9;font-size:12px;margin-bottom:4px}.chart-card{display:flex;flex-direction:column}.chart-title{font-size:12px;font-weight:700;color:#dce6f3;margin-bottom:8px}.chart-canvas{flex:1;min-height:0}.chart-canvas svg{width:100%;height:100%;display:block}.legend{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:7px;max-height:34px;overflow:hidden}.legend-item{display:flex;align-items:center;gap:5px;font-size:9px;color:var(--muted);min-width:0}.legend-dot{width:7px;height:7px;border-radius:50%;flex:0 0 auto}.legend-name{max-width:170px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rank{display:flex;flex-direction:column;gap:7px;height:100%;overflow:auto;padding-right:3px}.rank-row{display:grid;grid-template-columns:minmax(90px,1fr) minmax(70px,2fr) auto;align-items:center;gap:9px;font-size:10px}.rank-name{color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rank-track{height:6px;border-radius:9px;background:#1b2a3c;overflow:hidden}.rank-fill{height:100%;border-radius:9px;background:linear-gradient(90deg,var(--accent,var(--cyan)),color-mix(in srgb,var(--accent,var(--cyan)) 55%,white));min-width:2px}.rank-val{font-variant-numeric:tabular-nums;color:#e7eef8;font-weight:700}.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:999px;background:rgba(56,189,248,.09);border:1px solid rgba(56,189,248,.2);font-size:9px;color:#9bdcff;font-weight:700}.scroll{scrollbar-width:thin;scrollbar-color:#2b3b50 transparent}@media(max-width:900px){.section{padding:14px}.section-sub{display:none}.grid{gap:8px}.value{font-size:21px}}\n.db-grid{grid-template-columns:2.2fr .8fr}.db-side{display:grid;grid-template-rows:1fr 1fr;gap:10px}.db-side .card:first-child{--accent:#38bdf8}.db-side .card:last-child{--accent:#ef4444}\n.info-btn{display:inline-grid;place-items:center;width:13px;height:13px;margin-left:6px;padding:0;border:1px solid currentColor;border-radius:50%;background:transparent;color:inherit;opacity:.45;font:700 8px/1 Inter,sans-serif;text-transform:none;letter-spacing:0;cursor:help;vertical-align:middle;flex:0 0 auto}.info-btn:hover{opacity:1}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div class=\"shell\"><section class=\"section\"><header class=\"section-head\"><div><div class=\"section-kicker\">06 · Banco de dados</div><div class=\"section-title\">Pool HikariCP</div></div><div class=\"section-sub\">Conexões, espera e timeouts</div></header><div class=\"grid db-grid\"><article class=\"card\"><div class=\"card-inner chart-card\"><div class=\"chart-title\">Ocupação do pool<span class=\"info-btn\" title=\"Conexões do pool HikariCP ao longo do tempo: ativas, ociosas, pendentes (aguardando) e o máximo configurado.\">i</span></div><div class=\"chart-canvas\" id=\"db-chart\"></div></div></article><div class=\"db-side\"><article class=\"card\"><div class=\"card-inner\"><div class=\"label\">Conexões ativas<span class=\"info-btn\" title=\"Conexões HikariCP em uso neste momento, comparadas à capacidade máxima do pool.\">i</span></div><div class=\"value neutral\" id=\"db-active\">--</div><div class=\"meta\" id=\"db-capacity\">capacidade --</div></div></article><article class=\"card\" id=\"db-timeout-card\"><div class=\"card-inner\"><div class=\"label\">Timeouts no período<span class=\"info-btn\" title=\"Quantas vezes uma requisição não conseguiu conexão do pool dentro do connection-timeout, no período. Maior que zero = pool subdimensionado ou banco lento.\">i</span></div><div class=\"value\" id=\"db-timeouts\">--</div><div class=\"meta\">falhas ao obter conexão</div></div></article></div></div></section></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "\nfunction arr(values){if(!values)return[];if(Array.isArray(values))return values;if(typeof values.toArray==='function')return values.toArray();var out=[];for(var i=0;i<(values.length||0);i++)out.push(typeof values.get==='function'?values.get(i):values[i]);return out}\nfunction numField(frame){var fs=(frame&&frame.fields)||[];for(var i=0;i<fs.length;i++){if(fs[i].type==='number'||fs[i].name==='Value'||fs[i].name==='value')return fs[i]}return fs.length>1?fs[1]:fs[0]}\nfunction timeField(frame){var fs=(frame&&frame.fields)||[];for(var i=0;i<fs.length;i++){if(fs[i].type==='time'||fs[i].name==='Time'||fs[i].name==='time')return fs[i]}return fs[0]}\nfunction frames(ref){return((data&&data.series)||[]).filter(function(f){return f.refId===ref})}\nfunction last(ref){var fs=frames(ref);for(var i=0;i<fs.length;i++){var f=numField(fs[i]),vs=arr(f&&f.values);for(var j=vs.length-1;j>=0;j--){var n=Number(vs[j]);if(Number.isFinite(n))return n}}return null}\nfunction labelOf(frame,key,fallback){var f=numField(frame),ls=(f&&f.labels)||{};if(key&&ls[key]!=null)return String(ls[key]);if(frame&&frame.name)return String(frame.name);if(f&&f.config&&f.config.displayNameFromDS)return String(f.config.displayNameFromDS);return fallback||'série'}\nfunction esc(s){return String(s==null?'':s).replace(/[&<>\"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',\"'\":'&#39;'}[c]})}\nfunction fmt(n,d){if(!Number.isFinite(n))return'--';return n.toLocaleString('pt-BR',{maximumFractionDigits:d==null?2:d})}\nfunction pct(n){return Number.isFinite(n)?fmt(n,2)+'%':'--'}\nfunction ms(n){return Number.isFinite(n)?fmt(n,n>=100?0:1)+' ms':'--'}\nfunction rate(n){return Number.isFinite(n)?fmt(n,2)+'/s':'--'}\nfunction dur(n){if(!Number.isFinite(n))return'--';n=Math.max(0,n);if(n<60)return Math.round(n)+'s';if(n<3600)return Math.floor(n/60)+'m '+Math.round(n%60)+'s';if(n<86400)return Math.floor(n/3600)+'h '+Math.round((n%3600)/60)+'m';return Math.floor(n/86400)+'d '+Math.round((n%86400)/3600)+'h'}\nvar palette=['#38bdf8','#f97316','#22c55e','#a78bfa','#f59e0b','#ef4444','#2dd4bf','#fb7185','#60a5fa','#c084fc'];\nfunction emptyHtml(title,sub){return'<div class=\"empty\"><div><b>'+esc(title)+'</b>'+esc(sub||'')+'</div></div>'}\nfunction drawLines(id,ref,key,unitFn){var host=htmlNode.querySelector('#'+id);if(!host)return;var fs=frames(ref),series=[];fs.forEach(function(frame,idx){var vf=numField(frame),tf=timeField(frame),ys=arr(vf&&vf.values).map(Number),xs=arr(tf&&tf.values).map(Number);var pts=[];for(var i=0;i<ys.length;i++){if(Number.isFinite(ys[i]))pts.push({x:Number.isFinite(xs[i])?xs[i]:i,y:ys[i]})}if(pts.length)series.push({name:labelOf(frame,key,'Série '+(idx+1)),pts:pts,color:palette[idx%palette.length]})});if(!series.length){host.innerHTML=emptyHtml('Sem dados','A métrica ainda não foi publicada para esta aplicação.');return}var all=[];series.forEach(function(s){all=all.concat(s.pts)});var xmin=Math.min.apply(null,all.map(function(p){return p.x})),xmax=Math.max.apply(null,all.map(function(p){return p.x})),ymax=Math.max.apply(null,all.map(function(p){return p.y}));if(xmax===xmin)xmax=xmin+1;if(!Number.isFinite(ymax)||ymax<=0)ymax=1;var W=760,H=190,L=34,R=10,T=10,B=23;var sx=function(x){return L+(x-xmin)/(xmax-xmin)*(W-L-R)},sy=function(y){return T+(1-y/ymax)*(H-T-B)};var grid='';for(var g=0;g<4;g++){var gy=T+g*(H-T-B)/3;grid+='<line x1=\"'+L+'\" y1=\"'+gy+'\" x2=\"'+(W-R)+'\" y2=\"'+gy+'\" stroke=\"#203044\" stroke-width=\"1\"/><text x=\"'+(L-5)+'\" y=\"'+(gy+3)+'\" text-anchor=\"end\" fill=\"#62748a\" font-size=\"8\">'+esc(unitFn?unitFn(ymax*(1-g/3)):fmt(ymax*(1-g/3),1))+'</text>'}var paths='';series.forEach(function(s){var d=s.pts.map(function(p,i){return(i?'L':'M')+sx(p.x).toFixed(1)+' '+sy(p.y).toFixed(1)}).join(' ');paths+='<path d=\"'+d+'\" fill=\"none\" stroke=\"'+s.color+'\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\"/>'});var legend='<div class=\"legend\">'+series.slice(0,10).map(function(s){var v=s.pts[s.pts.length-1].y;return'<div class=\"legend-item\"><i class=\"legend-dot\" style=\"background:'+s.color+'\"></i><span class=\"legend-name\">'+esc(s.name)+'</span><b>'+esc(unitFn?unitFn(v):fmt(v,2))+'</b></div>'}).join('')+'</div>';host.innerHTML='<svg viewBox=\"0 0 '+W+' '+H+'\" preserveAspectRatio=\"none\" aria-label=\"gráfico\"><defs><linearGradient id=\"fade-'+id+'\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#38bdf8\" stop-opacity=\".16\"/><stop offset=\"1\" stop-color=\"#38bdf8\" stop-opacity=\"0\"/></linearGradient></defs>'+grid+paths+'</svg>'+legend}\nfunction drawRank(id,ref,key,unitFn,accent){var host=htmlNode.querySelector('#'+id);if(!host)return;var rows=[];frames(ref).forEach(function(frame,idx){var f=numField(frame),vs=arr(f&&f.values),n=null;for(var i=vs.length-1;i>=0;i--){var v=Number(vs[i]);if(Number.isFinite(v)){n=v;break}}if(n!=null)rows.push({name:labelOf(frame,key,'Item '+(idx+1)),value:n})});rows.sort(function(a,b){return b.value-a.value});if(!rows.length){host.innerHTML=emptyHtml('Sem dados','Nenhuma série encontrada no período.');return}var max=Math.max.apply(null,rows.map(function(r){return Math.abs(r.value)}))||1;host.innerHTML='<div class=\"rank scroll\">'+rows.slice(0,14).map(function(r){var w=Math.max(1,Math.abs(r.value)/max*100);return'<div class=\"rank-row\" title=\"'+esc(r.name)+'\"><span class=\"rank-name\">'+esc(r.name)+'</span><span class=\"rank-track\"><i class=\"rank-fill\" style=\"width:'+w+'%;--accent:'+(accent||'#38bdf8')+'\"></i></span><span class=\"rank-val\">'+esc(unitFn?unitFn(r.value):fmt(r.value,2))+'</span></div>'}).join('')+'</div>'}\n(function(){try{var a=last('A'),m=last('D'),t=last('E'),original=(data.series||[]),poolFrames=original.filter(function(f){return f.refId==='A'||f.refId==='B'||f.refId==='C'||f.refId==='D'}).map(function(f){var copy=Object.assign({},f);copy.refId='POOL';return copy});data.series=poolFrames;drawLines('db-chart','POOL',null,function(v){return fmt(v,0)});data.series=original;var va=htmlNode.querySelector('#db-active'),cap=htmlNode.querySelector('#db-capacity'),vt=htmlNode.querySelector('#db-timeouts');if(va)va.textContent=fmt(a,0);if(cap)cap.textContent='capacidade '+fmt(m,0);if(vt){vt.textContent=fmt(t,0);vt.className='value '+(t>0?'bad':'ok')}}catch(e){}})();",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    },
+    "panel-8": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "cfo52u38mplogd"
+                    },
+                    "group": "loki",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "direction": "backward",
+                      "editorMode": "code",
+                      "expr": "{app=\"$app_name\"} \r\n  | pattern `[<_>] [<thread>] correlationId=<correlationId> traceId=<traceId> spanId=<spanId> <type> <logger> - <msg>` \r\n  |= \"$log_keyword\"",
+                      "maxLines": 500,
+                      "queryType": "range"
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": [
+              {
+                "group": "extractFields",
+                "kind": "Transformation",
+                "spec": {
+                  "options": {
+                    "format": "json",
+                    "keepTime": false,
+                    "replace": false,
+                    "source": "labels"
+                  }
+                }
+              },
+              {
+                "group": "organize",
+                "kind": "Transformation",
+                "spec": {
+                  "options": {
+                    "excludeByName": {
+                      "Line": true,
+                      "TraceID": true,
+                      "app": true,
+                      "correlationId": true,
+                      "filename": true,
+                      "host": true,
+                      "id": true,
+                      "job": true,
+                      "labelTypes": true,
+                      "labels": true,
+                      "spanId": true,
+                      "thread": true,
+                      "tsNs": true
+                    },
+                    "indexByName": {
+                      "Time": 0,
+                      "logger": 1,
+                      "msg": 4,
+                      "traceId": 3,
+                      "type": 2
+                    },
+                    "renameByName": {
+                      "Time": "Hora",
+                      "logger": "Origem",
+                      "msg": "Mensagem",
+                      "traceId": "TraceId",
+                      "type": "Nivel"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "description": "",
+        "id": 8,
+        "links": [],
+        "title": "",
+        "transparent": true,
+        "vizConfig": {
+          "group": "gapit-htmlgraphics-panel",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "SVGBaseFix": true,
+              "add100Percentage": true,
+              "calcsMutation": "standard",
+              "centerAlignContent": true,
+              "codeData": "{}",
+              "css": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@500&display=swap');:host,:root{--color-error:#ef4444;--color-warn:#f59e0b;--color-info:#0ea5e9;--color-debug:#64748b;--color-trace:#475569;--color-text-primary:#e0e6f1;--color-text-secondary:#9ca6b7;--color-bg-panel:rgba(14,18,25,0.94);--color-bg-hover:rgba(255,255,255,0.035);--color-border:#30363d;--color-btn-bg:#21262d;--color-btn-active-default:#2563eb}*{box-sizing:border-box}button,input{font-family:'Inter',sans-serif}#log-section-root{width:100%;height:100%;box-sizing:border-box;display:flex;flex-direction:column;padding:18px 20px;background:radial-gradient(circle at top left,rgba(249,115,22,0.06),transparent 32%),linear-gradient(135deg,#161B22 0%,#101419 100%);border:1px solid rgba(255,255,255,0.06);border-radius:14px;overflow:hidden}.log-section-header{display:flex;align-items:center;justify-content:space-between;margin:0 0 16px 0;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0}.log-section-header-left{display:flex;align-items:center;gap:10px}.log-section-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:9px;color:#F97316;background:rgba(249,115,22,0.12);border:1px solid rgba(249,115,22,0.30);font-size:1rem;flex-shrink:0}.log-section-title{font-size:1rem;font-weight:700;color:#ffffff;line-height:1.1}.log-section-sub{font-size:0.65rem;font-weight:600;color:#8b949e;text-transform:uppercase;letter-spacing:0.04em;margin-top:2px}#log-problems-container{flex:1;min-height:0;width:100%;font-family:'Inter',sans-serif;display:flex;flex-direction:column;overflow:hidden}.problems-table-panel{width:100%;flex:1;min-height:0;border:1px solid var(--color-border);border-radius:12px;background-color:var(--color-bg-panel);display:flex;flex-direction:column;overflow:hidden}.filter-bar{padding:10px 16px;border-bottom:1px solid var(--color-border);display:flex;align-items:center;flex-wrap:wrap;gap:16px;flex-shrink:0}.filter-group{display:flex;align-items:center;flex-wrap:wrap;gap:8px}.filter-label{color:var(--color-text-secondary);font-size:.8rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase}.filter-btn{padding:6px 14px;border:1px solid var(--color-border);border-radius:6px;background-color:var(--color-btn-bg);color:var(--color-text-secondary);display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-size:.75rem;font-weight:600;transition:background .2s ease,border-color .2s ease,color .2s ease}.filter-btn:hover{background-color:var(--color-border);color:var(--color-text-primary)}.filter-btn.active{background-color:var(--color-btn-active-default);border-color:var(--color-btn-active-default);color:#fff}.filter-btn.active.btn-error{background:var(--color-error);border-color:var(--color-error)}.filter-btn.active.btn-warn{background:var(--color-warn);border-color:var(--color-warn);color:#402c00}.filter-btn.active.btn-info{background:var(--color-info);border-color:var(--color-info)}.filter-btn.active.btn-debug{background:var(--color-debug);border-color:var(--color-debug)}.filter-btn.active.btn-trace{background:var(--color-trace);border-color:var(--color-trace)}.search-bar-group{margin-left:auto;display:flex;align-items:center;gap:8px}.search-input-wrapper{padding:0 10px;border:1px solid var(--color-border);border-radius:6px;background-color:var(--color-btn-bg);display:flex;align-items:center}.search-input-wrapper .svg-icon{color:var(--color-text-secondary);font-size:14px}.search-input{width:220px;padding:8px;border:none;outline:none;background:transparent;color:var(--color-text-primary)}.search-input::placeholder{color:#7d8590}.export-btn{padding:6px 10px}.table-wrapper{min-height:0;flex:1 1 auto;overflow-y:auto;overflow-x:auto;overscroll-behavior:contain}.table-wrapper::-webkit-scrollbar{width:7px;height:7px}.table-wrapper::-webkit-scrollbar-thumb{border-radius:999px;background:#30363d}.problems-table{width:100%;min-width:850px;border-collapse:collapse;table-layout:fixed}.problems-table th,.problems-table td{padding:12px 16px;border-bottom:1px solid rgba(48,54,61,0.7);color:var(--color-text-primary);font-size:12px;line-height:1.35;text-align:left;vertical-align:middle}.problems-table thead{position:sticky;top:0;z-index:2;background-color:#21262d}.problems-table th{color:#9ca6b7;font-size:11px;font-weight:700;letter-spacing:.3px;text-transform:uppercase}.problems-table tbody tr:hover{background-color:var(--color-bg-hover)}.problems-table th:nth-child(1),.problems-table td:nth-child(1){width:14%}.problems-table th:nth-child(2),.problems-table td:nth-child(2){width:9%}.problems-table th:nth-child(3),.problems-table td:nth-child(3){width:16%}.problems-table th:nth-child(4),.problems-table td:nth-child(4){width:38%}.problems-table th:nth-child(5),.problems-table td:nth-child(5){width:11%}.problems-table th:nth-child(6),.problems-table td:nth-child(6){width:12%}.cell-host{color:#fff!important;font-weight:700}.cell-trace{color:#9ca6b7;font-family:'Roboto Mono',monospace;font-size:10.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cell-problem{word-break:break-word;overflow-wrap:anywhere}.problems-empty-row td{padding:30px!important;color:var(--color-text-secondary)!important;text-align:center!important}.severity-badge{min-width:64px;padding:5px 10px;border-radius:999px;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.3px;box-shadow:0 1px 4px rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.25)}.severity-badge.sev-error{background:var(--color-error)}.severity-badge.sev-warn{background:var(--color-warn);color:#402c00}.severity-badge.sev-info{background:var(--color-info)}.severity-badge.sev-debug{background:var(--color-debug);border-color:rgba(255,255,255,0.4)}.severity-badge.sev-trace{background:var(--color-trace);border-color:rgba(255,255,255,0.4)}.problems-table tbody tr.row-error{background:rgba(239,68,68,0.08)}.problems-table tbody tr.row-error:hover{background:rgba(239,68,68,0.14)}.problems-table tbody tr.row-warn{background:rgba(249,115,22,0.06)}.problems-table tbody tr.row-warn:hover{background:rgba(249,115,22,0.11)}.pagination-controls{padding:10px 16px;border-top:1px solid var(--color-border);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-shrink:0}.pagination-info{color:var(--color-text-secondary);font-size:12px}.pagination-buttons{display:flex;gap:8px}.pagination-btn{padding:6px 14px;border:1px solid var(--color-border);border-radius:6px;background:var(--color-btn-bg);color:var(--color-text-primary);cursor:pointer;font-size:12px;font-weight:600;transition:background .18s ease,border-color .18s ease}.pagination-btn:hover:not(:disabled){background:#2d333b;border-color:#4b5563}.pagination-btn:disabled{opacity:.4;cursor:not-allowed}@media (max-width:680px){.filter-bar{align-items:stretch}.filter-group{width:100%}.search-bar-group{width:100%}.search-input-wrapper{flex:1}.search-input{width:100%}.pagination-controls{align-items:stretch;flex-direction:column}.pagination-buttons{width:100%}.pagination-buttons .pagination-btn{flex:1}}.svg-icon{display:inline-grid;place-items:center;width:1em;height:1em;line-height:1;vertical-align:-.125em;flex-shrink:0}.svg-icon svg{width:1em;height:1em;display:block}.copy-log-btn{width:28px;height:28px;border:1px solid var(--color-border);border-radius:6px;background:var(--color-btn-bg);color:var(--color-text-secondary);display:inline-grid;place-items:center;cursor:pointer}.copy-log-btn:hover{color:#fff;border-color:#4b5563}.copy-log-btn.copied{color:#22c55e;border-color:#22c55e}.cell-problem-wrap{display:grid;grid-template-columns:minmax(0,1fr) 30px;gap:8px;align-items:start}.cell-problem-text{min-width:0;word-break:break-word;overflow-wrap:anywhere}",
+              "dynamicData": false,
+              "dynamicFieldDisplayValues": false,
+              "dynamicHtmlGraphics": {
+                "dynamicData": true,
+                "dynamicFieldDisplayValues": false,
+                "dynamicProps": false
+              },
+              "dynamicProps": false,
+              "html": "<div id='log-section-root'><div id='log-problems-container'></div></div>",
+              "onInit": "",
+              "onInitOnResize": false,
+              "onRender": "(function(){\nfunction escapeHtml(v){return String(v==null?'':v).replace(/[&<>\\\"']/g,function(c){return c==='&'?'&amp;':c==='<'?'&lt;':c==='>'?'&gt;':c==='\\\"'?'&quot;':'&#39;';});}\nfunction normalizeSearchText(v){return String(v||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');}\nfunction valuesToArray(values){if(!values)return[];if(Array.isArray(values))return values;if(typeof values.toArray==='function')return values.toArray();var len=values.length||values.size||(values.buffer?values.buffer.length:0)||0;var out=[];for(var i=0;i<len;i++){out.push(typeof values.get==='function'?values.get(i):values[i]);}return out;}\nfunction toMs(v){if(v instanceof Date)return v.getTime();if(typeof v==='number')return v;var p=new Date(v).getTime();return Number.isFinite(p)?p:0;}\nfunction fieldByName(frame,name){var fields=(frame&&frame.fields)||[];var lower=name.toLowerCase();for(var i=0;i<fields.length;i++){var f=fields[i];var n1=String(f.name||'').toLowerCase();var n2=String((f.config&&f.config.displayName)||'').toLowerCase();if(n1===lower||n2===lower)return f;}return null;}\nvar TABLE_ICON=\"<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='4' width='18' height='16' rx='2'/><path d='M3 10h18'/><path d='M9 4v16'/></svg>\";\nvar SEARCH_ICON=\"<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='7'/><path d='m20 20-3.5-3.5'/></svg>\";\nvar CSV_ICON=\"<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.1' stroke-linecap='round' stroke-linejoin='round'><path d='M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7Z'/><path d='M14 2v5h5'/><path d='M8 16h8'/><path d='M8 12h8'/></svg>\";\nvar SEV_ORDER=['error','warn','info','debug','trace'];\nvar SEV_META={error:{label:'Error',cls:'sev-error'},warn:{label:'Warn',cls:'sev-warn'},info:{label:'Info',cls:'sev-info'},debug:{label:'Debug',cls:'sev-debug'},trace:{label:'Trace',cls:'sev-trace'}};\nvar rows=[];\nvar frame=data&&data.series&&data.series[0];\nif(frame){\nvar timeField=fieldByName(frame,'Hora')||fieldByName(frame,'Time');\nvar origemField=fieldByName(frame,'Origem');\nvar sevField=fieldByName(frame,'Nivel');\nvar traceField=fieldByName(frame,'TraceId');\nvar msgField=fieldByName(frame,'Mensagem');\nvar times=timeField?valuesToArray(timeField.values):[];\nvar origens=origemField?valuesToArray(origemField.values):[];\nvar sevs=sevField?valuesToArray(sevField.values):[];\nvar traces=traceField?valuesToArray(traceField.values):[];\nvar msgs=msgField?valuesToArray(msgField.values):[];\nvar n=times.length;\nfor(var i=0;i<n;i++){\nvar sevRaw=String(sevs[i]||'').toLowerCase();\nrows.push({time:toMs(times[i]),origem:String(origens[i]||'N/A'),severity:SEV_META[sevRaw]?sevRaw:'info',traceId:String(traces[i]||'-'),mensagem:String(msgs[i]||'-')});\n}\n}\nwindow.__logPanelStateSpring=window.__logPanelStateSpring||{activeSeverity:'all',searchTerm:'',currentPage:1};\nvar state=window.__logPanelStateSpring;\nvar itemsPerPage=15;\nvar debounceTimer=null;\nvar rightContainer=htmlNode.querySelector('#log-problems-container');\nfunction formatAge(ms){if(!ms)return '-';var diff=Math.floor((Date.now()-ms)/1000);if(diff<60)return Math.max(0,diff)+'s atras';if(diff<3600)return Math.floor(diff/60)+'m atras';if(diff<86400)return Math.floor(diff/3600)+'h atras';return Math.floor(diff/86400)+'d atras';}\nfunction formatHora(ms){if(!ms)return '-';var d=new Date(ms);return d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})+' '+d.toLocaleTimeString('pt-BR');}\nfunction exportCsv(list){var Q=String.fromCharCode(34);var esc=function(v){v=String(v==null?'':v).split(Q).join(Q+Q);return Q+v+Q;};var header=[esc('Origem'),esc('Nivel'),esc('TraceId'),esc('Mensagem'),esc('Hora')].join(';');var lines=[header];list.forEach(function(r){lines.push([esc(r.origem),esc(r.severity),esc(r.traceId),esc(r.mensagem),esc(formatHora(r.time))].join(';'));});var csv=String.fromCharCode(65279)+lines.join(String.fromCharCode(13,10));var blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='logs-'+Date.now()+'.csv';document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(url);},1000);}\nfunction renderRightPanel(){\nif(!rightContainer)return;\nvar filtered=rows.filter(function(r){\nif(state.activeSeverity!=='all'&&r.severity!==state.activeSeverity)return false;\nif(state.searchTerm){var s=normalizeSearchText(state.searchTerm);var hay=normalizeSearchText(r.origem+' '+r.traceId+' '+r.mensagem);if(hay.indexOf(s)===-1)return false;}\nreturn true;\n});\nfiltered.sort(function(a,b){return b.time-a.time;});\nvar totalPages=Math.max(1,Math.ceil(filtered.length/itemsPerPage));\nif(state.currentPage>totalPages)state.currentPage=totalPages;\nif(state.currentPage<1)state.currentPage=1;\nvar start=(state.currentPage-1)*itemsPerPage;\nvar pageItems=filtered.slice(start,start+itemsPerPage);\nvar rowsHtml='';\npageItems.forEach(function(r,idx){\nvar meta=SEV_META[r.severity];\nvar rowClass=r.severity==='error'?'row-error':(r.severity==='warn'?'row-warn':'');\nrowsHtml+=\"<tr class='\"+rowClass+\"'><td class='cell-host'>\"+escapeHtml(r.origem)+\"</td><td><span class='severity-badge \"+meta.cls+\"'>\"+escapeHtml(r.severity)+\"</span></td><td class='cell-trace' title='\"+escapeHtml(r.traceId)+\"'>\"+escapeHtml(r.traceId)+\"</td><td class='cell-problem'><div class='cell-problem-wrap'><span class='cell-problem-text'>\"+escapeHtml(r.mensagem)+\"</span><button class='copy-log-btn' type='button' title='Copiar linha do log' data-idx='\"+idx+\"'>\"+CSV_ICON+\"</button></div></td><td>\"+formatAge(r.time)+\"</td><td>\"+formatHora(r.time)+\"</td></tr>\";\n});\nif(!rowsHtml){\nrowsHtml=\"<tr class='problems-empty-row'><td colspan='6'>Nenhum log encontrado para os filtros selecionados.</td></tr>\";\n}\nvar filterButtonsHtml=\"<button class='filter-btn filter-btn-severity \"+(state.activeSeverity==='all'?'active':'')+\"' data-sev='all' type='button'>All</button>\";\nfilterButtonsHtml+=SEV_ORDER.map(function(sv){\nvar meta=SEV_META[sv];\nreturn \"<button class='filter-btn filter-btn-severity btn-\"+sv+\" \"+(state.activeSeverity===sv?'active':'')+\"' data-sev='\"+sv+\"' type='button'>\"+meta.label+\"</button>\";\n}).join('');\nrightContainer.innerHTML =\n\"<div class='log-section-header'><div class='log-section-header-left'><span class='log-section-icon'><span class='svg-icon' aria-hidden='true'>\"+TABLE_ICON+\"</span></span><div><div class='log-section-title'>Logs da Aplicação</div><div class='log-section-sub'>Busca detalhada por nível e conteúdo</div></div></div></div>\"+\n\"<div class='problems-table-panel'>\"+\n\"<div class='filter-bar'>\"+\n\"<div class='filter-group'><span class='filter-label'>Nível:</span>\"+filterButtonsHtml+\"</div>\"+\n\"<div class='search-bar-group'>\"+\n\"<div class='search-input-wrapper'><span class='svg-icon' aria-hidden='true'>\"+SEARCH_ICON+\"</span>\"+\n\"<input type='text' id='problem-search-input' class='search-input' placeholder='Buscar origem, traceId ou mensagem...' value='\"+escapeHtml(state.searchTerm)+\"'/></div>\"+\n\"<button class='pagination-btn export-btn' id='btn-export' type='button' title='Exportar CSV'><span class='svg-icon' aria-hidden='true'>\"+CSV_ICON+\"</span></button>\"+\n\"</div></div>\"+\n\"<div class='table-wrapper'><table class='problems-table'><thead><tr><th>Origem</th><th>Nível</th><th>TraceId</th><th>Mensagem</th><th>Idade</th><th>Hora</th></tr></thead><tbody>\"+rowsHtml+\"</tbody></table></div>\"+\n\"<div class='pagination-controls'><span class='pagination-info'>Pagina \"+state.currentPage+\" de \"+totalPages+\" &middot; \"+filtered.length+\" log(s)</span>\"+\n\"<div class='pagination-buttons'>\"+\n\"<button class='pagination-btn' id='btn-prev' type='button' \"+(state.currentPage===1?'disabled':'')+\">Anterior</button>\"+\n\"<button class='pagination-btn' id='btn-next' type='button' \"+(state.currentPage===totalPages?'disabled':'')+\">Proxima</button>\"+\n\"</div></div></div>\";\nvar searchInput=rightContainer.querySelector('#problem-search-input');\nif(searchInput){\nsearchInput.oninput=function(ev){\nvar value=ev.target.value;\nclearTimeout(debounceTimer);\ndebounceTimer=setTimeout(function(){\nstate.searchTerm=value;\nstate.currentPage=1;\nrenderRightPanel();\nvar updated=rightContainer.querySelector('#problem-search-input');\nif(updated){updated.focus();updated.setSelectionRange(value.length,value.length);}\n},400);\n};\n}\nvar sevButtons=rightContainer.querySelectorAll('.filter-btn-severity');\nfor(var i=0;i<sevButtons.length;i++){\n(function(btn){\nbtn.onclick=function(){\nstate.activeSeverity=btn.getAttribute('data-sev')||'all';\nstate.currentPage=1;\nrenderRightPanel();\n};\n})(sevButtons[i]);\n}\nvar prevBtn=rightContainer.querySelector('#btn-prev');\nif(prevBtn){prevBtn.onclick=function(){if(state.currentPage>1){state.currentPage-=1;renderRightPanel();}};}\nvar nextBtn=rightContainer.querySelector('#btn-next');\nif(nextBtn){nextBtn.onclick=function(){if(state.currentPage<totalPages){state.currentPage+=1;renderRightPanel();}};}\nvar exportBtn=rightContainer.querySelector('#btn-export');\nif(exportBtn){exportBtn.onclick=function(){exportCsv(filtered);};}\nfunction fallbackCopy(t){try{var ta=document.createElement('textarea');ta.value=t;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.left='-9999px';ta.style.top='0';ta.style.opacity='0';document.body.appendChild(ta);ta.focus();ta.select();try{ta.setSelectionRange(0,t.length);}catch(e){}try{document.execCommand('copy');}catch(e){}document.body.removeChild(ta);}catch(e){}}\nfunction doCopy(t,btn){var done=function(){btn.classList.add('copied');setTimeout(function(){btn.classList.remove('copied');},900);};try{if(navigator.clipboard&&navigator.clipboard.writeText&&window.isSecureContext){navigator.clipboard.writeText(t).then(done,function(){fallbackCopy(t);done();});}else{fallbackCopy(t);done();}}catch(e){fallbackCopy(t);done();}}\nvar copyButtons=rightContainer.querySelectorAll('.copy-log-btn');\nfor(var ci=0;ci<copyButtons.length;ci++){\n(function(btn){btn.onclick=function(){var rr=pageItems[+btn.getAttribute('data-idx')];if(!rr)return;var text='['+formatHora(rr.time)+'] '+String(rr.severity).toUpperCase()+' '+rr.origem+' '+rr.traceId+' - '+rr.mensagem;doCopy(text,btn);};})(copyButtons[ci]);\n}\n}\nrenderRightPanel();\n})();",
+              "overflow": "visible",
+              "panelupdateOnMount": true,
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull",
+                  "last",
+                  "firstNotNull",
+                  "first",
+                  "min",
+                  "max",
+                  "mean",
+                  "sum",
+                  "count",
+                  "range",
+                  "delta",
+                  "step",
+                  "diff",
+                  "logmin",
+                  "allIsZero",
+                  "allIsNull",
+                  "diffperc"
+                ]
+              },
+              "renderOnMount": true,
+              "rootCSS": ":host{overflow:hidden;display:block;}",
+              "useGrafanaScrollbar": false
+            }
+          },
+          "version": "2.2.3"
+        }
+      }
+    }
+  },
+  "layout": {
+    "kind": "GridLayout",
+    "spec": {
+      "items": [
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-1"
+            },
+            "height": 4,
+            "width": 24,
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-2"
+            },
+            "height": 9,
+            "width": 24,
+            "x": 0,
+            "y": 4
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-3"
+            },
+            "height": 16,
+            "width": 24,
+            "x": 0,
+            "y": 13
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-4"
+            },
+            "height": 11,
+            "width": 24,
+            "x": 0,
+            "y": 29
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-5"
+            },
+            "height": 11,
+            "width": 24,
+            "x": 0,
+            "y": 40
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-6"
+            },
+            "height": 13,
+            "width": 24,
+            "x": 0,
+            "y": 51
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-7"
+            },
+            "height": 10,
+            "width": 24,
+            "x": 0,
+            "y": 64
+          }
+        },
+        {
+          "kind": "GridLayoutItem",
+          "spec": {
+            "element": {
+              "kind": "ElementReference",
+              "name": "panel-8"
+            },
+            "height": 18,
+            "width": 24,
+            "x": 0,
+            "y": 74
+          }
+        }
+      ]
+    }
+  },
+  "links": [],
+  "liveNow": false,
+  "preload": false,
+  "tags": [
+    "spring-boot",
+    "operations",
+    "html-graphics"
+  ],
+  "timeSettings": {
+    "autoRefresh": "30s",
+    "autoRefreshIntervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "fiscalYearStartMonth": 0,
+    "from": "now-1h",
+    "hideTimepicker": false,
+    "timezone": "America/Sao_Paulo",
+    "to": "now"
+  },
+  "title": "Aplicações Spring Boot · Operations",
+  "variables": [
+    {
+      "kind": "QueryVariable",
+      "spec": {
+        "allowCustomValue": true,
+        "current": {
+          "text": "lognet-crm",
+          "value": "lognet-crm"
+        },
+        "definition": "label_values(up{app!=\"\",job!~\"node-exporter|cadvisor\"}, app)",
+        "hide": "hideVariable",
+        "includeAll": false,
+        "label": "Aplicação",
+        "multi": false,
+        "name": "app_name",
+        "options": [],
+        "query": {
+          "datasource": {
+            "name": "bfnr96wiwms5cd"
+          },
+          "group": "prometheus",
+          "kind": "DataQuery",
+          "spec": {
+            "__legacyStringValue": "label_values(up{app!=\"\",job!~\"node-exporter|cadvisor\"}, app)"
+          },
+          "version": "v0"
+        },
+        "refresh": "onDashboardLoad",
+        "regex": ".*",
+        "regexApplyTo": "value",
+        "skipUrlSync": false,
+        "sort": "disabled"
+      }
+    },
+    {
+      "kind": "TextVariable",
+      "spec": {
+        "current": {
+          "text": "",
+          "value": ""
+        },
+        "description": "",
+        "hide": "hideVariable",
+        "label": "",
+        "name": "log_keyword",
+        "query": "",
+        "skipUrlSync": false
+      }
+    }
+  ]
+}
