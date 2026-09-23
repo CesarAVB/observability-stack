@@ -62,12 +62,60 @@ Acompanhar a inicialização (a geração do DH/PKI leva alguns minutos):
 docker service logs -f openvpn_openvpn
 ```
 
-O `client.ovpn` fica gerado dentro do volume, em `/etc/openvpn/client.ovpn`.
-Para copiar pra fora do container:
+## Obter o `client.ovpn`
+
+O perfil é gerado uma única vez, dentro do volume, em `/etc/openvpn/client.ovpn`
+(só existe depois de aparecer `[openvpn-init] Concluido` no log). É o mesmo
+arquivo para todos os usuários — a identificação é por usuário/senha.
+
+**1. No servidor (SSH)** — copiar do container para o `/root`:
 
 ```bash
-docker cp $(docker ps -qf name=openvpn_openvpn):/etc/openvpn/client.ovpn ./client.ovpn
+docker cp $(docker ps -qf name=openvpn_openvpn):/etc/openvpn/client.ovpn /root/client.ovpn
 ```
+
+**2. No Windows (PowerShell)** — baixar (ou usar WinSCP/FileZilla em SFTP, porta 2224):
+
+```powershell
+scp -P 2224 root@45.187.224.251:/root/client.ovpn $HOME\Downloads\client.ovpn
+```
+
+**3. No servidor** — apagar a cópia (o arquivo carrega a chave `tls-auth`):
+
+```bash
+rm /root/client.ovpn
+```
+
+**4. No OpenVPN Connect** — **+** → aba **Upload File** (não **URL**: essa aba
+é para OpenVPN Access Server e falha com "Incorrect response from server") →
+arrastar o arquivo → informar usuário/senha → Connect.
+
+### Perfil gerado por versão antiga do script
+
+Redeploy/"Pull and redeploy" **não** regera o `client.ovpn` — o script pula a
+inicialização quando o volume já tem config. Se o perfil foi gerado antes dos
+ajustes para o OpenVPN Connect, os sintomas são:
+
+| Sintoma no OpenVPN Connect | Linha que falta no `client.ovpn` |
+|---|---|
+| "Missing external certificate" | `setenv CLIENT_CERT 0` |
+| "TAP adapter is disabled" | `data-ciphers AES-256-GCM:AES-128-GCM:AES-256-CBC` no lugar de `cipher AES-256-CBC` |
+
+Corrigir o arquivo no volume, sem regerar a PKI (os comandos são idempotentes), e
+repetir os passos 1 a 4:
+
+```bash
+C=$(docker ps -qf name=openvpn_openvpn)
+docker exec $C sh -c '
+  f=/etc/openvpn/client.ovpn
+  grep -q "^setenv CLIENT_CERT 0" $f || sed -i "/^auth-user-pass$/a setenv CLIENT_CERT 0" $f
+  sed -i "s/^cipher AES-256-CBC$/data-ciphers AES-256-GCM:AES-128-GCM:AES-256-CBC\ndata-ciphers-fallback AES-256-CBC/" $f
+  grep -E "^(setenv|data-ciphers|cipher)" $f'
+```
+
+Para regerar tudo do zero (novos certificados — perfis antigos deixam de
+funcionar): remover a stack, `docker volume rm openvpn_openvpn-data` e fazer o
+deploy de novo, recadastrando as variáveis da stack.
 
 ## Adicionar novo usuário
 
