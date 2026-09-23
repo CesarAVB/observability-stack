@@ -1,0 +1,35 @@
+services:
+  flussonic-exporter:
+    image: python:3.12-alpine
+    # Script montado como Docker Config; só usa a biblioteca padrão do Python.
+    command: ["python", "-u", "/app/flussonic_exporter.py"]
+    configs:
+      - source: flussonic_exporter_script
+        target: /app/flussonic_exporter.py
+    secrets:
+      - flussonic_api_password
+    environment:
+      - TZ=America/Sao_Paulo
+      # Definida em "Environment variables" da stack no Portainer (fora do git)
+      - FLUSSONIC_USER=${FLUSSONIC_USER}
+    networks:
+      - network_swarm_public
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+
+configs:
+  flussonic_exporter_script:
+    # Docker Config é imutável no Swarm: ao alterar flussonic_exporter.py,
+    # incrementar o sufixo para o "Pull and redeploy" trocar o script.
+    name: flussonic_exporter_script_v1
+    file: ./flussonic_exporter.py
+
+secrets:
+  flussonic_api_password:
+    external: true
+
+networks:
+  network_swarm_public:
+    external: true

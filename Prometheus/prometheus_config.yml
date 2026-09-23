@@ -63,6 +63,9 @@ scrape_configs:
   # blackbox_exporter — ping (ICMP) dos servidores Flussonic. Alertas de queda,
   # perda de pacotes e latência no grupo `icmp` de rules/alerts.yml. O IP fica
   # no label `instance` (mesmo relabel do blackbox-http).
+  # Os 172.16.14.13/14/15 não entram: o .251 não tem rota para 172.16.0.0/12.
+  # Eles são origens dos canais e ficam cobertos pelo job `flussonic` (a API do
+  # 170.80.69.5 mostra se cada origem está entregando quadros).
   - job_name: 'blackbox-icmp'
     scrape_interval: 30s
     metrics_path: /probe
@@ -70,12 +73,10 @@ scrape_configs:
       module: [icmp]
     static_configs:
       - targets:
+          - 170.80.69.5
           - 170.80.69.13
           - 170.80.69.14
           - 170.80.69.15
-          - 172.16.14.13
-          - 172.16.14.14
-          - 172.16.14.15
           - 177.129.15.12
           - 45.187.32.94
           - 200.209.175.118
@@ -89,6 +90,28 @@ scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: blackbox-exporter:9115
+
+  # Flussonic Media Server via API v3 (stack FlussonicExporter/). O 23.01 não
+  # gera formato Prometheus, então o flussonic-exporter lê o JSON e converte.
+  # Multi-target como o blackbox: o servidor Flussonic vai em `target` e fica
+  # no label `instance`. Alertas no grupo `flussonic` de rules/alerts.yml.
+  - job_name: 'flussonic'
+    scrape_interval: 30s
+    scrape_timeout: 25s
+    metrics_path: /probe
+    static_configs:
+      - targets:
+          - 170.80.69.5
+        labels:
+          servico: 'flussonic'
+          environment: 'production'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: flussonic-exporter:9105
 
   # App Spring Boot do CRM Lognet — coleta métricas via Actuator/Micrometer
   # sobre HTTPS no endpoint público da API.

@@ -22,6 +22,16 @@ route:
   repeat_interval: 4h
 
   routes:
+    # Flussonic: agrupa por origem principal para uma queda de origem com dezenas
+    # de canais não virar uma mensagem gigante (limite de 4096 caracteres do
+    # Telegram). Já realerta de hora em hora, como a rota de críticos abaixo.
+    - matchers:
+        - job="flussonic"
+      receiver: telegram
+      group_by: ['alertname', 'primary']
+      group_wait: 30s
+      repeat_interval: 1h
+
     # Críticos: realerta de hora em hora enquanto estiver de pé.
     - matchers:
         - severity="critical"
@@ -42,6 +52,18 @@ inhibit_rules:
       - alertname="IcmpHostDown"
     target_matchers:
       - alertname=~"IcmpPacketLoss|IcmpHighLatency"
+    equal: ['instance']
+  # Origem principal caída: os canais dela indo para a reserva é consequência.
+  - source_matchers:
+      - alertname="FlussonicSourceDown"
+    target_matchers:
+      - alertname="FlussonicStreamOnBackup"
+    equal: ['primary']
+  # API do Flussonic fora: todos os canais aparecem sem sinal.
+  - source_matchers:
+      - alertname="FlussonicApiDown"
+    target_matchers:
+      - alertname=~"FlussonicStreamDown|FlussonicSourceDown|FlussonicStreamOnBackup"
     equal: ['instance']
 
 receivers:
@@ -85,6 +107,9 @@ receivers:
           {{- end }}
           {{- with .Labels.exported_job }}
           ⏱ <b>Tarefa:</b> <code>{{ . }}</code>
+          {{- end }}
+          {{- with .Labels.stream }}
+          📺 <b>Canal:</b> <code>{{ . }}</code>
           {{- end }}
           {{- with .Labels.client_name }}
           🔌 <b>Integração:</b> <code>{{ . }}</code>

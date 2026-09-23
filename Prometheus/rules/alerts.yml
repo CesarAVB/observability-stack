@@ -85,6 +85,61 @@ groups:
           description: "Latência média do ping acima de 100 ms nos últimos 5 minutos."
 
   # ---------------------------------------------------------------------------
+  # Canais do Flussonic (job flussonic, stack FlussonicExporter/). Só streams
+  # static="true" (sempre ligados); os sob demanda param sem espectador.
+  # `primary` = 1ª origem configurada do stream; `source` = origem ativa agora.
+  - name: flussonic
+    rules:
+      - alert: FlussonicApiDown
+        expr: flussonic_up == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          titulo: "API do Flussonic inacessível"
+          summary: "O exporter não consegue ler a API do Flussonic {{ $labels.instance }}"
+          description: "Servidor Flussonic fora do ar, porta 80 bloqueada ou usuário/senha da API inválidos."
+
+      - alert: FlussonicStreamDown
+        expr: |
+          flussonic_stream_alive{static="true"} == 0
+          or
+          flussonic_stream_input_bitrate_kbps{static="true"} == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          titulo: "Canal fora do ar"
+          summary: "{{ $labels.stream }} ({{ $labels.title }}) sem sinal no Flussonic"
+          description: "Stream parado ou sem bitrate de entrada há 2 minutos, em todas as origens configuradas."
+
+      # Origem que é a primeira opção de algum canal e não entrega quadro para
+      # nenhum deles. Os canais podem ter caído para a reserva (ver abaixo).
+      - alert: FlussonicSourceDown
+        expr: |
+          label_replace(
+            max by (job, servico, instance, host) (flussonic_input_up{static="true",position="0"}) == 0,
+            "primary", "$1", "host", "(.*)"
+          )
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          titulo: "Origem de canais sem sinal"
+          summary: "A origem {{ $labels.host }} não entrega sinal para nenhum canal"
+          description: "Nenhum canal que tem {{ $labels.host }} como origem principal recebe quadros dela há 2 minutos."
+
+      - alert: FlussonicStreamOnBackup
+        expr: flussonic_stream_on_backup{static="true"} == 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          titulo: "Canal na origem reserva"
+          summary: "{{ $labels.stream }} ({{ $labels.title }}) puxando de {{ $labels.source }} em vez de {{ $labels.primary }}"
+          description: "O canal está no ar, mas pela origem reserva há 5 minutos."
+
+  # ---------------------------------------------------------------------------
   - name: spring-apps
     rules:
       - alert: HighHttp5xxRate
