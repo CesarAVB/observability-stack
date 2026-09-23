@@ -1,0 +1,873 @@
+zabbix_export:
+  version: '7.0'
+  template_groups:
+    -
+      uuid: 0e55488e98e44ecbb7bd7fd4fcc22925
+      name: 'Templates/Network devices'
+  templates:
+    -
+      uuid: 7c3fa313510449ceaf99718a7173b2cb
+      template: 'OLT Fiberhome AN5516'
+      name: 'OLT Fiberhome AN5516'
+      vendor:
+        name: 'César Augusto'
+        version: '7.0.3'
+      description: |
+        Template para OLT Fiberhome AN5516 (GEPON-OLT-COMMON-MIB, enterprise
+        OID 1.3.6.1.4.1.5875). Autor: César Augusto. Versão do template: 7.0.3.
+
+        ATUALIZAÇÃO 7.0.3 (11/09/2026): encontrado em
+        Grafana/estudar/finder-hist.php um script PHP real e em produção
+        (usa a API do Zabbix pra descobrir hosts de um template
+        "FB - OLT Fiberhome" e coleta os dados via snmp2_get/snmp2_real_walk
+        para um MySQL próprio, com alertas Telegram/WhatsApp). Esse script
+        CONFIRMA em SNMP real, para ESTE modelo de OLT: (1) voltagem,
+        corrente de bias e temperatura POR ONU são sim acessíveis via SNMP
+        puro (colunas .8/.9/.10 de onuPonInfoTable) — a versão anterior
+        deste template (7.0.2) dizia o contrário, baseada só na lib
+        tqandrade/snmp-fiberhome, que usa uma rota binária proprietária
+        diferente para o mesmo dado; (2) a escala de TODOS os campos
+        analógicos (tensão, corrente, temperatura, potência TX/RX, tanto
+        por PON quanto por ONU) é x0,01, confirmado ao vivo, não suposição;
+        (3) slot/PON de cada ONU não vêm de decodificar {#SNMPINDEX} — vêm
+        de fazer parse da STRING "PON <slot>/<pon>" retornada pela própria
+        tabela de localização da ONU. Os itens abaixo foram corrigidos de
+        acordo. Esse script NÃO faz parte deste template (é uma ferramenta
+        Zabbix-API + MySQL separada) — foi usado só como fonte de validação.
+
+        NÃO TESTADO em hardware real por mim (Claude) ainda — mas os OIDs,
+        escalas e formato de índice abaixo agora têm confirmação de uso em
+        produção via o script citado acima. Ainda vale rodar snmpwalk
+        próprio antes de confiar cegamente, mas a base é sólida.
+
+        Fontes cruzadas em 11/09/2026:
+        1. MIB oficial da Fiberhome, GEPON-OLT-COMMON-MIB.my (mirror em
+           librenms/librenms-mibs), lida diretamente byte a byte (grep no
+           arquivo baixado) — fonte MAIS CONFIÁVEL, é a definição SNMP real
+           da fabricante, não um template de terceiros. A tabela
+           oltPonInfoTable (potência TX, voltagem, corrente e temperatura
+           POR PORTA PON) e a tabela oltPonRxOpticalPowerTable vêm daqui,
+           verbatim.
+        2. Template oficial da comunidade Zabbix "SNMP OLT FiberHome"
+           (zabbix/community-templates, Network_Appliances/template_fiberhome_2020,
+           versão 6.0) — lido por completo. Os itens de temperatura da OLT
+           e potência óptica RX/TX por ONU vêm daqui, verbatim.
+        3. Biblioteca open-source tqandrade/snmp-fiberhome (Node.js), que
+           reimplementa o protocolo Fiberhome via SNMP puro (árvore .800.*)
+           e via um protocolo binário proprietário (árvore .91.*) — usada
+           para confirmar a tabela de portas PON e a tabela de status de ONU.
+        4. Documentação esparsa (Paessler KB, fóruns) sobre o item de status
+           de ONU.
+
+        POTÊNCIA ÓPTICA TX vs. RX — POR QUE NÃO HÁ "RX POR PORTA PON":
+        fisicamente, cada porta PON da OLT tem UM laser de descida (TX) que
+        transmite em broadcast para todas as ONUs — por isso faz sentido
+        existir "oltPonTxOpticalPower" como valor único por porta. Já o
+        RECEBIMENTO (RX) é feito em rajadas (burst-mode) separadas por ONU
+        — por isso a MIB só define oltPonRxOpticalPowerTable indexada por
+        {ponIndex, número da ONU} (1.3.6.1.4.1.5875.800.3.9.3.7), ou seja,
+        RX óptico só existe por ONU (mesmo dado que já estava em
+        onuPonRXOpticalPower, tabela onuPonInfoTable, usada abaixo). Não há
+        "potência RX da porta PON" como grandeza única — não é lacuna deste
+        template, é a arquitetura física do GPON.
+
+        ESCALA (multiplicador x0,01): CONFIRMADA em produção pelo script
+        finder-hist.php para TODOS os campos analógicos deste template —
+        voltagem, corrente de bias e temperatura tanto por PORTA PON
+        (oltPonOpticalVltage/oltPonOpticalCurrent/oltPonOpticalTemperature)
+        quanto por ONU (onuPonInfoTable colunas .8/.9/.10), além de TX power
+        por porta PON e TX/RX power por ONU. Não é mais suposição por
+        analogia — o script real aplica `number_format($valor * 0.01, 2)`
+        em todos esses campos antes de gravar no banco dele.
+
+        LIMITAÇÃO CONHECIDA — CONTAGEM DE ONUs ONLINE/OFFLINE POR PON: a OLT
+        expõe via SNMP puro apenas o TOTAL de ONUs autorizadas por porta PON
+        (item "authorized_onus" abaixo, coluna .12 de getPonPortList) — não
+        uma contagem já separada de online vs. offline. Este template
+        também descobre o status individual de cada ONU (item
+        fh.onu.status, tabela .800.3.10.1.1.11), com tag
+        {#PONSLOT}-{#PONPORT} — para obter "quantos online / quantos
+        offline por PON", agregue esses itens por tag no lado do Grafana
+        (Zabbix data source, agregação por tag) em vez de tentar somar
+        dentro do próprio Zabbix: os calculated/aggregate items do Zabbix
+        não têm uma forma simples e documentada de contar itens descobertos
+        filtrando por tag dentro do mesmo host nesta versão, e inventar essa
+        expressão sem testar ao vivo arriscaria quebrar silenciosamente. O
+        script finder-hist.php resolve isso por fora do Zabbix: ele mesmo
+        conta online/offline por PON a partir da tabela fiber_onu (MySQL
+        próprio) e dispara alerta quando a % de offline passa de um
+        threshold — é uma referência de como fazer essa agregação, mas roda
+        fora do Zabbix, num MySQL e script PHP separados.
+
+        VALUEMAP DE STATUS DE ONU: confirmado tanto pela lib
+        tqandrade/snmp-fiberhome quanto pelo script finder-hist.php (tabela
+        $StatusNames, em uso real): 0=rompimento de fibra/fiber cut,
+        1=online, 2=falta de energia/power cut, 3=offline, 4=desconhecido/
+        averiguar (esse último código não aparece na lib tqandrade, só no
+        script real — mantido no valuemap por precaução). A lib
+        tqandrade/snmp-fiberhome documenta outras DUAS tabelas de código
+        possíveis dependendo do modelo/firmware (AN5116 e AN5516 NGPON) —
+        se a OLT não for um AN5516 "clássico", confirmar os códigos antes
+        de usar o valuemap "ONU Status (Fiberhome AN5516)" em produção.
+      groups:
+        -
+          name: 'Templates/Network devices'
+      items:
+        -
+          uuid: 1da824034bf94faa99e7817a30ec7c06
+          name: 'SNMP agent availability'
+          type: INTERNAL
+          key: 'zabbix[host,snmp,available]'
+          delay: 1m
+          history: 7d
+          trends: 30d
+          valuemap:
+            name: 'SNMP availability'
+          tags:
+            -
+              tag: component
+              value: system
+        -
+          uuid: 4b4ef80a032a400ba032772ed30ef52e
+          name: 'System Temperature'
+          type: SNMP_AGENT
+          snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.4.5.0'
+          key: 'fh.olt.temperature'
+          delay: 5m
+          history: 30d
+          trends: 90d
+          value_type: FLOAT
+          units: °C
+          description: |
+            Temperatura geral da OLT (chassi). OID: getOltInformation,
+            coluna .5 (.1.3.6.1.4.1.5875.800.3.9.4.5.0), escalar único —
+            não há leitura por slot/placa nesta MIB.
+          tags:
+            -
+              tag: component
+              value: system
+            -
+              tag: metric
+              value: temperature
+      discovery_rules:
+        -
+          uuid: 79590d17322a421f84823f77b1fd6646
+          name: 'Card Info Table'
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#SNMPVALUE},.1.3.6.1.4.1.5875.800.3.9.2.1.1.2]'
+          key: 'fh.card.discovery'
+          delay: 1h
+          lifetime: 7d
+          description: |
+            Descobre os slots/placas pela tabela getCardInformation
+            (.1.3.6.1.4.1.5875.800.3.9.2.1.1), coluna .2 (cardType).
+            {#SNMPINDEX} = número do slot; {#SNMPVALUE} = código do tipo
+            de placa.
+          item_prototypes:
+            -
+              uuid: e26feb203f01466291ca64d93eb2cebd
+              name: 'Slot {#SNMPINDEX}: card type code'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.2.1.1.2.{#SNMPINDEX}'
+              key: 'fh.card.type[{#SNMPINDEX}]'
+              delay: 1h
+              history: 30d
+              trends: 90d
+              tags:
+                -
+                  tag: component
+                  value: card
+                -
+                  tag: metric
+                  value: type
+            -
+              uuid: ae5d08b39fe540cb9a2b9ee7e9efbe5c
+              name: 'Slot {#SNMPINDEX}: card status'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.2.1.1.5.{#SNMPINDEX}'
+              key: 'fh.card.status[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              trends: 90d
+              valuemap:
+                name: 'Card Status (Fiberhome)'
+              tags:
+                -
+                  tag: component
+                  value: card
+                -
+                  tag: metric
+                  value: status
+            -
+              uuid: 41da5e097832411a9c7a4932b527f764
+              name: 'Slot {#SNMPINDEX}: hardware version'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.2.1.1.3.{#SNMPINDEX}'
+              key: 'fh.card.hw_version[{#SNMPINDEX}]'
+              delay: 1h
+              history: 30d
+              trends: 90d
+              value_type: CHAR
+              tags:
+                -
+                  tag: component
+                  value: card
+                -
+                  tag: metric
+                  value: hw-version
+            -
+              uuid: 483dd538f9f64d65b2bf7400bab43ba2
+              name: 'Slot {#SNMPINDEX}: software version'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.2.1.1.4.{#SNMPINDEX}'
+              key: 'fh.card.sw_version[{#SNMPINDEX}]'
+              delay: 1h
+              history: 30d
+              trends: 90d
+              value_type: CHAR
+              tags:
+                -
+                  tag: component
+                  value: card
+                -
+                  tag: metric
+                  value: sw-version
+            -
+              uuid: b260d18189374511af78fef959bc0b8c
+              name: 'Slot {#SNMPINDEX}: CPU utilization'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.2.1.1.8.{#SNMPINDEX}'
+              key: 'fh.card.cpu[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              trends: 90d
+              value_type: FLOAT
+              units: '%'
+              preprocessing:
+                -
+                  type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                -
+                  tag: component
+                  value: card
+                -
+                  tag: metric
+                  value: cpu
+            -
+              uuid: a956deb369a94fddb4dc6eb4f24f5eaf
+              name: 'Slot {#SNMPINDEX}: memory utilization'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.2.1.1.9.{#SNMPINDEX}'
+              key: 'fh.card.memory[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              trends: 90d
+              value_type: FLOAT
+              units: '%'
+              preprocessing:
+                -
+                  type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                -
+                  tag: component
+                  value: card
+                -
+                  tag: metric
+                  value: memory
+            -
+              uuid: 4be9511c8404401a840467303bea52dd
+              name: 'Slot {#SNMPINDEX}: total ports'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.2.1.1.6.{#SNMPINDEX}'
+              key: 'fh.card.ports_total[{#SNMPINDEX}]'
+              delay: 1h
+              history: 30d
+              trends: 90d
+              value_type: UNSIGNED
+              tags:
+                -
+                  tag: component
+                  value: card
+                -
+                  tag: metric
+                  value: ports-total
+            -
+              uuid: 9c02369e796943d99fa06ecb1a2c99b4
+              name: 'Slot {#SNMPINDEX}: available ports'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.2.1.1.7.{#SNMPINDEX}'
+              key: 'fh.card.ports_available[{#SNMPINDEX}]'
+              delay: 1h
+              history: 30d
+              trends: 90d
+              value_type: UNSIGNED
+              tags:
+                -
+                  tag: component
+                  value: card
+                -
+                  tag: metric
+                  value: ports-available
+        -
+          uuid: 84006b0db7644128b44e7e5daf768066
+          name: 'PON Port Table'
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#SNMPVALUE},.1.3.6.1.4.1.5875.800.3.9.3.4.1.2]'
+          key: 'fh.pon.discovery'
+          delay: 1h
+          lifetime: 7d
+          description: |
+            Descobre as portas PON pela tabela getPonPortList
+            (.1.3.6.1.4.1.5875.800.3.9.3.4.1), coluna .2 (portName).
+            {#SNMPINDEX} = índice da porta PON nesta tabela; {#SNMPVALUE} =
+            nome da porta retornado pela OLT.
+          item_prototypes:
+            -
+              uuid: 6bac4ea59b8741739c3c18c977344643
+              name: 'PON {#SNMPVALUE}: enable status'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.3.4.1.4.{#SNMPINDEX}'
+              key: 'fh.pon.enable_status[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              trends: 90d
+              tags:
+                -
+                  tag: component
+                  value: pon
+                -
+                  tag: metric
+                  value: enable-status
+            -
+              uuid: 55a45dafc8364ded88bc9317e4fe722e
+              name: 'PON {#SNMPVALUE}: online status'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.3.4.1.5.{#SNMPINDEX}'
+              key: 'fh.pon.online_status[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              trends: 90d
+              valuemap:
+                name: 'PON Port Online Status (Fiberhome)'
+              description: |
+                A MIB oficial (oltPonInfoEntry coluna .5) documenta este
+                campo como "1:occupied(1) 2:empty(0)" — presença/ocupação
+                da porta, não necessariamente um estado "online/offline"
+                formal. A lib tqandrade/snmp-fiberhome mapeia o mesmo
+                campo como portOnlineStatus (1=online, 0=offline). Mantido
+                como "online status" por ser o uso prático mais comum;
+                confirmar semântica exata com snmpwalk real.
+              tags:
+                -
+                  tag: component
+                  value: pon
+                -
+                  tag: metric
+                  value: online-status
+            -
+              uuid: e86f91639fa4409a998e863ee44654de
+              name: 'PON {#SNMPVALUE}: authorized ONUs (total)'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.3.4.1.12.{#SNMPINDEX}'
+              key: 'fh.pon.authorized_onus[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              trends: 90d
+              value_type: UNSIGNED
+              units: ONUs
+              description: |
+                Total de ONUs autorizadas/registradas na porta PON — NÃO
+                separa online de offline (ver limitação descrita na
+                descrição do template). Para o detalhamento online/offline,
+                usar os itens fh.onu.status descobertos por "ONU Status
+                Table" e agregar por tag pon={#SNMPINDEX} no Grafana.
+              tags:
+                -
+                  tag: component
+                  value: pon
+                -
+                  tag: metric
+                  value: onu-count
+            -
+              uuid: ffbf120869c745c39d81591c4692d7a5
+              name: 'PON {#SNMPVALUE}: downlink rate'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.3.4.1.6.{#SNMPINDEX}'
+              key: 'fh.pon.downlink_rate[{#SNMPINDEX}]'
+              delay: 1h
+              history: 30d
+              trends: 90d
+              tags:
+                -
+                  tag: component
+                  value: pon
+                -
+                  tag: metric
+                  value: downlink-rate
+            -
+              uuid: 50e6d65d11cb448ebf716cd968274903
+              name: 'PON {#SNMPVALUE}: uplink rate'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.3.4.1.13.{#SNMPINDEX}'
+              key: 'fh.pon.uplink_rate[{#SNMPINDEX}]'
+              delay: 1h
+              history: 30d
+              trends: 90d
+              tags:
+                -
+                  tag: component
+                  value: pon
+                -
+                  tag: metric
+                  value: uplink-rate
+            -
+              uuid: 106e8e2f0ed64cee8c4311cc5a7175b4
+              name: 'PON {#SNMPVALUE}: TX optical power'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.3.4.1.8.{#SNMPINDEX}'
+              key: 'fh.pon.tx_power[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              trends: 90d
+              value_type: FLOAT
+              units: dBm
+              preprocessing:
+                -
+                  type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              description: |
+                Potência óptica TX do transceptor da PRÓPRIA porta PON da
+                OLT (não é de uma ONU específica). Confirmado verbatim na
+                MIB oficial: oltPonTxOpticalPower, coluna .8 de
+                oltPonInfoEntry (1.3.6.1.4.1.5875.800.3.9.3.4.1.8),
+                SYNTAX Integer32, read-only. Escala x0,01 (dBm) CONFIRMADA
+                EM PRODUÇÃO pelo script finder-hist.php (`$TX_Pon * 0.01`).
+              tags:
+                -
+                  tag: component
+                  value: pon
+                -
+                  tag: metric
+                  value: optical-power-tx
+            -
+              uuid: fec3b97e76914caca5f6d283ba7538b4
+              name: 'PON {#SNMPVALUE}: optical transceiver voltage'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.3.4.1.9.{#SNMPINDEX}'
+              key: 'fh.pon.voltage[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              trends: 90d
+              value_type: FLOAT
+              units: V
+              preprocessing:
+                -
+                  type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              description: |
+                Voltagem do transceptor óptico da porta PON da OLT.
+                Confirmado verbatim na MIB oficial: oltPonOpticalVltage
+                (sic), coluna .9 de oltPonInfoEntry
+                (1.3.6.1.4.1.5875.800.3.9.3.4.1.9), SYNTAX Integer32,
+                read-only. Escala x0,01 CONFIRMADA EM PRODUÇÃO pelo script
+                finder-hist.php (`$voltagem * 0.01`).
+              tags:
+                -
+                  tag: component
+                  value: pon
+                -
+                  tag: metric
+                  value: voltage
+            -
+              uuid: f6abd861799e4634bc0afc39e2b13340
+              name: 'PON {#SNMPVALUE}: optical transceiver bias current'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.3.4.1.10.{#SNMPINDEX}'
+              key: 'fh.pon.bias_current[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              trends: 90d
+              value_type: FLOAT
+              units: mA
+              preprocessing:
+                -
+                  type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              description: |
+                Corrente de bias do transceptor óptico da porta PON da OLT.
+                Confirmado verbatim na MIB oficial: oltPonOpticalCurrent,
+                coluna .10 de oltPonInfoEntry
+                (1.3.6.1.4.1.5875.800.3.9.3.4.1.10), SYNTAX Integer32,
+                read-only. Escala x0,01 CONFIRMADA EM PRODUÇÃO pelo script
+                finder-hist.php (`$amperagem * 0.01`).
+              tags:
+                -
+                  tag: component
+                  value: pon
+                -
+                  tag: metric
+                  value: bias-current
+            -
+              uuid: 922d24c28f114429a6274c127717ea47
+              name: 'PON {#SNMPVALUE}: optical transceiver temperature'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.3.4.1.11.{#SNMPINDEX}'
+              key: 'fh.pon.temperature[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              trends: 90d
+              value_type: FLOAT
+              units: °C
+              description: |
+                Temperatura do transceptor óptico da PORTA PON (diferente
+                do item "System Temperature", que é da OLT/chassi inteiro).
+                Confirmado verbatim na MIB oficial: oltPonOpticalTemperature,
+                coluna .11 de oltPonInfoEntry
+                (1.3.6.1.4.1.5875.800.3.9.3.4.1.11), SYNTAX Integer32,
+                read-only.
+              trigger_prototypes:
+                -
+                  uuid: 33dfd0ef1b264b26aafdb443cecc979d
+                  expression: 'last(/OLT Fiberhome AN5516/fh.pon.temperature[{#SNMPINDEX}])>{$FH.PON.TEMP.MAX}'
+                  name: 'PON {#SNMPVALUE}: high transceiver temperature ({ITEM.LASTVALUE})'
+                  priority: AVERAGE
+              tags:
+                -
+                  tag: component
+                  value: pon
+                -
+                  tag: metric
+                  value: temperature
+        -
+          uuid: 4debb015abf545a7b5eec2761d5945b9
+          name: 'ONU Table'
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#SNMPVALUE},.1.3.6.1.4.1.5875.800.3.9.3.3.1.2]'
+          key: 'fh.onu.discovery'
+          delay: '12h;1m/1-7,12:00-12:01'
+          lifetime: 7d
+          description: |
+            CONFIRMADO EM PRODUÇÃO em 11/09/2026: encontrado um script PHP
+            real (Grafana/estudar/finder-hist.php, não faz parte deste
+            template — é uma ferramenta separada que já coleta dados de
+            OLTs Fiberhome via API do Zabbix + SNMP direto para um MySQL
+            próprio) que usa exatamente esta tabela e index para descobrir
+            ONUs, com os mesmos OIDs abaixo validados em SNMP real.
+
+            Descobre as ONUs pela tabela onuPonInfoTable
+            (.1.3.6.1.4.1.5875.800.3.9.3.3.1), coluna .2 (onuPonName).
+            {#SNMPINDEX} = índice numérico simples da linha nesta tabela
+            (NÃO é um "onuIndex" empacotado — é só um contador de linha,
+            confirmado pelo script real, que extrai esse número com
+            `preg_match('/(\d+)(?!.*\d)/', $key, ...)` e usa o MESMO índice
+            para correlacionar as tabelas de status/serial/óptica).
+            {#SNMPVALUE} = string de localização da ONU no formato
+            "PON <slot>/<pon>" (ex.: "PON 1/3") — o preprocessing abaixo
+            extrai {#PONSLOT} e {#PONPORT} dessa STRING (removendo o
+            prefixo "PON " e dividindo por "/"), exatamente como o script
+            real faz (`str_replace("PON ", "", $onu)` + `explode("/", ...)`)
+            — versão anterior deste template tentava decodificar slot/pon
+            a partir de uma fórmula bit a bit sobre {#SNMPINDEX}, o que
+            estava ERRADO; corrigido nesta versão.
+          preprocessing:
+            -
+              type: JAVASCRIPT
+              parameters:
+                - |
+                  var data = JSON.parse(value);
+                  for (var i = 0; i < data.length; i++) {
+                    var loc = data[i]['{#SNMPVALUE}'].replace('PON ', '');
+                    var parts = loc.split('/');
+                    data[i]['{#PONSLOT}'] = parts[0] || '';
+                    data[i]['{#PONPORT}'] = parts[1] || '';
+                  }
+                  return JSON.stringify(data);
+          item_prototypes:
+            -
+              uuid: add24a03bdc84a91a15969cceb0f73f0
+              name: 'Slot {#PONSLOT} - PON {#PONPORT} - ONU {#SNMPINDEX}: status'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.10.1.1.11.{#SNMPINDEX}'
+              key: 'fh.onu.status[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              trends: 90d
+              valuemap:
+                name: 'ONU Status (Fiberhome AN5516)'
+              description: |
+                OID confirmada em produção (getOnuStatus). Códigos
+                confirmados pelo script real (tabela $StatusNames):
+                0=rompimento/fiber cut, 1=online (implícito, não alertado
+                pelo script), 2=falta de energia/power cut, 3=offline,
+                4=desconhecido/averiguar. Ver valuemap "ONU Status
+                (Fiberhome AN5516)".
+              trigger_prototypes:
+                -
+                  uuid: bde1d959892246b590b0d24efd6ef31a
+                  expression: 'last(/OLT Fiberhome AN5516/fh.onu.status[{#SNMPINDEX}])={$FH.ONU.STATUS.OFFLINE_VALUE}'
+                  name: 'Slot {#PONSLOT} - PON {#PONPORT} - ONU {#SNMPINDEX}: offline'
+                  priority: AVERAGE
+              tags:
+                -
+                  tag: component
+                  value: onu
+                -
+                  tag: metric
+                  value: status
+                -
+                  tag: pon
+                  value: '{#PONSLOT}-{#PONPORT}'
+            -
+              uuid: bf19e80b89974c5fb917a2e51ac1ff9b
+              name: 'Slot {#PONSLOT} - PON {#PONPORT} - ONU {#SNMPINDEX}: serial'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.10.1.1.10.{#SNMPINDEX}'
+              key: 'fh.onu.serial[{#SNMPINDEX}]'
+              delay: 1h
+              history: 30d
+              trends: 90d
+              value_type: CHAR
+              tags:
+                -
+                  tag: component
+                  value: onu
+                -
+                  tag: metric
+                  value: serial
+                -
+                  tag: pon
+                  value: '{#PONSLOT}-{#PONPORT}'
+            -
+              uuid: 9f4e1a46d1fc42488ef4d494d6fdf1db
+              name: 'Slot {#PONSLOT} - PON {#PONPORT} - ONU {#SNMPINDEX}: RX power'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.3.3.1.6.{#SNMPINDEX}'
+              key: 'fh.onu.rx_power[{#SNMPINDEX}]'
+              delay: 1h
+              history: 7d
+              trends: 60d
+              value_type: FLOAT
+              units: dBm
+              preprocessing:
+                -
+                  type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              trigger_prototypes:
+                -
+                  uuid: 0c0b2711cd944cf2b0ade8a01a1412ab
+                  expression: 'avg(/OLT Fiberhome AN5516/fh.onu.rx_power[{#SNMPINDEX}],10m)<={$FH.ONU.RXPOWER.MIN}'
+                  name: 'Slot {#PONSLOT} - PON {#PONPORT} - ONU {#SNMPINDEX}: low RX power ({ITEM.LASTVALUE})'
+                  priority: WARNING
+              tags:
+                -
+                  tag: component
+                  value: onu
+                -
+                  tag: metric
+                  value: optical-power-rx
+                -
+                  tag: pon
+                  value: '{#PONSLOT}-{#PONPORT}'
+            -
+              uuid: 83e4ea3224864786ab8b4f5033bfeb65
+              name: 'Slot {#PONSLOT} - PON {#PONPORT} - ONU {#SNMPINDEX}: TX power'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.3.3.1.7.{#SNMPINDEX}'
+              key: 'fh.onu.tx_power[{#SNMPINDEX}]'
+              delay: 1h
+              history: 7d
+              trends: 60d
+              value_type: FLOAT
+              units: dBm
+              preprocessing:
+                -
+                  type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                -
+                  tag: component
+                  value: onu
+                -
+                  tag: metric
+                  value: optical-power-tx
+                -
+                  tag: pon
+                  value: '{#PONSLOT}-{#PONPORT}'
+            -
+              uuid: 1a397855a7834e68b3919a205a1e5520
+              name: 'Slot {#PONSLOT} - PON {#PONPORT} - ONU {#SNMPINDEX}: voltage'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.3.3.1.8.{#SNMPINDEX}'
+              key: 'fh.onu.voltage[{#SNMPINDEX}]'
+              delay: 1h
+              history: 7d
+              trends: 60d
+              value_type: FLOAT
+              units: V
+              preprocessing:
+                -
+                  type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              description: |
+                Voltagem do transceptor da ONU. CONFIRMADO EM PRODUÇÃO pelo
+                script finder-hist.php (variável $voltagem, seção
+                "ONU COMPLETA") — via SNMP puro, x0,01 = Volts. Corrige a
+                versão anterior deste template, que assumia (incorretamente)
+                que voltagem por ONU só era acessível via protocolo binário
+                proprietário.
+              tags:
+                -
+                  tag: component
+                  value: onu
+                -
+                  tag: metric
+                  value: voltage
+                -
+                  tag: pon
+                  value: '{#PONSLOT}-{#PONPORT}'
+            -
+              uuid: ee34c45035924afc855aba52044b4f37
+              name: 'Slot {#PONSLOT} - PON {#PONPORT} - ONU {#SNMPINDEX}: bias current'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.3.3.1.9.{#SNMPINDEX}'
+              key: 'fh.onu.bias_current[{#SNMPINDEX}]'
+              delay: 1h
+              history: 7d
+              trends: 60d
+              value_type: FLOAT
+              units: mA
+              preprocessing:
+                -
+                  type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              description: |
+                Corrente de bias do transceptor da ONU. CONFIRMADO EM
+                PRODUÇÃO pelo script finder-hist.php (variável $optical_c),
+                x0,01 = mA.
+              tags:
+                -
+                  tag: component
+                  value: onu
+                -
+                  tag: metric
+                  value: bias-current
+                -
+                  tag: pon
+                  value: '{#PONSLOT}-{#PONPORT}'
+            -
+              uuid: 8c230329b0314735a6d6c149132505b0
+              name: 'Slot {#PONSLOT} - PON {#PONPORT} - ONU {#SNMPINDEX}: temperature'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.3.3.1.10.{#SNMPINDEX}'
+              key: 'fh.onu.temperature[{#SNMPINDEX}]'
+              delay: 1h
+              history: 7d
+              trends: 60d
+              value_type: FLOAT
+              units: °C
+              preprocessing:
+                -
+                  type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              description: |
+                Temperatura do transceptor da ONU. CONFIRMADO EM PRODUÇÃO
+                pelo script finder-hist.php (variável $Temperatura), x0,01
+                = °C.
+              tags:
+                -
+                  tag: component
+                  value: onu
+                -
+                  tag: metric
+                  value: temperature
+                -
+                  tag: pon
+                  value: '{#PONSLOT}-{#PONPORT}'
+      macros:
+        -
+          macro: '{$FH.ONU.RXPOWER.MIN}'
+          value: '-25'
+          description: 'Limite mínimo (dBm) de potência óptica RX da ONU antes de disparar alerta de sinal baixo.'
+        -
+          macro: '{$FH.PON.TEMP.MAX}'
+          value: '65'
+          description: |
+            Limite máximo (°C) de temperatura do transceptor óptico da
+            porta PON antes de disparar alerta. Valor de 65°C copiado por
+            convenção de transceptores SFP/GPON comuns — não confirmado
+            para este modelo específico de OLT, ajustar após validação
+            real.
+        -
+          macro: '{$FH.ONU.STATUS.OFFLINE_VALUE}'
+          value: '3'
+          description: |
+            Valor do item fh.onu.status que representa "offline" no
+            valuemap "ONU Status (Fiberhome AN5516)". Ajustar para 0 se a
+            OLT for modelo AN5116 ou AN5516 NGPON (ver descrição do
+            template) — nesses modelos o próprio significado dos códigos
+            muda, não apenas este macro.
+      valuemaps:
+        -
+          uuid: 8e134e80de5b4827b7a6cb440bfd7c1b
+          name: 'SNMP availability'
+          mappings:
+            -
+              value: '0'
+              newvalue: 'NOT_AVAILABLE'
+            -
+              value: '1'
+              newvalue: AVAILABLE
+            -
+              value: '2'
+              newvalue: UNAVAILABLE
+        -
+          uuid: adb58c9d09c640afbcb5b4a2b966b814
+          name: 'Card Status (Fiberhome)'
+          mappings:
+            -
+              value: '1'
+              newvalue: NORMAL
+            -
+              value: '0'
+              newvalue: 'COMMUNICATION_INTERRUPT'
+        -
+          uuid: 4b7854120ec34fd2980392fe1e898a6d
+          name: 'PON Port Online Status (Fiberhome)'
+          mappings:
+            -
+              value: '1'
+              newvalue: ONLINE
+            -
+              value: '0'
+              newvalue: OFFLINE
+        -
+          uuid: a432fbf94c704a10b80af87bdd6e9e64
+          name: 'ONU Status (Fiberhome AN5516)'
+          mappings:
+            -
+              value: '0'
+              newvalue: 'FIBER_CUT'
+            -
+              value: '1'
+              newvalue: ONLINE
+            -
+              value: '2'
+              newvalue: 'POWER_CUT'
+            -
+              value: '3'
+              newvalue: OFFLINE
+            -
+              value: '4'
+              newvalue: 'UNKNOWN'

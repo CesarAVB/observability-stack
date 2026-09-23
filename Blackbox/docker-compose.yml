@@ -1,0 +1,20 @@
+services:
+  blackbox-exporter:
+    image: prom/blackbox-exporter:latest
+    container_name: blackbox-exporter
+    restart: unless-stopped
+    configs:
+      - source: blackbox_config
+        target: /etc/blackbox_exporter/config.yml
+    command:
+      - '--config.file=/etc/blackbox_exporter/config.yml'
+    networks:
+      - network_swarm_public
+
+configs:
+  blackbox_config:
+    file: ./blackbox_config.yml
+
+networks:
+  network_swarm_public:
+    external: true

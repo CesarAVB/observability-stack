@@ -1,0 +1,78 @@
+version: "3.9"
+
+services:
+  zabbix-mysql:
+    image: mysql:8.0
+    container_name: zabbix-mysql
+    restart: unless-stopped
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_bin
+      - --default-authentication-plugin=mysql_native_password
+    environment:
+      TZ: ${TZ}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - /opt/docker/zabbix/mysql/data:/var/lib/mysql
+    networks:
+      - network_swarm_public
+
+  zabbix-server:
+    image: zabbix/zabbix-server-mysql:alpine-7.4-latest
+    container_name: zabbix-server
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ}
+      DB_SERVER_HOST: zabbix-mysql
+      DB_SERVER_PORT: 3306
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    depends_on:
+      - zabbix-mysql
+    ports:
+      - "10051:10051"
+    networks:
+      - network_swarm_public
+
+  zabbix-web:
+    image: zabbix/zabbix-web-nginx-mysql:alpine-7.4-latest
+    container_name: zabbix-web
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ}
+      PHP_TZ: ${TZ}
+      ZBX_SERVER_HOST: zabbix-server
+      DB_SERVER_HOST: zabbix-mysql
+      DB_SERVER_PORT: 3306
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      ZBX_SERVER_NAME: ${ZBX_SERVER_NAME}
+    depends_on:
+      - zabbix-server
+    expose:
+      - "8080"
+    networks:
+      - network_swarm_public
+
+  zabbix-agent:
+    image: zabbix/zabbix-agent:alpine-7.4-latest
+    container_name: zabbix-agent
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ}
+      ZBX_HOSTNAME: Zabbix server
+      ZBX_SERVER_HOST: zabbix-server
+      ZBX_SERVER_PORT: 10051
+    expose:
+      - "10050"
+    networks:
+      - network_swarm_public
+
+networks:
+  network_swarm_public:
+    external: true

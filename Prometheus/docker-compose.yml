@@ -1,0 +1,32 @@
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - prometheus_data:/prometheus
+    configs:
+      - source: prometheus_config
+        target: /etc/prometheus/prometheus.yml
+      - source: prometheus_rules
+        target: /etc/prometheus/rules/alerts.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.retention.time=30d'
+      - '--web.enable-lifecycle'
+      - '--web.enable-admin-api'
+    networks:
+      - network_swarm_public
+
+configs:
+  prometheus_config:
+    file: ./prometheus_config.yml
+  prometheus_rules:
+    file: ./rules/alerts.yml
+
+volumes:
+  prometheus_data:
+
+networks:
+  network_swarm_public:
+    external: true

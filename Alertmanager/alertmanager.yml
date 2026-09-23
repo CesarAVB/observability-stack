@@ -1,0 +1,100 @@
+# Configuração do Alertmanager.
+# Recebe os alertas "firing" do Prometheus (bloco `alerting:` em
+# prometheus_config.yml) e os transforma em mensagens no Telegram.
+#
+# Editar: alterar aqui, push, e no Portainer "Pull and redeploy" da stack
+# Alertmanager. O container recria e recarrega a config.
+
+global:
+  resolve_timeout: 5m
+
+# Árvore de roteamento: todo alerta entra pela raiz e desce até a rota mais
+# específica que casar. `continue: false` (padrão) para a busca no primeiro match.
+route:
+  receiver: telegram
+  # Agrupa alertas do mesmo tipo/serviço numa única mensagem.
+  group_by: ['alertname', 'application', 'job']
+  # Espera 30s juntando alertas novos do mesmo grupo antes do 1º envio.
+  group_wait: 30s
+  # Depois do 1º envio, espera 5min antes de mandar novidades do mesmo grupo.
+  group_interval: 5m
+  # Realerta um grupo ainda ativo a cada 4h (lembrete de que não foi resolvido).
+  repeat_interval: 4h
+
+  routes:
+    # Críticos: realerta de hora em hora enquanto estiver de pé.
+    - matchers:
+        - severity="critical"
+      receiver: telegram
+      group_wait: 10s
+      repeat_interval: 1h
+
+# Suprime ruído: se o alvo está DOWN, não faz sentido também gritar sobre
+# latência/heap/pool do mesmo alvo.
+inhibit_rules:
+  - source_matchers:
+      - alertname="TargetDown"
+    target_matchers:
+      - severity=~"warning|critical"
+    equal: ['job', 'instance']
+
+receivers:
+  - name: telegram
+    telegram_configs:
+      - send_resolved: true
+        # Token lido do Docker secret montado pelo compose.
+        bot_token_file: /run/secrets/telegram_bot_token
+        # ID do chat/grupo/canal de destino. Grupo = número negativo.
+        # Descobrir: adicione o bot ao grupo e chame
+        #   https://api.telegram.org/bot<TOKEN>/getUpdates
+        # Grupo "Lognet - Observabilidade". Se virar supergrupo, o id muda para
+        # o formato -100xxxxxxxxxx — rodar getUpdates de novo.
+        chat_id: -5439281417
+        parse_mode: HTML
+        # Cartão no estilo das notificações do Zabbix/WhatsApp: um cabeçalho de
+        # status + um bloco "ficha" por alerta do grupo, com campos rotulados.
+        # `exported_job` é o nome da tarefa @Scheduled (o Prometheus renomeia a
+        # tag `job` da métrica por colidir com o `job` do scrape).
+        message: |-
+          {{ if eq .Status "firing" -}}
+          🚨 <b>PROBLEMA DETECTADO</b> 🚨
+          {{- else -}}
+          ✅ <b>PROBLEMA RESOLVIDO</b> ✅
+          {{- end }}
+          {{- with .CommonLabels.severity }}
+          {{ if eq . "critical" }}🔴 Severidade: <b>crítico</b>{{ else }}🟡 Severidade: <b>atenção</b>{{ end }}
+          {{- end }}
+          {{- if gt (len .Alerts) 1 }}
+          📦 <b>{{ len .Alerts }}</b> ocorrências neste grupo
+          {{- end }}
+          {{ range .Alerts }}
+          ━━━━━━━━━━━━━━━━━━━━
+          {{ if .Labels.application -}}
+          🖥 <b>Aplicação:</b> <code>{{ .Labels.application }}</code>
+          {{- else if .Labels.job -}}
+          🖥 <b>Serviço:</b> <code>{{ .Labels.job }}</code>
+          {{- end }}
+          {{- with .Labels.instance }}
+          🌐 <b>Alvo:</b> <code>{{ . }}</code>
+          {{- end }}
+          {{- with .Labels.exported_job }}
+          ⏱ <b>Tarefa:</b> <code>{{ . }}</code>
+          {{- end }}
+          {{- with .Labels.client_name }}
+          🔌 <b>Integração:</b> <code>{{ . }}</code>
+          {{- end }}
+          {{ if eq $.Status "firing" }}⚠️{{ else }}✅{{ end }} <b>{{ if eq $.Status "resolved" }}Solucionado:{{ else }}Problema:{{ end }}</b> {{ with .Annotations.titulo }}{{ . }}{{ else }}{{ .Labels.alertname }}{{ end }}
+          📊 <b>Detalhe:</b> {{ .Annotations.summary }}
+          {{- with .Annotations.description }}
+          <i>{{ . }}</i>
+          {{- end }}
+          {{ if eq $.Status "firing" -}}
+          🕐 <b>Quando:</b> {{ .StartsAt.Local.Format "02/01/2006 às 15:04:05" }}
+          {{- else -}}
+          🕐 <b>Detectado:</b> {{ .StartsAt.Local.Format "02/01/2006 às 15:04:05" }}
+          🕑 <b>Resolvido:</b> {{ .EndsAt.Local.Format "02/01/2006 às 15:04:05" }}
+          ⌛ <b>Duração:</b> {{ .EndsAt.Sub .StartsAt }}
+          {{- end }}
+          {{- end }}
+          ━━━━━━━━━━━━━━━━━━━━
+          {{ with .ExternalURL }}<a href="{{ . }}">🔗 abrir Alertmanager</a>{{ end }}
