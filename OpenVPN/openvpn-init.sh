@@ -52,7 +52,9 @@ persist-key
 persist-tun
 remote-cert-tls server
 auth-user-pass
-cipher AES-256-CBC
+# GCM primeiro: o DCO do OpenVPN Connect/2.6 so aceita AEAD; CBC fica de fallback
+data-ciphers AES-256-GCM:AES-128-GCM:AES-256-CBC
+data-ciphers-fallback AES-256-CBC
 key-direction 1
 verb 3
 <ca>
