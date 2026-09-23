@@ -52,6 +52,8 @@ persist-key
 persist-tun
 remote-cert-tls server
 auth-user-pass
+# Sem certificado de cliente: evita o aviso "Missing external certificate" do OpenVPN Connect
+setenv CLIENT_CERT 0
 # GCM primeiro: o DCO do OpenVPN Connect/2.6 so aceita AEAD; CBC fica de fallback
 data-ciphers AES-256-GCM:AES-128-GCM:AES-256-CBC
 data-ciphers-fallback AES-256-CBC
