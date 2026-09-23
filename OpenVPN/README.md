@@ -30,7 +30,7 @@ Variáveis/segredo usados pela automação (`docker-compose.yml`):
 
 | Nome | Tipo | Uso |
 |---|---|---|
-| `OVPN_SERVER_HOST` | env | Host/IP público usado no `ovpn_genconfig` e no `client.ovpn` gerado. |
+| `OVPN_SERVER_HOST` | env da stack (Portainer) | Host/IP público usado no `ovpn_genconfig` e no `client.ovpn` gerado (ex.: `45.187.224.251`). Não fica no repositório; sem ela o container aborta com `OVPN_SERVER_HOST nao definido`. |
 | `OVPN_USER` | env da stack (Portainer) | Usuário inicial gravado em `users.txt` na primeira execução. Não fica no repositório; sem ela o container aborta com `OVPN_USER nao definido`. |
 | `openvpn_password` | secret externo | Senha do usuário inicial. Não fica no repositório. |
 
@@ -54,7 +54,7 @@ inicial evita que a senha fique no histórico do shell:
 Depois seguir o padrão do repositório: Portainer → Stacks → Add stack →
 nome `openvpn` → Build method **Repository** → Compose path
 `OpenVPN/docker-compose.yml` → em **Environment variables** adicionar
-`OVPN_USER` = `<usuário>` → Deploy the stack.
+`OVPN_SERVER_HOST` = `<ip ou host público>` e `OVPN_USER` = `<usuário>` → Deploy the stack.
 
 Acompanhar a inicialização (a geração do DH/PKI leva alguns minutos):
 

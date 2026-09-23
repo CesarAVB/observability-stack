@@ -22,8 +22,8 @@ services:
       - NET_ADMIN
     environment:
       - TZ=America/Sao_Paulo
-      - OVPN_SERVER_HOST=45.187.224.251
-      # Definida em "Environment variables" da stack no Portainer (fora do git)
+      # Definidas em "Environment variables" da stack no Portainer (fora do git)
+      - OVPN_SERVER_HOST=${OVPN_SERVER_HOST}
       - OVPN_USER=${OVPN_USER}
     deploy:
       replicas: 1
