@@ -60,6 +60,36 @@ scrape_configs:
       - target_label: __address__
         replacement: blackbox-exporter:9115
 
+  # blackbox_exporter — ping (ICMP) dos servidores Flussonic. Alertas de queda,
+  # perda de pacotes e latência no grupo `icmp` de rules/alerts.yml. O IP fica
+  # no label `instance` (mesmo relabel do blackbox-http).
+  - job_name: 'blackbox-icmp'
+    scrape_interval: 30s
+    metrics_path: /probe
+    params:
+      module: [icmp]
+    static_configs:
+      - targets:
+          - 170.80.69.13
+          - 170.80.69.14
+          - 170.80.69.15
+          - 172.16.14.13
+          - 172.16.14.14
+          - 172.16.14.15
+          - 177.129.15.12
+          - 45.187.32.94
+          - 200.209.175.118
+        labels:
+          servico: 'flussonic'
+          environment: 'production'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox-exporter:9115
+
   # App Spring Boot do CRM Lognet — coleta métricas via Actuator/Micrometer
   # sobre HTTPS no endpoint público da API.
   - job_name: 'lognet-crm'

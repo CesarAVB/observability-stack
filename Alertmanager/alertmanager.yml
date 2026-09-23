@@ -37,6 +37,12 @@ inhibit_rules:
     target_matchers:
       - severity=~"warning|critical"
     equal: ['job', 'instance']
+  # Host sem ping: perda e latência do mesmo IP são consequência, não notifica.
+  - source_matchers:
+      - alertname="IcmpHostDown"
+    target_matchers:
+      - alertname=~"IcmpPacketLoss|IcmpHighLatency"
+    equal: ['instance']
 
 receivers:
   - name: telegram

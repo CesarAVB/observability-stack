@@ -3,6 +3,9 @@ services:
     image: prom/blackbox-exporter:latest
     container_name: blackbox-exporter
     restart: unless-stopped
+    # root para o módulo icmp: a imagem roda como nobody, que não abre socket
+    # raw. Como root o container já tem NET_RAW (capacidade padrão do Docker).
+    user: root
     configs:
       - source: blackbox_config
         target: /etc/blackbox_exporter/config.yml
@@ -13,6 +16,7 @@ services:
 
 configs:
   blackbox_config:
+    name: blackbox_config_v2   # incrementar o vN sempre que ./blackbox_config.yml mudar
     file: ./blackbox_config.yml
 
 networks:
