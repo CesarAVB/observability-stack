@@ -52,6 +52,8 @@ groups:
   # ---------------------------------------------------------------------------
   # Ping dos hosts do job blackbox-icmp (Flussonic). Cada scrape (30s) é um ping:
   # probe_success 1/0 e probe_icmp_duration_seconds{phase="rtt"} com o RTT.
+  # `canais` (annotation) lista os canais do Flussonic que usam o IP como
+  # origem, consultando flussonic_input_up na hora do alerta.
   - name: icmp
     rules:
       - alert: IcmpHostDown
@@ -63,6 +65,8 @@ groups:
           titulo: "Host sem resposta ao ping"
           summary: "{{ $labels.instance }} ({{ $labels.servico }}) não responde ao ping"
           description: "Nenhum ping respondido há cerca de 3 minutos — host fora do ar ou link caído."
+          canais: >-
+            {{ range $i, $c := printf `flussonic_input_up{host="%s"}` $labels.instance | query | sortByLabel "stream" }}{{ if $i }}, {{ end }}{{ $c.Labels.stream }}{{ if ne $c.Labels.position "0" }} (reserva){{ end }}{{ end }}
 
       - alert: IcmpPacketLoss
         expr: 1 - avg_over_time(probe_success{job="blackbox-icmp"}[5m]) > 0.2
@@ -73,6 +77,8 @@ groups:
           titulo: "Perda de pacotes"
           summary: "{{ $labels.instance }} ({{ $labels.servico }}): {{ $value | humanizePercentage }} de perda de ping"
           description: "Mais de 20% dos pings sem resposta nos últimos 5 minutos."
+          canais: >-
+            {{ range $i, $c := printf `flussonic_input_up{host="%s"}` $labels.instance | query | sortByLabel "stream" }}{{ if $i }}, {{ end }}{{ $c.Labels.stream }}{{ if ne $c.Labels.position "0" }} (reserva){{ end }}{{ end }}
 
       - alert: IcmpHighLatency
         expr: avg_over_time(probe_icmp_duration_seconds{job="blackbox-icmp",phase="rtt"}[5m]) > 0.1
@@ -83,6 +89,8 @@ groups:
           titulo: "Latência alta"
           summary: "{{ $labels.instance }} ({{ $labels.servico }}): RTT médio de {{ $value | humanizeDuration }}"
           description: "Latência média do ping acima de 100 ms nos últimos 5 minutos."
+          canais: >-
+            {{ range $i, $c := printf `flussonic_input_up{host="%s"}` $labels.instance | query | sortByLabel "stream" }}{{ if $i }}, {{ end }}{{ $c.Labels.stream }}{{ if ne $c.Labels.position "0" }} (reserva){{ end }}{{ end }}
 
   # ---------------------------------------------------------------------------
   # Canais do Flussonic (job flussonic, stack FlussonicExporter/). Só streams
@@ -111,14 +119,18 @@ groups:
         annotations:
           titulo: "Canal fora do ar"
           summary: "{{ $labels.stream }} ({{ $labels.title }}) sem sinal no Flussonic"
-          description: "Stream parado ou sem bitrate de entrada há 2 minutos, em todas as origens configuradas."
+          description: |-
+            Stream parado ou sem bitrate de entrada há 2 minutos, em todas as origens configuradas.
+            {{- range printf `flussonic_input_last_frame_age_seconds{stream="%s"}` $labels.stream | query | sortByLabel "position" }}
+            • {{ .Labels.host }}{{ if eq .Labels.position "0" }} (principal){{ else }} (reserva){{ end }}: {{ if lt .Value 0.0 }}nunca recebeu quadro{{ else }}último quadro há {{ .Value | humanizeDuration }}{{ end }}
+            {{- end }}
 
       # Origem que é a primeira opção de algum canal e não entrega quadro para
       # nenhum deles. Os canais podem ter caído para a reserva (ver abaixo).
       - alert: FlussonicSourceDown
         expr: |
           label_replace(
-            max by (job, servico, instance, host) (flussonic_input_up{static="true",position="0"}) == 0,
+            max by (job, servico, instance, host) (flussonic_input_up{static="true",position="0",host!=""}) == 0,
             "primary", "$1", "host", "(.*)"
           )
         for: 2m
@@ -126,8 +138,11 @@ groups:
           severity: critical
         annotations:
           titulo: "Origem de canais sem sinal"
-          summary: "A origem {{ $labels.host }} não entrega sinal para nenhum canal"
-          description: "Nenhum canal que tem {{ $labels.host }} como origem principal recebe quadros dela há 2 minutos."
+          summary: "A origem {{ $labels.host }} não entrega sinal para nenhum dos seus {{ with printf `count(flussonic_input_up{static=\"true\",position=\"0\",host=\"%s\"})` $labels.host | query }}{{ . | first | value }}{{ end }} canais"
+          description: "Nenhum canal que tem {{ $labels.host }} como origem principal recebe quadros dela há 2 minutos. ❌ = fora do ar, 🔁 = no ar pela reserva."
+          # Canais com esta origem como principal e o estado de cada um agora.
+          canais: >-
+            {{ range $i, $c := printf `flussonic_stream_alive{static="true",primary="%s"}` $labels.host | query | sortByLabel "stream" }}{{ if $i }}, {{ end }}{{ if eq $c.Value 0.0 }}❌{{ else }}🔁{{ end }} {{ $c.Labels.stream }}{{ end }}
 
       - alert: FlussonicStreamOnBackup
         expr: flussonic_stream_on_backup{static="true"} == 1
@@ -137,7 +152,11 @@ groups:
         annotations:
           titulo: "Canal na origem reserva"
           summary: "{{ $labels.stream }} ({{ $labels.title }}) puxando de {{ $labels.source }} em vez de {{ $labels.primary }}"
-          description: "O canal está no ar, mas pela origem reserva há 5 minutos."
+          description: |-
+            O canal está no ar, mas pela origem reserva há 5 minutos.
+            {{- range printf `flussonic_input_last_frame_age_seconds{stream="%s"}` $labels.stream | query | sortByLabel "position" }}
+            • {{ .Labels.host }}{{ if eq .Labels.position "0" }} (principal){{ else }} (reserva){{ end }}: {{ if lt .Value 0.0 }}nunca recebeu quadro{{ else }}último quadro há {{ .Value | humanizeDuration }}{{ end }}
+            {{- end }}
 
   # ---------------------------------------------------------------------------
   - name: spring-apps

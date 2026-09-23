@@ -5,6 +5,8 @@ O 23.01 não gera formato Prometheus (`?format=openmetrics` é ignorado) e pagin
 então `flussonic_exporter.py` lê o JSON de `/streamer/api/v3/streams` e converte em métricas.
 Só usa a biblioteca padrão: roda em `python:3.12-alpine`, com o script montado como Docker Config.
 
+Lista de canais e origens (foto da config em 2026-09-23): [CANAIS.md](CANAIS.md).
+
 ## Deploy
 
 1. Secret com a senha da API (Portainer → Secrets, ou via SSH):

@@ -21,23 +21,37 @@ route:
   # Realerta um grupo ainda ativo a cada 4h (lembrete de que não foi resolvido).
   repeat_interval: 4h
 
+  # Dois grupos no Telegram, separados por quem age:
+  #   TV          -> tudo com servico="flussonic" (canais, origens, ping dos IPs
+  #                  do Flussonic, TargetDown do exporter)
+  #   Aplicações  -> o resto (apps Java, APIs, certificados, infra da observabilidade)
+  # Em ambos, severity="warning" chega sem som (disable_notifications) e
+  # "critical" toca normalmente.
   routes:
-    # Flussonic: agrupa por origem principal para uma queda de origem com dezenas
-    # de canais não virar uma mensagem gigante (limite de 4096 caracteres do
-    # Telegram). Já realerta de hora em hora, como a rota de críticos abaixo.
+    # TV: agrupa por origem principal para uma queda de origem com dezenas de
+    # canais não virar uma mensagem gigante (limite de 4096 caracteres do Telegram).
     - matchers:
-        - job="flussonic"
-      receiver: telegram
+        - servico="flussonic"
+      receiver: telegram-tv
       group_by: ['alertname', 'primary']
       group_wait: 30s
       repeat_interval: 1h
+      routes:
+        - matchers:
+            - severity="warning"
+          receiver: telegram-tv-silencioso
 
-    # Críticos: realerta de hora em hora enquanto estiver de pé.
+    # Aplicações — críticos: realerta de hora em hora enquanto estiver de pé.
     - matchers:
         - severity="critical"
       receiver: telegram
       group_wait: 10s
       repeat_interval: 1h
+
+    # Aplicações — atenção: sem som.
+    - matchers:
+        - severity="warning"
+      receiver: telegram-silencioso
 
 # Suprime ruído: se o alvo está DOWN, não faz sentido também gritar sobre
 # latência/heap/pool do mesmo alvo.
@@ -67,9 +81,12 @@ inhibit_rules:
     equal: ['instance']
 
 receivers:
+  # Grupo de Aplicações. As outras três variações reaproveitam esta config
+  # (âncora &telegram_base + merge `<<:`) trocando só chat_id e o som.
   - name: telegram
     telegram_configs:
-      - send_resolved: true
+      - &telegram_base
+        send_resolved: true
         # Token lido do Docker secret montado pelo compose.
         bot_token_file: /run/secrets/telegram_bot_token
         # ID do chat/grupo/canal de destino. Grupo = número negativo.
@@ -83,6 +100,9 @@ receivers:
         parse_mode: HTML
         # Cartão no estilo das notificações do Zabbix/WhatsApp: um cabeçalho de
         # status + um bloco "ficha" por alerta do grupo, com campos rotulados.
+        # Textos vindos de labels/annotations passam por `html` (ex.: "A&E" quebraria
+        # o parse_mode HTML do Telegram). `canais` é annotation dos alertas de
+        # ping/origem com os canais do Flussonic afetados.
         # `exported_job` é o nome da tarefa @Scheduled (o Prometheus renomeia a
         # tag `job` da métrica por colidir com o `job` do scrape).
         message: |-
@@ -113,13 +133,25 @@ receivers:
           {{- with .Labels.stream }}
           📺 <b>Canal:</b> <code>{{ . }}</code>
           {{- end }}
+          {{- with .Labels.title }}
+          🏷 <b>Nome:</b> {{ . | html }}
+          {{- end }}
+          {{- with .Labels.primary }}
+          📡 <b>Origem principal:</b> <code>{{ . }}</code>
+          {{- end }}
+          {{- if and .Labels.source (ne .Labels.source .Labels.primary) }}
+          🔁 <b>Origem ativa:</b> <code>{{ .Labels.source }}</code>
+          {{- end }}
           {{- with .Labels.client_name }}
           🔌 <b>Integração:</b> <code>{{ . }}</code>
           {{- end }}
           {{ if eq $.Status "firing" }}⚠️{{ else }}✅{{ end }} <b>{{ if eq $.Status "resolved" }}Solucionado:{{ else }}Problema:{{ end }}</b> {{ with .Annotations.titulo }}{{ . }}{{ else }}{{ .Labels.alertname }}{{ end }}
-          📊 <b>Detalhe:</b> {{ .Annotations.summary }}
+          📊 <b>Detalhe:</b> {{ .Annotations.summary | html }}
           {{- with .Annotations.description }}
-          <i>{{ . }}</i>
+          <i>{{ . | html }}</i>
+          {{- end }}
+          {{- with .Annotations.canais }}
+          📺 <b>Canais:</b> {{ . | html }}
           {{- end }}
           {{ if eq $.Status "firing" -}}
           🕐 <b>Quando:</b> {{ .StartsAt.Local.Format "02/01/2006 às 15:04:05" }}
@@ -131,3 +163,22 @@ receivers:
           {{- end }}
           ━━━━━━━━━━━━━━━━━━━━
           {{ with .ExternalURL }}<a href="{{ . }}">🔗 abrir Alertmanager</a>{{ end }}
+
+  - name: telegram-silencioso
+    telegram_configs:
+      - <<: *telegram_base
+        disable_notifications: true
+
+  # Grupo "Lognet - Alertas TV" (canais do Flussonic). Grupo comum: se virar
+  # supergrupo o id muda (-100…) e o envio falha com "group chat was upgraded to
+  # a supergroup chat" — pegar o novo id no `migrate_to_chat_id` do erro.
+  - name: telegram-tv
+    telegram_configs:
+      - <<: *telegram_base
+        chat_id: -5593580296
+
+  - name: telegram-tv-silencioso
+    telegram_configs:
+      - <<: *telegram_base
+        chat_id: -5593580296
+        disable_notifications: true
