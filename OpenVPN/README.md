@@ -96,10 +96,11 @@ Redeploy/"Pull and redeploy" **não** regera o `client.ovpn` — o script pula a
 inicialização quando o volume já tem config. Se o perfil foi gerado antes dos
 ajustes para o OpenVPN Connect, os sintomas são:
 
-| Sintoma no OpenVPN Connect | Linha que falta no `client.ovpn` |
+| Sintoma no OpenVPN Connect | Causa / correção |
 |---|---|
-| "Missing external certificate" | `setenv CLIENT_CERT 0` |
-| "TAP adapter is disabled" | `data-ciphers AES-256-GCM:AES-128-GCM:AES-256-CBC` no lugar de `cipher AES-256-CBC` |
+| "Missing external certificate" | Falta `setenv CLIENT_CERT 0` no perfil |
+| "TAP adapter is disabled" | DCO desligado no cliente: **☰ → Settings → Advanced Settings** (rolar até o fim) → ligar **Data Channel Offload (DCO)** |
+| "non-preferred data channel algorithms are not compatible with dco" | Perfil aceita CBC (`cipher AES-256-CBC`, ou CBC em `data-ciphers`/`data-ciphers-fallback`). Deve ter só `data-ciphers AES-256-GCM:AES-128-GCM` |
 
 Corrigir o arquivo no volume, sem regerar a PKI (os comandos são idempotentes), e
 repetir os passos 1 a 4:
@@ -109,9 +110,12 @@ C=$(docker ps -qf name=openvpn_openvpn)
 docker exec $C sh -c '
   f=/etc/openvpn/client.ovpn
   grep -q "^setenv CLIENT_CERT 0" $f || sed -i "/^auth-user-pass$/a setenv CLIENT_CERT 0" $f
-  sed -i "s/^cipher AES-256-CBC$/data-ciphers AES-256-GCM:AES-128-GCM:AES-256-CBC\ndata-ciphers-fallback AES-256-CBC/" $f
+  sed -i -e "/^data-ciphers-fallback /d" -e "s/^cipher AES-256-CBC$/data-ciphers AES-256-GCM:AES-128-GCM/" -e "s/^data-ciphers .*/data-ciphers AES-256-GCM:AES-128-GCM/" $f
   grep -E "^(setenv|data-ciphers|cipher)" $f'
 ```
+
+No OpenVPN Connect, depois de trocar o arquivo, **apagar o perfil antigo e
+importar de novo** — ele guarda uma cópia própria e não relê o original.
 
 Para regerar tudo do zero (novos certificados — perfis antigos deixam de
 funcionar): remover a stack, `docker volume rm openvpn_openvpn-data` e fazer o
