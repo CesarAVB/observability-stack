@@ -1,8 +1,9 @@
 # OpenVPN (LOGNET - 45.187.224.251)
 
-Stack baseada na imagem `kylemanna/openvpn`. A inicialização (gerar PKI, config
-e primeiro usuário) roda **automaticamente** no entrypoint (`openvpn-init.sh`),
-montado via Docker Config igual ao restante do repositório (`file: ./openvpn-init.sh`).
+Stack baseada na imagem `kylemanna/openvpn`. Toda a configuração é feita
+**automaticamente** pelo entrypoint (`openvpn-init.sh`), montado via Docker
+Config igual ao restante do repositório (`file: ./openvpn-init.sh`). Nenhum
+arquivo precisa ser editado à mão, nem no servidor nem no cliente.
 
 ## Autenticação
 
@@ -16,20 +17,20 @@ como CN. O `tls-auth` (`pki/ta.key`) continua ativo e vai embutido no
 
 `openvpn-init.sh` roda como entrypoint a cada start do container:
 
-- Se `/etc/openvpn/openvpn.conf` **não existe** (volume `openvpn-data` vazio,
-  primeiro deploy): gera PKI, `openvpn.conf`, `users.txt` (com o usuário inicial
-  vindo de `OVPN_USER`/secret `openvpn_password`), `auth.sh` e `client.ovpn`.
-- Se já existe (redeploy, restart, update da stack): pula tudo isso e só sobe
-  o servidor (`exec ovpn_run`). Não regenera certificado nem apaga usuários
-  adicionados manualmente depois.
+| Quando | O que faz |
+|---|---|
+| Só na 1ª execução (volume `openvpn-data` sem `pki/ca.crt`) | Gera PKI e `openvpn.conf` base (`ovpn_genconfig` + `ovpn_initpki`). |
+| Só se não existir `users.txt` | Cria com o usuário inicial (`OVPN_USER` + secret `openvpn_password`). |
+| **A cada start** | Reescreve `auth.sh`, remove compressão do `openvpn.conf`, reescreve o bloco gerenciado (auth, pushes) e **regera o `client.ovpn`** a partir da PKI existente. |
+
+Redeploy/restart **nunca** regera certificados nem apaga usuários — perfis já
+distribuídos continuam válidos. Mas qualquer ajuste de config feito no script
+chega ao servidor e ao `client.ovpn` no próximo deploy.
 
 > **Ao alterar o `openvpn-init.sh`, incremente o sufixo de `name: openvpn_init_vN`**
 > em `configs:` no `docker-compose.yml`. Docker Config é imutável no Swarm: sem
 > trocar o nome, o "Pull and redeploy" mantém o script antigo no container.
 > Confira com `docker exec $(docker ps -qf name=openvpn_openvpn) cat /usr/local/bin/openvpn-init.sh`.
->
-> Mudanças no `openvpn-init.sh` só valem para um volume **novo**. Para regerar
-> tudo: remover a stack, `docker volume rm openvpn_openvpn-data` e fazer deploy de novo.
 
 Variáveis/segredo usados pela automação (`docker-compose.yml`):
 
@@ -61,17 +62,24 @@ nome `openvpn` → Build method **Repository** → Compose path
 `OpenVPN/docker-compose.yml` → em **Environment variables** adicionar
 `OVPN_SERVER_HOST` = `<ip ou host público>` e `OVPN_USER` = `<usuário>` → Deploy the stack.
 
-Acompanhar a inicialização (a geração do DH/PKI leva alguns minutos):
+Acompanhar a inicialização (a geração do DH/PKI leva alguns minutos na 1ª vez):
 
 ```bash
 docker service logs -f openvpn_openvpn
 ```
 
+## Atualizar a stack
+
+Editar `openvpn-init.sh` (incrementando `openvpn_init_vN` no compose) → push →
+Portainer → **Pull and redeploy**. O container reinicia com o script novo, que
+reaplica a config e regera o `client.ovpn`. Depois é só buscar o perfil de novo
+(seção abaixo) e reimportar no cliente.
+
 ## Obter o `client.ovpn`
 
-O perfil é gerado uma única vez, dentro do volume, em `/etc/openvpn/client.ovpn`
-(só existe depois de aparecer `[openvpn-init] Concluido` no log). É o mesmo
-arquivo para todos os usuários — a identificação é por usuário/senha.
+O perfil fica no volume, em `/etc/openvpn/client.ovpn`, e é regerado a cada
+start (espere `[openvpn-init] Pronto` no log). É o mesmo arquivo para todos os
+usuários — a identificação é por usuário/senha.
 
 **1. No servidor (SSH)** — copiar do container para o `/root`:
 
@@ -91,42 +99,25 @@ scp -P 2224 root@45.187.224.251:/root/client.ovpn $HOME\Downloads\client.ovpn
 rm /root/client.ovpn
 ```
 
-**4. No OpenVPN Connect** — **+** → aba **Upload File** (não **URL**: essa aba
-é para OpenVPN Access Server e falha com "Incorrect response from server") →
-arrastar o arquivo → informar usuário/senha → Connect.
+**4. No OpenVPN Connect** — apagar o perfil anterior, se houver (o Connect
+guarda cópia própria e não relê o arquivo) → **+** → aba **Upload File** (não
+**URL**: essa aba é para OpenVPN Access Server e falha com "Incorrect response
+from server") → arrastar o arquivo → informar usuário/senha → Connect.
 
-### Perfil gerado por versão antiga do script
+### Configuração do OpenVPN Connect (uma vez por máquina)
 
-Redeploy/"Pull and redeploy" **não** regera o `client.ovpn` — o script pula a
-inicialização quando o volume já tem config. Se o perfil foi gerado antes dos
-ajustes para o OpenVPN Connect, os sintomas são:
+**☰ → Settings → Advanced Settings**:
 
-| Sintoma no OpenVPN Connect | Causa / correção |
+- **Security Level: Preferred** — com **Legacy** o Connect recusa o DCO.
+- **Data Channel Offload (DCO): ligado** (fim da tela) — sem ele o Connect cai
+  no driver TAP.
+
+| Sintoma no OpenVPN Connect | Causa |
 |---|---|
-| "Missing external certificate" | Falta `setenv CLIENT_CERT 0` no perfil |
-| "TAP adapter is disabled" | DCO desligado no cliente: **☰ → Settings → Advanced Settings** (rolar até o fim) → ligar **Data Channel Offload (DCO)** |
-| "non-preferred data channel algorithms are not compatible with dco" | **Security Level = Legacy** no cliente (Advanced Settings) → trocar para **Preferred**. E o perfil deve ter só GCM: `data-ciphers AES-256-GCM:AES-128-GCM` + `cipher AES-256-GCM` |
-| "server pushed compression settings that are not allowed" | `openvpn.conf` do servidor com `comp-lzo` → remover (bloco abaixo) e reiniciar o serviço |
-
-Corrigir perfil e servidor no volume, sem regerar a PKI (os comandos são
-idempotentes), e repetir os passos 1 a 4:
-
-```bash
-C=$(docker ps -qf name=openvpn_openvpn)
-docker exec $C sh -c '
-  f=/etc/openvpn/client.ovpn
-  sed -i -e "/^cipher /d" -e "/^data-ciphers/d" -e "/^setenv CLIENT_CERT/d" $f
-  sed -i -e "/^auth-user-pass$/a setenv CLIENT_CERT 0" \
-         -e "/^auth-user-pass$/a data-ciphers AES-256-GCM:AES-128-GCM" \
-         -e "/^auth-user-pass$/a cipher AES-256-GCM" $f
-  grep -E "^(setenv|data-ciphers|cipher)" $f
-  sed -i "/comp-lzo/d; /^compress/d; /^push \"compress/d" /etc/openvpn/openvpn.conf
-  grep -n comp /etc/openvpn/openvpn.conf || echo "servidor sem compressao"'
-docker service update --force openvpn_openvpn
-```
-
-No OpenVPN Connect, depois de trocar o arquivo, **apagar o perfil antigo e
-importar de novo** — ele guarda uma cópia própria e não relê o original.
+| "Missing external certificate" | Perfil antigo, sem `setenv CLIENT_CERT 0` → buscar o perfil de novo |
+| "TAP adapter is disabled" | DCO desligado no cliente |
+| "non-preferred data channel algorithms are not compatible with dco" | Security Level em **Legacy**, ou perfil antigo com CBC |
+| "server pushed compression settings that are not allowed" | Servidor rodando script antigo → conferir `openvpn_init_vN` e fazer Pull and redeploy |
 
 Para regerar tudo do zero (novos certificados — perfis antigos deixam de
 funcionar): remover a stack, `docker volume rm openvpn_openvpn-data` e fazer o
@@ -142,8 +133,7 @@ de conexão.
 ## Trocar a senha do usuário inicial
 
 Trocar a senha depois do primeiro deploy só via `users.txt` (o secret
-`openvpn_password` só é lido na inicialização do volume vazio, não em
-redeploys seguintes).
+`openvpn_password` só é lido quando `users.txt` não existe).
 
 ## Firewall
 
