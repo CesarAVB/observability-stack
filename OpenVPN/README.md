@@ -123,17 +123,52 @@ Para regerar tudo do zero (novos certificados — perfis antigos deixam de
 funcionar): remover a stack, `docker volume rm openvpn_openvpn-data` e fazer o
 deploy de novo, recadastrando as variáveis da stack.
 
-## Adicionar novo usuário
+## Usuários e senhas
 
-Editar `users.txt` diretamente no volume (`docker exec -it <container> vi /etc/openvpn/users.txt`
-ou `docker cp`), adicionando uma linha `usuario:senha`. Não precisa gerar
-certificado nem reiniciar o container — `auth.sh` lê o arquivo a cada tentativa
-de conexão.
+Os usuários ficam em `/etc/openvpn/users.txt` (volume `openvpn-data`), uma linha
+`usuario:senha` cada. O `auth.sh` lê o arquivo a cada tentativa de conexão:
+**não precisa reiniciar o container nem gerar certificado**, e todos usam o
+mesmo `client.ovpn` (ver [Obter o `client.ovpn`](#obter-o-clientovpn)).
 
-## Trocar a senha do usuário inicial
+Rodar no servidor (SSH). O **espaço no início** de cada comando evita que a
+senha fique no histórico do shell. Usuário e senha vão como argumentos
+separados (`_ 'usuario' 'senha'`), então a senha pode ter `@ $ ! : espaço` sem
+problema de aspas.
 
-Trocar a senha depois do primeiro deploy só via `users.txt` (o secret
-`openvpn_password` só é lido quando `users.txt` não existe).
+**Criar usuário:**
+
+```bash
+ docker exec $(docker ps -qf name=openvpn_openvpn) sh -c 'grep -q "^$1:" /etc/openvpn/users.txt && echo "usuario $1 ja existe" || { printf "%s:%s\n" "$1" "$2" >> /etc/openvpn/users.txt; echo "usuario $1 criado"; }' _ 'maria' 'S3nh@Forte'
+```
+
+**Trocar senha** (vale também para o usuário inicial — o secret
+`openvpn_password` só é lido quando `users.txt` ainda não existe):
+
+```bash
+ docker exec $(docker ps -qf name=openvpn_openvpn) sh -c 'grep -q "^$1:" /etc/openvpn/users.txt || { echo "usuario $1 nao existe"; exit 1; }; sed -i "/^$1:/d" /etc/openvpn/users.txt; printf "%s:%s\n" "$1" "$2" >> /etc/openvpn/users.txt; echo "senha de $1 alterada"' _ 'maria' 'NovaS3nh@'
+```
+
+**Remover usuário:**
+
+```bash
+docker exec $(docker ps -qf name=openvpn_openvpn) sh -c 'grep -q "^$1:" /etc/openvpn/users.txt && { sed -i "/^$1:/d" /etc/openvpn/users.txt; echo "usuario $1 removido"; } || echo "usuario $1 nao existe"' _ 'maria'
+```
+
+**Listar usuários** (só os nomes):
+
+```bash
+docker exec $(docker ps -qf name=openvpn_openvpn) cut -d: -f1 /etc/openvpn/users.txt
+```
+
+Observações:
+
+- Nome de usuário: só letras, números, `.`, `-` e `_` (sem `:` nem espaço). A
+  senha pode ter qualquer caractere, exceto quebra de linha.
+- Remover usuário ou trocar senha **não derruba quem já está conectado** — a
+  regra vale na próxima conexão. Para forçar todos a reconectar:
+  `docker service update --force openvpn_openvpn`.
+- As senhas ficam em texto puro no volume; quem tem acesso root ao servidor
+  consegue lê-las.
 
 ## Firewall
 
