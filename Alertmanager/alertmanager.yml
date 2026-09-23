@@ -75,9 +75,11 @@ receivers:
         # ID do chat/grupo/canal de destino. Grupo = número negativo.
         # Descobrir: adicione o bot ao grupo e chame
         #   https://api.telegram.org/bot<TOKEN>/getUpdates
-        # Grupo "Lognet - Observabilidade". Se virar supergrupo, o id muda para
-        # o formato -100xxxxxxxxxx — rodar getUpdates de novo.
-        chat_id: -5439281417
+        # Grupo "Lognet - Observabilidade", supergrupo desde 2026-09-23 (o id
+        # antigo -5439281417 passou a falhar com "group chat was upgraded to a
+        # supergroup chat"). Se o id mudar de novo, o novo vem no
+        # `migrate_to_chat_id` da resposta de erro de um sendMessage ao id antigo.
+        chat_id: -1004347506618
         parse_mode: HTML
         # Cartão no estilo das notificações do Zabbix/WhatsApp: um cabeçalho de
         # status + um bloco "ficha" por alerta do grupo, com campos rotulados.
