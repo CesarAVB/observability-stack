@@ -23,6 +23,11 @@ como CN. O `tls-auth` (`pki/ta.key`) continua ativo e vai embutido no
   o servidor (`exec ovpn_run`). Não regenera certificado nem apaga usuários
   adicionados manualmente depois.
 
+> **Ao alterar o `openvpn-init.sh`, incremente o sufixo de `name: openvpn_init_vN`**
+> em `configs:` no `docker-compose.yml`. Docker Config é imutável no Swarm: sem
+> trocar o nome, o "Pull and redeploy" mantém o script antigo no container.
+> Confira com `docker exec $(docker ps -qf name=openvpn_openvpn) cat /usr/local/bin/openvpn-init.sh`.
+>
 > Mudanças no `openvpn-init.sh` só valem para um volume **novo**. Para regerar
 > tudo: remover a stack, `docker volume rm openvpn_openvpn-data` e fazer deploy de novo.
 
