@@ -19,6 +19,45 @@ só aparecem na aba *Alerts* da UI do Prometheus e ninguém é avisado.
 | Persistência | volume `alertmanager_data` (silences sobrevivem a restart) |
 | Rede | `network_swarm_public` — Prometheus alcança por `alertmanager:9093` |
 
+## Grupos do Telegram e som
+
+São **2 grupos** no Telegram, os dois com o mesmo bot (`@lognet_alertas_bot`):
+
+| Grupo | chat_id | Recebe |
+|---|---|---|
+| **Lognet - Observabilidade** | `-1004347506618` | apps Java, APIs, certificados, infra da observabilidade |
+| **Lognet - Alertas TV** | `-1004439481378` | tudo com `servico="flussonic"`: canais, origens, ping dos IPs do Flussonic |
+
+Dentro de cada grupo, a **severidade** decide se o celular toca:
+
+- `critical` → a mensagem chega e **toca/vibra** normalmente.
+- `warning` → a mensagem **chega igual no grupo**, mas **sem som** (`disable_notifications: true`).
+
+Como cada combinação de grupo e som precisa de um receiver, o `alertmanager.yml` tem **4 receivers**
+para os **2 grupos**:
+
+| Configuração interna | Grupo | Toca? |
+|---|---|---|
+| `telegram` | Observabilidade | 🔔 sim |
+| `telegram-silencioso` | Observabilidade | 🔕 não |
+| `telegram-tv` | Alertas TV | 🔔 sim |
+| `telegram-tv-silencioso` | Alertas TV | 🔕 não |
+
+Os 4 usam a mesma mensagem e o mesmo token: `telegram` define a âncora `&telegram_base` e os outros
+fazem `<<: *telegram_base`, trocando só `chat_id` e `disable_notifications`. Para conferir para qual
+receiver um alerta vai:
+
+```bash
+amtool config routes test --config.file=alertmanager.yml servico=flussonic severity=warning
+# telegram-tv-silencioso
+```
+
+> **Supergrupo muda o id.** Se um grupo comum virar supergrupo (tornar público, histórico visível
+> para novos membros, mais de 200 membros), o `chat_id` muda para `-100…` e o envio falha **em
+> silêncio** (`group chat was upgraded to a supergroup chat (400)` no log). O id novo vem no
+> `migrate_to_chat_id` da resposta de erro de um `sendMessage` para o id antigo. Os dois grupos
+> acima já são supergrupos.
+
 ## Primeiro deploy
 
 ### 1. Criar o bot do Telegram
@@ -37,7 +76,7 @@ printf '123456789:ABCdef_your_token_here' | docker secret create telegram_bot_to
 ```
 
 ### 3. Ajustar o `chat_id`
-Editar `Alertmanager/alertmanager.yml` → `chat_id: 0` → o número do passo 1, e dar push.
+Editar `chat_id` nos receivers de `Alertmanager/alertmanager.yml` com o número do passo 1, e dar push.
 
 ### 4. Adicionar a stack no Portainer
 Stacks → Add stack → Build method **Repository** → URL deste repo →
@@ -58,8 +97,9 @@ regras). Portainer → stack Prometheus → **Pull and redeploy**.
 
 - **Regras de alerta:** editar `Prometheus/rules/alerts.yml` → push → *Pull and
   redeploy* da stack **Prometheus**.
-- **Roteamento / receivers:** editar `Alertmanager/alertmanager.yml` → push →
-  *Pull and redeploy* da stack **Alertmanager**.
+- **Roteamento / receivers:** editar `Alertmanager/alertmanager.yml` → incrementar
+  `name: alertmanager_config_vN` no `docker-compose.yml` → push → *Pull and redeploy*
+  da stack **Alertmanager**. Sem trocar o nome, o Swarm pode manter o config antigo.
 
 ## Silenciar durante manutenção
 
