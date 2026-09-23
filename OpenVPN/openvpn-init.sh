@@ -85,6 +85,15 @@ $(cat pki/ta.key)
 </tls-auth>
 EOF
 
+# NAT dos clientes para a internet. O ovpn_run so mascara saindo por eth0, mas
+# no Swarm eth0 e a overlay da stack e a saida real e o docker_gwbridge (eth1):
+# sem esta regra o cliente conecta e fica sem internet (envia, nada volta).
+OVPN_NET=$(sed -n 's/^declare -x OVPN_SERVER=//p' ovpn_env.sh 2>/dev/null | tr -d '"')
+OVPN_NET="${OVPN_NET:-192.168.255.0/24}"
+iptables -t nat -C POSTROUTING -s "$OVPN_NET" -j MASQUERADE 2>/dev/null \
+  || iptables -t nat -A POSTROUTING -s "$OVPN_NET" -j MASQUERADE
+echo "[openvpn-init] NAT ${OVPN_NET} em todas as interfaces; ip_forward=$(cat /proc/sys/net/ipv4/ip_forward); rota padrao: $(ip route show default)"
+
 echo "[openvpn-init] Pronto. client.ovpn atualizado em ${OVPN_DATA}/client.ovpn (docker cp pra fora do container)."
 
 exec ovpn_run
