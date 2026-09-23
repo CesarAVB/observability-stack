@@ -34,7 +34,7 @@ configs:
   openvpn_init:
     # Docker Config e imutavel no Swarm: ao alterar openvpn-init.sh, incrementar
     # o sufixo para o "Pull and redeploy" criar um config novo em vez de manter o antigo.
-    name: openvpn_init_v2
+    name: openvpn_init_v3
     file: ./openvpn-init.sh
 
 secrets:

@@ -105,18 +105,24 @@ ajustes para o OpenVPN Connect, os sintomas são:
 |---|---|
 | "Missing external certificate" | Falta `setenv CLIENT_CERT 0` no perfil |
 | "TAP adapter is disabled" | DCO desligado no cliente: **☰ → Settings → Advanced Settings** (rolar até o fim) → ligar **Data Channel Offload (DCO)** |
-| "non-preferred data channel algorithms are not compatible with dco" | Perfil aceita CBC (`cipher AES-256-CBC`, ou CBC em `data-ciphers`/`data-ciphers-fallback`). Deve ter só `data-ciphers AES-256-GCM:AES-128-GCM` |
+| "non-preferred data channel algorithms are not compatible with dco" | **Security Level = Legacy** no cliente (Advanced Settings) → trocar para **Preferred**. E o perfil deve ter só GCM: `data-ciphers AES-256-GCM:AES-128-GCM` + `cipher AES-256-GCM` |
+| "server pushed compression settings that are not allowed" | `openvpn.conf` do servidor com `comp-lzo` → remover (bloco abaixo) e reiniciar o serviço |
 
-Corrigir o arquivo no volume, sem regerar a PKI (os comandos são idempotentes), e
-repetir os passos 1 a 4:
+Corrigir perfil e servidor no volume, sem regerar a PKI (os comandos são
+idempotentes), e repetir os passos 1 a 4:
 
 ```bash
 C=$(docker ps -qf name=openvpn_openvpn)
 docker exec $C sh -c '
   f=/etc/openvpn/client.ovpn
-  grep -q "^setenv CLIENT_CERT 0" $f || sed -i "/^auth-user-pass$/a setenv CLIENT_CERT 0" $f
-  sed -i -e "/^data-ciphers-fallback /d" -e "s/^cipher AES-256-CBC$/data-ciphers AES-256-GCM:AES-128-GCM/" -e "s/^data-ciphers .*/data-ciphers AES-256-GCM:AES-128-GCM/" $f
-  grep -E "^(setenv|data-ciphers|cipher)" $f'
+  sed -i -e "/^cipher /d" -e "/^data-ciphers/d" -e "/^setenv CLIENT_CERT/d" $f
+  sed -i -e "/^auth-user-pass$/a setenv CLIENT_CERT 0" \
+         -e "/^auth-user-pass$/a data-ciphers AES-256-GCM:AES-128-GCM" \
+         -e "/^auth-user-pass$/a cipher AES-256-GCM" $f
+  grep -E "^(setenv|data-ciphers|cipher)" $f
+  sed -i "/comp-lzo/d; /^compress/d; /^push \"compress/d" /etc/openvpn/openvpn.conf
+  grep -n comp /etc/openvpn/openvpn.conf || echo "servidor sem compressao"'
+docker service update --force openvpn_openvpn
 ```
 
 No OpenVPN Connect, depois de trocar o arquivo, **apagar o perfil antigo e

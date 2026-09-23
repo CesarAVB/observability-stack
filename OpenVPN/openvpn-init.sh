@@ -32,6 +32,10 @@ grep -qxF "${username}:${password}" /etc/openvpn/users.txt && exit 0 || exit 1
 EOF
   chmod +x auth.sh
 
+  # Sem compressao: o OpenVPN Connect (nivel Preferred/DCO) recusa o push de
+  # comp-lzo ("server pushed compression settings that are not allowed").
+  sed -i '/comp-lzo/d; /^compress/d; /^push "compress/d' openvpn.conf
+
   cat >> openvpn.conf <<'EOF'
 auth-user-pass-verify /etc/openvpn/auth.sh via-file
 script-security 2
@@ -57,6 +61,8 @@ setenv CLIENT_CERT 0
 # So AEAD: o DCO do OpenVPN Connect/2.6 recusa o perfil se CBC aparecer, mesmo
 # como fallback. O servidor 2.4 negocia GCM via NCP.
 data-ciphers AES-256-GCM:AES-128-GCM
+# Sem "cipher" o Connect assume BF-CBC como reserva; declarar GCM tambem aqui
+cipher AES-256-GCM
 key-direction 1
 verb 3
 <ca>
