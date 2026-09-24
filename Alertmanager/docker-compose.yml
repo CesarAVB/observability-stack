@@ -29,7 +29,7 @@ configs:
   alertmanager_config:
     # Docker Config é imutável no Swarm: incrementar o vN sempre que
     # ./alertmanager.yml mudar, senão o Pull and redeploy mantém o antigo.
-    name: alertmanager_config_v4
+    name: alertmanager_config_v5
     file: ./alertmanager.yml
 
 secrets:

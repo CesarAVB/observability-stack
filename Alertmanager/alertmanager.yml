@@ -118,7 +118,7 @@ receivers:
           📦 <b>{{ len .Alerts }}</b> ocorrências neste grupo
           {{- end }}
           {{ range .Alerts }}
-          ━━━━━━━━━━━━━━━━━━━━
+          ━━━━━━━━━━━━
           {{ if .Labels.application -}}
           🖥 <b>Aplicação:</b> <code>{{ .Labels.application }}</code>
           {{- else if .Labels.job -}}
@@ -161,7 +161,7 @@ receivers:
           ⌛ <b>Duração:</b> {{ .EndsAt.Sub .StartsAt }}
           {{- end }}
           {{- end }}
-          ━━━━━━━━━━━━━━━━━━━━
+          ━━━━━━━━━━━━
           {{ with .ExternalURL }}<a href="{{ . }}">🔗 abrir Alertmanager</a>{{ end }}
 
   - name: telegram-silencioso
