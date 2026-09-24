@@ -13,7 +13,7 @@ services:
     ports:
       - '1935:1935'   # RTMP — ingest/play
       - '8080:8080'   # HTTP-FLV / HLS
-      # 1985 (API/console) fica só na rede interna, sem publicar
+      - '1985:1985'   # API/console — restrita no firewall (VPS/Firewall/) à ALLOWED_NETWORKS
     networks:
       - network_swarm_public
 
