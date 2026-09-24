@@ -22,6 +22,9 @@ configs:
   prometheus_config:
     file: ./prometheus_config.yml
   prometheus_rules:
+    # Docker Config é imutável no Swarm: ao alterar rules/alerts.yml,
+    # incrementar o sufixo para o "Pull and redeploy" trocar as regras.
+    name: prometheus_rules_v2
     file: ./rules/alerts.yml
 
 volumes:

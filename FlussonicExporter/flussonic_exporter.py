@@ -130,7 +130,9 @@ def collect(target):
 
         for position, inp in enumerate(stream.get("inputs") or []):
             last = (inp.get("stats") or {}).get("last_dts_at")
-            age = (now_ms - last) / 1000 if isinstance(last, (int, float)) else -1
+            # O relógio do Flussonic anda alguns segundos à frente do nosso, então
+            # quadro recém-chegado dá idade negativa: conta como 0. -1 = nunca recebeu.
+            age = max(0.0, (now_ms - last) / 1000) if isinstance(last, (int, float)) else -1
             in_labels = {
                 "stream": labels["stream"],
                 "static": labels["static"],

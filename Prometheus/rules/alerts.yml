@@ -139,10 +139,11 @@ groups:
         annotations:
           titulo: "Origem de canais sem sinal"
           summary: "A origem {{ $labels.host }} não entrega sinal para nenhum dos seus {{ with printf `count(flussonic_input_up{static=\"true\",position=\"0\",host=\"%s\"})` $labels.host | query }}{{ . | first | value }}{{ end }} canais"
-          description: "Nenhum canal que tem {{ $labels.host }} como origem principal recebe quadros dela há 2 minutos. ❌ = fora do ar, 🔁 = no ar pela reserva."
-          # Canais com esta origem como principal e o estado de cada um agora.
+          description: "Nenhum canal que tem {{ $labels.host }} como origem principal recebe quadros dela há 2 minutos. ❌ = fora do ar, 🔁 = no ar pela reserva, ✅ = no ar pela principal."
+          # Canais com esta origem como principal e o estado de cada um agora:
+          # alive * (1 + on_backup) → 0 fora do ar, 1 na principal, 2 na reserva.
           canais: >-
-            {{ range $i, $c := printf `flussonic_stream_alive{static="true",primary="%s"}` $labels.host | query | sortByLabel "stream" }}{{ if $i }}, {{ end }}{{ if eq $c.Value 0.0 }}❌{{ else }}🔁{{ end }} {{ $c.Labels.stream }}{{ end }}
+            {{ range $i, $c := printf `flussonic_stream_alive{static="true",primary="%s"} * (1 + flussonic_stream_on_backup)` $labels.host | query | sortByLabel "stream" }}{{ if $i }}, {{ end }}{{ if eq $c.Value 0.0 }}❌{{ else if eq $c.Value 2.0 }}🔁{{ else }}✅{{ end }} {{ $c.Labels.stream }}{{ end }}
 
       - alert: FlussonicStreamOnBackup
         expr: flussonic_stream_on_backup{static="true"} == 1

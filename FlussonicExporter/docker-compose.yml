@@ -23,7 +23,7 @@ configs:
   flussonic_exporter_script:
     # Docker Config é imutável no Swarm: ao alterar flussonic_exporter.py,
     # incrementar o sufixo para o "Pull and redeploy" trocar o script.
-    name: flussonic_exporter_script_v1
+    name: flussonic_exporter_script_v2
     file: ./flussonic_exporter.py
 
 secrets:
