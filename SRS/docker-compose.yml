@@ -1,0 +1,27 @@
+services:
+  srs:
+    image: ossrs/srs:6
+    container_name: srs
+    restart: unless-stopped
+    command:
+      - './objs/srs'
+      - '-c'
+      - '/usr/local/srs/conf/srs.conf'
+    configs:
+      - source: srs_config
+        target: /usr/local/srs/conf/srs.conf
+    ports:
+      - '1935:1935'   # RTMP — ingest/play
+      - '8080:8080'   # HTTP-FLV / HLS
+      # 1985 (API/console) fica só na rede interna, sem publicar
+    networks:
+      - network_swarm_public
+
+configs:
+  srs_config:
+    name: srs_config_v1   # incrementar o vN sempre que ./srs.conf mudar
+    file: ./srs.conf
+
+networks:
+  network_swarm_public:
+    external: true
